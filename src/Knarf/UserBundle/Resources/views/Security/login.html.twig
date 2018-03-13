@@ -1,0 +1,40 @@
+{# src/Knarf/UserBundle/Resources/views/Security/login.html.twig #}
+
+{% extends '::layout.html.twig' %}
+
+
+{% block body %}
+
+  {# S'il y a une erreur, on l'affiche dans un joli cadre #}
+  {% if error %}
+    <div class="alert alert-danger">{{ error.message }}</div>
+  {% endif %}
+
+  {# Le formulaire, avec URL de soumission vers la route « login_check » comme on l'a vu #}
+
+    
+    <div class="container">
+    
+       <div class="col-sm-6 col-md-4">
+            <h1 class=" well text-center login-title">Connectez-vous pour continuer</h1>
+            <div class="account-wall">
+                <img class="profile-img" src=""
+                    alt="">
+                <form class="form-signin" action="{{ path('login_check') }}" method="post">
+                <input type="text" id="username" name="_username" value="{{ last_username }}"class="form-control" placeholder="Pseudo" required autofocus>
+                <input type="password" id="password" name="_password" class="form-control" placeholder="Mot de passe" required>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">
+                    Se connecter</button>
+                <label class="checkbox pull-left">
+                    <input type="checkbox" value="remember-me">
+                    Remember me
+                </label>
+                <a href="#" class="pull-right need-help">Need help? </a><span class="clearfix"></span>
+                </form>
+            </div>
+            <a href="{{ path('register') }}" class="text-center new-account">Créer un compte </a>
+        </div>
+    
+    </div>
+
+{% endblock %}

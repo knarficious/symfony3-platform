@@ -1,0 +1,41 @@
+
+knarf_platform:
+    resource: "@KnarfPlatformBundle/Resources/config/routing.yml"
+    prefix:   /platform
+    
+rubrique:
+    resource: "@KnarfPlatformBundle/Resources/config/routing/rubrique.yml"
+    prefix: /rubrique
+
+knarf_commentaire:
+    resource: "@KnarfPlatformBundle/Resources/config/routing/commentaire.yml"
+    prefix: /knarf_commentaire
+
+login:
+    path: /login
+    defaults:
+        _controller: KnarfUserBundle:Security:login
+
+login_check:
+    path: /login_check
+
+logout:
+    path: /logout
+    
+register:
+    path: /register
+    defaults:
+        _controller: KnarfUserBundle:Security:register
+        
+profile:
+    path: /profile/
+    defaults:
+        _controller: KnarfUserBundle:Security:profile
+        
+profile_edit:
+    path: /profile/edit
+    defaults:
+        _controller: KnarfUserBundle:Security:editProfile
+        
+_liip_imagine:
+    resource: "@LiipImagineBundle/Resources/config/routing.xml"

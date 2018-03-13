@@ -1,0 +1,32 @@
+{# src/Knarf/PlatformBundle/Resources/views/Rubrique/form.html.twig #}
+
+<h3>Formulaire d'ajout d'une rubrique</h3>
+
+<div class="well">
+  {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+
+  {# Les erreurs générales du formulaire. #}
+  {{ form_errors(form) }}
+
+  {# Génération du label + error + widget pour un champ. #}
+
+
+  {# Génération manuelle et éclatée : #}
+  <div class="form-group">
+      {{ form_label(form.intitule, "Intitulé de la rubrique", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+      {{ form_errors(form.intitule) }}
+      {{ form_widget(form.intitule, {'attr': {'class': 'form-control'}}) }}
+  </div>
+  
+ 
+  {# Pour le bouton, pas de label ni d'erreur, on affiche juste le widget #}
+  {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
+
+  {# Génération automatique des champs pas encore écrits.
+     Dans cet exemple, ce serait le champ CSRF (géré automatiquement par Symfony !)
+     et tous les champs cachés (type « hidden »). #}
+  {{ form_rest(form) }}
+
+  {# Fermeture de la balise <form> du formulaire HTML #}
+  {{ form_end(form) }}
+</div>

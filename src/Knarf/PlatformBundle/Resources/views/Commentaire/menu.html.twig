@@ -1,0 +1,29 @@
+{# src/Knarf/PlatformBundle/Resources/views/Advert/menu.html.twig #}
+
+
+{# Ce template n'hérite de personne,
+
+   tout comme le template inclus avec {{ include() }}. #}
+
+
+<ul class="nav nav-pills nav-stacked">
+
+  {% for advert in listAdverts %}
+      
+      {% if advert.published == 1 %}
+
+    <li>
+
+      <a href="{{ path('knarf_platform_view', {'id': advert.id}) }}">
+
+        {{ advert.title }}
+
+      </a>
+
+    </li>
+    
+        {% endif %}
+
+  {% endfor %}
+
+</ul>

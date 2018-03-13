@@ -1,0 +1,5 @@
+# src/Knarf/UseruUndle/Resources/config/vich_uploader/User.yml
+Knarf\UserBundle\Entity\User:
+  mediaFile:
+   mapping: upload_media        
+   filename_property: nomMedia

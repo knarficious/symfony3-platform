@@ -1,0 +1,26 @@
+{# src/Knarf/PlatformBundle/Resources/views/Rubrique/edit.html.twig #}
+
+{% extends "KnarfPlatformBundle::layout.html.twig" %}
+
+{% block title %}
+  Modifier une rubrique - {{ parent() }}
+{% endblock %}
+
+{% block knarfplatform_body %}
+
+  <h2>Modifier une rubrique</h2>
+
+  {{ include("KnarfPlatformBundle:Rubrique:form.html.twig") }}
+
+  <p>
+    Vous éditez une rubrique déjà existante...
+  </p>
+
+  <p>
+    <a href="{{ path('rubrique_view', {'id': rubrique.id}) }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-chevron-left"></i>
+      Retour à la rubrique
+    </a>
+  </p>
+
+{% endblock %}

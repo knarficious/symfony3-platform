@@ -1,0 +1,51 @@
+{# src/Knarf/PlatformBundle/Resources/views/Advert/index.html.twig #}
+
+
+{% extends "KnarfPlatformBundle::layout.html.twig" %}
+
+
+{% block title %}
+
+  Accueil - {{ parent() }}
+
+{% endblock %}
+
+
+{% block knarfplatform_body %}
+
+
+  <h2>Liste des commentaires</h2>
+
+
+  <ul>
+
+    {% for commentaire in listCommentaires %}        
+
+      <li>
+
+        <a href="{{ path('knarf_commentaire_view', {'id': commentaire.id}) }}">
+
+          {{ commentaire.contenu }}
+
+        </a>
+
+        par {{ commentaire.user.username }},
+
+        le {{ commentaire.datePublication|date('d/m/Y') }}
+
+      </li>      
+
+
+    {% else %}
+
+      <li>Pas (encore !) d'annonces</li>
+
+    {% endfor %}
+
+  </ul>
+
+
+{% endblock %}
+
+
+

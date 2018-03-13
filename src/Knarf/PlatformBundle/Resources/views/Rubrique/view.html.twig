@@ -1,0 +1,29 @@
+{# src/Knarf/PlatformBundle/Resources/view/Rubrique/view.html.twig #}
+
+{% extends "KnarfPlatformBundle::layout.html.twig" %}
+
+{% block title %}
+  Lecture d'une rubrique - {{ parent() }}
+{% endblock %}
+
+{% block knarfplatform_body %}
+
+  <h2>{{ rubrique.intitule }}</h2>
+
+  <ul class="well">
+      {% for entity in rubrique.adverts %}
+        <li class="article-rubrique">
+            <a href="{{ path('knarf_platform_view', { 'id': entity.id }) }}">{{ entity.title }}</a>
+	</li>
+      {% endfor %}  
+  </ul>
+
+  <p>
+    <a href="{{ path('rubrique_home') }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-chevron-left"></i>
+      Retour à la liste
+    </a>
+
+  </p>
+
+{% endblock %}

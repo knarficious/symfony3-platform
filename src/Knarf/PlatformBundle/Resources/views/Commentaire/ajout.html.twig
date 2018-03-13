@@ -1,0 +1,29 @@
+{# src/Knarf/PlatformBundle/Resources/views/Commentaire/ajout.html.twig #}
+
+{% extends "KnarfPlatformBundle::layout.html.twig" %}
+
+{% block title %}
+  Ajouter un commentaire
+{% endblock %}
+
+{% block knarfplatform_body %}
+
+
+  <h2>Ajouter un commentaire</h2>
+
+
+  
+  {{ include("KnarfPlatformBundle:Commentaire:form.html.twig") }}
+
+
+  <p>
+
+    Attention : ce commentaire sera ajouté directement
+
+    à l'annonce après validation du formulaire.
+
+  </p>
+
+
+
+{% endblock %}

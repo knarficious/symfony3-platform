@@ -1,0 +1,25 @@
+{# src/Knarf/PlatformBundle/Resources/views/Rubrique/ajout.html.twig #}
+
+{% extends "KnarfPlatformBundle::layout.html.twig" %}
+
+{% block title %}
+  Ajouter une rubrique
+{% endblock %}
+
+{% block knarfplatform_body %}
+
+
+  <h2>Ajouter une rubrique</h2>
+
+  {{ include("KnarfPlatformBundle:Rubrique:form.html.twig") }}
+
+  <p>
+
+    Attention : cette rubrique sera ajoutée directement
+
+    en base de données après validation du formulaire.
+
+  </p>
+
+
+{% endblock %}

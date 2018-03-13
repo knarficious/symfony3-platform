@@ -1,0 +1,56 @@
+{# src/Knarf/PlatformBundle/Resources/views/Advert/index.html.twig #}
+
+
+{% extends "KnarfPlatformBundle::layout.html.twig" %}
+
+
+{% block title %}
+
+  Accueil - {{ parent() }}
+
+{% endblock %}
+
+
+{% block knarfplatform_body %}
+
+
+  <h2>Liste des annonces</h2>
+
+
+  <ul>
+
+    {% for advert in listAdverts %}
+        
+        {% if advert.published == 1 %}
+
+      <li>
+
+        <a href="{{ path('knarf_platform_view', {'id': advert.id}) }}">
+
+          {{ advert.title }}
+
+        </a>
+
+        par {{ advert.user.username }},
+
+        le {{ advert.date|date('d/m/Y') }}
+        
+        dans la rubrique <a href="{{ path('rubrique_view', {'id': advert.rubrique.id}) }}">{{ advert.rubrique.intitule }}</a>
+
+      </li>
+      
+        {% endif %}
+
+    {% else %}
+
+      <li>Pas (encore !) d'annonces</li>
+
+    {% endfor %}
+
+  </ul>
+
+
+{% endblock %}
+
+
+

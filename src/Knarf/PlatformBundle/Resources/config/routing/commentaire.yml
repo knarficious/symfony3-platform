@@ -1,0 +1,33 @@
+## YAML Template.
+---
+knarf_commentaire_home:
+    path:     /
+    defaults: 
+        _controller: KnarfPlatformBundle:Commentaire:index
+  
+knarf_commentaire_add:
+    path:   /ajout
+    defaults:
+        _controller: KnarfPlatformBundle:Commentaire:add
+        
+knarf_commentaire_edit:
+    path:   /edit/{id}
+    defaults:
+        _controller: KnarfPlatformBundle:Commentaire:edit
+    requirements:
+        id: \d+
+        
+knarf_commentaire_delete:
+    path: /delete/{id}
+    defaults:
+        _controller: KnarfPlatformBundle:Commentaire:delete
+    requirements:
+        id: \d+
+        
+knarf_commentaire_view:
+    path:      /{id}
+    defaults:
+        _controller: KnarfPlatformBundle:Commentaire:view
+    requirements:
+        id: \d+
+

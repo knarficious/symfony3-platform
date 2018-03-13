@@ -1,0 +1,33 @@
+## YAML Template.
+---
+rubrique_home:
+    path:     /
+    defaults: 
+        _controller: KnarfPlatformBundle:Rubrique:index
+  
+rubrique_ajout:
+    path:   /ajout
+    defaults:
+        _controller: KnarfPlatformBundle:Rubrique:add
+        
+rubrique_edit:
+    path:   /edit/{id}
+    defaults:
+        _controller: KnarfPlatformBundle:Rubrique:edit
+    requirements:
+        id: \d+
+        
+rubrique_delete:
+    path: /delete/{id}
+    defaults:
+        _controller: KnarfPlatformBundle:Rubrique:delete
+    requirements:
+        id: \d+
+        
+rubrique_view:
+    path:      /{id}
+    defaults:
+        _controller: KnarfPlatformBundle:Rubrique:view
+    requirements:
+        id: \d+
+

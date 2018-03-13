@@ -1,0 +1,36 @@
+{# src/Knarf/PlatformBundle/Resources/view/Advert/view.html.twig #}
+
+{% extends "KnarfPlatformBundle::layout.html.twig" %}
+
+{% block title %}
+  Lecture d'un commentaire - {{ parent() }}
+{% endblock %}
+
+{% block knarfplatform_body %}
+
+  <i>Par {{ commentaire.user.username }}, le {{ commentaire.datePublication|date('d/m/Y') }}</i>
+
+  <div class="well">
+    {{ commentaire.contenu }}
+  </div>
+
+  <p>
+    <a href="{{ path('knarf_commentaire_home') }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-chevron-left"></i>
+      Retour à la liste
+    </a>
+    {% if commentaire.user == app.user %}
+        
+    <a href="{{ path('knarf_commentaire_edit', {'id': commentaire.id}) }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-edit"></i>
+      Modifier le commentaire
+    </a>
+    <a href="{{ path('knarf_commentaire_delete', {'id': commentaire.id}) }}" class="btn btn-danger">
+      <i class="glyphicon glyphicon-trash"></i>
+      Supprimer le commentaire
+      
+    {% endif %}  
+    </a>
+  </p>
+
+{% endblock %}

@@ -1,0 +1,8 @@
+#commentaire:after {
+    content: "";
+    display: block;
+    height: 1px;
+    width: 40%;
+    margin: 10px;
+    background: #f00;
+}

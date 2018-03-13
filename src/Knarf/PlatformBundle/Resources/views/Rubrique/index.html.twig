@@ -1,0 +1,44 @@
+{# src/Knarf/PlatformBundle/Resources/views/Rubrique/index.html.twig #}
+
+
+{% extends "KnarfPlatformBundle::layout.html.twig" %}
+
+
+{% block title %}
+
+  Accueil - {{ parent() }}
+
+{% endblock %}
+
+
+{% block knarfplatform_body %}
+
+
+  <h2>Liste des rubriques</h2>
+
+
+  <ul>
+
+    {% for rubrique in listRubriques %}        
+
+      <li>
+
+        <a href="{{ path('rubrique_view', {'id': rubrique.id}) }}">
+
+          {{ rubrique.intitule }}
+
+        </a>
+
+
+      </li>
+
+
+    {% endfor %}
+
+  </ul>
+
+
+{% endblock %}
+
+
+

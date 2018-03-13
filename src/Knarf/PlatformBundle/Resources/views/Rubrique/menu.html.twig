@@ -1,0 +1,25 @@
+{# src/Knarf/PlatformBundle/Resources/views/Rubrique/menu.html.twig #}
+
+
+{# Ce template n'hérite de personne,
+
+   tout comme le template inclus avec {{ include() }}. #}
+
+
+<ul class="nav nav-pills nav-stacked">
+
+  {% for rubrique in listRubriques %}      
+
+    <li>
+
+      <a href="{{ path('rubrique_view', {'id': rubrique.id}) }}">
+
+        {{ rubrique.intitule }}
+
+      </a>
+
+    </li>
+
+  {% endfor %}
+
+</ul>

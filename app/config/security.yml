@@ -1,0 +1,55 @@
+# To get started with security, check out the documentation:
+# https://symfony.com/doc/current/security.html
+security:
+
+    # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
+    encoders:
+        Symfony\Component\Security\Core\User\User: bcrypt
+        Knarf\UserBundle\Entity\User: bcrypt
+
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_USER
+        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+        
+    providers:
+        main:
+            entity:
+                class:      KnarfUserBundle:User
+                property:   username    
+       
+
+    firewalls:
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        main_login:
+            pattern: ^/login$
+            anonymous: true
+            logout_on_user_change: true            
+            
+        main:
+            pattern: ^/
+            anonymous: true
+            # activate different ways to authenticate
+
+            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
+            #http_basic: ~
+
+            # https://symfony.com/doc/current/security/form_login_setup.html
+            provider: main
+            form_login:
+              login_path: login
+              check_path: login_check
+              default_target_path: knarf_platform_home
+            logout:
+              path: logout
+              target: login
+            logout_on_user_change: true  
+            
+
+
+    access_control:
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/profile, roles: ROLE_USER }
