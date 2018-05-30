@@ -1,0 +1,109 @@
+{# src/Knarf/PlatformBundle/Resources/view/Advert/view.html.twig #}
+
+{% extends "KnarfPlatformBundle::layout.html.twig" %}
+
+{% block title %}
+  Lecture d'une annonce - {{ parent() }}
+{% endblock %}
+
+{% block knarfplatform_body %}
+
+    <h2>{{ advert.title }}</h2>
+    <i>Par {{ advert.user.username }}, le {{ advert.date|date('d/m/Y') }}</i>
+
+    {% if  advert.nomMedia is not empty %}
+    <div class="well">
+        
+        {% if advert.nomMedia ends with 'jpg' or 'JPG' or 'gif' or 'GIF' or 'png' or 'PNG'  %}
+                                           
+            <img src="{{vich_uploader_asset(advert, 'mediaFile') | imagine_filter('my_thumb_resize') }}" alt="{{ advert.nomMedia }}"  />
+        
+        {% elseif advert.nomMedia ends with 'mp3' %}
+						
+            <audio controls>
+            <source src="{{ asset('uploads/') }}{{ advert.nomMedia }}" type="audio/mpeg">
+            </audio>
+                                                                                           
+						
+		{% elseif advert.nomMedia ends with 'mp4' %}
+            
+            <video width="420" height="340" controls>
+            <source src="{{ asset('uploads/') }}{{ advert.nomMedia }}" type="video/mp4">
+            </video>
+					
+        {% elseif advert.nomMedia ends with 'avi' or 'AVI' %}
+            
+            <video width="320" height="240" controls>
+            <source src="{{ asset('uploads/') }}{{ advert.nomMedia }}" type="video/avi">
+            </video>               
+        
+                                            
+        {% endif %}
+        
+    </div>
+    {% endif %}
+  
+    <div class="well">
+    {{ advert.content }}
+    </div>
+  
+    <div class="well" onClick="document.getElementById('bloc-commentaires').style.display='block'">
+        <h4>Commentaires</h4>
+        <hr>
+        {% if advert.commentaires %}
+            <ul class="nav nav-pills nav-stacked" id="bloc-commentaires" style="display:none">
+            {% for advert in advert.commentaires %}
+                {{ advert.contenu }}
+                <li id="commentaire">
+                    <i>par <b>{{ advert.user.username }}</b> le {{ advert.datePublication|date('d/m/Y') }}
+                    </i>
+                </li>
+                              
+            {% endfor %}
+            </ul>
+            
+      {% endif %}    
+    </div>
+
+    {% if app.user %}
+    <div class="well">
+    
+    <div id="bouton-commentaire" onClick="document.getElementById('bouton-commentaire').style.display='none'">
+        <div class="btn btn-default"  onclick="document.getElementById('formulaire-commentaire').style.display='block'" >
+            <i class="glyphicon glyphicon-exclamation-sign"></i>
+            Laisser un commentaire
+        </div>
+    </div>
+    
+    
+    <div id="formulaire-commentaire" style="display:none">
+        {{ include("KnarfPlatformBundle:Commentaire:form.html.twig") }}
+    </div> 
+    
+    </div>
+    {% endif %}
+
+    <a href="{{ path('knarf_platform_home') }}" class="btn btn-default">
+        <i class="glyphicon glyphicon-chevron-left"></i>
+            Retour à la liste
+    </a>    
+    
+    {% if advert.user == app.user %}
+        
+    <a href="{{ path('knarf_platform_edit', {'id': advert.id}) }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-edit"></i>
+      Modifier l'annonce
+    </a>
+    <a href="{{ path('knarf_platform_delete', {'id': advert.id}) }}" class="btn btn-danger">
+      <i class="glyphicon glyphicon-trash"></i>
+      Supprimer l'annonce
+    </a>
+      
+    {% endif %} 
+
+{% endblock %}
+
+{% block javascripts %}
+    
+
+{% endblock %}    
