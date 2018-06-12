@@ -4,7 +4,11 @@
 {# Ce template n'hérite de personne,
 
    tout comme le template inclus avec {{ include() }}. #}
-
+{% if listAdverts %}
+    
+    <h4>Dernières annonces</h4>
+    
+    
 
 <ul class="nav nav-pills nav-stacked">
 
@@ -27,3 +31,4 @@
   {% endfor %}
 
 </ul>
+  {% endif %}

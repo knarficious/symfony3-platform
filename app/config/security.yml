@@ -15,19 +15,14 @@ security:
         main:
             entity:
                 class:      KnarfUserBundle:User
-                property:   username    
        
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
+            security: false     
 
-        main_login:
-            pattern: ^/login$
-            anonymous: true
-            logout_on_user_change: true            
             
         main:
             pattern: ^/
@@ -42,14 +37,25 @@ security:
             form_login:
               login_path: login
               check_path: login_check
-              default_target_path: knarf_platform_home
+              default_target_path: profile
+              csrf_token_generator: security.csrf.token_manager
+            logout_on_user_change: true
+            remember_me:
+                secret: '%secret%'
+                lifetime: 604800
+                path: /
+                #always_remember_me: true
             logout:
-              path: logout
-              target: login
-            logout_on_user_change: true  
-            
+                path: /logout
+                target: /
+                invalidate_session: false
+                handlers: [logout_listener]
 
 
     access_control:
         - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/rubrique/delete, roles: ROLE_ADMIN }
+        - { path: ^/rubrique/edit, roles: ROLE_ADMIN }
+        - { path: ^/rubrique/ajout, roles: ROLE_ADMIN }
+        - { path: ^/login | register, roles: IS_AUTHENTICATED_ANONYMOUSLY }

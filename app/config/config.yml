@@ -89,7 +89,6 @@ vich_uploader:
        upload_media:
         uri_prefix: /uploads
         upload_destination: '%kernel.root_dir%/../web/uploads/'
-        namer: vich_uploader.namer_uniqid           
         inject_on_load: true
         delete_on_update: true
         delete_on_remove: true
@@ -112,6 +111,7 @@ liip_imagine:
                 thumbnail: { size: [120, 120], mode: outbound }
                 relative_resize: { heighten: 78 }
 
+# Assetic Configuration
 assetic:
     debug:          '%kernel.debug%'
     use_controller: '%kernel.debug%'

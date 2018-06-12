@@ -1,6 +1,8 @@
 {# src/Knarf/PlatformBundle/Resources/views/Commentaire/form.html.twig #}
 
-<h3>Ajouter un commentaire</h3>
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+
+<h3>Ajouter un commentaire </h3>
 
 <div class="well">
   {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}

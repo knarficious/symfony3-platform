@@ -66,6 +66,13 @@ class User implements UserInterface, \Serializable
     private $updatedAt;
     
     /**
+     * @var \DateTime
+     * 
+     * @ORM\Column(name="lastTimeConnect", type="datetime")
+     */
+    private $lastTimeConnect;
+    
+    /**
      * 
      * @ORM\Column(name="adresseIp", type="string")
      */
@@ -91,6 +98,11 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(name="isActive", type="integer")
      */
     private $isActive;
+    
+    /**
+     * @ORM\Column(name="apiKey", type="string", unique=true)
+     */
+    private $apiKey;
     
     /**
      * 
@@ -135,7 +147,7 @@ class User implements UserInterface, \Serializable
         
         $this->isActive = true;
         $this->salt = md5(uniqid(null, true));
-        $this->roles = array('ROLE_USER');
+        //$this->roles = array('ROLE_USER');
         $this->createdAt = new \DateTime;
         $this->updatedAt= new \DateTime;
         $this->adverts = new ArrayCollection();
@@ -535,5 +547,53 @@ class User implements UserInterface, \Serializable
     public function getCommentaires()
     {
         return $this->commentaires;
+    }
+
+    /**
+     * Set lastTimeConnect
+     *
+     * @param \DateTime $lastTimeConnect
+     *
+     * @return User
+     */
+    public function setLastTimeConnect($lastTimeConnect)
+    {
+        $this->lastTimeConnect = $lastTimeConnect;
+
+        return $this;
+    }
+
+    /**
+     * Get lastTimeConnect
+     *
+     * @return \DateTime
+     */
+    public function getLastTimeConnect()
+    {
+        return $this->lastTimeConnect;
+    }
+
+    /**
+     * Set apiKey
+     *
+     * @param string $apiKey
+     *
+     * @return User
+     */
+    public function setApiKey($apiKey)
+    {
+        $this->apiKey = $apiKey;
+
+        return $this;
+    }
+
+    /**
+     * Get apiKey
+     *
+     * @return string
+     */
+    public function getApiKey()
+    {
+        return $this->apiKey;
     }
 }

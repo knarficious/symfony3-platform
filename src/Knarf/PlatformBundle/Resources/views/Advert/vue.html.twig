@@ -1,4 +1,4 @@
-{# src/Knarf/PlatformBundle/Resources/view/Advert/view.html.twig #}
+{# src/Knarf/PlatformBundle/Resources/view/Advert/vue.html.twig #}
 
 {% extends "KnarfPlatformBundle::layout.html.twig" %}
 
@@ -8,81 +8,70 @@
 
 {% block knarfplatform_body %}
 
-    <h2>{{ advert.title }}</h2>
-    <i>Par {{ advert.user.username }}, le {{ advert.date|date('d/m/Y') }}</i>
-
-    {% if  advert.nomMedia is not empty %}
-    <div class="well">
-        
-        {% if advert.nomMedia ends with 'jpg' or 'JPG' or 'gif' or 'GIF' or 'png' or 'PNG'  %}
-                                           
-            <img src="{{vich_uploader_asset(advert, 'mediaFile') | imagine_filter('my_thumb_resize') }}" alt="{{ advert.nomMedia }}"  />
-        
-        {% elseif advert.nomMedia ends with 'mp3' %}
-						
+    <article class="well">   
+    
+    {% if advert.nomMedia is defined %} 
+        {% if advert.nomMedia ends with 'jpg' or advert.nomMedia ends with 'png' or advert.nomMedia ends with 'gif' %}                                           
+            <img class="img-responsive" src="{{vich_uploader_asset(advert, 'mediaFile') }}" alt="{{ advert.nomMedia }}"/>
+        {% elseif advert.nomMedia ends with 'mp3' %}						
             <audio controls>
             <source src="{{ asset('uploads/') }}{{ advert.nomMedia }}" type="audio/mpeg">
-            </audio>
-                                                                                           
-						
-		{% elseif advert.nomMedia ends with 'mp4' %}
-            
-            <video width="420" height="340" controls>
+            </audio>       
+        {% elseif advert.nomMedia ends with 'mp4' %}
+        <div class="embed-responsive embed-responsive-16by9" >    
+            <video controls>
             <source src="{{ asset('uploads/') }}{{ advert.nomMedia }}" type="video/mp4">
-            </video>
-					
-        {% elseif advert.nomMedia ends with 'avi' or 'AVI' %}
-            
-            <video width="320" height="240" controls>
-            <source src="{{ asset('uploads/') }}{{ advert.nomMedia }}" type="video/avi">
-            </video>               
-        
-                                            
-        {% endif %}
-        
-    </div>
+            </video>          
+	</div>
+        {% else %}                                    
+        {% endif %}    
     {% endif %}
-  
-    <div class="well">
+    
+    <h2>{{ advert.title }}</h2>
+    <i>Par {{ advert.user.username }}, le {{ advert.date|date('d/m/Y') }} à {{ advert.date|date('h:i') }}</i>
+    <div class="row">
     {{ advert.content }}
     </div>
-  
-    <div class="well" onClick="document.getElementById('bloc-commentaires').style.display='block'">
-        <h4>Commentaires</h4>
+    </article>
+    
+    {# bloc des commentaires #}
+    
+    <div class="container-fluid">
+        <h4>Commentaires</h4>        
         <hr>
-        {% if advert.commentaires %}
-            <ul class="nav nav-pills nav-stacked" id="bloc-commentaires" style="display:none">
-            {% for advert in advert.commentaires %}
-                {{ advert.contenu }}
-                <li id="commentaire">
-                    <i>par <b>{{ advert.user.username }}</b> le {{ advert.datePublication|date('d/m/Y') }}
-                    </i>
-                </li>
-                              
-            {% endfor %}
-            </ul>
+        <div class="container" >
+        {% if advert.commentaires is not empty %}
             
-      {% endif %}    
+            {% for commentaire in advert.commentaires %}
+                <div class="media">
+                    <a href="{{ path('knarf_commentaire_view', {'id': commentaire.id}) }}">
+                    <div class="media-left">
+                        {% if commentaire.user.nomMedia is not empty %}
+                        <img class="media-object" src="{{vich_uploader_asset(commentaire.user, 'mediaFile')| imagine_filter('my_thumb_resize') }}" />
+                        {% else %}
+                        {% image '@KnarfUserBundle/Resources/public/images/if_icon-person_211874.png' %}
+                        <img src="{{ asset_url }}" alt="" />
+                        {% endimage %}
+                        {% endif %}
+                    </div>
+                    <div class="media-body">                        
+                        <h4 class="media-heading">
+                            <small><i>par <b>{{ commentaire.user.username }}</b> le {{ commentaire.datePublication|date('d/m/Y') }}</i>
+                            </small>
+                        </h4>
+                        <p>
+                        {{ commentaire.contenu }}
+                        </p>                    
+                    </div>             
+            {% endfor %}   
+                    </a>
+                </div>
+        {% else %}
+            Aucun commentaire
+        {% endif %}    
+          
     </div>
-
-    {% if app.user %}
-    <div class="well">
     
-    <div id="bouton-commentaire" onClick="document.getElementById('bouton-commentaire').style.display='none'">
-        <div class="btn btn-default"  onclick="document.getElementById('formulaire-commentaire').style.display='block'" >
-            <i class="glyphicon glyphicon-exclamation-sign"></i>
-            Laisser un commentaire
-        </div>
-    </div>
-    
-    
-    <div id="formulaire-commentaire" style="display:none">
-        {{ include("KnarfPlatformBundle:Commentaire:form.html.twig") }}
-    </div> 
-    
-    </div>
-    {% endif %}
-
     <a href="{{ path('knarf_platform_home') }}" class="btn btn-default">
         <i class="glyphicon glyphicon-chevron-left"></i>
             Retour à la liste
@@ -100,10 +89,5 @@
     </a>
       
     {% endif %} 
-
-{% endblock %}
-
-{% block javascripts %}
     
-
-{% endblock %}    
+{% endblock %}

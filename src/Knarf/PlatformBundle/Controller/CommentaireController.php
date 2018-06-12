@@ -33,7 +33,7 @@ class CommentaireController extends Controller
 
     }
     
-    public function viewAction($id)
+    public function viewAction($id, Request $request)
     {
        $repository = $this
         ->getDoctrine()
@@ -41,10 +41,31 @@ class CommentaireController extends Controller
         ->getRepository('KnarfPlatformBundle:Commentaire');
 
         $commentaire = $repository->find($id);
+        
+                            if(null === $commentaire)
+            {
+                throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas!");
+            }
+        
+        
+        $comment = new Commentaire();
+        $user = $this->getUser();
+        $comment->setUser($user);
+        $comment->setCommentaire($commentaire);
+        
+        $form = $this->createForm(CommentaireType::class, $comment);
+      
+      if($request->isMethod('POST') && $form->handleRequest($request)->isValid())
+      {
+            $em = $this->getDoctrine()->getManager();
+            //$em->persist($advert);
+            $em->persist($comment);
+            $em->flush();
+      }
 
-        return $this->render('KnarfPlatformBundle:Commentaire:view.html.twig', array(
+        return $this->render('KnarfPlatformBundle:Commentaire:vue.html.twig', array(
 
-        'commentaire' => $commentaire
+        'commentaire' => $commentaire, 'active' => 'commentaire', 'form' => $form->createView()
 
         ));
 	
@@ -57,7 +78,7 @@ class CommentaireController extends Controller
         $commentaire = new Commentaire();
         
         $user = $this->getUser();
-        $commentaire->setUser($user);
+        $commentaire->setUser($user);        
         
         $commentaire->setDate(new \DateTime());
         $form = $this->createForm(CommentaireType::class, $commentaire);
@@ -67,6 +88,7 @@ class CommentaireController extends Controller
             var_dump($commentaire->getDate());
             var_dump($commentaire->getUser()->getUsername());
             var_dump($commentaire->getAdvert()->getTitle());
+            var_dump($commentaire->getCommentaire()->getContenu());
             
             $em = $this->getDoctrine()->getManager();
             $em->persist($commentaire);
@@ -76,7 +98,7 @@ class CommentaireController extends Controller
 
             // Puis on redirige vers la page de visualisation de cettte annonce
 
-            return $this->redirect($this->generateUrl('knarf_commentaire_view', array('id' => $commentaire->getId())));
+            return $this->redirect($this->generateUrl('commentaire_view', array('id' => $commentaire->getId())));
            
         }
 
@@ -108,7 +130,7 @@ class CommentaireController extends Controller
         
                 $request->getSession()->getFlashBag()->add('notice', 'Commentaire modifié avec succès.');
         
-            return $this->redirectToRoute('knarf_commentaire_view', array('id' => $commentaire->getId()));
+            return $this->redirectToRoute('commentaire_view', array('id' => $commentaire->getId()));
             }
 
 
@@ -118,7 +140,7 @@ class CommentaireController extends Controller
         
         else
         {            
-            return $this->redirectToRoute('knarf_platform_view', array('id' => $commentaire->getId()));
+            return $this->redirectToRoute('commentaire_view', array('id' => $commentaire->getId()));
         }    
 
 
@@ -131,7 +153,7 @@ class CommentaireController extends Controller
 
     $em = $this->getDoctrine()->getManager();
     
-    $commentaire = $em->getRepository('KnarfPlatformBundle:COmmentaire')->find($id);
+    $commentaire = $em->getRepository('KnarfPlatformBundle:Commentaire')->find($id);
     
     if($this->getUser() === $commentaire->getUser())
     {
@@ -160,7 +182,7 @@ class CommentaireController extends Controller
      
     else
         {            
-            return $this->redirectToRoute('knarf_commentaire_view', array('id' => $commentaire->getId()));
+            return $this->redirectToRoute('commentaire_view', array('id' => $commentaire->getId()));
         }
     
 

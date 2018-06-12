@@ -55,9 +55,21 @@ class Commentaire
      */
     private $user;
     
+    /**
+     * @ORM\ManyToOne(targetEntity="Commentaire", inversedBy="commentaires")
+     * @ORM\JoinColumn(name="commentaire_id", referencedColumnName="id")
+     */
+    private $commentaire;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Commentaire", mappedBy="commentaire", cascade={"persist", "remove"})
+     */
+    private $commentaires;
+    
     public function __construct() {
         $this->datePublication = new \DateTime();
         $this->dateMiseAJour = new \DateTime();
+        $this->commentaires = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
 
@@ -189,5 +201,63 @@ class Commentaire
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set commentaire
+     *
+     * @param \Knarf\PlatformBundle\Entity\Commentaire $commentaire
+     *
+     * @return Commentaire
+     */
+    public function setCommentaire(\Knarf\PlatformBundle\Entity\Commentaire $commentaire = null)
+    {
+        $this->commentaire = $commentaire;
+
+        return $this;
+    }
+
+    /**
+     * Get commentaire
+     *
+     * @return \Knarf\PlatformBundle\Entity\Commentaire
+     */
+    public function getCommentaire()
+    {
+        return $this->commentaire;
+    }
+    
+    /**
+     * Add commentaire
+     *
+     * @param \Knarf\PlatformBundle\Entity\Commentaire $commentaire
+     *
+     * @return Commentaire
+     */
+    public function addCommentaire(\Knarf\PlatformBundle\Entity\Commentaire $commentaire)
+    {
+        $this->commentaires[] = $commentaire;
+
+        return $this;
+    }
+
+    /**
+     * Remove commentaire
+     *
+     * @param \Knarf\PlatformBundle\Entity\Commentaire $commentaire
+     */
+    public function removeCommentaire(\Knarf\PlatformBundle\Entity\Commentaire $commentaire)
+    {
+        $this->commentaires->removeElement($commentaire);
+    }
+
+    /**
+     * Get commentaires
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCommentaires()
+    {
+        return $this->commentaires;
     }
 }

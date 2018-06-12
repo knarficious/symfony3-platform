@@ -1,0 +1,28 @@
+
+{# app/Resources/TwigBundle/views/Exception/error404.html.twig #}
+{% extends 'layout.html.twig' %}
+
+{% block body %}
+    <h1>Page not found</h1>
+
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        {# ... #}
+    {% endif %}
+
+    <p>
+        The requested page couldn't be located. Checkout for any URL
+        misspelling or <a href="{{ path('knarf_platform_home') }}">return to the homepage</a>.
+    </p>
+    
+     <h1>Oops! Une erreur est survenue</h1>
+        <h2>Le serveur à retourné une erreur "{{ status_code }} {{ status_text }}".</h2>
+ 
+        <div>
+            <p>Si vous avez le courage de nous écrire pour nous expliquer à quel moment vous avez rencontré cette erreur nous vous en serons reconnaissant de nous adresser un mail à
+            inscriptions@zzzzz.fr</p>
+            <p>Veuillez nous excuser pour la gêne occasionnée</p>
+        </div>
+{% endblock %}
+
+
+

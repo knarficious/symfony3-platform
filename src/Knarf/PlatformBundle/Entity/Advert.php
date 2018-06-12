@@ -380,4 +380,10 @@ class Advert
     {
         return $this->updateAt;
     }
+    /**
+     * @var \DateTime
+     */
+    private $updateat;
+
+
 }

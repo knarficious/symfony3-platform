@@ -1,29 +1,41 @@
-{# src/Knarf/PlatformBundle/Resources/views/Advert/menu.html.twig #}
+{# src/Knarf/UserBundle/Resources/views/Security/menu.html.twig #}
 
 
 {# Ce template n'hérite de personne,
 
    tout comme le template inclus avec {{ include() }}. #}
+<h3>Membres </h3>
+<div class="container">
 
 
-<ul class="nav nav-pills nav-stacked">
-
-  {% for advert in listAdverts %}
+  {% for user in listUsers %}
       
-      {% if advert.published == 1 %}
+      {% if user.isActive == 1 %}
 
-    <li>
-
-      <a href="{{ path('knarf_platform_view', {'id': advert.id}) }}">
-
-        {{ advert.title }}
-
-      </a>
-
-    </li>
-    
+         <div class="media">
+        <div class="media-left">  
+        {% if user.nomMedia is not empty %}
+        <img class="media-object" src="{{vich_uploader_asset(user, 'mediaFile') | imagine_filter('my_thumb') }}" alt=""  />
+        {% else %}
+        {% image '@KnarfUserBundle/Resources/public/images/if_icon-person_211874.png' %}
+        <img class="media-object" src="{{ asset_url }}" alt="" />
+        {% endimage %}
+        {% endif %}
+        </div>
+        <div class="media-body">
+            <h4 class="media-heading">
+                {% if user is sameas( app.user) %}
+                    <a href="{{ path('profile') }}">{{ user.username }}</a>
+                {% else %}    
+                <a href="{{ path('profile_view', {'id': user.id}) }}">{{ user.username }}</a>
+                {% endif %}
+            </h4>
+        </div>
+        
+        </div>
         {% endif %}
 
   {% endfor %}
 
-</ul>
+
+</div>

@@ -2,6 +2,9 @@
 
 namespace Knarf\PlatformBundle\Repository;
 
+
+use Doctrine\ORM\QueryBuilder;
+
 /**
  * AdvertRepository
  *
@@ -10,4 +13,12 @@ namespace Knarf\PlatformBundle\Repository;
  */
 class AdvertRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function afficherDerniersArticles()
+    {
+        $qb = $this->createQueryBuilder('a')
+               // ->where('a.published = ?1')
+                ->addOrderBy('a.date', 'DESC');
+        
+        return $qb->getQuery()->getResult();
+    }
 }

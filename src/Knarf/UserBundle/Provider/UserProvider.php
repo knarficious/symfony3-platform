@@ -6,7 +6,6 @@ namespace Knarf\ApiBundle\Provider;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
-use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\NoResultException;
@@ -36,7 +35,7 @@ class UserProvider implements UserProviderInterface
 				catch (NoResultException $e)
 				{
 					$message = sprintf(	
-						  'Unable to find an active admin KnarfUserBundle:User object identified by "%s".',
+						  'Unable to find an active KnarfUserBundle:User object identified by "%s".',
                   $username);
                   throw new UserNameNotFoundException($message, 0, $e);
                 }

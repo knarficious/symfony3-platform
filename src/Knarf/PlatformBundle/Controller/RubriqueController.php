@@ -54,6 +54,8 @@ class RubriqueController extends Controller{
     public function editAction($id, Request $request)
     {
 
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
+        
         $em = $this->getDoctrine()->getManager();
     
         $rubrique = $em->getRepository('KnarfPlatformBundle:Rubrique')->find($id);
@@ -118,7 +120,7 @@ class RubriqueController extends Controller{
     public function menuAction()
     {
 
-        $repository = $this->getDoctrine()->getManager()->getRepository('KnarfPlatformBundle:Advert');
+        $repository = $this->getDoctrine()->getManager()->getRepository('KnarfPlatformBundle:Rubrique');
         $listRubriques = $repository->findAll();
 
 

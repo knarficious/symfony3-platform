@@ -1,4 +1,4 @@
-{# src/Knarf/PlatformBundle/Resources/views/Advert/menu.html.twig #}
+{# src/Knarf/PlatformBundle/Resources/views/Commentaire/menu.html.twig #}
 
 
 {# Ce template n'hérite de personne,
@@ -8,21 +8,19 @@
 
 <ul class="nav nav-pills nav-stacked">
 
-  {% for advert in listAdverts %}
+  {% for commentaire in listCommentaires %}     
       
-      {% if advert.published == 1 %}
 
     <li>
 
-      <a href="{{ path('knarf_platform_view', {'id': advert.id}) }}">
+      <a href="{{ path('knarf_commentaire_view', {'id': commentaire.id}) }}">
 
-        {{ advert.title }}
+        {{ commentaire.contenu }}
 
       </a>
 
-    </li>
-    
-        {% endif %}
+    </li>    
+       
 
   {% endfor %}
 

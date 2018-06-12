@@ -6,3 +6,13 @@
     margin: 10px;
     background: #f00;
 }
+
+#msg {
+  background: rgb(113,223,113);
+  color: rgb(38,88,38);
+  padding: 0.813em 0;
+  margin: auto;
+  border-radius : 3px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.9); 
+}
+

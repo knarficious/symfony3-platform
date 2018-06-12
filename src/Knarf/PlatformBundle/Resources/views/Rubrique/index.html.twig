@@ -36,6 +36,14 @@
     {% endfor %}
 
   </ul>
+    
+    {% if is_granted('ROLE_ADMIN') %}
+        
+        <a class="btn btn-primary btn-lg" href="{{ path('rubrique_ajout') }}">
+          Ajouter une rubrique »
+        </a>
+
+    {% endif %}
 
 
 {% endblock %}

@@ -25,7 +25,7 @@ class AdvertController extends Controller
 
     {
         $repository = $this->getDoctrine()->getManager()->getRepository('KnarfPlatformBundle:Advert');
-        $listAdverts = $repository->findAll();
+        $listAdverts = $repository->afficherDerniersArticles();
         
         return $this->render('KnarfPlatformBundle:Advert:index.html.twig', array(
         'listAdverts' => $listAdverts
@@ -33,19 +33,27 @@ class AdvertController extends Controller
 
     }
     
-    public function viewAction(Advert $advert, $id, Request $request)
+    public function viewAction($id, Request $request)
     {
-       $repository = $this
+       
+        $repository1 = $this
         ->getDoctrine()
         ->getManager()
         ->getRepository('KnarfPlatformBundle:Advert');
 
-        $advert = $repository->find($id);
+        $advert = $repository1->find($id);
         
+                    if(null === $advert)
+            {
+                throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas!");
+            }
+        $repository2 = $this->getDoctrine()->getManager()->getRepository('KnarfPlatformBundle:Commentaire');
+        $comment = $repository2->find($id);
       $commentaire = new Commentaire();
       $user = $this->getUser();
       $commentaire->setUser($user);
       $commentaire->setAdvert($advert);
+      $commentaire->setCommentaire($comment);
       
       $form = $this->createForm(CommentaireType::class, $commentaire);
       
@@ -59,7 +67,7 @@ class AdvertController extends Controller
 
         return $this->render('KnarfPlatformBundle:Advert:view.html.twig', array(
 
-        'advert' => $advert, 'active' => 'advert', 'form' => $form->createView()
+        'advert' => $advert, 'active' => 'advert', 'comment' => $comment, 'active' => 'comment', 'form' => $form->createView()
 
         ));
 	
@@ -89,7 +97,7 @@ class AdvertController extends Controller
             $em->persist($advert);
             $em->flush();
 
-            $request->getSession()->getFlashBag()->add('notice', 'Annonce bien enregistrée.');
+            $this->addFlash('notice', 'Annonce bien enregistrée.');
 
             // Puis on redirige vers la page de visualisation de cettte annonce
 
@@ -123,7 +131,7 @@ class AdvertController extends Controller
             {
                 $em->flush();
         
-                $request->getSession()->getFlashBag()->add('notice', 'Annonce modifiée avec succès.');
+                $this->addFlash('notice', 'Annonce modifiée avec succès.');
         
             return $this->redirectToRoute('knarf_platform_view', array('id' => $advert->getId()));
             }
@@ -164,7 +172,7 @@ class AdvertController extends Controller
             $em->remove($advert);
             $em->flush();
         
-            $request->getSession()->getFlashBag()->add('notice', "L'annonce a été supprimée avec succès");
+            $this->addFlash('notice', "L'annonce a été supprimée avec succès");
         
             return $this->redirect($this->generateUrl('knarf_platform_home'));    
         }
@@ -187,15 +195,12 @@ class AdvertController extends Controller
 
   {
 
-    $repository = $this->getDoctrine()->getManager()->getRepository('KnarfPlatformBundle:Advert');
-    $listAdverts = $repository->findAll();
+    $listAdverts = $this->getDoctrine()
+            ->getRepository(Advert::class)
+            ->afficherDerniersArticles();
 
 
     return $this->render('KnarfPlatformBundle:Advert:menu.html.twig', array(
-
-      // Tout l'intérêt est ici : le contrôleur passe
-
-      // les variables nécessaires au template !
 
       'listAdverts' => $listAdverts
 

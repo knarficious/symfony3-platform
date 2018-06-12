@@ -10,7 +10,7 @@
 
   <h2>Modifier une annonce</h2>
 
-  {{ include("KnarfPlatformBundle:Advert:form.html.twig") }}
+  {{ include("KnarfPlatformBundle:Commentaire:form.html.twig") }}
 
   <p>
     Vous éditez une annonce déjà existante, merci de ne pas changer
@@ -18,9 +18,9 @@
   </p>
 
   <p>
-    <a href="{{ path('knarf_platform_view', {'id': advert.id}) }}" class="btn btn-default">
+    <a href="{{ path('knarf_commentaire_view', {'id': commentaire.id}) }}" class="btn btn-default">
       <i class="glyphicon glyphicon-chevron-left"></i>
-      Retour à l'annonce
+      Retour au commentaire
     </a>
   </p>
 

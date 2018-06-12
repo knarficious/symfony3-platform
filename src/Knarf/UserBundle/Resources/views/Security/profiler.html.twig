@@ -1,15 +1,15 @@
-{# src/Knarf/UserBundle/Resources/views/Security/profil.html.twig #}
+{# src/Knarf/UserBundle/Resources/views/Security/profiler.html.twig #}
 
 {% extends '::layout.html.twig' %}
 
 {% block title %}
-    Profil
+    Profil de {{ user.username }}
 {% endblock %}
 
 {% block body %}
 
 <div class="well">
-    <h3>Bienvenue {{ user.username }}</h3>
+    <h3>{{ user.username }}</h3>
     
     {% if  user.nomMedia is not empty %}
     <div class="badge">
@@ -19,36 +19,27 @@
     <p>
     Membre depuis le: {{ user.createdAt|date('m/d/Y') }}
     </p>
-</div>
-    
+    <p>
+    Dernière connection: {{ user.lastTimeConnect|date('m/d/Y H:i:s')}}
+    </p>
+</div>    
 
 
-
+{% if user.adverts is not empty %}
 <div class="well">
-    Adresse email: {{ user.email }}
-</div>
-
-<div class="well">
-    <h4>Mes commentaires</h4>
+    <h4>Ses articles</h4>
     <ul class="list-unstyled"> 
-        {% for commentaire in user.commentaires %}
+        {% for advert in user.adverts %}
             <li>
-                <a href="{{ path('knarf_commentaire_view', {'id': commentaire.id}) }}">
-                    {{ commentaire.contenu }}
+                <a href="{{ path('knarf_platform_view', {'id': advert.id}) }}">
+                    {{ advert.title }}
                 </a>
-                sur l'annonce: <a href="{{ path('knarf_platform_view', {'id': commentaire.advert.id}) }}">
-                    {{ commentaire.advert.title }}
-                </a>
+                
             </li>
         {% endfor %}
     </ul>    
 </div>
+{% endif %}
 <p>
-<div class="">
-    <a href="{{ path('profile_edit') }}" class="btn btn-default">
-      <i class="glyphicon glyphicon-edit"></i>
-      Modifier le profil
-    </a>
-</div>
 
 {% endblock %}

@@ -15,8 +15,8 @@
   </p>
 
   {# On met l'id de l'annonce dans la route de l'action du formulaire #}
-  <form action="{{ path('knarf_commentaire_delete', {'id': commentaire.id}) }}" method="post">
-    <a href="{{ path('knarf_commentaire_view', {'id': commentaire.id}) }}" class="btn btn-default">
+  <form action="{{ path('commentaire_delete', {'id': commentaire.id}) }}" method="post">
+    <a href="{{ path('commentaire_view', {'id': commentaire.id}) }}" class="btn btn-default">
       <i class="glyphicon glyphicon-chevron-left"></i>
       Retour au commentaire
     </a>

@@ -6,6 +6,8 @@ namespace Knarf\UserBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Http\Logout\LogoutSuccessHandlerInterface;
+use Symfony\Component\Routing\Annotation\Route;
 use Knarf\UserBundle\Entity\User;
 use Knarf\UserBundle\Form\UserType;
 use Knarf\UserBundle\Form\UserEditType;
@@ -13,10 +15,14 @@ use Knarf\UserBundle\Geoloc\AdresseIp;
 
 class SecurityController extends Controller
 {
-  public function loginAction(Request $request)
+  /**
+   * @return type
+   * @Route("/login", name="login")
+   */  
+  public function loginAction()
   {
     // Si le visiteur est déjà identifié, on le redirige vers l'accueil
-    if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+    if ($this->get('security.authorization_checker')->isGranted('ROLE_USER')) {
       return $this->redirectToRoute('profile');
     }
 
@@ -31,15 +37,24 @@ class SecurityController extends Controller
     ));
   }
   
-    public function loginCheckAction(Request $request)
-    {
-        return $this->redirectToRoute('profile');
+    public function loginCheckAction()
+    {       
+       
+    }
+    
+    public function logoutAction()    {
+          
+        
     }
     
   
   public function registerAction (Request $request)
   {
-        $user = new User();
+    if ($this->get('security.authorization_checker')->isGranted('ROLE_USER')) {
+      return $this->redirectToRoute('profile');
+    }  
+      
+      $user = new User();
         
         $form = $this->createForm(UserType::class, $user);
         
@@ -54,6 +69,7 @@ class SecurityController extends Controller
             $adresseIp = new AdresseIp();
             $adresseIp->get_ip_address();
             $user->setAdresseIp($adresseIp);
+            $user->setRoles(array('ROLE_USER'));
            
            // $role = $user->getRoles();
            // $user->setRoles(array('roles' => $role));
@@ -63,9 +79,9 @@ class SecurityController extends Controller
             $entityManager->persist($user);
             $entityManager->flush();
 
-            $request->getSession()->getFlashBag()->add('notice', 'Votre compte est enregistré. Vous pouvez maintenant vous connecter');
+            $this->addFlash('notice', 'Votre compte est enregistré. Vous pouvez maintenant vous connecter');
 
-            return $this->redirectToRoute('knarf_platform_home');
+            return $this->redirectToRoute('login');
         }
 
         return $this->render(
@@ -82,6 +98,18 @@ class SecurityController extends Controller
 
         
         return $this->render('KnarfUserBundle:Security:profil.html.twig', array( 'user' => $currentUser) );
+    }
+    
+    public function viewMemberAction($id)
+    {   
+        $repository = $this
+        ->getDoctrine()
+        ->getManager()
+        ->getRepository('KnarfUserBundle:User');
+
+        $user = $repository->find($id);
+        
+    return $this->render('KnarfUserBundle:Security:profiler.html.twig', array( 'user' => $user ) );
     }
     
     public function editProfileAction(Request $request)
@@ -108,5 +136,16 @@ class SecurityController extends Controller
         }
         
         return $this->render('KnarfUserBundle:Security:edit_profil.html.twig', array('form' => $form->createView(), 'user' => $currentUser));
+    }
+    
+    public function indexAction()
+    {
+        $repository = $this->getDoctrine()->getManager()->getRepository('KnarfUserBundle:User');
+        $listUsers = $repository->findAll();
+        
+        return $this->render('KnarfUserBundle:Security:menu.html.twig', array(
+        'listUsers' => $listUsers
+        ));        
+        
     }
 }

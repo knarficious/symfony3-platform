@@ -13,41 +13,68 @@
 
 {% block knarfplatform_body %}
 
-
-  <h2>Liste des annonces</h2>
-
-
-  <ul>
+  <div class="row">
 
     {% for advert in listAdverts %}
         
         {% if advert.published == 1 %}
 
-      <li>
+      <div class="col-md-4">
+          
+          <div class="thumbnail">
+          <a href="{{ path('knarf_platform_view', {'id': advert.id}) }}">
+          {% if advert.nomMedia is defined %}
+        
+                
+        {% if advert.nomMedia ends with 'jpg' or advert.nomMedia ends with 'png' or advert.nomMedia ends with 'gif' %}
+                                           
+            <img src="{{vich_uploader_asset(advert, 'mediaFile') }}" alt="{{ advert.nomMedia }}"/>
+        
+        
+        {% elseif advert.nomMedia ends with 'mp3' %}
+						
+            <span class="glyphicon glyphicon-play">
+            </span>
+       
+        {% elseif advert.nomMedia ends with 'mp4' %}
+            <div class="embed-responsive embed-responsive-16by9">
+            <video controls>
+            <source src="{{ asset('uploads/') }}{{ advert.nomMedia }}" type="video/mp4">
+            </video>          
+            </div>
+ 
+        {% else %}                                    
+        {% endif %}
+        
+    
+    {% endif %}
+        
+        <div class="caption">
+        
 
-        <a href="{{ path('knarf_platform_view', {'id': advert.id}) }}">
+            <b> {{ advert.title }}</b>
 
-          {{ advert.title }}
-
-        </a>
+        
 
         par {{ advert.user.username }},
 
         le {{ advert.date|date('d/m/Y') }}
         
-        dans la rubrique <a href="{{ path('rubrique_view', {'id': advert.rubrique.id}) }}">{{ advert.rubrique.intitule }}</a>
-
-      </li>
+        dans la rubrique {{ advert.rubrique.intitule }}
+        </div>
+        </a>
+      </div>
+      </div> 
       
         {% endif %}
 
     {% else %}
 
-      <li>Pas (encore !) d'annonces</li>
+      Pas (encore !) d'annonces
 
     {% endfor %}
 
-  </ul>
+  </div>
 
 
 {% endblock %}
