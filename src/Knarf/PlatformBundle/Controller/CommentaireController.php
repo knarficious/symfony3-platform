@@ -60,11 +60,7 @@ class CommentaireController extends Controller
       
       if($request->isMethod('POST') && $formulaire->handleRequest($request)->isValid())
       {
-            var_dump($comment->getDatePublication());
-            var_dump($comment->getUser()->getUsername());
-            var_dump($comment->getAdvert()->getTitle());
-            var_dump($comment->getCommentaire()->getContenu());
-            
+
           $em = $this->getDoctrine()->getManager();
             //$em->persist($advert);
             $em->persist($comment);
@@ -255,8 +251,7 @@ class CommentaireController extends Controller
                             if(null === $commentaire)
             {
                 throw new NotFoundHttpException("Le commentaire d'id ".$id." n'existe pas!");
-            }
-        
+            }        
         
         $reponse = new Commentaire();
         $user = $this->getUser();
@@ -269,9 +264,6 @@ class CommentaireController extends Controller
       
       if($request->isMethod('POST') && $formulaire->handleRequest($request)->isValid())
       {
-        var_dump($reponse->getDatePublication());
-        var_dump($reponse->getUser()->getUsername());           
-        var_dump($reponse->getCommentaire()->getContenu());
             
         $em = $this->getDoctrine()->getManager();
         $em->persist($reponse);

@@ -85,13 +85,7 @@ class AdvertController extends Controller
         $form = $this->createForm(AdvertType::class, $advert);
 
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-            
-            var_dump($advert->getDate());
-            var_dump($advert->getUpDateAT());
-            var_dump($advert->getUser()->getUsername());
-            var_dump($advert->getRubrique()->getIntitule());
-            var_dump($advert->getNomMedia());
-            
+                      
             $em = $this->getDoctrine()->getManager();
             $em->persist($advert);
             $em->flush();

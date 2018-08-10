@@ -84,36 +84,8 @@ class SecurityController extends Controller
         $user = $repository->find($id);
         
     return $this->render('KnarfUserBundle:Security:profiler.html.twig', array( 'user' => $user ) );
-    }
+    }   
     
-    public function editProfileAction(Request $request)
-    {
-        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Unable to access this page!');     
-
-        $currentUser = $this->getUser();        
-        if ($currentUser instanceof User)
-        {
-             $form = $this->createForm(EditEmailType::class, $currentUser);
-        
-        $form->handleRequest($request);
-        
-        if ($form->isSubmitted() && $form->isValid())
-        {
-            $currentUser->setUpdatedAt(new \DateTime('now'));
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($currentUser);
-            $entityManager->flush();    
-            
-
-            $request->getSession()->getFlashBag()->add('notice', 'Modifications effectuées avec succès');
-            return $this->redirectToRoute('profile');
-        
-        }
-        }
-       
-        
-        return $this->render('KnarfUserBundle:Security:edit_profile.html.twig', array('form' => $form->createView(), 'user' => $currentUser));
-    }
     
     public function indexAction()
     {
