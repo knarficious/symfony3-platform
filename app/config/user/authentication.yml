@@ -1,0 +1,21 @@
+services:
+    #
+    # AUTHENTICATION handlers
+    #
+    security_authentication_success_handler:
+        class: Knarf\UserBundle\Security\AuthenticationSuccessHandler
+        arguments:  ["@logger", "@security.http_utils", {}]
+        tags:
+            - { name: 'monolog.logger', channel: 'mywebsite_user' }
+
+    security_authentication_failure_handler:
+        class: Knarf\UserBundle\Security\AuthenticationFailureHandler
+        arguments:  ["@http_kernel", "@security.http_utils", {}, "@logger"]
+        tags:
+            - { name: 'monolog.logger', channel: 'security' }
+
+    security_logout_success_handler:
+        class: Knarf\UserBundle\Security\LogoutSuccessHandler
+        arguments:  ["@logger", "@app.user_manager"]
+        tags:
+            - { name: 'monolog.logger', channel: 'mywebsite_user' }

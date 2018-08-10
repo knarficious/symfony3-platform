@@ -11,6 +11,7 @@
   {% block stylesheets %}
     <link href="{{ asset('bundles/knarfplatform/css/main.css') }}" type="text/css" rel="stylesheet">
     <link href="{{ asset('bundles/knarfuser/css/main.css') }}" type="text/css" rel="stylesheet">
+    <link href="{{ asset('bundles/knarfplatform/css/hover-min.css') }}" type="text/css" rel="stylesheet">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   {% endblock %}
 </head>
@@ -43,10 +44,11 @@
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}              
           <li><a href="{{ path('knarf_platform_add') }}">Ajouter une annonce</a></li>          
           {% endif %}        
+        <li><a href="{{ path('contact') }}">Contact</a></li>
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
-        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}  
        
     <li class="badge">
         {% if  app.user.nomMedia is not empty %}
@@ -64,66 +66,58 @@
             
         {% endif %}
         
-        <li><a href="{{ path('logout') }}"><span class="glyphicon glyphicon-log-out"></span> Déconnexion</a></li>
+        <li><a href="{{ path('security_logout') }}"><span class="glyphicon glyphicon-log-out"></span> Déconnexion</a></li>
         
         {% else %}
             
-        <li><a href="{{ path('register') }}"><span class="glyphicon glyphicon-user"></span> S'enregistrer</a></li>
-        <li><a href="{{ path('login') }}"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
+        <li><a href="{{ path('knarf_user_register_register') }}"><span class="glyphicon glyphicon-user"></span> S'enregistrer</a></li>
+        <li><a href="{{ path('security_login_form') }}"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
       </ul>
       {% endif %}
     </div>
   </div>
 </nav>
-  <div class="container">
+<div class="container">
     <div id="header" class="jumbotron">
-      <h1></h1>
+      
       <p>
-        Ce projet est propulsé avec Symfony3 par Norminfo
-      </p>
+       <h1> Ce projet est propulsé avec Symfony3 par Norminfo</h1>
+      
       <p>
         <a class="btn btn-primary btn-lg" href="https://norminfo.eu" target="blank">
           Aller voir Norminfo »
         </a>
       </p>
-    </div>      
-
-
+    </div>
+    
     <div class="row">
-      <div id="menu" class="col-md-3">      
-        
-        {% if is_granted('IS_AUTHENTICATED_FULLY') %}           
-            
-            {{ render(controller("KnarfUserBundle:Security:index")) }}
-        {% endif %}        
-        
-        {{ render(controller("KnarfPlatformBundle:Advert:menu")) }}
-      </div>
       <div id="content" class="col-md-9">
-          
-        {% set flashbag_notices = app.session.flashbag.get('notice') %}
-	{% if flashbag_notices is not empty %}
+                {% set flashbag_notices = app.session.flashbag.get('notice') %}
+            {% if flashbag_notices is not empty %}
             <div class="glyphicon glyphicon-remove" id="msg" onClick="cacher();">
 		{% for notice in flashbag_notices %}
                     {{ notice }}
 		{% endfor %}
             </div>
 	{% endif %}
-        
+     
         {% block body %}
-
-        {% endblock %}
-      </div>
-      
+            
+        {% endblock %}    
+        
+         </div>
+ 
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}      
+            {{ render(controller("KnarfUserBundle:Security:index")) }}  
+        {% endif %}
     </div>
-
-    <hr>
-
+<hr>
     <footer>
       <p>The sky's the limit © {{ 'now'|date('Y') }} and beyond.</p>
+      <p>
       <p><a href="//www.dmca.com/Protection/Status.aspx?ID=26aaf6fe-fc66-41db-b995-c6f783965e2b" title="DMCA.com Protection Status" class="dmca-badge"> <img src="//images.dmca.com/Badges/dmca_protected_sml_120y.png?ID=26aaf6fe-fc66-41db-b995-c6f783965e2b" alt="DMCA.com Protection Status"></a> <script src="//images.dmca.com/Badges/DMCABadgeHelper.min.js"> </script></p>
     </footer>
-  </div>
+</div>
   <div id="back-to-top" style="display:bloc;">
       <a href="#" class="btn btn-primary btn-lg back-to-top" role="button" title="Revenir en haut de la page" data-toggle="tooltip" data-placement="left"><span class="glyphicon glyphicon-chevron-up"></span></a>
   </div>

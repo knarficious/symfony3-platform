@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="app.user_registration.handler"
+                 class="Knarf\UserBundle\Form\Handler\User\RegistrationFormHandler">
+            <argument type="service" id="app.user_manager" />
+        </service>
+
+        <service id="app.user_change_password.handler"
+                 class="Knarf\UserBundle\Form\Handler\User\ChangePasswordFormHandler">
+            <argument type="service" id="app.user_manager" />
+        </service>
+
+        <service id="app.user_request_password.handler"
+                 class="Knarf\UserBundle\Form\Handler\User\RequestPasswordFormHandler">
+            <argument type="service" id="app.user_manager" />
+        </service>
+
+        <service id="app.user_reset_password.handler"
+                 class="Knarf\UserBundle\Form\Handler\User\ResetPasswordFormHandler">
+            <argument type="service" id="app.user_manager" />
+        </service>
+        
+        <service id="app.user_edit_email.handler"
+                 class="Knarf\UserBundle\Form\Handler\User\EditEmailFormHandler">
+                 <argument type="service" id="app.user_manager" />
+        </service>
+        
+        <service id="app.user_edit_avatar.handler"
+                 class="Knarf\UserBundle\Form\Handler\User\EditAvatarFormHandler">
+                 <argument type="service" id="app.user_manager" />
+        </service>             
+
+        <service id="form.type.change_password"
+                 class="Knarf\UserBundle\Form\Type\User\ChangePasswordType">
+            <argument type="service" id="app.user_manager" />
+            <tag name="form.type" />
+        </service>
+        
+        <service id="form.type.request_password"
+                 class="Knarf\UserBundle\Form\Type\User\RequestPasswordType">
+            <argument type="service" id="app.user_manager" />
+            <tag name="form.type" />
+        </service>
+
+        <service id="form.type.reset_password"
+                 class="Knarf\UserBundle\Form\Type\User\ResetPasswordType" >
+            <argument type="service" id="app.user_manager" />
+            <argument type="service" id="request_stack" strict="false"/>
+            <tag name="form.type" />
+        </service>
+        
+        <service id="form.type.edit_email"
+                 class="Knarf\UserBundle\Form\Type\User\EditEmailType" >
+            <argument type="service" id="app.user_manager" />
+            <tag name="form.type" />                
+        </service>
+        
+        <service id="form.type.edit_avatar"
+                 class="Knarf\UserBundle\Form\Type\User\EditAvatarType" >
+            <argument type="service" id="app.user_manager" />
+            <tag name="form.type" />                
+        </service>
+        
+    </services>
+    
+</container>

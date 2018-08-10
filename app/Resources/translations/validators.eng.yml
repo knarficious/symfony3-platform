@@ -1,0 +1,7 @@
+contact.firstname.notblank: The first name should be filled
+contact.lastname.notblank: The last name should be filled
+contact.email.notblank: The email should be filled
+
+change_password.old_password.minlength: The password should have at least {{ limit }} characters
+registration.password.minlength: The password should have at least {{ limit }} characters
+registration.email.notblank: The email should be filled

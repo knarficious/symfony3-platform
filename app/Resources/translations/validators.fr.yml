@@ -1,0 +1,9 @@
+## YAML Template.
+---
+contact.firstname.notblank: Le prénom est obligatoire
+contact.lastname.notblank: Le nom de famille est obligatoire
+contact.email.notblank: L'email est obligatoire
+
+change_password.old_password.minlength: Le mot de passe doit avoir au moins {{ limit }} caractères
+registration.password.minlength: Le mot de passe doit avoir au moins {{ limit }} caractères
+registration.email.notblank: L'email est obligatoire

@@ -2,6 +2,15 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: services.yml }
+    - { resource: validator.yml }
+    - { resource: mail_blacklist.yml }
+    - { resource: "@KnarfCoreBundle/Resources/config/services.yml" }
+    - { resource: user/authentication.yml }
+    - { resource: user/form.xml }
+    - { resource: user/manager.xml }
+    - { resource: user/repository.xml }
+    - { resource: user/listener.xml }
+    - { resource: user/handler.xml }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -39,6 +48,8 @@ twig:
     strict_variables: '%kernel.debug%'
     form_themes:
         - 'bootstrap_3_layout.html.twig'
+    globals:
+        website: mywebsite    
 
 # Doctrine Configuration
 doctrine:
@@ -69,6 +80,9 @@ swiftmailer:
     username: '%mailer_user%'
     password: '%mailer_password%'
     spool: { type: memory }
+    encryption: '%mailer_encryption%'
+    port: '%mailer_port%'
+    auth_mode: '%mailer_auth_mode%'
 
 # OneUpFlysytemBundle Configuration
 oneup_flysystem:
@@ -117,3 +131,45 @@ assetic:
     use_controller: '%kernel.debug%'
     filters:
         cssrewrite: ~
+        
+# Fos_Rest Configuration
+fos_rest:
+    body_listener:
+       decoders:
+           json: fos_rest.decoder.json
+    format_listener:
+        rules:
+            - { path: '^/api', priorities: ['json'], fallback_format: 'json' }
+            - { path: '^/', priorities: ['html'], fallback_format: 'html'}
+    view:
+        view_response_listener: force
+        formats:
+            xml: true
+            json: true
+            jsonp: true
+        templating_formats:
+            html: true
+        force_redirects:
+            html: true
+        failed_validation: HTTP_BAD_REQUEST
+      #default_engine: twig
+        mime_types:
+            json : ['application/json']
+    routing_loader:
+        default_format: json
+    access_denied_listener:
+        json: true
+        xml: true
+        html: true
+    exception:
+        codes:
+            'Symfony\Component\Routing\Exception\ResourceNotFoundException': 404
+            'Doctrine\ORM\OptimisticLockException': HTTP_CONFLICT
+        messages:
+            'Symfony\Component\Routing\Exception\ResourceNotFoundException': true      
+      
+    service:
+        router: router
+        templating: templating
+        view_handler: fos_rest.view_handler.default    
+    

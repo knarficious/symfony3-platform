@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="app.user_manager"
+                 class="Knarf\UserBundle\Entity\Manager\UserManager" lazy="true">
+            <argument type="service" id="security.encoder_factory" />
+            <argument type="service" id="event_dispatcher" />
+            <argument type="service" id="security.password_encoder" />
+            <argument type="service" id="app.user_repository" />
+        </service>
+    </services>
+</container>

@@ -13,12 +13,4 @@ services:
         # this means you cannot fetch services directly from the container via $container->get()
         # if you need to do this, you can override this setting on individual services
         public: false
-        
-    security.interactive_login_listener:
-      class: Knarf\UserBundle\Security\InteractiveLoginListener
-      arguments: ["@doctrine.orm.entity_manager", "@request_stack" ]     
-      tags:
-        - { name: kernel.event_listener, event: security.interactive_login, method: onSecurityInteractiveLogin }
     
-    logout_listener:
-        class: Knarf\UserBundle\Listeners\LogoutListener

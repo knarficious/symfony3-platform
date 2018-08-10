@@ -1,0 +1,41 @@
+menu:
+    accueil: Home
+    contact: Contact us
+    connexion: Log in
+    deconnexion: Log out
+    inscription: Sign in
+    changement_password: Password Changement
+    choisir_langue: Choose a language
+
+user:
+    connexion:
+            new_password: New password
+            confirmation: Repeat the password
+            label: Connexion
+            username: Identifier
+            password: Password
+            password_forgotten: Password forgotten
+    registration:
+            label: Registration
+            username: Identifier
+            email: Email
+            password: Password
+            confirm: Repeat the password
+            register: Send
+    change_password:
+            title: Change your password
+            old_password: Old password
+            new_password: New password
+            repeat_new_password: Repeat the password
+            button: Send
+    reset_password:
+            identifier: Identifier
+            button: Send
+            title: Reset of your password
+            new_password: New password
+            repeat_new_password: Repeat the password
+            successful_reset: Your password has been resetted. You can log in now
+    request_password:
+            button: Send the request
+            title: Request for changing your password
+            mail_sent: A mail has been sent to your mailbox to reset your password

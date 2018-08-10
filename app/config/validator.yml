@@ -1,0 +1,9 @@
+## YAML Template.
+---
+services:
+    app.email_blackList_validator:
+        class: Knarf\UserBundle\Validator\Constraints\EmailBlackListValidator
+        calls:
+            - [ setBlackList, ['%mail_blacklist%'] ]
+        tags:
+            - { name: validator.constraint_validator, alias: email_black_list }

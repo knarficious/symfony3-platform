@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="app.user_send_confirmation_mail_listener"
+                 class="Knarf\UserBundle\EventListener\SendConfirmationMailListener">
+            <argument type="service" id="knarf.mailer_service"/>
+            <argument type="service" id="twig" />
+            <argument type="service" id="router" />
+            <argument type="service" id="security.csrf.token_generator" />
+            <argument type="service" id="app.user_manager" />
+            <argument>KnarfUserBundle:Security:registration.html.twig</argument>
+            <argument>%email_from%</argument>
+            <tag name="kernel.event_listener" event="app.new_account_created" method="onNewAccountCreated" />
+        </service>
+
+        <service id="app.user_send_request_password_mail_listener"
+                 class="Knarf\UserBundle\EventListener\SendRequestPasswordMailListener">
+            <argument type="service" id="knarf.mailer_service"/>
+            <argument type="service" id="twig" />
+            <argument type="service" id="router" />
+            <argument type="service" id="security.csrf.token_generator" />
+            <argument type="service" id="app.user_manager" />
+            <argument>KnarfUserBundle:Security:request_password_mail.html.twig</argument>
+            <argument>%email_from%</argument>
+            <tag name="kernel.event_listener" event="app.new_password_requested" method="onRequestedPassword" />
+        </service>
+
+    </services>
+</container>

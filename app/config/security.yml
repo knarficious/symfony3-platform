@@ -4,7 +4,7 @@ security:
 
     # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     encoders:
-        Symfony\Component\Security\Core\User\User: bcrypt
+        #Symfony\Component\Security\Core\User\User: bcrypt
         Knarf\UserBundle\Entity\User: bcrypt
 
     role_hierarchy:
@@ -12,9 +12,10 @@ security:
         ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
         
     providers:
-        main:
+        database_users:
             entity:
                 class:      KnarfUserBundle:User
+                #property:   identifier
        
 
     firewalls:
@@ -33,24 +34,34 @@ security:
             #http_basic: ~
 
             # https://symfony.com/doc/current/security/form_login_setup.html
-            provider: main
+            
             form_login:
-              login_path: login
-              check_path: login_check
-              default_target_path: profile
+              provider: database_users
+              login_path: security_login_form
+              check_path: security_login_check
+              use_referer: true          
               csrf_token_generator: security.csrf.token_manager
-            logout_on_user_change: true
+              failure_path: security_login_form
+              success_handler: security_authentication_success_handler
+              failure_handler: security_authentication_failure_handler
+              
             remember_me:
                 secret: '%secret%'
-                lifetime: 604800
+                lifetime: 5184000
                 path: /
                 #always_remember_me: true
             logout:
-                path: /logout
+                path: security_logout
                 target: /
+                handlers: [security_logout_success_handler]
                 invalidate_session: false
-                handlers: [logout_listener]
-
+                #logout_on_user_change: true    
+    
+    access_decision_manager:
+        #   affirmative (default) => This grants access as soon as there is one voter granting access;
+        #   consensus => This grants access if there are more voters granting access than denying;
+        #   unanimous => This only grants access once all voters grant access.
+        strategy: affirmative
 
     access_control:
         - { path: ^/admin, roles: ROLE_ADMIN }
@@ -59,3 +70,5 @@ security:
         - { path: ^/rubrique/edit, roles: ROLE_ADMIN }
         - { path: ^/rubrique/ajout, roles: ROLE_ADMIN }
         - { path: ^/login | register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/ajout, roles: ROLE_USER }        
+        - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
