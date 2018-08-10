@@ -1,36 +1,81 @@
 {# src/Knarf/PlatformBundle/Resources/view/Commentaire/view.html.twig #}
 
-{% extends "KnarfPlatformBundle::layout.html.twig" %}
-
-{% block title %}
-  Lecture d'un commentaire - {{ parent() }}
-{% endblock %}
-
 {% block knarfplatform_body %}
 
-  <i>Par {{ commentaire.user.username }}, le {{ commentaire.datePublication|date('d/m/Y') }}</i>
-
-  <div class="well">
+    <div class="media">
+      <div class="media-left">
+        {% if  commentaire.user.nomMedia is not empty %}
+        <img src="{{vich_uploader_asset(commentaire.user, 'mediaFile') | imagine_filter('my_thumb') }}" alt="{{ commentaire.user.nomMedia }}"  />
+        {% else  %}
+        {% image '@KnarfUserBundle/Resources/public/images/if_icon-person_211874.png' %}
+        <img src="{{ asset_url }}" alt="" />
+        {% endimage %}
+        {% endif %}
+      </div>
+      
+      <div class="media-body">
+          <h4 class="media-heading">{{ commentaire.user.username }}, le {{ commentaire.datePublication|date('d/m/Y') }}
+          </h4>
     {{ commentaire.contenu }}
-  </div>
+    
+    {% if app.user and commentaire.user is not same as( app.user ) %}
+        <a href="{{ path('commentaire_repond', {'id' :commentaire.id })}}" class="btn btn-default">
+            <i class="glyphicon glyphicon-add"></i>Répondre
+        </a>
+    {% endif %} 
 
-  <p>
-    <a href="{{ path('knarf_commentaire_home') }}" class="btn btn-default">
-      <i class="glyphicon glyphicon-chevron-left"></i>
-      Retour à la liste
-    </a>
+    {% if commentaire.commentaires %}
+        {% for comment in commentaire.commentaires %}
+            <div class="media">          
+                
+                <div class="media-left">
+                    
+                    {% if  comment.user.nomMedia is not empty %}
+                        <img src="{{vich_uploader_asset(comment.user, 'mediaFile') | imagine_filter('my_thumb') }}" alt="{{ comment.user.nomMedia }}"  />
+                    {% else  %}
+                        {% image '@KnarfUserBundle/Resources/public/images/if_icon-person_211874.png' %}
+                        <img src="{{ asset_url }}" alt="" />
+                        {% endimage %}
+                    {% endif %}
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">{{ comment.user.username }}, le {{ comment.datePublication|date('d/m/Y') }}</h4>
+            
+                    {{ comment.contenu }}
+                </div>
+                
+                {% if comment.user == app.user %}
+        
+                    <a href="{{ path('commentaire_edit', {'id': comment.id}) }}" class="btn btn-default">
+                        <i class="glyphicon glyphicon-edit"></i>
+                            Modifier le commentaire
+                    </a>
+                    <a href="{{ path('commentaire_delete', {'id': comment.id}) }}" class="btn btn-danger">
+                        <i class="glyphicon glyphicon-trash"></i>
+                            Supprimer le commentaire
+                    </a>
+                {% endif %} 
+            </div>
+            <hr>
+        {% endfor %}
+    {% endif %}        
+    
+    </div>
+    </div>
+    <p>
+    <p>  
+
     {% if commentaire.user == app.user %}
         
-    <a href="{{ path('knarf_commentaire_edit', {'id': commentaire.id}) }}" class="btn btn-default">
-      <i class="glyphicon glyphicon-edit"></i>
-      Modifier le commentaire
-    </a>
-    <a href="{{ path('knarf_commentaire_delete', {'id': commentaire.id}) }}" class="btn btn-danger">
-      <i class="glyphicon glyphicon-trash"></i>
-      Supprimer le commentaire
-      
-    {% endif %}  
-    </a>
-  </p>
-
+        <a href="{{ path('commentaire_edit', {'id': commentaire.id}) }}" class="btn btn-default">
+            <i class="glyphicon glyphicon-edit"></i>
+                Modifier le commentaire
+        </a>
+        <a href="{{ path('commentaire_delete', {'id': commentaire.id}) }}" class="btn btn-danger">
+            <i class="glyphicon glyphicon-trash"></i>
+                Supprimer le commentaire
+        </a>
+    {% endif %} 
+    </p>
+    <hr>
 {% endblock %}

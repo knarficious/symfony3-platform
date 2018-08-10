@@ -3,20 +3,23 @@
 namespace Knarf\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Knarf\UserBundle\Entity\Interfaces\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\File;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use Doctrine\Common\Collections\Collection;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
+use Symfony\Component\Security\Core\Role\Role;
 use Doctrine\Common\Collections\ArrayCollection;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * User
  *
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="Knarf\UserBundle\Repository\UserRepository")
- * @ORM\HasLifecycleCallbacks
- * 
+ * @ORM\HasLifecycleCallbacks * 
+ * @UniqueEntity(fields="username", message="Ce pseudo existe déjà!")
+ * @UniqueEntity(fields="email", message="Cet email existe déjà!")
  * @Vich\Uploadable
  */
 class User implements UserInterface, \Serializable
@@ -33,14 +36,18 @@ class User implements UserInterface, \Serializable
     /**
      * @var string
      *
-     * @ORM\Column(name="username", type="string", length=255, unique=true)
+     * @ORM\Column(name="username", type="string", length=255, unique=true)     * 
+     * @Assert\NotBlank(message="Give us at least 3 characters")
+     * @Assert\Length(min=3, minMessage="Give us at least 3 characters!")
      */
     private $username;
     
     /**
      * @var string
      * 
-     * @ORM\Column(name="email", type="string", length=255, unique=true)
+     * @ORM\Column(name="email", type="string", length=255, unique=true)     * 
+     * @Assert\NotBlank
+     * @Assert\Email
      */
     private $email;
 
@@ -68,13 +75,13 @@ class User implements UserInterface, \Serializable
     /**
      * @var \DateTime
      * 
-     * @ORM\Column(name="lastTimeConnect", type="datetime")
+     * @ORM\Column(name="lastTimeConnect", type="datetime", nullable=true)
      */
     private $lastTimeConnect;
     
     /**
      * 
-     * @ORM\Column(name="adresseIp", type="string")
+     * @ORM\Column(name="adresseIp", type="string", nullable=true)
      */
     private $adresseIp;
 
@@ -95,18 +102,26 @@ class User implements UserInterface, \Serializable
     /**
      * @var boolean
      * 
-     * @ORM\Column(name="isActive", type="integer")
+     * @ORM\Column(name="isActive", type="boolean")
      */
     private $isActive;
     
     /**
-     * @ORM\Column(name="apiKey", type="string", unique=true)
+     * @ORM\Column(name="apiKey", type="string", unique=true, nullable=true)
      */
     private $apiKey;
     
     /**
-     * 
-     * @Assert\Length(max=4096)
+     * @ORM\Column(name="confirmationToken", type="string", length=255, nullable=true)
+     */
+    private $confirmationToken = null;
+    
+    /**
+     * @Assert\NotBlank
+     * @Assert\Regex(
+     *      pattern="/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$/",
+     *      message="Use 1 upper case letter, 1 lower case letter, and 1 number"
+     * )
      */
     private $plainPassword;
     
@@ -122,31 +137,48 @@ class User implements UserInterface, \Serializable
      */
     private $mediaFile;
 
-     /**
+    /**
      * @var string
      *
      * @ORM\Column(name="nom_media", type="string", length=255, nullable=true)
      */
     private $nomMedia;
+         
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="isAlreadyRequested", type="boolean")
+     */
+    private $isAlreadyRequested = false;
+    
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="cgvRead", type="boolean", nullable=true)
+     */
+    private $cgvRead;
+
     
     // === ASSOCIATIONS ===
     
     /**
-     * @ORM\OneToMany(targetEntity="Knarf\PlatformBundle\Entity\Advert", mappedBy="user", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="Knarf\PlatformBundle\Entity\Advert", mappedBy="user")
      */
     private $adverts;
     
     /**
-     * @ORM\OneToMany(targetEntity="Knarf\PlatformBundle\Entity\Commentaire", mappedBy="user", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="Knarf\PlatformBundle\Entity\Commentaire", mappedBy="user")
      */
     private $commentaires;
     
+   /*
+    * 
     public function __construct()
     {
         //parent::__construct();
         
-        $this->isActive = true;
-        $this->salt = md5(uniqid(null, true));
+        $this->isActive = false;
+       // $this->salt = md5(uniqid(null, true));
         //$this->roles = array('ROLE_USER');
         $this->createdAt = new \DateTime;
         $this->updatedAt= new \DateTime;
@@ -154,6 +186,8 @@ class User implements UserInterface, \Serializable
         $this->commentaires = new ArrayCollection();
         
     }
+    * 
+    */
 
     /**
      * Get id
@@ -212,6 +246,36 @@ class User implements UserInterface, \Serializable
     {
         return $this->password;
     }
+    
+    /**
+     * @return boolean
+     */
+    public function isCgvRead()
+    {
+        return $this->cgvRead;
+    }
+    
+    /**
+     * @param boolean $cgvRead
+     */
+    public function setCgvRead($cgvRead)
+    {
+        $this->cgvRead = $cgvRead;
+    }
+    
+    /**
+     * @param PasswordEncoderInterface $encoder
+     */
+    public function encodePassword(PasswordEncoderInterface $encoder)
+    {
+        if ($this->plainPassword) {
+            $this->salt = sha1(uniqid(mt_rand()));
+            $this->password = $encoder->encodePassword(
+                $this->plainPassword, $this->salt
+            );
+            $this->eraseCredentials();
+        }
+    }
 
     /**
      * Set salt
@@ -244,7 +308,7 @@ class User implements UserInterface, \Serializable
      *
      * @return User
      */
-    public function setRoles($roles)
+    public function setRoles(array $roles)
     {
         $this->roles = $roles;
 
@@ -252,18 +316,31 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Get roles
+     * Returns the roles granted to the user.
      *
-     * @return array
+     * <code>
+     * public function getRoles()
+     * {
+     *     return array('ROLE_USER');
+     * }
+     * </code>
+     *
+     * Alternatively, the roles might be stored on a ``roles`` property,
+     * and populated in any number of different ways when the user object
+     * is created.
+     *
+     * @return Role[] The user roles
      */
     public function getRoles()
     {
-        return $this->roles;
+        $roles = $this->roles;
+        $roles[] = 'ROLE_USER';
+        return array_unique($roles);
     }
     
     public function eraseCredentials()
     {
-		
+	$this->setPlainPassword(null);
     }
     
     /**
@@ -274,10 +351,7 @@ class User implements UserInterface, \Serializable
         return serialize(array(
         $this->id,
         $this->username,
-        $this->password,
-        $this->salt,
-        $this->isActive,    
-        $this->roles
+        $this->password
         ));
     }
 
@@ -289,10 +363,7 @@ class User implements UserInterface, \Serializable
         list(
         $this->id,
         $this->username,
-        $this->password,
-        $this->salt,
-        $this->isActive,        
-        $this->roles,
+        $this->password
         ) = unserialize($serialized);
     }
 
@@ -556,7 +627,7 @@ class User implements UserInterface, \Serializable
      *
      * @return User
      */
-    public function setLastTimeConnect($lastTimeConnect)
+    public function setLastTimeConnect(\DateTime $lastTimeConnect)
     {
         $this->lastTimeConnect = $lastTimeConnect;
 
@@ -596,4 +667,87 @@ class User implements UserInterface, \Serializable
     {
         return $this->apiKey;
     }
+
+
+
+
+    /**
+     * Set confirmationToken
+     *
+     * @param string $confirmationToken
+     *
+     * @return User
+     */
+    public function setConfirmationToken($confirmationToken)
+    {
+        $this->confirmationToken = $confirmationToken;
+
+        return $this;
+    }
+
+    /**
+     * Get confirmationToken
+     *
+     * @return string
+     */
+    public function getConfirmationToken()
+    {
+        return $this->confirmationToken;
+    }
+    
+      public function isAccountNonExpired()
+    {
+        return true;
+    }
+
+    public function isAccountNonLocked()
+    {
+        return true;
+    }
+
+    public function isCredentialsNonExpired()
+    {
+        return true;
+    }
+
+    public function isEnabled()
+    {
+        return $this->isActive;
+    }
+
+    /**
+     * Set isAlreadyRequested
+     *
+     * @param boolean $isAlreadyRequested
+     *
+     * @return User
+     */
+    public function setIsAlreadyRequested($isAlreadyRequested)
+    {
+        $this->isAlreadyRequested = $isAlreadyRequested;
+
+        return $this;
+    }
+
+    /**
+     * Get isAlreadyRequested
+     *
+     * @return boolean
+     */
+    public function getIsAlreadyRequested()
+    {
+        return $this->isAlreadyRequested;
+    }
+
+    /**
+     * Get cgvRead
+     *
+     * @return boolean
+     */
+    public function getCgvRead()
+    {
+        return $this->cgvRead;
+    }
+
+
 }

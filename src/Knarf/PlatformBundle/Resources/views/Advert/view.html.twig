@@ -34,72 +34,13 @@
     </div>
     </article>
     
-    {# bloc des commentaires #}
-    
-    <div class="comment">
-        <h4>Commentaires</h4>        
-        <hr>
-        <div class="container" >
-        {% if advert.commentaires is not empty or commentaire.commentaire.id is defined%} 
             
-            {% for commentaire in advert.commentaires %}
-                <div class="media">
-                    <div class="media-left">
-                        {% if commentaire.user.nomMedia is not empty %}
-                        <img class="media-object" src="{{vich_uploader_asset(commentaire.user, 'mediaFile')| imagine_filter('my_thumb_resize') }}" />
-                        {% else %}
-                        {% image '@KnarfUserBundle/Resources/public/images/if_icon-person_211874.png' %}
-                        <img src="{{ asset_url }}" alt="" />
-                        {% endimage %}
-                        {% endif %}
-                    </div>
-                    <div class="media-body">                        
-                        <h4 class="media-heading">
-                            <small><i>par <b>{{ commentaire.user.username }}</b> le {{ commentaire.datePublication|date('d/m/Y') }}</i>
-                            </small>
-                        </h4>
-                        <div class="">{{ commentaire.contenu }}</div>
-                        
-                {% if app.user %}        
-                <div class="btn btn-default"  onclick="document.getElementById('formulaire-commentaire').style.display='block'" >
-                    <i class="glyphicon glyphicon-exclamation-sign"></i>
-                        Répondre
-                </div>    
-                <div id="formulaire-commentaire" style="display:none">
-                    {{ include("KnarfPlatformBundle:Commentaire:form.html.twig") }}
-                </div>   
-                {% endif %}
-                    </div>             
-            {% endfor %} 
-            </div>
-         
-                  
-        {% else %}
-            Aucun commentaire
-        {% endif %}    
-        </div>  
-    </div>
-        
-        {% if app.user %}
-            <div class="row">   
-    
-                <div class="btn btn-default"  onclick="document.getElementById('formulaire-commentaire').style.display='block'" >
-                    <i class="glyphicon glyphicon-exclamation-sign"></i>
-                        Laisser un commentaire
-                </div>    
-                <div id="formulaire-commentaire" style="display:none">
-                    {{ include("KnarfPlatformBundle:Commentaire:form.html.twig") }}
-                </div>    
-            </div>
-        {% endif %}
-        
-        <div class="row">
             <a href="{{ path('knarf_platform_home') }}" class="btn btn-default">
             <i class="glyphicon glyphicon-chevron-left"></i>
             Retour à la liste
             </a>    
-        </div>
-            
+        
+    
     {% if advert.user == app.user %}
         
     <a href="{{ path('knarf_platform_edit', {'id': advert.id}) }}" class="btn btn-default">
@@ -113,4 +54,37 @@
       
     {% endif %} 
     
+    {# bloc des commentaires #}
+    
+    <div class="comment">
+        <h4>Commentaires</h4>        
+        <hr>
+        <div class="container" >
+        {% if advert.commentaires is not empty or commentaire.commentaire.id is defined%} 
+            
+            {% for commentaire in advert.commentaires %}
+              {{ include("KnarfPlatformBundle:Commentaire:view.html.twig", {'commentaire' : commentaire }) }}
+            {% endfor %}  
+        </div>
+        {% else %}
+            <div class="row">
+            Aucun commentaire
+            </div>
+        {% endif %} 
+    </div>
+    <p>
+        {% if app.user %}              
+    
+                <div class="btn btn-default"  onclick="document.getElementById('formulaire-comment-annonce').style.display='block'" >
+                    <i class="glyphicon glyphicon-exclamation-sign"></i>
+                        Laisser un commentaire
+                </div>    
+                <div id="formulaire-comment-annonce" style="display:none">
+                    {{ include("KnarfPlatformBundle:Commentaire:form.html.twig") }}
+                </div> 
+
+        {% else %}
+            Vous devez vous <a href="{{ path('security_login_form') }}">connecter</a> pour commenter
+        {% endif %}       
+               
 {% endblock %}

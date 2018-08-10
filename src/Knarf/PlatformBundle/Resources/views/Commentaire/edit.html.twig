@@ -3,22 +3,18 @@
 {% extends "KnarfPlatformBundle::layout.html.twig" %}
 
 {% block title %}
-  Modifier une annonce - {{ parent() }}
+  Modifier une commentaire - {{ parent() }}
 {% endblock %}
 
 {% block knarfplatform_body %}
 
-  <h2>Modifier une annonce</h2>
+  <h2>Modifier votre commentaire</h2>
 
   {{ include("KnarfPlatformBundle:Commentaire:form.html.twig") }}
 
-  <p>
-    Vous éditez une annonce déjà existante, merci de ne pas changer
-    l'esprit général de l'annonce déjà publiée.
-  </p>
 
   <p>
-    <a href="{{ path('knarf_commentaire_view', {'id': commentaire.id}) }}" class="btn btn-default">
+    <a href="{{ path('commentaire_view', {'id': commentaire.id}) }}" class="btn btn-default">
       <i class="glyphicon glyphicon-chevron-left"></i>
       Retour au commentaire
     </a>

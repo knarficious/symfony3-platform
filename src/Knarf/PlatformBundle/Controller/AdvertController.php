@@ -47,13 +47,10 @@ class AdvertController extends Controller
             {
                 throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas!");
             }
-        $repository2 = $this->getDoctrine()->getManager()->getRepository('KnarfPlatformBundle:Commentaire');
-        $comment = $repository2->find($id);
       $commentaire = new Commentaire();
       $user = $this->getUser();
       $commentaire->setUser($user);
       $commentaire->setAdvert($advert);
-      $commentaire->setCommentaire($comment);
       
       $form = $this->createForm(CommentaireType::class, $commentaire);
       
@@ -63,11 +60,13 @@ class AdvertController extends Controller
             //$em->persist($advert);
             $em->persist($commentaire);
             $em->flush();
+            
+             $this->addFlash('notice', 'Commentaire ajouté avec succès.');
       }
 
         return $this->render('KnarfPlatformBundle:Advert:view.html.twig', array(
 
-        'advert' => $advert, 'active' => 'advert', 'comment' => $comment, 'active' => 'comment', 'form' => $form->createView()
+        'advert' => $advert, 'active' => 'advert', 'commentaire' => $commentaire, 'form' => $form->createView()
 
         ));
 	
@@ -117,6 +116,8 @@ class AdvertController extends Controller
         $em = $this->getDoctrine()->getManager();    
         $advert = $em->getRepository('KnarfPlatformBundle:Advert')->find($id);
         
+        $advert->setUpDateAt(new \DateTime());
+        
         //On vérifie si l'annonce appartient à l'utilisateur en cours
         if($this->getUser() === $advert->getUser())
         {
@@ -128,7 +129,8 @@ class AdvertController extends Controller
             $form = $this->createForm(AdvertEditType::class, $advert);
     
             if($request->isMethod('POST') && $form->handleRequest($request)->isValid())
-            {
+            {                
+                $em->persist($advert);
                 $em->flush();
         
                 $this->addFlash('notice', 'Annonce modifiée avec succès.');
@@ -167,7 +169,7 @@ class AdvertController extends Controller
     
         $form = $this->createFormBuilder()->getForm();
     
-        if($form->handleRequest($request)->isValid())
+        if($request->isMethod('POST') && $form->handleRequest($request)->isValid())
         {
             $em->remove($advert);
             $em->flush();

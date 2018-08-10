@@ -5,19 +5,19 @@ namespace Knarf\UserBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Security\Http\Logout\LogoutSuccessHandlerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Knarf\UserBundle\Entity\User;
 use Knarf\UserBundle\Form\UserType;
-use Knarf\UserBundle\Form\UserEditType;
+use Knarf\UserBundle\Form\Type\User\EditEmailType;
 use Knarf\UserBundle\Geoloc\AdresseIp;
+use Knarf\UserBundle\Util\TokenGeneratorInterface;
 
 class SecurityController extends Controller
 {
+  
   /**
    * @return type
-   * @Route("/login", name="login")
+   * @Route("/login", name="security_login_form")
    */  
   public function loginAction()
   {
@@ -25,7 +25,7 @@ class SecurityController extends Controller
     if ($this->get('security.authorization_checker')->isGranted('ROLE_USER')) {
       return $this->redirectToRoute('profile');
     }
-
+    
     // Le service authentication_utils permet de récupérer le nom d'utilisateur
     // et l'erreur dans le cas où le formulaire a déjà été soumis mais était invalide
     // (mauvais mot de passe par exemple)
@@ -36,59 +36,33 @@ class SecurityController extends Controller
       'error'         => $authenticationUtils->getLastAuthenticationError(),
     ));
   }
-  
+    
+    /**
+     * This is the route the login form submits to.
+     *
+     * But, this will never be executed. Symfony will intercept this first
+     * and handle the login automatically. See form_login in app/config/security.yml
+     *
+     * @Route("/login_check", name="security_login_check")
+     */
     public function loginCheckAction()
     {       
-       
+      throw new \Exception('This should never be reached!');
     }
     
-    public function logoutAction()    {
-          
-        
-    }
-    
+    /**
+     * This is the route the user can use to logout.
+     *
+     * But, this will never be executed. Symfony will intercept this first
+     * and handle the logout automatically. See logout in app/config/security.yml
+     *
+     * @Route("/logout", name="security_logout")
+     */
+    public function logoutAction()   
+    {
+     throw new \Exception('This should never be reached!');
+    } 
   
-  public function registerAction (Request $request)
-  {
-    if ($this->get('security.authorization_checker')->isGranted('ROLE_USER')) {
-      return $this->redirectToRoute('profile');
-    }  
-      
-      $user = new User();
-        
-        $form = $this->createForm(UserType::class, $user);
-        
-        $form->handleRequest($request);
-        
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            // 3) Encode the password (you could also do this via Doctrine listener)
-            $password = $this->get('security.password_encoder')
-                ->encodePassword($user, $user->getPlainPassword());
-            $user->setPassword($password);
-            $adresseIp = new AdresseIp();
-            $adresseIp->get_ip_address();
-            $user->setAdresseIp($adresseIp);
-            $user->setRoles(array('ROLE_USER'));
-           
-           // $role = $user->getRoles();
-           // $user->setRoles(array('roles' => $role));
-
-            // 4) save the User!
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
-
-            $this->addFlash('notice', 'Votre compte est enregistré. Vous pouvez maintenant vous connecter');
-
-            return $this->redirectToRoute('login');
-        }
-
-        return $this->render(
-            'KnarfUserBundle:Security:register.html.twig',
-            array('form' => $form->createView())
-        );
-    }    
 
     public function profileAction()
     {
@@ -117,16 +91,17 @@ class SecurityController extends Controller
         $this->denyAccessUnlessGranted('ROLE_USER', null, 'Unable to access this page!');     
 
         $currentUser = $this->getUser();        
-        $user = new User();
-        $form = $this->createForm(UserEditType::class, $currentUser);
+        if ($currentUser instanceof User)
+        {
+             $form = $this->createForm(EditEmailType::class, $currentUser);
         
         $form->handleRequest($request);
         
-        if ($form->isSubmitted() && $form->isValid()) {
-            $user = $currentUser;
-            $user->setUpdatedAt(new \DateTime('now'));
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $currentUser->setUpdatedAt(new \DateTime('now'));
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
+            $entityManager->persist($currentUser);
             $entityManager->flush();    
             
 
@@ -134,8 +109,10 @@ class SecurityController extends Controller
             return $this->redirectToRoute('profile');
         
         }
+        }
+       
         
-        return $this->render('KnarfUserBundle:Security:edit_profil.html.twig', array('form' => $form->createView(), 'user' => $currentUser));
+        return $this->render('KnarfUserBundle:Security:edit_profile.html.twig', array('form' => $form->createView(), 'user' => $currentUser));
     }
     
     public function indexAction()
@@ -148,4 +125,18 @@ class SecurityController extends Controller
         ));        
         
     }
+    
+    public function adminAction()
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
+        
+        $user = $this->getUser();
+        $name = $user->getUsername();
+        
+        return $this->render('KnarfUserBundle:Security:admin.html.twig', array(
+            'name' => $name
+        ));
+
+    }    
+    
 }

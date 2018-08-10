@@ -1,12 +1,10 @@
 # src/Knarf/PlatformBundle/Resources/config/routing.yml
 
 knarf_platform_home:
-    path:      /{page}
+    path:      /
     defaults: 
         _controller: KnarfPlatformBundle:Advert:index 
         page:    1
-    requirements:
-        page: \d*  
 
 knarf_platform_view:
     path:      /advert/{id}

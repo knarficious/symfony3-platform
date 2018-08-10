@@ -1,0 +1,34 @@
+{# src/Knarf/PlatformBundle/Resources/view/Commentaire/reponse.html.twig #}
+
+{% extends "KnarfPlatformBundle::layout.html.twig" %}
+
+{% block title %}
+  Répondre à un commentaire {{ parent() }}
+{% endblock %}
+
+{% block knarfplatform_body %}
+    
+    Vous allez répondre au commentaire:
+    
+    <div class="well">
+        {{ commentaire.contenu }}
+    </div>
+
+  de {{ commentaire.user.username }}, le {{ commentaire.datePublication|date('d/m/Y') }}
+
+  {{include ('KnarfPlatformBundle:Commentaire:formulaire.html.twig') }}
+
+  <p>
+    {% if commentaire.commentaire.advert.id is defined %}
+        <a href="{{ path('knarf_platform_view', {'id' :commentaire.commentaire.advert.id}) }}" class="btn btn-default">
+        <i class="glyphicon glyphicon-chevron-left"></i>
+        Retour
+            </a>
+    {% else %}
+        <a href="{{ path('knarf_platform_view', {'id' :commentaire.advert.id}) }}" class="btn btn-default">
+        <i class="glyphicon glyphicon-chevron-left"></i>
+        Retour
+        </a>
+    {% endif %}    
+
+{% endblock %}

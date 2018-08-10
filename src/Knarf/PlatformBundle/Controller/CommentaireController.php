@@ -25,6 +25,7 @@ class CommentaireController extends Controller
 
     {
         $repository = $this->getDoctrine()->getManager()->getRepository('KnarfPlatformBundle:Commentaire');
+        
         $listCommentaires = $repository->findAll();
         
         return $this->render('KnarfPlatformBundle:Commentaire:index.html.twig', array(
@@ -32,6 +33,8 @@ class CommentaireController extends Controller
         ));
 
     }
+    
+    
     
     public function viewAction($id, Request $request)
     {
@@ -44,7 +47,7 @@ class CommentaireController extends Controller
         
                             if(null === $commentaire)
             {
-                throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas!");
+                throw new NotFoundHttpException("Le commentaire d'id ".$id." n'existe pas!");
             }
         
         
@@ -53,19 +56,26 @@ class CommentaireController extends Controller
         $comment->setUser($user);
         $comment->setCommentaire($commentaire);
         
-        $form = $this->createForm(CommentaireType::class, $comment);
+        $formulaire = $this->createForm(CommentaireType::class, $comment);
       
-      if($request->isMethod('POST') && $form->handleRequest($request)->isValid())
+      if($request->isMethod('POST') && $formulaire->handleRequest($request)->isValid())
       {
-            $em = $this->getDoctrine()->getManager();
+            var_dump($comment->getDatePublication());
+            var_dump($comment->getUser()->getUsername());
+            var_dump($comment->getAdvert()->getTitle());
+            var_dump($comment->getCommentaire()->getContenu());
+            
+          $em = $this->getDoctrine()->getManager();
             //$em->persist($advert);
             $em->persist($comment);
             $em->flush();
+            
+            $request->getSession()->getFlashBag()->add('notice', 'Commentaire bien enregistré.');
       }
 
-        return $this->render('KnarfPlatformBundle:Commentaire:vue.html.twig', array(
+        return $this->render('KnarfPlatformBundle:Commentaire:view.html.twig', array(
 
-        'commentaire' => $commentaire, 'active' => 'commentaire', 'form' => $form->createView()
+        'commentaire' => $commentaire, 'active' => 'commentaire', 'formulaire' => $formulaire->createView()
 
         ));
 	
@@ -78,16 +88,16 @@ class CommentaireController extends Controller
         $commentaire = new Commentaire();
         
         $user = $this->getUser();
-        $commentaire->setUser($user);        
+        $commentaire->setUser($user);
+        $commentaire->setDatePublication(new \DateTime());
         
-        $commentaire->setDate(new \DateTime());
-        $form = $this->createForm(CommentaireType::class, $commentaire);
+        $formulaire = $this->createForm(CommentaireType::class, $commentaire);
 
-        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+        if ($request->isMethod('POST') && $formulaire->handleRequest($request)->isValid()) {
             
-            var_dump($commentaire->getDate());
-            var_dump($commentaire->getUser()->getUsername());
-            var_dump($commentaire->getAdvert()->getTitle());
+           
+            //var_dump($commentaire->getUser()->getUsername());
+            //var_dump($commentaire->getAdvert()->getTitle());
             var_dump($commentaire->getCommentaire()->getContenu());
             
             $em = $this->getDoctrine()->getManager();
@@ -104,7 +114,7 @@ class CommentaireController extends Controller
 
         // Si on n'est pas en POST, alors on affiche le formulaire
     
-    return $this->render('KnarfPlatformBundle:Commentaire:ajout.html.twig', array('form' => $form->createView()));
+    return $this->render('KnarfPlatformBundle:Commentaire:ajout.html.twig', array('formulaire' => $formulaire->createView()));
     
     }
   
@@ -113,6 +123,19 @@ class CommentaireController extends Controller
           
         $em = $this->getDoctrine()->getManager();    
         $commentaire = $em->getRepository('KnarfPlatformBundle:Commentaire')->find($id);
+        $commentaire->setDateMiseAJour(new \DateTime('now'));
+        
+        $advert = null;
+        
+        if($commentaire->getAdvert() != null)
+        {
+            $advert = $commentaire->getAdvert();
+        }
+        
+        else
+        {
+            $advert = $commentaire->getCommentaire()->getAdvert();
+        }
         
         //On vérifie si l'annonce appartient à l'utilisateur en cours
         if($this->getUser() === $commentaire->getUser())
@@ -122,7 +145,7 @@ class CommentaireController extends Controller
                 throw new NotFoundHttpException("Le commentaire d'id ".$id." n'existe pas!");
             }
     
-            $form = $this->createForm(AdvertEditType::class, $commentaire);
+            $form = $this->createForm(CommentaireType::class, $commentaire);
     
             if($request->isMethod('POST') && $form->handleRequest($request)->isValid())
             {
@@ -130,7 +153,7 @@ class CommentaireController extends Controller
         
                 $request->getSession()->getFlashBag()->add('notice', 'Commentaire modifié avec succès.');
         
-            return $this->redirectToRoute('commentaire_view', array('id' => $commentaire->getId()));
+            return $this->redirectToRoute('knarf_platform_view', array('id' => $advert->getId()));
             }
 
 
@@ -150,10 +173,21 @@ class CommentaireController extends Controller
   public function deleteAction($id, Request $request)
 
   {
-
     $em = $this->getDoctrine()->getManager();
     
     $commentaire = $em->getRepository('KnarfPlatformBundle:Commentaire')->find($id);
+    
+    $advert = null;
+    
+    if ($commentaire->getAdvert() != null)
+    {
+        $advert = $commentaire->getAdvert();
+    }
+    
+    else
+    {
+        $advert = $commentaire->getCommentaire()->getAdvert();    }
+    
     
     if($this->getUser() === $commentaire->getUser())
     {
@@ -167,11 +201,12 @@ class CommentaireController extends Controller
         if($form->handleRequest($request)->isValid())
         {
             $em->remove($commentaire);
-            $em->flush();
+            $em->flush();   
         
-            $request->getSession()->getFlashBag()->add('notice', "Le commentaire a été supprimé avec succès");
+            $this->addFlash('notice', "Le commentaire sur la publication ".$advert->getId()." a été supprimé avec succès");
+             
+                 return $this->redirectToRoute('knarf_platform_view', array('id' => $advert->getId()));
         
-            return $this->redirect($this->generateUrl('knarf_platform_home'));    
         }
 
         return $this->render('KnarfPlatformBundle:Commentaire:delete.html.twig', array(
@@ -182,7 +217,7 @@ class CommentaireController extends Controller
      
     else
         {            
-            return $this->redirectToRoute('commentaire_view', array('id' => $commentaire->getId()));
+            return $this->redirectToRoute('knarf_platform_view', array('id' => $commentaire->getAdvert()->getId()));
         }
     
 
@@ -207,5 +242,58 @@ class CommentaireController extends Controller
     ));
 
   }
+  
+  public function repondAction($id, Request $request)
+    {
+       $repository = $this
+        ->getDoctrine()
+        ->getManager()
+        ->getRepository('KnarfPlatformBundle:Commentaire');
+
+        $commentaire = $repository->find($id);
+        
+                            if(null === $commentaire)
+            {
+                throw new NotFoundHttpException("Le commentaire d'id ".$id." n'existe pas!");
+            }
+        
+        
+        $reponse = new Commentaire();
+        $user = $this->getUser();
+        //$advert = $commentaire->getAdvert();
+        $reponse->setUser($user);
+        //$reponse->setAdvert($advert);
+        $reponse->setCommentaire($commentaire);
+        
+        $formulaire = $this->createForm(CommentaireType::class, $reponse);
+      
+      if($request->isMethod('POST') && $formulaire->handleRequest($request)->isValid())
+      {
+        var_dump($reponse->getDatePublication());
+        var_dump($reponse->getUser()->getUsername());           
+        var_dump($reponse->getCommentaire()->getContenu());
+            
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($reponse);
+        $em->flush();
+            
+        $request->getSession()->getFlashBag()->add('notice', 'Commentaire bien enregistré.');
+        
+
+        return $this->redirectToRoute('knarf_platform_view', array('id' => $reponse->getCommentaire()->getAdvert()->getId()));
+   
+        
+            
+      }
+
+        return $this->render('KnarfPlatformBundle:Commentaire:reponse.html.twig', array(
+
+        'commentaire' => $commentaire, 'active' => 'commentaire', 'formulaire' => $formulaire->createView()
+
+        ));			
+	
+    }
+    
+   
 
 }

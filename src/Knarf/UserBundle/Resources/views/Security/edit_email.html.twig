@@ -1,0 +1,24 @@
+{# src/Knarf/UserBundle/Resources/views/Security/edit_email.html.twig #}
+
+{% extends '::layout.html.twig' %}
+
+{% block title %}
+    Profil
+{% endblock %}
+
+{% block body %}
+
+    <div style="text-align: center">
+        <h1>{{ 'user.change_email.title' | trans }}</h1>
+    </div>
+    {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+        {{ form_row(form.email) }}
+        {{ form_widget(form.Register) }}
+    {{ form_rest(form) }}    
+    {{ form_end(form) }}
+<p>
+    <a href="{{ path('profile') }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-chevron-left"></i>
+      Retour à mon profil
+    </a>
+{% endblock %}

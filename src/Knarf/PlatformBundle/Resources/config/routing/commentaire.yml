@@ -30,4 +30,11 @@ commentaire_view:
         _controller: KnarfPlatformBundle:Commentaire:view
     requirements:
         id: \d+
+        
+commentaire_repond:
+    path: /reply/{id}
+    defaults:
+        _controller: KnarfPlatformBundle:Commentaire:repond
+    requirements:
+        id: \d+
 

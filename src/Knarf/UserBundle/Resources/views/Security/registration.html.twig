@@ -1,0 +1,17 @@
+{% block subject %}
+    Activez votre compte
+{% endblock %}
+
+{% block body %}
+Bonjour {{ username }}.
+<p>
+<p>
+Veuillez cliquer sur le lien suivant pour activer votre compte--> 
+<a href="{{ request_link }}">Ici</a>
+<p>
+    Si vous n'êtes pas à l'origine de cette action, veuillez ne pas tenir compte de ce message.
+<p>    
+Cordialement,
+<p>
+Franck, administrateur
+{% endblock %}

@@ -15,7 +15,7 @@ class RubriqueType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('intitule')
-                ->add('save', SubmitType::class);;
+                ->add('enregistrer', SubmitType::class);;
     }
     
     /**

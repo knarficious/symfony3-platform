@@ -1,0 +1,29 @@
+{# src/Knarf/UserBundle/Resources/views/Security/edit_image.html.twig #}
+
+{% extends '::layout.html.twig' %}
+
+{% block title %}
+    Profil
+{% endblock %}
+
+{% block body %}
+
+<div class="row">
+    <h3>Yo! {{ app.user.username }}</h3>
+    {% if  app.user.nomMedia is not empty %}
+        <img src="{{vich_uploader_asset(app.user, 'mediaFile') | imagine_filter('my_thumb') }}" alt="{{ app.user.nomMedia }}"  />
+    {% endif %}
+</div>
+
+
+{{ form_start(form) }}
+{{ form_errors(form) }}
+    {{ form_widget(form) }}
+{{ form_rest(form) }}    
+{{ form_end(form) }}
+<p>
+    <a href="{{ path('profile') }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-chevron-left"></i>
+      Retour à mon profil
+    </a>
+{% endblock %}

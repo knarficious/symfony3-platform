@@ -1,0 +1,12 @@
+{# src/Knarf/PlatformBundle/Resources/views/Contact/form.html.twig #}
+
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+    
+<div class="well">  
+{{ form_start(form, {'attr': {'class': 'form-horizontal'} }) }}
+<div class="form-group">
+    {{ form_widget(form) }}
+    {{ form_rest(form) }}
+{{ form_end(form) }}
+</div>
+</div>

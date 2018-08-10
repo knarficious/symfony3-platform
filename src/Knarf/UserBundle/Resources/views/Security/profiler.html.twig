@@ -17,10 +17,34 @@
     </div>
     {% endif %}
     <p>
-    Membre depuis le: {{ user.createdAt|date('m/d/Y') }}
+    Membre depuis le: {{ user.createdAt|date('d/m/Y') }}
     </p>
     <p>
-    Dernière connection: {{ user.lastTimeConnect|date('m/d/Y H:i:s')}}
+     Dernière connection:    
+    {% if user.lastTimeConnect is not empty %}
+     le {{ user.lastTimeConnect|date('d/m/Y H:i')}}
+    
+    {% else %}
+        jamais
+    {% endif %}
+    </p>
+    {% if user.adverts is not empty %}
+        
+        <ul class="nav nav-pills nav-stacked">  
+            {% for entity in app.user.adverts %}
+                <li>
+                    <a href="{{ path('knarf_platform_view', { 'id': entity.id }) }}">
+                        {{ entity.title }}>
+                        dans la rubrique {{ entity.rubrique.intitule }}
+                    </a>                        
+                </li>    
+            {% endfor %}
+        </ul>
+    {% endif %}    
+    <p>
+    {% if is_granted('ROLE_ADMIN') %}
+        Adresse ip: {{ user.adresseIp }}
+    {% endif %}
     </p>
 </div>    
 

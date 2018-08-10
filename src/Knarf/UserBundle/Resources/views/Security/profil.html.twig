@@ -9,26 +9,41 @@
 {% block body %}
 
 <div class="well">
-    <h3>Bienvenue {{ user.username }}</h3>
-    
+    <h3> {{ user.username }}</h3>
+    <a href="{{ path('change_image') }}">
     {% if  user.nomMedia is not empty %}
     <div class="badge">
         <img src="{{vich_uploader_asset(user, 'mediaFile') | imagine_filter('my_thumb_resize') }}" alt="{{ user.nomMedia }}"  />
     </div>
+    {% else %}
+        {% image '@KnarfUserBundle/Resources/public/images/if_icon-person_211874.png' %}
+        <img class="media-object" src="{{ asset_url }}" alt="" />
+        {% endimage %}
     {% endif %}
-    <div class="row">
-    Vous êtes membre depuis le: {{ user.createdAt|date('d/m/Y') }}
-    </div>
+    </a>
     <p>
-    Dernière connection: {{ user.lastTimeConnect|date('m/d/Y H:i:s')}}
-    </p>
+    Vous êtes membre depuis le: {{ user.createdAt|date('d/m/Y') }}
+    <p>
+    
+    Dernière connection le: {{ user.lastTimeConnect|date('d/m/Y H:i:s')}}
+    
     
 </div>
 
 <div class="well">
     Votre adresse email: {{ user.email }}
+    <p>
+{% if is_granted('ROLE_USER') %}
+    <a class="btn btn-primary btn-lg" href="{{ path('change_email') }}">
+        Modifier
+    </a>
+{% endif %}    
 </div>
 
+<div class="">    
+    <a class="btn btn-primary btn-lg" href="{{ path('change_password') }}">{{ 'menu.changement_password' | trans }}</a>
+</div>
+    
 {% if app.user.adverts is not empty%}
     <div class="well">
                 
@@ -46,7 +61,15 @@
     </div>
 {% else %}
 {% endif %}
-
+<p>
+{% if is_granted('ROLE_USER') %}
+    <div class="">
+    <a class="btn btn-primary btn-lg" href="{{ path('knarf_platform_add') }}">
+        Ajouter une annonce »
+    </a>
+    </div>
+{% endif %}
+<p>
 {% if app.user.commentaires is not empty %}
     <div class="well">
         
@@ -81,13 +104,6 @@
 </div>
 {% endif %}
 <p>
-
-<div class="">
-    <a href="{{ path('profile_edit') }}" class="btn btn-block">
-      <i class="glyphicon glyphicon-edit"></i>
-      Modifier mon profil
-    </a>
-</div>
 
 
 {% endblock %}

@@ -4,18 +4,12 @@
 {% form_theme form 'bootstrap_3_layout.html.twig' %}
 
 {% block title %}
-    Création de compte
+    
 {% endblock %}
 
 {% block body %}
-
-{{ form_start(form) }}
-    {{ form_row(form.username) }}
-    {{ form_row(form.email) }}
-    {{ form_row(form.plainPassword.first) }}
-    {{ form_row(form.plainPassword.second) }}
-
-    <button type="submit">S'enregistrer</button>
-{{ form_end(form) }}
-
+    <div style="text-align: center">
+        <h1>{{ 'user.registration.label' | trans }}</h1>
+    </div>
+{{ form(form, { attr: { novalidate: 'novalidate' } }) }}
 {% endblock %}

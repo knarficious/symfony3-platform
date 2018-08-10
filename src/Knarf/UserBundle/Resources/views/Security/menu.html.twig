@@ -4,15 +4,15 @@
 {# Ce template n'hérite de personne,
 
    tout comme le template inclus avec {{ include() }}. #}
-<h3>Membres </h3>
-<div class="container">
 
+<div class="col-md-3">
+    <h3>Membres </h3>
 
   {% for user in listUsers %}
       
       {% if user.isActive == 1 %}
 
-         <div class="media">
+        <div class="media">
         <div class="media-left">  
         {% if user.nomMedia is not empty %}
         <img class="media-object" src="{{vich_uploader_asset(user, 'mediaFile') | imagine_filter('my_thumb') }}" alt=""  />
@@ -24,14 +24,14 @@
         </div>
         <div class="media-body">
             <h4 class="media-heading">
-                {% if user is sameas( app.user) %}
-                    <a href="{{ path('profile') }}">{{ user.username }}</a>
+                {% if user is same as( app.user) %}
+                    <a href="{{ path('profile') }}">{{ user.username }}</a>                    
                 {% else %}    
                 <a href="{{ path('profile_view', {'id': user.id}) }}">{{ user.username }}</a>
                 {% endif %}
             </h4>
-        </div>
-        
+        </div>     
+         
         </div>
         {% endif %}
 

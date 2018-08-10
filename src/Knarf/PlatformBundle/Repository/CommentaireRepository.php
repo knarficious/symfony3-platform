@@ -10,4 +10,14 @@ namespace Knarf\PlatformBundle\Repository;
  */
 class CommentaireRepository extends \Doctrine\ORM\EntityRepository
 {
+        public function afficherCommentairesAnnonce($advertId)
+    {
+        $qb = $this->createQueryBuilder('c')
+                ->join('c.advert', 'a')
+                ->where('a.id = :id')
+                ->setParameter('id', $advertId)
+                ->addOrderBy('c.datePublication', 'DESC');
+        
+        return $qb->getQuery()->getResult();
+    }
 }

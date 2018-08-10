@@ -3,7 +3,8 @@
 {% extends '::layout.html.twig' %}
 
 
-{% block body %}
+{% block body %}   
+    
 
   {# Le formulaire, avec URL de soumission vers la route « login_check » comme on l'a vu #}
     <div class="container">    
@@ -17,10 +18,13 @@
                 {% endif %}    
                 <img class="profile-img" src=""
                     alt="">
-                <form class="form-signin" action="{{ path('login_check') }}" method="post">
+                <form class="form-signin" action="{{ path('security_login_check') }}" method="post">
                 <input type="text" id="username" name="_username" value="{{ last_username }}"class="form-control" placeholder="username or email" required autofocus>
                 <input type="password" id="password" name="_password" class="form-control" placeholder="Mot de passe" required>
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                {% if app.request.get('_route') != app.request.headers.get('referer') %}   
+                <input type="hidden" name="_target_path" value="{{ app.request.headers.get('referer') }}" />   
+                {% endif %}
                 <button class="btn btn-lg btn-primary btn-block" type="submit">
                     Se connecter</button>
                 <label class="checkbox pull-left">
@@ -30,7 +34,9 @@
                 <a href="#" class="pull-right need-help">Need help? </a><span class="clearfix"></span>
                 </form>
             </div>
-            <a href="{{ path('register') }}" class="text-center new-account">Créer un compte </a>
+                <a href="{{ path('request_password') }}">{{ 'user.connexion.password_forgotten' | trans }}</a>
+            <p>
+            <a href="{{ path('knarf_user_register_register') }}" class="text-center new-account">Créer un compte </a>
         </div>
     
     </div>

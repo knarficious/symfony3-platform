@@ -6,7 +6,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -23,9 +23,10 @@ class AdvertType extends AbstractType
         $builder->add('rubrique',   EntityType::class,  array('class' => 'KnarfPlatformBundle:Rubrique', 'choice_label' => 'intitule', 'placeholder' => 'Sélectionner la rubrique'))
                 ->add('title',      TextType::class)
                 ->add('content',    TextareaType::class)
-                ->add('mediaFile',  VichFileType::class, array('required' => FALSE))
+                ->add('mediaFile',  VichFileType::class, array('required' => false))
                 ->add('published',  CheckboxType::class, array('required' => false))
-                ->add('save',       SubmitType::class);
+                ->add('enregistrer',       SubmitType::class)
+                ->add('annuler', ButtonType::class);
     }
     
     /**

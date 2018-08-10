@@ -1,0 +1,11 @@
+knarf_api_homepage:
+    path:     /
+    defaults: { _controller: KnarfApiBundle:Default:index }
+    
+knarf_api_users:
+    path:   /users
+    defaults: { _controller: KnarfApiBundle:Default:getUsers }
+    
+knarf_api_adverts:
+    path: /adverts
+    defaults: { _controller: KnarfApiBundle:Default:getAdverts }

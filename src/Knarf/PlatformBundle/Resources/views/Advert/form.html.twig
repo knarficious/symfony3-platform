@@ -52,7 +52,8 @@
   {{ form_row(form.published) }}
 
   {# Pour le bouton, pas de label ni d'erreur, on affiche juste le widget #}
-  {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
+  {{ form_widget(form.enregistrer, {'attr': {'class': 'btn btn-primary'}}) }}
+  {{ form_widget(form.annuler, {'attr': {'class': 'btn btn-danger'}}) }}
 
   {# Génération automatique des champs pas encore écrits.
      Dans cet exemple, ce serait le champ CSRF (géré automatiquement par Symfony !)

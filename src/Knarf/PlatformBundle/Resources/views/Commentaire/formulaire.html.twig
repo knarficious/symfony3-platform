@@ -1,0 +1,31 @@
+{# src/Knarf/PlatformBundle/Resources/views/Commentaire/formulaire.html.twig #}
+
+{% form_theme formulaire 'bootstrap_3_layout.html.twig' %}
+
+<h3>Ajouter un commentaire </h3>
+
+<div class="well">
+  {{ form_start(formulaire, {'attr': {'class': 'form-horizontal'}}) }}
+
+  {# Les erreurs générales du formulaire. #}
+  {{ form_errors(formulaire) }}
+
+  {# Idem pour un autre champ. #}
+  <div class="form-group">
+    {{ form_label(formulaire.contenu, "Contenu du commentaire", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+    {{ form_errors(formulaire.contenu) }}
+    <div class="col-sm-10">
+      {{ form_widget(formulaire.contenu, {'attr': {'class': 'form-control'}}) }}
+    </div>
+  </div>
+
+
+  {# Pour le bouton, pas de label ni d'erreur, on affiche juste le widget #}
+  {{ form_widget(formulaire.Enregistrer, {'attr': {'class': 'btn btn-primary'}}) }}
+  {{ form_widget(formulaire.Effacer, {'attr': {'class': 'btn btn-primary'}}) }}
+  <span id="annul" onClick="document.getElementById('formulaire-comment-commentaire').style.display='none'">
+  {{ form_widget(formulaire.Annuler, {'attr': {'class': 'btn btn-danger'}}) }}
+  </span>
+  {# Fermeture de la balise <form> du formulaire HTML #}
+  {{ form_end(formulaire) }}
+</div>

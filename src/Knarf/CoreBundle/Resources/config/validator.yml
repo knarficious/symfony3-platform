@@ -1,0 +1,8 @@
+## YAML Template.
+---
+services:
+    knarf.unique_attribute_validator:
+        class: Knarf\CoreBundle\Validator\Constraints\UniqueAttributeValidator
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: validator.constraint_validator, alias: unique_attribute_validator }
