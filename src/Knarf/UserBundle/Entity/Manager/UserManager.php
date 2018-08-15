@@ -12,6 +12,7 @@ use Knarf\UserBundle\Entity\Manager\Interfaces\UserManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Knarf\CoreBundle\Entity\Manager\AbstractGenericManager;
 use Knarf\UserBundle\KnarfUserEvents;
 use Knarf\UserBundle\Entity\Interfaces\UserInterface;
@@ -71,11 +72,12 @@ class UserManager extends AbstractGenericManager implements UserManagerInterface
         $user->setIsAlreadyRequested(false);
     }
 
-    public function createUser(UserInterface $user) 
+    public function createUser(UserInterface $user, $adresseIp) 
     {
         $user->setCgvRead(false);
         $user->setRoles(['ROLE_ADMIN']);
         $user->encodePassword($this->encoderFactory->getEncoder($user));
+        $user->setAdresseIp($adresseIp);
         $this->save($user, true, true);
         $this->dispatcher->dispatch(
             KnarfUserEvents::NEW_ACCOUNT_CREATED, new UserDataEvent($user)
