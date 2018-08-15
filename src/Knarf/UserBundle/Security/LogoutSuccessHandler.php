@@ -40,7 +40,7 @@ class LogoutSuccessHandler implements LogoutHandlerInterface
     public function logout(Request $request, Response $response, TokenInterface $token) 
     {
         $user = $token->getUser();
-        $this->logger->info("User " . $user->getEmail() . " has been logged out");
+        $this->logger->info("User " . $user->getUsername() . " has been logged out");
         $request->getSession()->getFlashBag()->add(
                 'notice', 'Vous êtes déconnecté. À bientôt '.$user->getUsername());
         $response->headers->setCookie(new Cookie('success_connection', '', time() - 3600));
