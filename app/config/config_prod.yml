@@ -10,9 +10,21 @@ imports:
 monolog:
     handlers:
         main:
-            type: fingers_crossed
-            action_level: error
-            handler: nested
+            type:           rotating_file
+            max_files:      3
+            path:           "%kernel.logs_dir%/%kernel.environment%.all.log"
+            level:          info
+            channels:       [!doctrine, !security]
+        doctrine:
+            type:           stream
+            path:           "%kernel.logs_dir%/%kernel.environment%.doctrine.log"
+            channels:       doctrine
+        authentication:
+            type:           rotating_file
+            max_files:      15
+            path:           "%kernel.logs_dir%/%kernel.environment%.auth.log"
+            level:          info
+            channels:       security #mywebsite_user    
         nested:
             type: stream
             path: '%kernel.logs_dir%/%kernel.environment%.log'
