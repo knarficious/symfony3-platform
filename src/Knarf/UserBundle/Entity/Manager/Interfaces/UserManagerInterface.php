@@ -22,7 +22,7 @@ interface UserManagerInterface extends GenericManagerInterface
      *
      * @return void
      */
-    public function createUser(UserInterface $user);
+    public function createUser(UserInterface $user, $adresseIp);
     
     /**
      * @param UserInterface $user
