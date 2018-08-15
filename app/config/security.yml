@@ -54,8 +54,9 @@ security:
                 path: security_logout
                 target: /
                 handlers: [security_logout_success_handler]
-                invalidate_session: false
-                #logout_on_user_change: true    
+                invalidate_session: true
+                
+            logout_on_user_change: true    
     
     access_decision_manager:
         #   affirmative (default) => This grants access as soon as there is one voter granting access;
@@ -71,4 +72,4 @@ security:
         - { path: ^/rubrique/ajout, roles: ROLE_ADMIN }
         - { path: ^/login | register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/ajout, roles: ROLE_USER }        
-        - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+       # - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
