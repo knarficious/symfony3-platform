@@ -50,4 +50,6 @@ interface UserInterface extends SecurityUserInterface
     
     public function setUpdatedAt();
     
+    public function setAdresseIp($adresseIp);
+    
 }
