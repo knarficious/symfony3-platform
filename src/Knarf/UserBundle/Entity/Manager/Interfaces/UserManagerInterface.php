@@ -96,5 +96,10 @@ interface UserManagerInterface extends GenericManagerInterface
      */
     public function updateUserImage(UserInterface $user, $nomMedia, $mediaFile);
     
+    /**
+     * @param UserInterface $user
+     * @param $adresseIp
+     */
+    public function setIp(UserInterface $user, $adresseIp);
 
 }
