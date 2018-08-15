@@ -46,7 +46,7 @@ class RegistrationFormHandler implements FormHandlerInterface
         if (!$form->isValid()) {
             return false;
         }
-        $this->handler->createUser($form->getData()->getUser());
+        $this->handler->createUser($form->getData()->getUser(), $request->getClientIp());
         return true;
     }
 
