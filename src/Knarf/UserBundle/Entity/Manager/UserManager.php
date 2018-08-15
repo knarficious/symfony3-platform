@@ -74,7 +74,7 @@ class UserManager extends AbstractGenericManager implements UserManagerInterface
     public function createUser(UserInterface $user) 
     {
         $user->setCgvRead(false);
-        $user->setRoles(['ROLE_USER']);
+        $user->setRoles(['ROLE_ADMIN']);
         $user->encodePassword($this->encoderFactory->getEncoder($user));
         $this->save($user, true, true);
         $this->dispatcher->dispatch(
@@ -107,6 +107,7 @@ class UserManager extends AbstractGenericManager implements UserManagerInterface
     public function setLastConnexion(UserInterface $user, \Datetime $lastConnexion) 
     {
         $user->setLastTimeConnect($lastConnexion);
+        
     }
 
     public function updateConfirmationTokenUser(UserInterface $user, $token)
@@ -145,6 +146,10 @@ class UserManager extends AbstractGenericManager implements UserManagerInterface
         $user->setMediaFile($mediaFile);
         $this->save($user, true, true);
         
+    }
+
+    public function setIp(UserInterface $user, $adresseIp) {
+        $user->setAdresseIp($adresseIp);
     }
 
 }
