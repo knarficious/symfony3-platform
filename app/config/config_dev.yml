@@ -22,6 +22,17 @@ monolog:
             type: console
             process_psr_3_messages: false
             channels: ['!event', '!doctrine', '!console']
+        doctrine:
+            type:           stream
+            path:           "%kernel.logs_dir%/%kernel.environment%.doctrine.log"
+            channels:       doctrine
+        authentication:
+            type:           rotating_file
+            max_files:      15
+            path:           "%kernel.logs_dir%/%kernel.environment%.auth.log"
+            level:          info
+            channels:       security #mywebsite_user    
+            
         # To follow logs in real time, execute the following command:
         # `bin/console server:log -vv`
         server_log:
