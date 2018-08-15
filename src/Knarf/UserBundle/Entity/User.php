@@ -4,11 +4,13 @@ namespace Knarf\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Knarf\UserBundle\Entity\Interfaces\UserInterface;
+//use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 use Symfony\Component\Security\Core\Role\Role;
+use Symfony\Component\Security\Core\User\EquatableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
@@ -17,12 +19,12 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="Knarf\UserBundle\Repository\UserRepository")
- * @ORM\HasLifecycleCallbacks * 
+ * 
  * @UniqueEntity(fields="username", message="Ce pseudo existe déjà!")
  * @UniqueEntity(fields="email", message="Cet email existe déjà!")
  * @Vich\Uploadable
  */
-class User implements UserInterface, \Serializable
+class User implements UserInterface, \Serializable, EquatableInterface
 {
     /**
      * @var int
@@ -171,23 +173,18 @@ class User implements UserInterface, \Serializable
      */
     private $commentaires;
     
-   /*
-    * 
-    public function __construct()
+
+    public function __construct($username, $password, $salt, array $roles)
     {
         //parent::__construct();
         
-        $this->isActive = false;
-       // $this->salt = md5(uniqid(null, true));
-        //$this->roles = array('ROLE_USER');
-        $this->createdAt = new \DateTime;
-        $this->updatedAt= new \DateTime;
-        $this->adverts = new ArrayCollection();
-        $this->commentaires = new ArrayCollection();
+        $this->username = $username;
+        $this->password = $password;
+        $this->salt = $salt;
+        $this->roles = $roles;
         
     }
-    * 
-    */
+    
 
     /**
      * Get id
@@ -351,7 +348,9 @@ class User implements UserInterface, \Serializable
         return serialize(array(
         $this->id,
         $this->username,
-        $this->password
+        $this->email,
+        $this->password,
+        $this->salt    
         ));
     }
 
@@ -363,7 +362,9 @@ class User implements UserInterface, \Serializable
         list(
         $this->id,
         $this->username,
-        $this->password
+        $this->email,
+        $this->password,
+        $this->salt
         ) = unserialize($serialized);
     }
 
@@ -749,5 +750,26 @@ class User implements UserInterface, \Serializable
         return $this->cgvRead;
     }
 
+    public function isEqualTo(\Symfony\Component\Security\Core\User\UserInterface $user) {
+        
+        if (!$user instanceof User) {
+            return false;
+        }
+
+        if ($this->password !== $user->getPassword()) {
+            return false;
+        }
+
+        if ($this->salt !== $user->getSalt()) {
+            return false;
+        }
+
+        if ($this->username !== $user->getUsername()) {
+            return false;
+        }
+
+        return true;
+        
+    }
 
 }
