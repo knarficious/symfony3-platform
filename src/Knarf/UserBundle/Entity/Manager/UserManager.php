@@ -75,7 +75,7 @@ class UserManager extends AbstractGenericManager implements UserManagerInterface
     public function createUser(UserInterface $user, $adresseIp) 
     {
         $user->setCgvRead(false);
-        $user->setRoles(['ROLE_ADMIN']);
+        $user->setRoles(['ROLE_USER']);
         $user->encodePassword($this->encoderFactory->getEncoder($user));
         $user->setAdresseIp($adresseIp);
         $this->save($user, true, true);
