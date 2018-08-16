@@ -64,6 +64,11 @@ contact:
     path: /contact
     defaults:
         _controller: KnarfPlatformBundle:Contact:contact
+        
+nelmio-api-doc:
+    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+    prefix:   /documentation
+        
 
 
         
