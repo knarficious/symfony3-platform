@@ -141,8 +141,9 @@ fos_rest:
         rules:
             - { path: '^/api', priorities: ['json'], fallback_format: 'json' }
             - { path: '^/', priorities: ['html'], fallback_format: 'html'}
+    param_fetcher_listener: true
     view:
-        view_response_listener: force
+        view_response_listener: true
         formats:
             xml: true
             json: true
@@ -156,7 +157,7 @@ fos_rest:
         mime_types:
             json : ['application/json']
     routing_loader:
-        default_format: json
+        include_format: false
     access_denied_listener:
         json: true
         xml: true
