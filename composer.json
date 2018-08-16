@@ -19,7 +19,7 @@
             "vendor/symfony/symfony/src/Symfony/Component/VarDumper/Resources/functions/dump.php"
         ]
     },
-    "require": {        
+    "require": {
         "php": ">=5.5.9",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/doctrine-fixtures-bundle": "~2.3",
@@ -28,6 +28,7 @@
         "incenteev/composer-parameter-handler": "^2.0",
         "leafo/scssphp": "~0.6",
         "liip/imagine-bundle": "^1.9",
+        "nelmio/api-doc-bundle": "^2.13",
         "oneup/flysystem-bundle": "^1.14",
         "patchwork/jsqueeze": "~1.0",
         "sensio/distribution-bundle": "^5.0.19",
