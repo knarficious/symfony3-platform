@@ -1,0 +1,57 @@
+# src/Knarf/ApiBundle/Resources/config/serialization.yml
+
+Knarf\UserBundle\Entity\User:
+    attributes:
+        id:
+            groups: ['user', 'advert', 'commentaire']
+        username:
+            groups: ['user', 'advert', 'commentaire']
+        email:
+            groups: ['user', 'advert', 'commentaire']
+        adverts:
+            groups: ['user']
+        commentaires:
+            groups: ['user']
+            
+Knarf\PlatformBundle\Entity\Advert:
+    attributes:
+        id:
+            groups: ['user', 'advert', 'commentaire', 'rubrique']
+        
+        title:
+            groups: ['user', 'advert', 'commentaire', 'rubrique']
+            
+        user:
+            groups: ['advert']
+            
+        rubrique:
+            groups: ['advert']
+            
+        commentaires:
+            groups: ['advert']
+            
+Knarf\PlatformBundle\Entity\Rubrique:
+    attributes:
+        id:
+            groups: ['advert', 'rubrique']
+            
+        intitule:
+            groups: ['advert', 'rubrique']
+            
+        adverts:
+            groups: ['rubrique']
+            
+            
+Knarf\PlatformBundle\Entity\Commentaire:
+    attributes:
+        id:
+            groups: ['advert', 'user', 'commentaire']
+            
+        contenu:
+            groups: ['advert', 'user', 'commentaire']
+            
+        advert:
+            groups: ['commentaire']
+            
+        user:
+            groups: ['commentaire']
