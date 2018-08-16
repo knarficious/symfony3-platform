@@ -9,3 +9,8 @@ knarf_api_users:
 knarf_api_adverts:
     path: /adverts
     defaults: { _controller: KnarfApiBundle:Default:getAdverts }
+    
+knarf_api_adverts_user:
+    path: /users/{id}/adverts
+    defaults: 
+        _controller: KnarfApiBundle:Default:getAdvertsByUsers
