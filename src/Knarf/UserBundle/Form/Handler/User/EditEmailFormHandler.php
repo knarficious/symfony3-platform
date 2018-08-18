@@ -44,7 +44,7 @@ class EditEmailFormHandler implements FormHandlerInterface
     public function handle(FormInterface $form, Request $request, array $options = null)
     {
         $form->handleRequest($request);
-        if (!$form->isValid()) {
+        if (!$form->isSubmitted()) {
             return false;
         }
         
