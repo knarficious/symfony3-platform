@@ -41,13 +41,17 @@ class AccountActivationHandler
     public function handle(Request $request, array $options = null)
     {
        $token = $request->query->get('token');
-      // dump($token);
-       $user = $this->userManager->getUserByConfirmationToken($token);
+       
+       if ($this->userManager->getUserByConfirmationToken($token))
+       {
+           $user = $this->userManager->getUserByConfirmationToken($token);
       
        $this->userManager->clearConfirmationTokenUser($user);
        $this->userManager->setIsEnable($user);
       // $this->userManager->setIpAdress($user, $request->getClientIp());
         
         return true;
+       }
+       
     }
 }
