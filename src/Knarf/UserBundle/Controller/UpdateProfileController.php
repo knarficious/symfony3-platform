@@ -9,7 +9,7 @@
 namespace Knarf\UserBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-//use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 use Knarf\UserBundle\Form\Type\User\EditEmailType;
@@ -20,11 +20,13 @@ use Knarf\UserBundle\Entity\User\Profile;
  * Description of UpdateProfileController
  *
  * @author franck
+ * @Route("/profile")
  */
 class UpdateProfileController extends Controller 
 {
    /**
      * @param Request $request
+     * @Route("/modifier-email", name="change_email")
      * @Method({"GET", "POST"})
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
@@ -46,6 +48,7 @@ class UpdateProfileController extends Controller
     
     /**
      * @param Request $request
+     * @Route("/modifier-photo", name="change_image")
      * @Method({"GET", "POST"})
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
