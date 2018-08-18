@@ -6,7 +6,7 @@
     <h1>Page not found</h1>
 
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-        {# ... #}
+        {{ user.username }}
     {% endif %}
 
     <p>
