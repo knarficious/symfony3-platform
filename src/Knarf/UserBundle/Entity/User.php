@@ -174,16 +174,18 @@ class User implements UserInterface, \Serializable, EquatableInterface
     private $commentaires;
     
 
-    public function __construct($username, $password, $salt, array $roles)
-    {
-        //parent::__construct();
-        
-        $this->username = $username;
-        $this->password = $password;
-        $this->salt = $salt;
-        $this->roles = $roles;
-        
-    }
+//    public function __construct($username, $password, $salt, array $roles)
+//    {
+//        //parent::__construct();
+//        
+//        $this->username = $username;
+//        $this->password = $password;
+//        $this->salt = $salt;
+//        $this->roles = $roles;
+//        $this->adverts = new ArrayCollection();
+//        $this->commentaires = new ArrayCollection();
+//        
+//    }
     
 
     /**
