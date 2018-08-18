@@ -19,13 +19,13 @@ use Knarf\UserBundle\Entity\Password\ChangePassword;
  * Description of ChangePasswordController
  *
  * @author franck
- * @Route("/")
+ * @Route("/profile")
  */
 class ChangePasswordController extends Controller
 {
     /**
      * @param Request $request
-     * @Route("/change-password", name="change_password")
+     * @Route("/modifier_motdepasse", name="change_password")
      * @Method("GET|POST")
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
