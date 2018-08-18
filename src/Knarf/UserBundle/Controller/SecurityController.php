@@ -4,13 +4,7 @@
 namespace Knarf\UserBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Knarf\UserBundle\Entity\User;
-use Knarf\UserBundle\Form\UserType;
-use Knarf\UserBundle\Form\Type\User\EditEmailType;
-use Knarf\UserBundle\Geoloc\AdresseIp;
-use Knarf\UserBundle\Util\TokenGeneratorInterface;
 
 class SecurityController extends Controller
 {
@@ -60,10 +54,12 @@ class SecurityController extends Controller
      */
     public function logoutAction()   
     {
-     throw new \Exception('This should never be reached!');
+      throw new \Exception('This should never be reached!');
     } 
   
-
+    /**
+     * @Route("/profile", name="profile")
+     */
     public function profileAction()
     {
         $this->denyAccessUnlessGranted('ROLE_USER', null, 'Unable to access this page!');     
@@ -74,6 +70,9 @@ class SecurityController extends Controller
         return $this->render('KnarfUserBundle:Security:profil.html.twig', array( 'user' => $currentUser) );
     }
     
+    /**
+     *@Route("/member/{id}", name="profile_view")
+     */
     public function viewMemberAction($id)
     {   
         $repository = $this
@@ -90,7 +89,7 @@ class SecurityController extends Controller
     public function indexAction()
     {
         $repository = $this->getDoctrine()->getManager()->getRepository('KnarfUserBundle:User');
-        $listUsers = $repository->findAll();
+        $listUsers = $repository->findBy(array(), array('lastTimeConnect' => 'DESC'));
         
         return $this->render('KnarfUserBundle:Security:menu.html.twig', array(
         'listUsers' => $listUsers
@@ -98,6 +97,10 @@ class SecurityController extends Controller
         
     }
     
+    /**
+     * @Route("/admin")
+     * @return type
+     */
     public function adminAction()
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
