@@ -8,7 +8,7 @@
 <div class="col-md-3">
     <h3>Membres </h3>
 
-  {% for user in listUsers %}
+    {% for user in listUsers |sort%}
       
       {% if user.isActive == 1 %}
 
@@ -27,7 +27,7 @@
                 {% if user is same as( app.user) %}
                     <a href="{{ path('profile') }}">{{ user.username }}</a>                    
                 {% else %}    
-                <a href="{{ path('profile_view', {'id': user.id}) }}">{{ user.username }}</a>
+                    <a href="{{ path('profile_view', {'id': user.id}) }}">{{ user.username }}</a>
                 {% endif %}
             </h4>
         </div>     
