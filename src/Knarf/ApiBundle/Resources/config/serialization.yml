@@ -6,8 +6,6 @@ Knarf\UserBundle\Entity\User:
             groups: ['user', 'advert', 'commentaire']
         username:
             groups: ['user', 'advert', 'commentaire']
-        email:
-            groups: ['user', 'advert', 'commentaire']
         adverts:
             groups: ['user']
         commentaires:
@@ -19,6 +17,12 @@ Knarf\PlatformBundle\Entity\Advert:
             groups: ['user', 'advert', 'commentaire', 'rubrique']
         
         title:
+            groups: ['user', 'advert', 'commentaire', 'rubrique']
+        
+        date:
+            groups: ['user', 'advert', 'commentaire', 'rubrique']
+            
+        updateAt:
             groups: ['user', 'advert', 'commentaire', 'rubrique']
             
         user:
