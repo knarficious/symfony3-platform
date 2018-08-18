@@ -1,0 +1,18 @@
+{# src/Knarf/UserBundle/Resources/views/Security/info_activation.html.twig #}
+
+{% extends '::layout.html.twig' %}
+
+{% block body %}
+
+Un e-mail d'activation de votre compte a été envoyé à l'adresse  
+    {% for email in app.flashes('email') %}
+        <b>{{ email }} </b>
+    {% endfor %}    
+<p>
+<p>
+<p>
+Vérifiez votre boîte de réception (sans oublier le dossier "courrier indésirable") et cliquez sur le lien du mail pour activer votre compte. Vous pourrez alors vous connecter avec votre e-mail et votre mot de passe.
+<p>
+    <a href="{{ path('knarf_platform_home') }}">Retour à l'accueil</a>   
+
+{% endblock %}
