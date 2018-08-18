@@ -11,11 +11,16 @@ knarf_api:
 knarf_user:
     resource: "@KnarfUserBundle/Controller/"
     type: annotation
-    prefix: /
+    prefix: /   
 
 knarf_platform:
     resource: "@KnarfPlatformBundle/Resources/config/routing.yml"
     prefix:   /
+    
+registration:
+    path: /activate
+    defaults:
+        _controller: KnarfUserBundle:Register:activate
     
 rubrique:
     resource: "@KnarfPlatformBundle/Resources/config/routing/rubrique.yml"
@@ -24,38 +29,6 @@ rubrique:
 commentaire:
     resource: "@KnarfPlatformBundle/Resources/config/routing/commentaire.yml"
     prefix: /commentaire
-        
-profile:
-    path: /profile/
-    defaults:
-        _controller: KnarfUserBundle:Security:profile
-        
-change_email:
-    path: /profile/change-email
-    defaults:
-        _controller: KnarfUserBundle:UpdateProfile:editEmail
-        
-profile_view:
-    path: /member/{id}
-    defaults:
-        _controller: KnarfUserBundle:Security:viewMember
-    requirements:
-        id: \d+    
-
-change_image:
-    path: /profile/change-image
-    defaults:
-        _controller: KnarfUserBundle:UpdateProfile:editImage
-        
-admin:
-    path: /admin
-    defaults:
-        _controller: KnarfUserBundle:Security:admin
-        
-registration:
-    path: /activate
-    defaults:
-        _controller: KnarfUserBundle:Register:activate
         
 _liip_imagine:
     resource: "@LiipImagineBundle/Resources/config/routing.xml"
