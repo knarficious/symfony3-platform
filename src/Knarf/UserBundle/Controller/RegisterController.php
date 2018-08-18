@@ -24,7 +24,7 @@ class RegisterController extends Controller
 {
     /**
      * @param Request $request
-     * @Route("/register")
+     * @Route("/register", name="register")
      * @Method({"GET", "POST"})
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
@@ -38,9 +38,9 @@ class RegisterController extends Controller
         
         if ($this->getRegistrationFormHandler()->handle($form, $request))
         {
-            
-            $this->addFlash('notice', 'Votre compte est créé : Un email vous a été expédié');
-            return $this->redirectToRoute('security_login_form');
+            $email = $form->getData()->getEmail();
+            $this->addFlash('email', $email);
+            return $this->redirectToRoute('info_activation');
         }
         
         return $this->render(
@@ -49,12 +49,38 @@ class RegisterController extends Controller
         );
     }
     
+    /**
+     * @Route("/info-activation", name="info_activation")
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+
+     */
+    public function infoActivateAction()
+    {
+
+        // Si le visiteur est déjà identifié, on le redirige
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_USER'))
+            {
+                return $this->redirectToRoute('profile');
+            }        
+        
+        return $this->render(
+                'KnarfUserBundle:Security:info_activation.html.twig');
+    }
+    
     /*
-     * @Route("/activate"
+     * @Route("/activate", name="registration")
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function activateAction(Request $request)
     {
+        $token = $request->query->get("token");
+        //on teste si le jeton existe en BDD
+        if(!$this->getDoctrine()->getManager()->getRepository('KnarfUserBundle:User')->getUserByToken($token))
+                {
+                   $this->addFlash('notice', 'Le lien a expiré ou votre compte est déjà activé');
+                    return $this->redirectToRoute('knarf_platform_home');
+                }
+        
         if ($this->getAccountActivationHandler()->handle($request))
         {
             $this->addFlash('notice', 'Votre compte est activé : Vous pouvez vous connecter');
