@@ -4,7 +4,7 @@ services:
     #
     security_authentication_success_handler:
         class: Knarf\UserBundle\Security\AuthenticationSuccessHandler
-        arguments:  ["@logger", "@security.http_utils", {}]
+        arguments:  ["@logger", "@security.http_utils", "@app.user_manager"]
         tags:
             - { name: 'monolog.logger', channel: 'mywebsite_user' }
 
