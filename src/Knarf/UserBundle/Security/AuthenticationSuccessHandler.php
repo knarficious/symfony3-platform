@@ -9,35 +9,77 @@
 namespace Knarf\UserBundle\Security;
 
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Http\Authentication\DefaultAuthenticationSuccessHandler;
+use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
 use Symfony\Component\Security\Http\HttpUtils;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Psr\Log\LoggerInterface;
+use Knarf\UserBundle\Entity\Manager\Interfaces\UserManagerInterface;
 
 /**
  * Description of AuthenticationSuccessHandler
  *
  * @author franck
  */
-class AuthenticationSuccessHandler extends DefaultAuthenticationSuccessHandler
+class AuthenticationSuccessHandler implements AuthenticationSuccessHandlerInterface
 {
-        private $logger;
+    /**
+     * @var LoggerInterface $logger
+     */    
+    private $logger;
     
-    public function __construct(LoggerInterface $logger, HttpUtils $httpUtils, array $options)
-    {
-        parent::__construct($httpUtils, $options);
+    /**
+     * @var UserManagerInterface $userManager
+     */
+    private $userManager;
+    
+    /**
+     *
+     * @var HttpUtils $httpUtils 
+     */
+    private $httpUtils;
         
-        $this->logger = $logger;
+    
+    /** 
+     * @param LoggerInterface $logger
+     * @param HttpUtils $httpUtils
+     * @param UserManagerInterface $userManager
+     */
+    public function __construct(LoggerInterface $logger, HttpUtils $httpUtils,  UserManagerInterface $userManager)
+    {
+       $this->logger = $logger;
+       $this->httpUtils = $httpUtils;
+       $this->userManager = $userManager;
     }
+    
     public function onAuthenticationSuccess(Request $request, TokenInterface $token)
     {
+        $session = $request->getSession();
+
+        if ($session->has('referer'))
+        {
+            if ($session->get('referer') !== null && $session->get('referer') !== '')
+            {
+                $response = new RedirectResponse($session->get('referer'));
+            } 
+            else
+            {
+                $response = new RedirectResponse($request->getBasePath() . '/');
+            }
+        }
+        else
+        {
+            $response = new RedirectResponse($request->getBasePath() . '/');
+        }
+        
         $user = $token->getUser();
         $this->logger->info("User " . $user->getId() . " has been logged", ['user' => $user]);
-        $response = parent::onAuthenticationSuccess($request, $token);
+       // $response = parent::onAuthenticationSuccess($request, $token);
         $response->headers->setCookie(new Cookie('success_connection', $token->getUsername(), 0));
         $request->getSession()->getFlashBag()->add('notice', 'Bienvenue '.$token->getUsername()  .', VOUS ETES CONNECTE');
-        
+        $this->userManager->setLastConnexion($user, new \DateTime('now'));
+        $this->userManager->save($user, true, true);
         
         return $response;
     }
