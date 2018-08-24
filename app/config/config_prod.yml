@@ -14,7 +14,7 @@ monolog:
             max_files:      3
             path:           "%kernel.logs_dir%/%kernel.environment%.all.log"
             level:          info
-            channels:       [!doctrine, !security]
+            channels:       ['!doctrine', '!security']
         doctrine:
             type:           stream
             path:           "%kernel.logs_dir%/%kernel.environment%.doctrine.log"
