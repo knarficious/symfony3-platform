@@ -43,7 +43,7 @@ class ChangePasswordFormHandler implements FormHandlerInterface
     public function handle(FormInterface $form, Request $request, array $options = null) 
     {
         $form->handleRequest($request);
-        if (!$form->isSubmitted()) {
+        if (!$form->isValid()) {
             return false;
         }
         $this->manager->updateCredentials($form->getData()->getUser(), $form->getData()->getNewPassword());
