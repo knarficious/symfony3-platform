@@ -34,7 +34,9 @@ class RequestPasswordController extends Controller
     {
         $form = $this->createForm(RequestPasswordType::class, new RequestPassword());
         if ($this->getRequestPasswordFormHandler()->handle($form, $request)) {
-            $this->addFlash('notice', 'A mail has been sent to your mailbox to reset your password.');
+            
+            $translated = $this->get('translator')->trans('user.request_password.mail_sent');
+            $this->addFlash('notice', $translated);
             return $this->redirect($this->generateUrl('knarf_platform_home'));
         }
         return $this->render('KnarfUserBundle:Security:request-password.html.twig', [
