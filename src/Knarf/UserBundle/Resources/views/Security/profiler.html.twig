@@ -27,20 +27,7 @@
     {% else %}
         jamais
     {% endif %}
-    </p>
-    {% if user.adverts is not empty %}
-        
-        <ul class="nav nav-pills nav-stacked">  
-            {% for entity in app.user.adverts %}
-                <li>
-                    <a href="{{ path('knarf_platform_view', { 'id': entity.id }) }}">
-                        {{ entity.title }}>
-                        dans la rubrique {{ entity.rubrique.intitule }}
-                    </a>                        
-                </li>    
-            {% endfor %}
-        </ul>
-    {% endif %}    
+    </p>   
     <p>
     {% if is_granted('ROLE_ADMIN') %}
         Adresse ip: {{ user.adresseIp }}
