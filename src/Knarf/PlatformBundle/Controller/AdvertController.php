@@ -141,17 +141,16 @@ class AdvertController extends Controller
     }
   
     /**
-     * @Route("modifier/{id}", name="knarf_platform_edit")
-     * @param type $id
+     * @Route("modifier/{slug}", name="knarf_platform_edit")
+     * @param type $slug
      * @param Request $request
-     * @return type
      * @throws NotFoundHttpException
      */
-    public function editAction($id, Request $request)
+    public function editAction($slug, Request $request)
     {
           
         $em = $this->getDoctrine()->getManager();    
-        $advert = $em->getRepository('KnarfPlatformBundle:Advert')->find($id);
+        $advert = $em->getRepository('KnarfPlatformBundle:Advert')->findOneBy(array('slug' => $slug));
         
         $advert->setUpDateAt(new \DateTime());
         
@@ -160,7 +159,7 @@ class AdvertController extends Controller
         {
             if(null === $advert)
             {
-                throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas!");
+                throw new NotFoundHttpException("L'annonce  ".$slug." n'existe pas!");
             }
     
             $form = $this->createForm(AdvertEditType::class, $advert);
@@ -172,7 +171,7 @@ class AdvertController extends Controller
         
                 $this->addFlash('notice', 'Annonce modifiée avec succès.');
         
-            return $this->redirectToRoute('knarf_platform_view', array('id' => $advert->getId()));
+            return $this->redirectToRoute('knarf_platform_view', array('slug' => $advert->getSlug()));
             }
 
 
@@ -182,7 +181,7 @@ class AdvertController extends Controller
         
         else
         {            
-            return $this->redirectToRoute('knarf_platform_view', array('id' => $advert->getId()));
+            return $this->redirectToRoute('knarf_platform_view', array('slug' => $advert->getSlug()));
         }    
 
 
@@ -190,25 +189,24 @@ class AdvertController extends Controller
 
 
     /**
-     * @Route("/supprimer/{id}", name="knarf_platform_delete")
-     * @param type $id
+     * @Route("/supprimer/{slug}", name="knarf_platform_delete")
+     * @param type $slug
      * @param Request $request
-     * @return type
      * @throws NotFoundHttpException
      */
-    public function deleteAction($id, Request $request)
+    public function deleteAction($slug, Request $request)
 
   {
 
     $em = $this->getDoctrine()->getManager();
     
-    $advert = $em->getRepository('KnarfPlatformBundle:Advert')->find($id);
+    $advert = $em->getRepository('KnarfPlatformBundle:Advert')->findOneBy(array('slug' => $slug));
     
     if($this->getUser() === $advert->getUser())
     {
         if(null === $advert)
         {
-            throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas!");
+            throw new NotFoundHttpException("L'annonce  ".$slug." n'existe pas!");
         }
     
         $form = $this->createFormBuilder()->getForm();
