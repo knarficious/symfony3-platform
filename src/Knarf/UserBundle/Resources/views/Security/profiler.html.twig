@@ -42,7 +42,7 @@
     <ul class="list-unstyled"> 
         {% for advert in user.adverts %}
             <li>
-                <a href="{{ path('knarf_platform_view', {'id': advert.id}) }}">
+                <a href="{{ path('knarf_platform_view', {'slug': advert.slug}) }}">
                     {{ advert.title }}
                 </a>
                 

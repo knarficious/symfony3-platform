@@ -49,14 +49,38 @@
                 
         <h3>Vos annonces</h3>
         
-        <ul class="nav nav-pills nav-stacked">  
+            <ul class="nav nav-pills nav-stacked">  
             {% for entity in app.user.adverts %}
+                
+                {% if entity.published == 1 %}
                 <li>
-                    <a href="{{ path('knarf_platform_view', { 'id': entity.id }) }}">
+                    <h4>Publiées</h4>
+                    
+                    <a href="{{ path('knarf_platform_view', { 'slug': entity.slug }) }}">
                         {{ entity.title }}</a>
-                </li>    
+                </li>
+                {% else %}
+                    
+                <li>
+                    <h4>En attente</h4>
+                    
+                    <a href="{{ path('knarf_platform_view', { 'slug': entity.slug }) }}">
+                        {{ entity.title }}</a>
+                </li>
+                    
+                {% endif %}
+                
             {% endfor %}
-        </ul>
+        </ul>        
+        
+        
+        
+        
+        
+        
+       
+        
+
             
     </div>
 {% else %}
