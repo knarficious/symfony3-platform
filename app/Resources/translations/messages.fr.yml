@@ -57,7 +57,7 @@ user:
             successful_reset: Your password has been resetted. You can login now.
     request_password:
             button: Envoyer la demande
-            title: Demande de changement de mot de passe
+            title: Réinitialiser votre mot de passe
             mail_sent: Un email vient de vous être envoyé pour modifier votre mot de passe
     change_email:
             title: Changement de l'email

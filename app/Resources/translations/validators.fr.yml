@@ -7,3 +7,6 @@ contact.email.notblank: L'email est obligatoire
 change_password.old_password.minlength: Le mot de passe doit avoir au moins {{ limit }} caractères
 registration.password.minlength: Le mot de passe doit avoir au moins {{ limit }} caractères
 registration.email.notblank: L'email est obligatoire
+registration.username.notblank: L'identifiant est obligatoire
+registration.username.unique: Cet identifiant est déjà utilisé
+    
