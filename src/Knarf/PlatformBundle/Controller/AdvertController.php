@@ -10,10 +10,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Knarf\PlatformBundle\Form\AdvertType;
 use Knarf\PlatformBundle\Form\AdvertEditType;
 use Knarf\PlatformBundle\Entity\Advert;
-use Knarf\PlatformBundle\Entity\Rubrique;
 use Knarf\PlatformBundle\Entity\Commentaire;
 use Knarf\PlatformBundle\Form\CommentaireType;
 
@@ -21,6 +22,10 @@ class AdvertController extends Controller
 
 {
 
+    /**
+     * @Route("/", name="knarf_platform_home")
+     * @return type
+     */
     public function indexAction()
 
     {
@@ -33,7 +38,30 @@ class AdvertController extends Controller
 
     }
     
-    public function viewAction($id, Request $request)
+//    /**
+//     * @Route("/annonces/{id}", name="knarf_platform_view")
+//     * @ParamConverter("advert", class="KnarfPlatformBundle:Advert")
+//     * @param Advert $advert
+//     * @param Request $request
+//     * @return Response
+//     */
+//    public function showAction(Advert $advert, Request $request)
+//    {
+//        $response = new Response();
+//        
+//        if ($response->isNotModified($request)) {
+//            // envoie la réponse 304 tout de suite
+//            return $response;
+//        }
+//        return $this->render('KnarfPlatformBundle:Advert:view.html.twig', ['advert' => $advert], $response);
+//    }
+    
+    /**
+     * @Route("/annonces/{slug}", name="knarf_platform_view")
+     * @param type $slug
+     * @param Request $request
+     */
+    public function viewAction($slug, Request $request)
     {
        
         $repository1 = $this
@@ -41,11 +69,11 @@ class AdvertController extends Controller
         ->getManager()
         ->getRepository('KnarfPlatformBundle:Advert');
 
-        $advert = $repository1->find($id);
+        $advert = $repository1->findOneBy(array('slug' => $slug));
         
                     if(null === $advert)
             {
-                throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas!");
+                throw new NotFoundHttpException("L'annonce ".$slug." n'existe pas!");
             }
       $commentaire = new Commentaire();
       $user = $this->getUser();
@@ -74,6 +102,14 @@ class AdvertController extends Controller
 	//return $this->redirectToRoute('knarf_platform_home');
     }
     
+
+    
+    
+    /**
+     * @Route("/ajout", name="knarf_platform_add")
+     * @param Request $request
+     * @return type
+     */
     public function addAction(Request $request)
     {        
         $advert = new Advert();
@@ -94,7 +130,7 @@ class AdvertController extends Controller
 
             // Puis on redirige vers la page de visualisation de cettte annonce
 
-            return $this->redirect($this->generateUrl('knarf_platform_view', array('id' => $advert->getId())));
+            return $this->redirect($this->generateUrl('knarf_platform_view', array('id' => $advert->getId(), 'slug' => $advert->getSlug())));
            
         }
 
@@ -104,6 +140,13 @@ class AdvertController extends Controller
     
     }
   
+    /**
+     * @Route("modifier/{id}", name="knarf_platform_edit")
+     * @param type $id
+     * @param Request $request
+     * @return type
+     * @throws NotFoundHttpException
+     */
     public function editAction($id, Request $request)
     {
           
@@ -146,7 +189,14 @@ class AdvertController extends Controller
     }
 
 
-  public function deleteAction($id, Request $request)
+    /**
+     * @Route("/supprimer/{id}", name="knarf_platform_delete")
+     * @param type $id
+     * @param Request $request
+     * @return type
+     * @throws NotFoundHttpException
+     */
+    public function deleteAction($id, Request $request)
 
   {
 
@@ -202,6 +252,11 @@ class AdvertController extends Controller
 
     ));
 
+  }
+  
+  public function getAdvertManager()
+  {
+      return $this->get('app.advert.manager');
   }
   
   
