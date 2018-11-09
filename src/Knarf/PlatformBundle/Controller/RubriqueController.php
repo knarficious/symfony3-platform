@@ -85,16 +85,16 @@ class RubriqueController extends Controller{
 
     }
 
-    public function deleteAction($id, Request $request)
+    public function deleteAction($slug, Request $request)
     {
 
         $em = $this->getDoctrine()->getManager();
     
-        $rubrique = $em->getRepository('KnarfPlatformBundle:Rubrique')->find($id);
+        $rubrique = $em->getRepository('KnarfPlatformBundle:Rubrique')->findOneBy(array('slug' => $slug));
     
         if(null === $rubrique)
         {
-            throw new NotFoundHttpException("La rubrique d'id ".$id." n'existe pas!");
+            throw new NotFoundHttpException("La rubrique ".$slug." n'existe pas!");
         }
     
         $form = $this->createFormBuilder()->getForm();
