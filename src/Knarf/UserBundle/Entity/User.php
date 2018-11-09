@@ -13,6 +13,7 @@ use Symfony\Component\Security\Core\Role\Role;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * User
@@ -159,6 +160,12 @@ class User implements UserInterface, \Serializable, EquatableInterface
      * @ORM\Column(name="cgvRead", type="boolean", nullable=true)
      */
     private $cgvRead;
+    
+    /**
+     * @Gedmo\Slug(fields={"username"})
+     * @ORM\Column(length=255, unique=true)
+     */
+    private $slug;
 
     
     // === ASSOCIATIONS ===
@@ -774,4 +781,64 @@ class User implements UserInterface, \Serializable, EquatableInterface
         
     }
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->adverts = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->commentaires = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     *
+     * @return User
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $this->slugify($slug);
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+    
+    public function slugify($text)
+    {
+    // replace non letter or digits by -
+    $text = preg_replace('#[^\\pL\d]+#u', '-', $text);
+
+    // trim
+    $text = trim($text, '-');
+
+    // transliterate
+    if (function_exists('iconv'))
+    {
+        $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
+    }
+
+    // lowercase
+    $text = strtolower($text);
+
+    // remove unwanted characters
+    $text = preg_replace('#[^-\w]+#', '', $text);
+
+    if (empty($text))
+    {
+        return 'n-a';
+    }
+
+    return $text;
+    } 
 }
