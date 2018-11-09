@@ -146,12 +146,24 @@ class UserManager extends AbstractGenericManager implements UserManagerInterface
         $user->setUpdatedAt();
         $user->setNomMedia($nomMedia);
         $user->setMediaFile($mediaFile);
-        $this->save($user, true, true);
+        $this->save($user, false, true);
         
     }
 
     public function setIp(UserInterface $user, $adresseIp) {
         $user->setAdresseIp($adresseIp);
+    }
+
+    public function createAdmin(UserInterface $admin, $adresseIp)
+    {
+        $admin->setCgvRead(false);
+        $admin->setRoles(['ROLE_ADMIN']);
+        $admin->encodePassword($this->encoderFactory->getEncoder($admin));
+        $admin->setAdresseIp($adresseIp);
+        $this->save($admin, true, true);
+        $this->dispatcher->dispatch(
+            KnarfUserEvents::NEW_ACCOUNT_CREATED, new UserDataEvent($admin)
+        );
     }
 
 }
