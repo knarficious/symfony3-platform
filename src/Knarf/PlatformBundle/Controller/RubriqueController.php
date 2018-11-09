@@ -32,14 +32,14 @@ class RubriqueController extends Controller{
 
     }
     
-    public function viewAction($id)
+    public function viewAction($slug)
     {
        $repository = $this
         ->getDoctrine()
         ->getManager()
         ->getRepository('KnarfPlatformBundle:Rubrique');
 
-        $rubrique = $repository->find($id);
+        $rubrique = $repository->findOneBy(array('slug' => $slug));
 
         return $this->render('KnarfPlatformBundle:Rubrique:view.html.twig', array(
 
@@ -51,18 +51,18 @@ class RubriqueController extends Controller{
 	//return $this->redirectToRoute('knarf_platform_home');
     }
     
-    public function editAction($id, Request $request)
+    public function editAction($slug, Request $request)
     {
 
         $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
         
         $em = $this->getDoctrine()->getManager();
     
-        $rubrique = $em->getRepository('KnarfPlatformBundle:Rubrique')->find($id);
+        $rubrique = $em->getRepository('KnarfPlatformBundle:Rubrique')->findOneBy(array('slug' => $slug));
     
         if(null === $rubrique)
         {
-            throw new NotFoundHttpException("La rubrique d'id ".$id." n'existe pas!");
+            throw new NotFoundHttpException("La rubrique d'id ".$slug." n'existe pas!");
         }
     
         $form = $this->createForm(RubriqueType::class, $rubrique);
@@ -73,7 +73,7 @@ class RubriqueController extends Controller{
         
             $request->getSession()->getFlashBag()->add('notice', 'Rubrique modifiée avec succès.');
         
-            return $this->redirectToRoute('rubrique_view', array('id' => $rubrique->getId()));
+            return $this->redirectToRoute('rubrique_view', array('slug' => $rubrique->getSlug()));
         }
 
 
