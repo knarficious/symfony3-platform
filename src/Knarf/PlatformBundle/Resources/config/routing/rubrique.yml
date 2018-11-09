@@ -25,9 +25,7 @@ rubrique_delete:
         id: \d+
         
 rubrique_view:
-    path:      /{id}
+    path:      /{slug}
     defaults:
         _controller: KnarfPlatformBundle:Rubrique:view
-    requirements:
-        id: \d+
 

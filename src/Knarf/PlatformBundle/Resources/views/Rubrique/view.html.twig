@@ -15,7 +15,7 @@
       
       {% for entity in rubrique.adverts %}
         <li class="article-rubrique">
-            <a href="{{ path('knarf_platform_view', { 'id': entity.id }) }}">{{ entity.title }}</a>
+            <a href="{{ path('knarf_platform_view', { 'slug': entity.slug }) }}">{{ entity.title }}</a>
 	</li>
       {% endfor %}
           
