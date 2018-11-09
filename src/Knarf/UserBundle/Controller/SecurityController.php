@@ -71,16 +71,16 @@ class SecurityController extends Controller
     }
     
     /**
-     *@Route("/member/{id}", name="profile_view")
+     *@Route("/member/{slug}", name="profile_view")
      */
-    public function viewMemberAction($id)
+    public function viewMemberAction($slug)
     {   
         $repository = $this
         ->getDoctrine()
         ->getManager()
         ->getRepository('KnarfUserBundle:User');
 
-        $user = $repository->find($id);
+        $user = $repository->findOneBy(array('slug' => $slug));
         
     return $this->render('KnarfUserBundle:Security:profiler.html.twig', array( 'user' => $user ) );
     }   
