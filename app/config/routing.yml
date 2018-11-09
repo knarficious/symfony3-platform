@@ -14,7 +14,8 @@ knarf_user:
     prefix: /   
 
 knarf_platform:
-    resource: "@KnarfPlatformBundle/Resources/config/routing.yml"
+    resource: "@KnarfPlatformBundle/Controller/"
+    type: annotation
     prefix:   /
     
 registration:
