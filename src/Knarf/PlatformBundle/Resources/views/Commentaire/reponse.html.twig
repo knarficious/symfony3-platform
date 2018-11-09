@@ -20,12 +20,12 @@
 
   <p>
     {% if commentaire.commentaire.advert.id is defined %}
-        <a href="{{ path('knarf_platform_view', {'id' :commentaire.commentaire.advert.id}) }}" class="btn btn-default">
+        <a href="{{ path('knarf_platform_view', {'slug' :commentaire.commentaire.advert.slug}) }}" class="btn btn-default">
         <i class="glyphicon glyphicon-chevron-left"></i>
         Retour
             </a>
     {% else %}
-        <a href="{{ path('knarf_platform_view', {'id' :commentaire.advert.id}) }}" class="btn btn-default">
+        <a href="{{ path('knarf_platform_view', {'slug' :commentaire.advert.slug}) }}" class="btn btn-default">
         <i class="glyphicon glyphicon-chevron-left"></i>
         Retour
         </a>

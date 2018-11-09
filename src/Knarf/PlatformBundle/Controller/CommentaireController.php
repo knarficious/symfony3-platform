@@ -199,9 +199,9 @@ class CommentaireController extends Controller
             $em->remove($commentaire);
             $em->flush();   
         
-            $this->addFlash('notice', "Le commentaire sur la publication ".$advert->getId()." a été supprimé avec succès");
+            $this->addFlash('notice', "Le commentaire sur la publication ".$advert->getSlug()." a été supprimé avec succès");
              
-                 return $this->redirectToRoute('knarf_platform_view', array('id' => $advert->getId()));
+                 return $this->redirectToRoute('knarf_platform_view', array('slug' => $advert->getSlug()));
         
         }
 
@@ -272,7 +272,7 @@ class CommentaireController extends Controller
         $request->getSession()->getFlashBag()->add('notice', 'Commentaire bien enregistré.');
         
 
-        return $this->redirectToRoute('knarf_platform_view', array('id' => $reponse->getCommentaire()->getAdvert()->getId()));
+        return $this->redirectToRoute('knarf_platform_view', array('slug' => $reponse->getCommentaire()->getAdvert()->getSlug()));
    
         
             
