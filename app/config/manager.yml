@@ -1,0 +1,11 @@
+services:
+    app.advert.manager:
+        class: KnarfPlatformBundle\Entity\Manager\AdvertManager
+        arguments: ["@app.advert.repository"]
+        calls:
+            - [setFormFactory, ['@form.factory]]
+            - [setRouter, ['@router']]            
+            - [setSearchFormType, ['KnarfPlatformBundle\Form\Type\AdvertFilterType']]
+        lazy: true
+        tags:
+            - { name: app.manager_services }
