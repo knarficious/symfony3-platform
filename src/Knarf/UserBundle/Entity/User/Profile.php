@@ -29,6 +29,7 @@ class Profile
     private $user;
     
     /**
+     * @Assert\NotBlank(message = "registration.email.notblank")
      * @Assert\Email()
      * @CoreAssert\UniqueAttribute(
      *      repository="Knarf\UserBundle\Entity\User",
