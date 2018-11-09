@@ -11,17 +11,23 @@
   <h2>{{ rubrique.intitule }}</h2>
 
   {% if rubrique.adverts is not empty %}
-  <ul class="well">
+  
       
       {% for entity in rubrique.adverts %}
+          {% if entity.published == 1 %}
+              <ul class="well">
         <li class="article-rubrique">
             <a href="{{ path('knarf_platform_view', { 'slug': entity.slug }) }}">{{ entity.title }}</a>
 	</li>
+        </ul>
+          {% else %}
+          Il n'y a pas d'annonces publiées dans cette rubrique
+            {% endif %}
       {% endfor %}
           
-  </ul>
-  {% else %}
-          Il n'y a pas d'annonce dans cette rubrique
+    {% else %}
+          Il n'y a pas d'annonces dans cette rubrique
+
       {% endif %}    
 
   <div class="row">
@@ -33,12 +39,12 @@
       
     {% if is_granted('ROLE_ADMIN') %}
         
-    <a href="{{ path('rubrique_edit', {'id': rubrique.id}) }}" class="btn btn-default">
+    <a href="{{ path('rubrique_edit', {'slug': rubrique.slug}) }}" class="btn btn-default">
         <i class="glyphicon glyphicon-edit"></i>
         Modifier la rubrique
     </a>
         
-    <a href="{{ path('rubrique_delete', {'id': rubrique.id}) }}" class="btn btn-danger">
+    <a href="{{ path('rubrique_delete', {'slug': rubrique.slug}) }}" class="btn btn-danger">
         <i class="glyphicon glyphicon-trash"></i>
         Supprimer la rubrique
     </a>

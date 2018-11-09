@@ -30,7 +30,7 @@
     <h2>{{ advert.title }}</h2>
     <i>Par 
         {% if app.user %}
-            <a href ="{{ path('profile_view', {'id': advert.user.id} )}}">{{ advert.user.username }}</a>
+            <a href ="{{ path('profile_view', {'slug': advert.user.slug} )}}">{{ advert.user.username }}</a>
         {% else %}
             {{ advert.user.username }}
         {% endif %}    , le {{ advert.date|date('d/m/Y') }} à {{ advert.date|date('H:i') }}</i>
