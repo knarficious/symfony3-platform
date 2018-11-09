@@ -3,6 +3,7 @@
 namespace Knarf\PlatformBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Rubrique
@@ -27,6 +28,12 @@ class Rubrique
      * @ORM\Column(name="intitule", type="string", length=255, unique=true)
      */
     private $intitule;
+    
+    /**
+     * @Gedmo\Slug(fields={"intitule"})
+     * @ORM\Column(length=255, unique=true)
+     */
+    private $slug;
     
         // === ASSOCIATIONS ===
     
@@ -109,5 +116,57 @@ class Rubrique
     public function getAdverts()
     {
         return $this->adverts;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     *
+     * @return Rubrique
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $this->slugify($slug);
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+    
+    public function slugify($text)
+    {
+    // replace non letter or digits by -
+    $text = preg_replace('#[^\\pL\d]+#u', '-', $text);
+
+    // trim
+    $text = trim($text, '-');
+
+    // transliterate
+    if (function_exists('iconv'))
+    {
+        $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
+    }
+
+    // lowercase
+    $text = strtolower($text);
+
+    // remove unwanted characters
+    $text = preg_replace('#[^-\w]+#', '', $text);
+
+    if (empty($text))
+    {
+        return 'n-a';
+    }
+
+    return $text;
     }
 }
