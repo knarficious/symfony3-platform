@@ -7,6 +7,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ButtonType;
+use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -26,7 +27,7 @@ class AdvertType extends AbstractType
                 ->add('mediaFile',  VichFileType::class, array('required' => false))
                 ->add('published',  CheckboxType::class, array('required' => false))
                 ->add('enregistrer',       SubmitType::class)
-                ->add('annuler', ButtonType::class);
+                ->add('effacer',    ResetType::class);
     }
     
     /**
