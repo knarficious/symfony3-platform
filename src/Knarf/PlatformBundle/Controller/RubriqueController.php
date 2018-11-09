@@ -152,7 +152,7 @@ class RubriqueController extends Controller{
 
             // Puis on redirige vers la page de visualisation de cettte annonce
 
-            return $this->redirect($this->generateUrl('rubrique_view', array('id' => $rubrique->getId())));
+            return $this->redirect($this->generateUrl('rubrique_view', array('slug' => $rubrique->getSlug())));
         }
 
         // Si on n'est pas en POST, alors on affiche le formulaire
