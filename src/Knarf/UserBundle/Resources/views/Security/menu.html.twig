@@ -27,7 +27,7 @@
                 {% if user is same as( app.user) %}
                     <a href="{{ path('profile') }}">{{ user.username }}</a>                    
                 {% else %}    
-                    <a href="{{ path('profile_view', {'id': user.id}) }}">{{ user.username }}</a>
+                    <a href="{{ path('profile_view', {'slug': user.slug}) }}">{{ user.username }}</a>
                 {% endif %}
             </h4>
         </div>     
