@@ -6,9 +6,8 @@
   {{ parent() }} - {{ advert.title | title }}
 {% endblock %}
 
-{% block knarfplatform_body %}
-
-    <article class="well">   
+{% block knarfplatform_body %}    
+    
     
     {% if advert.nomMedia is defined %} 
         {% if advert.nomMedia ends with 'jpg' or advert.nomMedia ends with 'png' or advert.nomMedia ends with 'gif' %}                                           
@@ -37,13 +36,14 @@
     <div class="row">
     {{ advert.content }}
     </div>
-    </article>
+    <p>
+    <p>
     
-            
-            <a href="{{ path('knarf_platform_home') }}" class="btn btn-default">
+    <div class="row">
+        <a href="{{ path('knarf_platform_home') }}" class="btn btn-default">
             <i class="glyphicon glyphicon-chevron-left"></i>
             Retour à la liste
-            </a>    
+        </a>
         
     
     {% if advert.user == app.user %}
@@ -62,25 +62,25 @@
         Retourner à mon profil
     </a>
     {% endif %} 
-    
+    </div>
     {# bloc des commentaires #}
     
-    <div class="comment">
+    
         <h4>Commentaires</h4>        
         <hr>
-        <div class="container" >
+      
         {% if advert.commentaires is not empty or commentaire.commentaire.id is defined%} 
             
             {% for commentaire in advert.commentaires %}
               {{ include("KnarfPlatformBundle:Commentaire:view.html.twig", {'commentaire' : commentaire }) }}
             {% endfor %}  
-        </div>
+        
         {% else %}
             <div class="row">
             Aucun commentaire
             </div>
         {% endif %} 
-    </div>
+    
     <p>
         {% if app.user %}              
     
@@ -95,5 +95,5 @@
         {% else %}
             Vous devez vous <a href="{{ path('security_login_form') }}">connecter</a> pour commenter
         {% endif %}       
-               
+             
 {% endblock %}
