@@ -87,8 +87,8 @@
     </div>
   </div>
 </nav>
-<div class="container">
-    <div id="header" class="jumbotron">
+
+    <div id="header" class="jumbotron text-center">
       
       <p>
        <h1> Ce projet est propulsé avec Symfony3 par Norminfo</h1>
@@ -99,10 +99,10 @@
         </a>
       </p>
     </div>
-    
-    <div class="row">
-      <div id="content" class="col-md-9">
-                {% set flashbag_notices = app.session.flashbag.get('notice') %}
+  <div class="container">  
+  <div class="row"> 
+      
+            {% set flashbag_notices = app.session.flashbag.get('notice') %}
             {% if flashbag_notices is not empty %}
             <div class="glyphicon glyphicon-remove" id="msg" onClick="cacher();">
 		{% for notice in flashbag_notices %}
@@ -110,24 +110,32 @@
 		{% endfor %}
             </div>
 	{% endif %}
-     
-        {% block body %}
-            
-        {% endblock %}    
         
-         </div>
- 
-        {% if is_granted('IS_AUTHENTICATED_FULLY') %}      
-            {{ render(controller("KnarfUserBundle:Security:index")) }}  
-        {% endif %}
+    <div class="leftcolumn">
+        
+        {% block body %}          
+
+        {% endblock %}        
+
     </div>
+    
+    <div class="rightcolumn">
+        
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+           {{ render(controller("KnarfUserBundle:Security:index")) }}
+        {% endif %}
+        
+    </div>       
+ 
+       
+  </div>
+</div>   
 <hr>
-    <footer>
-      <p>The sky's the limit © {{ 'now'|date('Y') }} and beyond.</p>
+    <div class="footer">
+      <p>© knarficious {{ 'now'|date('Y') }}</p>
       <p>
-      <p><a href="//www.dmca.com/Protection/Status.aspx?ID=26aaf6fe-fc66-41db-b995-c6f783965e2b" title="DMCA.com Protection Status" class="dmca-badge"> <img src="//images.dmca.com/Badges/dmca_protected_sml_120y.png?ID=26aaf6fe-fc66-41db-b995-c6f783965e2b" alt="DMCA.com Protection Status"></a> <script src="//images.dmca.com/Badges/DMCABadgeHelper.min.js"> </script></p>
-    </footer>
-</div>
+    </div>
+   
   <div id="back-to-top" style="display:bloc;">
       <a href="#" class="btn btn-primary btn-lg back-to-top" role="button" title="Revenir en haut de la page" data-toggle="tooltip" data-placement="left"><span class="glyphicon glyphicon-chevron-up"></span></a>
   </div>
