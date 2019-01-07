@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -23,11 +24,12 @@ class AdvertType extends AbstractType
     {
         $builder->add('rubrique',   EntityType::class,  array('class' => 'KnarfPlatformBundle:Rubrique', 'choice_label' => 'intitule', 'placeholder' => 'Sélectionner la rubrique'))
                 ->add('title',      TextType::class)
-                ->add('content',    TextareaType::class)
+                //->add('content',    TextareaType::class)
                 ->add('mediaFile',  VichFileType::class, array('required' => false))
                 ->add('published',  CheckboxType::class, array('required' => false))
                 ->add('enregistrer',       SubmitType::class)
-                ->add('effacer',    ResetType::class);
+                ->add('effacer',    ResetType::class)
+                ->add('content',      CKEditorType::class, array('config_name' => 'full_config'));
     }
     
     /**
