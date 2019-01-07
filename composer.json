@@ -20,10 +20,11 @@
         ]
     },
     "require": {
-        "php": ">=5.5.9",
+        "php": ">=7.0",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/doctrine-fixtures-bundle": "~2.3",
         "doctrine/orm": "^2.5",
+        "friendsofsymfony/ckeditor-bundle": "^1.2",
         "friendsofsymfony/rest-bundle": "^2.1",
         "incenteev/composer-parameter-handler": "^2.0",
         "leafo/scssphp": "~0.6",
