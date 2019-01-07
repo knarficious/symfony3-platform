@@ -25,6 +25,8 @@ class AppKernel extends Kernel
             new Knarf\CoreBundle\KnarfCoreBundle(),
             new Knarf\ApiBundle\KnarfApiBundle(),
             new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
+            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+            new FOS\CKEditorBundle\FOSCKEditorBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
