@@ -50,6 +50,7 @@ twig:
     strict_variables: '%kernel.debug%'
     form_themes:
         - 'bootstrap_3_layout.html.twig'
+        - '@FOSCKEditor/Form/ckeditor_widget.html.twig'
     globals:
         website: mywebsite    
 
@@ -114,7 +115,15 @@ liip_imagine:
     resolvers:
        default:
          web_path: ~
-      
+            
+    loaders:
+        default:
+            filesystem:
+                data_root:
+                    - '%kernel.root_dir%/../web/' 
+    driver:               gd
+    cache:                default
+    data_loader:          default  
     filter_sets:        
         my_thumb:
             quality: 85
@@ -182,4 +191,25 @@ stof_doctrine_extensions:
         default:
             timestampable: true
             sluggable: true
+            
+fos_ck_editor:
+    configs:
+        full_config:
+            jquery: true
+            height: '900px'
+            language: '%locale%'
+            #toolbar: standard
+            #filebrowserBrowseRoute: elfinder
+            #filebrowserBrowseRouteParameters: []
+            extraPlugins: 'youtube'
+            uiColor: '#cccccc'
+        basic_config:
+            jquery: true
+            heihgt: '250px'
+            language: '%locale%'
+            toolbar: basic
+        plugins:
+            youtube:
+                path: '/web/bundles/fosckeditor/plugins/youtube/'
+                filename: 'plugin.js'
     
