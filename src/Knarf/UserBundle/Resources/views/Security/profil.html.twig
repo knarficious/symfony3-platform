@@ -33,14 +33,15 @@
 <div class="well">
     Votre adresse email: {{ user.email }}
     <p>
-{% if is_granted('ROLE_USER') %}
+    <p>
+    {% if is_granted('ROLE_USER') %}
     <a class="btn btn-primary btn-lg" href="{{ path('change_email') }}">
         Modifier
     </a>
-{% endif %}    
+    {% endif %}    
 </div>
 
-<div class="">    
+<div class="well">    
     <a class="btn btn-primary btn-lg" href="{{ path('change_password') }}">{{ 'menu.changement_password' | trans }}</a>
 </div>
     
@@ -48,30 +49,33 @@
     <div class="well">
                 
         <h3>Vos annonces</h3>
-        
-            <ul class="nav nav-pills nav-stacked">  
+       
             {% for entity in app.user.adverts %}
                 
                 {% if entity.published == 1 %}
+                      
+                <ul class="nav nav-pills nav-stacked">
                 <li>
-                    <h4>Publiées</h4>
                     
                     <a href="{{ path('knarf_platform_view', { 'slug': entity.slug }) }}">
                         {{ entity.title }}</a>
                 </li>
+                </ul>
                 {% else %}
                     
+                <ul class="nav nav-pills nav-stacked">    
                 <li>
-                    <h4>En attente</h4>
+                    
                     
                     <a href="{{ path('knarf_platform_view', { 'slug': entity.slug }) }}">
                         {{ entity.title }}</a>
                 </li>
+                </ul>
                     
-                {% endif %}
-                
+                {% endif %}                
+            
+            
             {% endfor %}
-        </ul>        
         
         
         
@@ -107,7 +111,7 @@
                     <a href="{{ path('commentaire_view', {'id': commentaire.id}) }}">
                     {{ commentaire.contenu }}
                     </a>
-                    sur l'annonce: <a href="{{ path('knarf_platform_view', {'id': commentaire.advert.id}) }}">
+                    sur l'annonce: <a href="{{ path('knarf_platform_view', {'slug': commentaire.advert.slug}) }}">
                     {{ commentaire.advert.title }}
                     </a>
                 
