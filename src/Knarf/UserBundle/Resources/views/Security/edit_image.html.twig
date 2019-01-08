@@ -8,17 +8,18 @@
 
 {% block body %}
 
-<div class="row">
-    <h3>Yo! {{ app.user.username }}</h3>
+<div class="">
+    <h3>Modifier votre avatar, {{ app.user.username }}</h3>
     {% if  app.user.nomMedia is not empty %}
         <img src="{{vich_uploader_asset(app.user, 'mediaFile') | imagine_filter('my_thumb') }}" alt="{{ app.user.nomMedia }}"  />
     {% endif %}
 </div>
-
+<p>
 
 {{ form_start(form) }}
 {{ form_errors(form) }}
-    {{ form_widget(form) }}
+    {{ form_widget(form.mediaFile) }}
+    {{ form_errors(form.mediaFile) }}
 {{ form_rest(form) }}    
 {{ form_end(form) }}
 <p>
