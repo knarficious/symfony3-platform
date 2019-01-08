@@ -101,7 +101,7 @@ oneup_flysystem:
 # VichUploaderBundle Configuration
 vich_uploader:
     db-driver: orm    
-    #storage: file_system
+    storage: flysystem
     mappings:
        upload_media:
         uri_prefix: /uploads
@@ -127,12 +127,14 @@ liip_imagine:
     filter_sets:        
         my_thumb:
             quality: 85
-            filters:
+            filters:                
+                auto_rotate: ~
                 thumbnail: { size: [50, 50], mode: outbound }
-        my_thumb_resize:
+        my_thumb_resize:            
             quality: 50
             cache: false
             filters:
+                auto_rotate: ~
                 thumbnail: { size: [120, 120], mode: outbound }
                 relative_resize: { heighten: 78 }
 
