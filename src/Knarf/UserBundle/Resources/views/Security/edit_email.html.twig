@@ -11,12 +11,16 @@
     <div style="text-align: center">
         <h1>{{ 'user.change_email.title' | trans }}</h1>
     </div>
-    {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+    
+    <p>
+        
+    {{ form_start(form) }}
         {{ form_row(form.email) }}
         {{ form_widget(form.Register) }}
     {{ form_rest(form) }}    
     {{ form_end(form) }}
-<p>
+    <p>
+    <p>
     <a href="{{ path('profile') }}" class="btn btn-default">
       <i class="glyphicon glyphicon-chevron-left"></i>
       Retour à mon profil
