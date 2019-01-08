@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Knarf\UserBundle\Form\Type\User\EditEmailType;
 use Knarf\UserBundle\Form\Type\User\EditAvatarType;
 use Knarf\UserBundle\Entity\User\Profile;
+use Knarf\UserBundle\Entity\User\Avatar;
 
 /**
  * Description of UpdateProfileController
@@ -54,7 +55,7 @@ class UpdateProfileController extends Controller
      */
     public function editImageAction(Request $request)
     {
-        $data = new Profile($this->getUser());
+        $data = new Avatar($this->getUser());
         $form = $this->createForm(EditAvatarType::class, $data);
         
         if($this->getAvatarProfileFormHandler()->handle($form, $request))
