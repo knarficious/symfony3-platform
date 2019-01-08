@@ -18,7 +18,7 @@ use Knarf\UserBundle\Entity\Manager\Interfaces\UserManagerInterface;
 
 
 /**
- * Description of EditImageType
+ * Description of EditAvatarType
  *
  * @author franck
  */
@@ -50,7 +50,7 @@ class EditAvatarType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'Knarf\UserBundle\Entity\User\Profile',
+            'data_class' => 'Knarf\UserBundle\Entity\User\Avatar',
         ]);
     }
 }
