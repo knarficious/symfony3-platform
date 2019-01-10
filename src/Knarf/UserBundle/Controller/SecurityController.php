@@ -5,6 +5,7 @@ namespace Knarf\UserBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 class SecurityController extends Controller
 {
@@ -112,6 +113,52 @@ class SecurityController extends Controller
             'name' => $name
         ));
 
-    }    
+    }
+    
+    /**
+     * @Route("/supprimer/{slug}", name="knarf_user_delete")
+     * @param type $slug
+     * @param Request $request
+     * @throws NotFoundHttpException
+     */
+    public function deleteProfileAction($slug, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();    
+        $user = $em->getRepository('KnarfUserBundle:User')->findOneBy(array('slug' => $slug));
+    
+        if($this->getUser() === $user)
+        {
+            if(null === $user)
+            {
+                throw new NotFoundHttpException("L'utilisateur  ".$slug." n'existe pas!");
+            }
+    
+            $form = $this->createFormBuilder()->getForm();
+    
+            if($request->isMethod('POST') && $form->handleRequest($request)->isValid())
+            {
+                $em->remove($user);
+                $em->flush();
+
+                $this->get('security.token_storage')->setToken(null);
+                $request->getSession()->invalidate();
+
+                $this->addFlash('notice', "Votre profil a été supprimé avec succès");
+
+                return $this->redirect($this->generateUrl('knarf_platform_home'));    
+            }
+
+            return $this->render('KnarfUserBundle:Security:delete.html.twig', array(
+            'user'    => $user,
+            'form'      => $form->createView()
+            ));
+        }
+
+        else
+        {            
+            return $this->redirectToRoute('profile');
+        }   
+
+    }
     
 }
