@@ -10,6 +10,9 @@
 
 <div class="well">
     <h3> {{ user.username }}</h3>
+    <p> {% if is_granted('ROLE_ADMIN') %}
+        Administrateur
+        {% endif %}
     <a href="{{ path('change_image') }}" data-toggle="tooltip" data-placement="right" title="Modifier votre avatar">
     {% if  user.nomMedia is not empty %}
     <div class="badge">
@@ -72,26 +75,14 @@
                 </li>
                 </ul>
                     
-                {% endif %}                
-            
-            
+                {% endif %} 
             {% endfor %}
-        
-        
-        
-        
-        
-        
-       
-        
-
-            
     </div>
 {% else %}
 {% endif %}
 <p>
 {% if is_granted('ROLE_USER') %}
-    <div class="">
+    <div class="well">
     <a class="btn btn-primary btn-lg" href="{{ path('knarf_platform_add') }}">
         Ajouter une annonce »
     </a>
@@ -132,6 +123,12 @@
 </div>
 {% endif %}
 <p>
-
+<p>
+    <div class="well">
+        <a href="{{ path('knarf_user_delete', {'slug': user.slug}) }}" class="btn btn-danger">
+      <i class="glyphicon glyphicon-trash"></i>
+      Supprimer votre profil
+    </a>
+    </div>  
 
 {% endblock %}
