@@ -1,0 +1,29 @@
+{# src/Knarf/userBundle/Resources/views/Security/delete.html.twig #}
+
+{% extends "KnarfPlatformBundle::layout.html.twig" %}
+
+{% block title %}
+  Supprimer votre profil - {{ parent() }}
+{% endblock %}
+
+{% block knarfplatform_body %}
+
+  <p>
+    Etes-vous certain de vouloir supprimer votre profil, {{ user.username }} ?
+    <p>
+    Ceci entraînera la suppression de toutes vos publications et commentaires.
+  </p>
+
+  {# On met l'id de l'annonce dans la route de l'action du formulaire #}
+  <form action="{{ path('knarf_user_delete', {'slug': user.slug}) }}" method="post">
+    <a href="{{ path('profile') }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-chevron-left"></i>
+      Retour à votre profil
+    </a>
+    {# Ici j'ai écrit le bouton de soumission à la main #}
+    <input type="submit" value="Supprimer" class="btn btn-danger" />
+    {# Ceci va générer le champ CSRF #}
+    {{ form_rest(form) }}
+  </form>
+
+{% endblock %}
