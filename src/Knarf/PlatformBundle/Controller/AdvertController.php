@@ -94,7 +94,8 @@ class AdvertController extends Controller
 
         return $this->render('KnarfPlatformBundle:Advert:view.html.twig', array(
 
-        'advert' => $advert, 'active' => 'advert', 'commentaire' => $commentaire, 'form' => $form->createView()
+        'advert' => $advert, 'active' => 'advert', 'commentaire' => $commentaire,
+            'form' => $form->createView()
 
         ));
 	
@@ -189,51 +190,47 @@ class AdvertController extends Controller
 
 
     /**
-     * @Route("/supprimer/{slug}", name="knarf_platform_delete")
+     * @Route("/delete/{slug}", name="knarf_platform_delete")
      * @param type $slug
      * @param Request $request
      * @throws NotFoundHttpException
      */
-    public function deleteAction($slug, Request $request)
-
-  {
-
-    $em = $this->getDoctrine()->getManager();
-    
-    $advert = $em->getRepository('KnarfPlatformBundle:Advert')->findOneBy(array('slug' => $slug));
-    
-    if($this->getUser() === $advert->getUser())
+    public function deleteAdvertAction($slug, Request $request)
     {
-        if(null === $advert)
-        {
-            throw new NotFoundHttpException("L'annonce  ".$slug." n'existe pas!");
-        }
+        $em = $this->getDoctrine()->getManager();    
+        $advert = $em->getRepository('KnarfPlatformBundle:Advert')->findOneBy(array('slug' => $slug));
     
-        $form = $this->createFormBuilder()->getForm();
-    
-        if($request->isMethod('POST') && $form->handleRequest($request)->isValid())
+        if($this->getUser() === $advert->getUser())
         {
-            $em->remove($advert);
-            $em->flush();
+            if(null === $advert)
+            {
+                throw new NotFoundHttpException("L'annonce  ".$slug." n'existe pas!");
+            }
+    
+            $form = $this->createFormBuilder()->getForm();
+    
+            if($request->isMethod('POST') && $form->handleRequest($request)->isValid())
+            {
+                $em->remove($advert);
+                $em->flush();
         
-            $this->addFlash('notice', "L'annonce a été supprimée avec succès");
+                $this->addFlash('notice', "L'annonce a été supprimée avec succès");
         
             return $this->redirect($this->generateUrl('knarf_platform_home'));    
-        }
+            }
 
-        return $this->render('KnarfPlatformBundle:Advert:delete.html.twig', array(
-        'advert'    => $advert,
-        'form'      => $form->createView()
-        ));
-    }
+            return $this->render('KnarfPlatformBundle:Advert:delete.html.twig', array(
+            'advert'    => $advert,
+            'form'      => $form->createView()
+            ));
+        }
      
-    else
+        else
         {            
-            return $this->redirectToRoute('knarf_platform_view', array('id' => $advert->getId()));
-        }
-    
+            return $this->redirectToRoute('knarf_platform_view', array('slug' => $advert->getSlug()));
+        }    
 
-  }
+    }
   
   public function menuAction()
 
