@@ -100,8 +100,13 @@
       </p>
     </div>
   <div class="container">  
-  <div class="row"> 
-      
+  <div class="row">     
+
+        
+    <div class="leftcolumn">
+        
+        {% block body %}
+            
             {% set flashbag_notices = app.session.flashbag.get('notice') %}
             {% if flashbag_notices is not empty %}
             <div class="glyphicon glyphicon-remove" id="msg" onClick="cacher();">
@@ -109,11 +114,7 @@
                     {{ notice }}
 		{% endfor %}
             </div>
-	{% endif %}
-        
-    <div class="leftcolumn">
-        
-        {% block body %}          
+            {% endif %}
 
         {% endblock %}        
 
@@ -141,8 +142,9 @@
   </div>
       {% block javascripts %}
     {# Ajoutez ces lignes JavaScript si vous comptez vous servir des fonctionnalités du bootstrap Twitter #}
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js"></script>
     <script>
                 $(document).ready(function(){
                 $(document.getElementById("msg")).click(function(){
@@ -182,6 +184,7 @@
             $('[data-toggle="tooltip"]').tooltip();
             });
     </script>
+    
   {% endblock %}
 
 </body>
