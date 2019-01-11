@@ -5,7 +5,8 @@
 
    tout comme le template inclus avec {{ include() }}. #}
 
-
+<div class="container-fluid">
+    
     <h3>Membres </h3>
 
     {% for user in listUsers |sort%}
@@ -36,5 +37,6 @@
         {% endif %}
 
   {% endfor %}
+</div>
 
 

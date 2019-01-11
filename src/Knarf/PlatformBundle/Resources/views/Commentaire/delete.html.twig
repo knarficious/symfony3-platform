@@ -7,23 +7,24 @@
 {% endblock %}
 
 {% block knarfplatform_body %}
+    {{ parent() }}
+    
+      <h2>Supprimer un commentaire</h2>
 
-  <h2>Supprimer un commentaire</h2>
+      <p>
+        Etes-vous certain de vouloir supprimer ce commentaire ?
+      </p>
 
-  <p>
-    Etes-vous certain de vouloir supprimer ce commentaire ?
-  </p>
-
-  {# On met l'id de l'annonce dans la route de l'action du formulaire #}
-  <form action="{{ path('commentaire_delete', {'id': commentaire.id}) }}" method="post">
-    <a href="{{ path('commentaire_view', {'id': commentaire.id}) }}" class="btn btn-default">
-      <i class="glyphicon glyphicon-chevron-left"></i>
-      Retour au commentaire
-    </a>
-    {# Ici j'ai écrit le bouton de soumission à la main #}
-    <input type="submit" value="Supprimer" class="btn btn-danger" />
-    {# Ceci va générer le champ CSRF #}
-    {{ form_rest(form) }}
-  </form>
+      {# On met l'id de l'annonce dans la route de l'action du formulaire #}
+      <form action="{{ path('commentaire_delete', {'id': commentaire.id}) }}" method="post">
+        <a href="{{ path('commentaire_view', {'id': commentaire.id}) }}" class="btn btn-default">
+          <i class="glyphicon glyphicon-chevron-left"></i>
+          Retour au commentaire
+        </a>
+        {# Ici j'ai écrit le bouton de soumission à la main #}
+        <input type="submit" value="Supprimer" class="btn btn-danger" />
+        {# Ceci va générer le champ CSRF #}
+        {{ form_rest(form) }}
+      </form>
 
 {% endblock %}

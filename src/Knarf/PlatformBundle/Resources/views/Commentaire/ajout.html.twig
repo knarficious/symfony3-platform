@@ -7,11 +7,8 @@
 {% endblock %}
 
 {% block knarfplatform_body %}
-
-
-  <h2>Ajouter un commentaire</h2>
-
-
+    
+    {{ parent() }}
   
   {{ include("KnarfPlatformBundle:Commentaire:form.html.twig") }}
 
@@ -23,7 +20,6 @@
     à l'annonce après validation du formulaire.
 
   </p>
-
-
+  
 
 {% endblock %}

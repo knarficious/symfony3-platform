@@ -1,12 +1,14 @@
 {# src/Knarf/userBundle/Resources/views/Security/delete.html.twig #}
 
-{% extends "KnarfPlatformBundle::layout.html.twig" %}
+{% extends "KnarfUserBundle::layout.html.twig" %}
 
 {% block title %}
   Supprimer votre profil - {{ parent() }}
 {% endblock %}
 
-{% block knarfplatform_body %}
+{% block knarfuser_body %}
+    
+    {{ parent() }}
 
   <p>
     Etes-vous certain de vouloir supprimer votre profil, {{ user.username }} ?

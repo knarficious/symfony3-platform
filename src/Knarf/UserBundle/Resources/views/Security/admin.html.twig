@@ -6,12 +6,13 @@
     {{ parent() }} - {{ app.user.username }}
 {% endblock %}
 
-{% block body %}
+{% block knarfuser_body %}
+    
+    {{ parent() }}
 
-    <div class="container">
-        <div class="col-md-4">
+
         <h1>Bienvenue {{ name }}</h1>
-        </div>
-    </div>    
+
+  
     
     {% endblock %}    

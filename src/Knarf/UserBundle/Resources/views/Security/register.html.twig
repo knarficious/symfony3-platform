@@ -1,15 +1,20 @@
 {# src/Knarf/UserBundle/Resources/views/Security/register.html.twig #}
-{% extends '::layout.html.twig' %}
+{% extends 'KnarfUserBundle::layout.html.twig' %}
 
 {% form_theme form 'bootstrap_3_layout.html.twig' %}
 
 {% block title %}
-    
+    {{ parent() }}
 {% endblock %}
 
-{% block body %}
+{% block knarfuser_body %}
+    
+    {{ parent() }}
+    
     <div style="text-align: center">
         <h1>{{ 'user.registration.label' | trans }}</h1>
     </div>
-{{ form(form, { attr: { novalidate: 'novalidate' } }) }}
+    
+    {{ form(form, { attr: { novalidate: 'novalidate' } }) }}
+    
 {% endblock %}

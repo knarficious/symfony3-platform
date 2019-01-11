@@ -1,134 +1,136 @@
 {# src/Knarf/UserBundle/Resources/views/Security/profil.html.twig #}
 
-{% extends '::layout.html.twig' %}
+{% extends 'KnarfUserBundle::layout.html.twig' %}
 
 {% block title %}
-    {{ parent() }} - {{ app.user.username }}
+    Profile de {{ app.user.username }} - {{ parent() }}
 {% endblock %}
 
-{% block body %}
+{% block knarfuser_body %}
+    
+    {{ parent() }}
 
-<div class="well">
-    <h3> {{ user.username }}</h3>
-    <p> {% if is_granted('ROLE_ADMIN') %}
-        Administrateur
+    <div class="well">
+        <h3> {{ user.username }}</h3>
+        <p> {% if is_granted('ROLE_ADMIN') %}
+            Administrateur
+            {% endif %}
+        <a href="{{ path('change_image') }}" data-toggle="tooltip" data-placement="right" title="Modifier votre avatar">
+        {% if  user.nomMedia is not empty %}
+        <div class="">
+            <img src="{{vich_uploader_asset(user, 'mediaFile') | imagine_filter('my_thumb_resize') }}" alt="{{ user.nomMedia }}"  />
+        </div>
+        {% else %}
+            {% image '@KnarfUserBundle/Resources/public/images/if_icon-person_211874.png' %}
+            <img class="media-object" src="{{ asset_url }}" alt="" />
+            {% endimage %}
         {% endif %}
-    <a href="{{ path('change_image') }}" data-toggle="tooltip" data-placement="right" title="Modifier votre avatar">
-    {% if  user.nomMedia is not empty %}
-    <div class="badge">
-        <img src="{{vich_uploader_asset(user, 'mediaFile') | imagine_filter('my_thumb_resize') }}" alt="{{ user.nomMedia }}"  />
-    </div>
-    {% else %}
-        {% image '@KnarfUserBundle/Resources/public/images/if_icon-person_211874.png' %}
-        <img class="media-object" src="{{ asset_url }}" alt="" />
-        {% endimage %}
-    {% endif %}
-    </a>
-    <p>
-    Vous êtes membre depuis le: {{ user.createdAt|date('d/m/Y') }}
-    <p>
-    
-    Dernière connection le: {{ user.lastTimeConnect|date('d/m/Y H:i:s')}}
-    
-    
-</div>
+        </a>
+        <p>
+        Vous êtes membre depuis le: {{ user.createdAt|date('d/m/Y') }}
+        <p>
 
-<div class="well">
-    Votre adresse email: {{ user.email }}
-    <p>
+        Dernière connection le: {{ user.lastTimeConnect|date('d/m/Y H:i:s')}}
+
+
+    </div>
+
+    <div class="well">
+        Votre adresse email: {{ user.email }}
+        <p>
+        <p>
+        {% if is_granted('ROLE_USER') %}
+        <a class="btn btn-primary btn-lg" href="{{ path('change_email') }}">
+            Modifier
+        </a>
+        {% endif %}    
+    </div>
+
+    <div class="well">    
+        <a class="btn btn-primary btn-lg" href="{{ path('change_password') }}">{{ 'menu.changement_password' | trans }}</a>
+    </div>
+
+    {% if app.user.adverts is not empty%}
+        <div class="well">
+
+            <h3>Vos annonces</h3>
+
+                {% for entity in app.user.adverts %}
+
+                    {% if entity.published == 1 %}
+
+                    <ul class="nav nav-pills nav-stacked">
+                    <li>
+
+                        <a href="{{ path('knarf_platform_view', { 'slug': entity.slug }) }}">
+                            {{ entity.title }}</a>
+                    </li>
+                    </ul>
+                    {% else %}
+
+                    <ul class="nav nav-pills nav-stacked">    
+                    <li>
+
+
+                        <a href="{{ path('knarf_platform_view', { 'slug': entity.slug }) }}">
+                            {{ entity.title }}</a>
+                    </li>
+                    </ul>
+
+                    {% endif %} 
+                {% endfor %}
+        </div>
+    {% else %}
+    {% endif %}
     <p>
     {% if is_granted('ROLE_USER') %}
-    <a class="btn btn-primary btn-lg" href="{{ path('change_email') }}">
-        Modifier
-    </a>
-    {% endif %}    
-</div>
+        <div class="well">
+        <a class="btn btn-primary btn-lg" href="{{ path('knarf_platform_add') }}">
+            Ajouter une annonce »
+        </a>
+        </div>
+    {% endif %}
+    <p>
+    {% if app.user.commentaires is not empty %}
+        <div class="well">
 
-<div class="well">    
-    <a class="btn btn-primary btn-lg" href="{{ path('change_password') }}">{{ 'menu.changement_password' | trans }}</a>
-</div>
-    
-{% if app.user.adverts is not empty%}
-    <div class="well">
-                
-        <h3>Vos annonces</h3>
-       
-            {% for entity in app.user.adverts %}
-                
-                {% if entity.published == 1 %}
-                      
-                <ul class="nav nav-pills nav-stacked">
+            <h4>Vos commentaires</h4>
+
+            <ul class="list-unstyled"> 
+            {% for commentaire in user.commentaires %}
                 <li>
-                    
-                    <a href="{{ path('knarf_platform_view', { 'slug': entity.slug }) }}">
-                        {{ entity.title }}</a>
+                    {% if commentaire.advert.id is defined %}
+
+                        <a href="{{ path('commentaire_view', {'id': commentaire.id}) }}">
+                        {{ commentaire.contenu }}
+                        </a>
+                        sur l'annonce: <a href="{{ path('knarf_platform_view', {'slug': commentaire.advert.slug}) }}">
+                        {{ commentaire.advert.title }}
+                        </a>
+
+
+                    {% endif %}
+                    <hr>
+
+                    {%  if commentaire.commentaire.id is defined %}
+                        {{ commentaire.contenu }}
+                        sur le <a href="{{ path('commentaire_view', {'id': commentaire.commentaire.id}) }}"> commentaire de:
+                        <b>{{ commentaire.commentaire.user.username }}</b></a>
+
+                    {% endif %}
+                    <hr>
                 </li>
-                </ul>
-                {% else %}
-                    
-                <ul class="nav nav-pills nav-stacked">    
-                <li>
-                    
-                    
-                    <a href="{{ path('knarf_platform_view', { 'slug': entity.slug }) }}">
-                        {{ entity.title }}</a>
-                </li>
-                </ul>
-                    
-                {% endif %} 
             {% endfor %}
+        </ul>    
     </div>
-{% else %}
-{% endif %}
-<p>
-{% if is_granted('ROLE_USER') %}
-    <div class="well">
-    <a class="btn btn-primary btn-lg" href="{{ path('knarf_platform_add') }}">
-        Ajouter une annonce »
-    </a>
-    </div>
-{% endif %}
-<p>
-{% if app.user.commentaires is not empty %}
-    <div class="well">
-        
-        <h4>Vos commentaires</h4>
-        
-        <ul class="list-unstyled"> 
-        {% for commentaire in user.commentaires %}
-            <li>
-                {% if commentaire.advert.id is defined %}
-                    
-                    <a href="{{ path('commentaire_view', {'id': commentaire.id}) }}">
-                    {{ commentaire.contenu }}
-                    </a>
-                    sur l'annonce: <a href="{{ path('knarf_platform_view', {'slug': commentaire.advert.slug}) }}">
-                    {{ commentaire.advert.title }}
-                    </a>
-                
-
-                {% endif %}
-                <hr>
-
-                {%  if commentaire.commentaire.id is defined %}
-                    {{ commentaire.contenu }}
-                    sur le <a href="{{ path('commentaire_view', {'id': commentaire.commentaire.id}) }}"> commentaire de:
-                    <b>{{ commentaire.commentaire.user.username }}</b></a>
-                    
-                {% endif %}
-                <hr>
-            </li>
-        {% endfor %}
-    </ul>    
-</div>
-{% endif %}
-<p>
-<p>
-    <div class="well">
-        <a href="{{ path('knarf_user_delete', {'slug': user.slug}) }}" class="btn btn-danger">
-      <i class="glyphicon glyphicon-trash"></i>
-      Supprimer votre profil
-    </a>
-    </div>  
-
+    {% endif %}
+    <p>
+    <p>
+        <div class="well">
+            <a href="{{ path('knarf_user_delete', {'slug': user.slug}) }}" class="btn btn-danger">
+          <i class="glyphicon glyphicon-trash"></i>
+          Supprimer votre profil
+        </a>
+        </div>  
+       
 {% endblock %}

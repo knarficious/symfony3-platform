@@ -1,6 +1,7 @@
 {# src/Knarf/PlatformBundle/Resources/view/Commentaire/view.html.twig #}
 
 {% block knarfplatform_body %}
+    {{ parent() }}
 
     <div class="media">
       <div class="media-left">
@@ -19,9 +20,35 @@
     {{ commentaire.contenu }}
     
     {% if app.user and commentaire.user is not same as( app.user ) %}
-        <a href="{{ path('commentaire_repond', {'id' :commentaire.id })}}" class="btn btn-default">
+        
+        <button class="btn btn-primary" data-toggle="modal" data-target="#commentaireModal">
+    	<i class="fa fa-plus"></i> Répondre
+        </button>
+            
+            <!-- Modal -->
+            <div class="modal fade" id="commentaireModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalTitle" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalTitle">Ajout d'un commentaire</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <!--
+        <a href="
+            {# 
+        {{ path('commentaire_repond', {'id' :commentaire.id })}}
+            #}
+        " class="btn btn-default">
             <i class="glyphicon glyphicon-add"></i>Répondre
         </a>
+        -->
     {% endif %} 
 
     {% if commentaire.commentaires %}
@@ -79,3 +106,53 @@
     </p>
     <hr>
 {% endblock %}
+
+{% block javascripts %}
+    
+    <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js"></script>
+    
+   
+    <script>
+		$('#commentaireModal').on('shown.bs.modal', function () {
+			var modal = $(this);
+			$.ajax('{{ path('commentaire_repond', {'id' : commentaire.id}) }}', {
+				success: function(data) {
+					modal.find('.modal-body').html(data);
+				}
+			});
+		});
+ 
+        $(document).on('submit', 'form', function(e){
+			// il est impératif de commencer avec cette méthode qui va empêcher le navigateur d'envoyer le formulaire lui-même
+            e.preventDefault();
+            
+            $form = $(e.target);
+            modal = $('#commentaireModal');
+ 
+			var title = $('#article_title').val();
+            
+        	var $submitButton = $form.find(':submit');
+    		$submitButton.html('<i class="fas fa-spinner fa-pulse"></i>');
+    		$submitButton.prop('disabled', true);
+ 
+			// ajaxSubmit du plugin ajaxForm nécessaire pour l'upload de fichier
+			$form.ajaxSubmit({
+				type: 'post',
+				success: function(data) {
+					if (data == 'ok') {
+						$('ul').append('<li>' + title + '</li>');
+						modal.modal('toggle');
+					} else {
+						modal.find('.modal-body').html(data);
+					}
+				},
+				error: function(jqXHR, status, error) {
+					  $submitButton.html(button.data('label'));
+					  $submitButton.prop('disabled', false);
+				}
+			});
+        });
+	</script>
+{% endblock %}     

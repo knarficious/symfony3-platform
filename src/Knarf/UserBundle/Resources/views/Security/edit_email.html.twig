@@ -1,12 +1,16 @@
 {# src/Knarf/UserBundle/Resources/views/Security/edit_email.html.twig #}
 
-{% extends '::layout.html.twig' %}
+{% extends 'KnarfUserBundle::layout.html.twig' %}
 
 {% block title %}
+    
+    {{ parent() }}
     Profil de {{ app.user.username }}
 {% endblock %}
 
-{% block body %}
+{% block knarfuser_body %}
+    
+    {{ parent()}}
 
     <div style="text-align: center">
         <h1>{{ 'user.change_email.title' | trans }}</h1>

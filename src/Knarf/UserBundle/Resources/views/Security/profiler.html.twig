@@ -1,39 +1,41 @@
 {# src/Knarf/UserBundle/Resources/views/Security/profiler.html.twig #}
 
-{% extends '::layout.html.twig' %}
+{% extends 'KnarfUser::layout.html.twig' %}
 
 {% block title %}
-    Profil de {{ user.username }}
+    Profil de {{ user.username }} - {{ parent() }}
 {% endblock %}
 
-{% block body %}
+{% block knarfuser_body %}
+    
+    {{ parent() }}
 
-<div class="well">
-    <h3>{{ user.username }}</h3>
-    
-    {% if  user.nomMedia is not empty %}
-    <div class="badge">
-        <img src="{{vich_uploader_asset(user, 'mediaFile') | imagine_filter('my_thumb_resize') }}" alt="{{ user.nomMedia }}"  />
-    </div>
-    {% endif %}
-    <p>
-    Membre depuis le: {{ user.createdAt|date('d/m/Y') }}
-    </p>
-    <p>
-     Dernière connection:    
-    {% if user.lastTimeConnect is not empty %}
-     le {{ user.lastTimeConnect|date('d/m/Y H:i')}}
-    
-    {% else %}
-        jamais
-    {% endif %}
-    </p>   
-    <p>
-    {% if is_granted('ROLE_ADMIN') %}
-        Adresse ip: {{ user.adresseIp }}
-    {% endif %}
-    </p>
-</div>    
+    <div class="well">
+        <h3>{{ user.username }}</h3>
+
+        {% if  user.nomMedia is not empty %}
+        <div class="">
+            <img src="{{vich_uploader_asset(user, 'mediaFile') | imagine_filter('my_thumb_resize') }}" alt="{{ user.nomMedia }}"  />
+        </div>
+        {% endif %}
+        <p>
+        Membre depuis le: {{ user.createdAt|date('d/m/Y') }}
+        </p>
+        <p>
+         Dernière connection:    
+        {% if user.lastTimeConnect is not empty %}
+         le {{ user.lastTimeConnect|date('d/m/Y H:i')}}
+
+        {% else %}
+            jamais
+        {% endif %}
+        </p>   
+        <p>
+        {% if is_granted('ROLE_ADMIN') %}
+            Adresse ip: {{ user.adresseIp }}
+        {% endif %}
+        </p>
+    </div>    
 
 
 {% if user.adverts is not empty %}

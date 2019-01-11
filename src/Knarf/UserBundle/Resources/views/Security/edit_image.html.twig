@@ -1,19 +1,21 @@
 {# src/Knarf/UserBundle/Resources/views/Security/edit_image.html.twig #}
 
-{% extends '::layout.html.twig' %}
+{% extends 'KnarfUserBundle::layout.html.twig' %}
+
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
 
 {% block title %}
-    Profil
+    
+    Avatar de {{ app.user.username }} - {{ parent()}}
 {% endblock %}
 
-{% block body %}
-
-<div class="">
+{% block knarfuser_body %}
+    {{ parent() }}
     <h3>Modifier votre avatar, {{ app.user.username }}</h3>
     {% if  app.user.nomMedia is not empty %}
         <img src="{{vich_uploader_asset(app.user, 'mediaFile') | imagine_filter('my_thumb') }}" alt="{{ app.user.nomMedia }}"  />
     {% endif %}
-</div>
+
 <p>
 
 {{ form_start(form) }}

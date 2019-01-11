@@ -1,8 +1,15 @@
-{% extends '::layout.html.twig' %}
+{% extends 'KnarfUserBundle::layout.html.twig' %}
 
-{% block title %}{{ 'Login' }}{% endblock %}
+{% block title %}
+    
+    {{ 'Login' }} - {{ parent() }}
 
-{% block body %}
+{% endblock %}
+
+{% block knarfuser_body %}
+    
+    {{ parent() }}
+    
     {% if error %}
         <div class="alert alert-danger">
             {{ error.messageKey|trans(error.messageData, 'security') }}

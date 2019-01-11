@@ -1,8 +1,16 @@
 {# src/Knarf/UserBundle/Resources/views/Security/info_activation.html.twig #}
 
-{% extends '::layout.html.twig' %}
+{% extends 'KnarfUserBundle::layout.html.twig' %}
 
-{% block body %}
+{% block title %}
+    
+    {{ parent() }}
+
+{% endblock %}    
+
+{% block knarfuser_body %}
+    
+    {{ parent() }}
 
 Un e-mail d'activation de votre compte a été envoyé à l'adresse  
     {% for email in app.flashes('email') %}

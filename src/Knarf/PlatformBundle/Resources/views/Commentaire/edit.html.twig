@@ -3,11 +3,12 @@
 {% extends "KnarfPlatformBundle::layout.html.twig" %}
 
 {% block title %}
-  Modifier une commentaire - {{ parent() }}
+  Modifier un commentaire - {{ parent() }}
 {% endblock %}
 
 {% block knarfplatform_body %}
-
+    {{ parent() }}
+    
   <h2>Modifier votre commentaire</h2>
 
   {{ include("KnarfPlatformBundle:Commentaire:form.html.twig") }}
