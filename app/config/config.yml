@@ -87,7 +87,7 @@ swiftmailer:
     port: '%mailer_port%'
     auth_mode: '%mailer_auth_mode%'
 
-# OneUpFlysytemBundle Configuration
+# OneUpFlysystemBundle Configuration
 oneup_flysystem:
     adapters:
         upload_adapter:
@@ -101,14 +101,21 @@ oneup_flysystem:
 # VichUploaderBundle Configuration
 vich_uploader:
     db-driver: orm    
-    storage: flysystem
+    #storage: file_system
     mappings:
        upload_media:
-        uri_prefix: /uploads
-        upload_destination: '%kernel.root_dir%/../web/uploads/'
-        inject_on_load: true
+        uri_prefix: /uploads/medias
+        upload_destination: '%kernel.root_dir%/../web/uploads/medias'
+        inject_on_load: false
         delete_on_update: true
         delete_on_remove: true
+       upload_avatar:
+         uri_prefix: /uploads/avatars
+         upload_destination: '%kernel.root_dir%/../web/uploads/avatars/'
+         inject_on_load: false
+         delete_on_update: true
+         delete_on_remove: true           
+           
     
 # LiipImagineBundle Configuration
 liip_imagine:
