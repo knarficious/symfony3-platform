@@ -7,50 +7,51 @@
 {% endblock %}
 
 {% block knarfplatform_body %}
+    {{ parent() }}
+    
+      <h2>{{ rubrique.intitule }}</h2>
 
-  <h2>{{ rubrique.intitule }}</h2>
+      {% if rubrique.adverts is not empty %}
 
-  {% if rubrique.adverts is not empty %}
-  
-      
-      {% for entity in rubrique.adverts %}
-          {% if entity.published == 1 %}
-              <ul class="well">
-        <li class="article-rubrique">
-            <a href="{{ path('knarf_platform_view', { 'slug': entity.slug }) }}">{{ entity.title }}</a>
-	</li>
-        </ul>
-          {% else %}
-          Il n'y a pas d'annonces publiées dans cette rubrique
-            {% endif %}
-      {% endfor %}
-          
-    {% else %}
-          Il n'y a pas d'annonces dans cette rubrique
 
-      {% endif %}    
+          {% for entity in rubrique.adverts %}
+              {% if entity.published == 1 %}
+                  <ul class="well">
+            <li class="article-rubrique">
+                <a href="{{ path('knarf_platform_view', { 'slug': entity.slug }) }}">{{ entity.title }}</a>
+            </li>
+            </ul>
+              {% else %}
+              Il n'y a pas d'annonces publiées dans cette rubrique
+                {% endif %}
+          {% endfor %}
 
-  <div class="row">
-      
-    <a href="{{ path('rubrique_home') }}" class="btn btn-default">
-      <i class="glyphicon glyphicon-chevron-left"></i>
-      Retour à la liste des rubriques
-    </a>
-      
-    {% if is_granted('ROLE_ADMIN') %}
-        
-    <a href="{{ path('rubrique_edit', {'slug': rubrique.slug}) }}" class="btn btn-default">
-        <i class="glyphicon glyphicon-edit"></i>
-        Modifier la rubrique
-    </a>
-        
-    <a href="{{ path('rubrique_delete', {'slug': rubrique.slug}) }}" class="btn btn-danger">
-        <i class="glyphicon glyphicon-trash"></i>
-        Supprimer la rubrique
-    </a>
-      
-    {% endif %}  
+        {% else %}
+              Il n'y a pas d'annonces dans cette rubrique
 
-  </div>
+          {% endif %}    
+
+      <div class="">
+
+        <a href="{{ path('rubrique_home') }}" class="btn btn-default">
+          <i class="glyphicon glyphicon-chevron-left"></i>
+          Retour à la liste des rubriques
+        </a>
+
+        {% if is_granted('ROLE_ADMIN') %}
+
+        <a href="{{ path('rubrique_edit', {'slug': rubrique.slug}) }}" class="btn btn-default">
+            <i class="glyphicon glyphicon-edit"></i>
+            Modifier la rubrique
+        </a>
+
+        <a href="{{ path('rubrique_delete', {'slug': rubrique.slug}) }}" class="btn btn-danger">
+            <i class="glyphicon glyphicon-trash"></i>
+            Supprimer la rubrique
+        </a>
+
+        {% endif %}  
+
+      </div>
 
 {% endblock %}

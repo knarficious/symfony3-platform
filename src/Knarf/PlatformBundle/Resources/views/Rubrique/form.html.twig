@@ -1,6 +1,6 @@
 {# src/Knarf/PlatformBundle/Resources/views/Rubrique/form.html.twig #}
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
 
-<div class="well">
   {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
 
   {# Les erreurs générales du formulaire. #}
@@ -11,9 +11,17 @@
 
   {# Génération manuelle et éclatée : #}
   <div class="form-group">
-      {{ form_label(form.intitule, "Intitulé de la rubrique", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+      {{ form_label(form.intitule, "Intitulé", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
       {{ form_errors(form.intitule) }}
       {{ form_widget(form.intitule, {'attr': {'class': 'form-control'}}) }}
+  </div>
+  
+  <div class="form-group">
+   {{ form_label(form.media, "Icône", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+   {{ form_errors(form.media) }}
+  <div class="">
+      {{ form_widget(form.media, {'attr': {'class': 'form-control'}}) }}
+  </div>
   </div>
   
  
@@ -27,4 +35,3 @@
 
   {# Fermeture de la balise <form> du formulaire HTML #}
   {{ form_end(form) }}
-</div>

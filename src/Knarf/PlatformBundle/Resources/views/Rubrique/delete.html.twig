@@ -8,22 +8,24 @@
 
 {% block knarfplatform_body %}
 
-  <h2>Supprimer une rubrique</h2>
+    {{ parent() }}
+    
+      <h2>Supprimer une rubrique</h2>
 
-  <p>
-    Etes-vous certain de vouloir supprimer la rubrique: "{{ rubrique.intitule }}" ?
-  </p>
+      <p>
+        Etes-vous certain de vouloir supprimer la rubrique: "{{ rubrique.intitule }}" ?
+      </p>
 
-  {# On met l'id de l'annonce dans la route de l'action du formulaire #}
-  <form action="{{ path('rubrique_delete', {'id': rubrique.id}) }}" method="post">
-    <a href="{{ path('rubrique_view', {'id': rubrique.id}) }}" class="btn btn-default">
-      <i class="glyphicon glyphicon-chevron-left"></i>
-      Retour à la rubrique
-    </a>
-    {# Ici j'ai écrit le bouton de soumission à la main #}
-    <input type="submit" value="Supprimer" class="btn btn-danger" />
-    {# Ceci va générer le champ CSRF #}
-    {{ form_rest(form) }}
-  </form>
+      {# On met l'id de l'annonce dans la route de l'action du formulaire #}
+      <form action="{{ path('rubrique_delete', {'id': rubrique.id}) }}" method="post">
+        <a href="{{ path('rubrique_view', {'id': rubrique.id}) }}" class="btn btn-default">
+          <i class="glyphicon glyphicon-chevron-left"></i>
+          Retour à la rubrique
+        </a>
+        {# Ici j'ai écrit le bouton de soumission à la main #}
+        <input type="submit" value="Supprimer" class="btn btn-danger" />
+        {# Ceci va générer le champ CSRF #}
+        {{ form_rest(form) }}
+      </form>
 
 {% endblock %}
