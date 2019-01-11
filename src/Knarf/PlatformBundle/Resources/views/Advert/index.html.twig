@@ -13,7 +13,7 @@
 
 {% block knarfplatform_body %}
 
-  <div class="row">
+  {{ parent() }}
 
     {% for advert in listAdverts %}
         
@@ -39,7 +39,7 @@
         {% elseif advert.nomMedia ends with 'mp4' %}
             <div class="embed-responsive embed-responsive-16by9">
             <video controls>
-            <source src="{{ asset('uploads/') }}{{ advert.nomMedia }}" type="video/mp4">
+            <source src="{{ asset('uploads/medias/') }}{{ advert.nomMedia }}" type="video/mp4">
             </video>          
             </div>
  
@@ -75,8 +75,7 @@
 
     {% endfor %}    
 
-  </div>
-    
+  {{ parent() }}   
 
 
 

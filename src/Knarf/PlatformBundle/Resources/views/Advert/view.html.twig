@@ -6,11 +6,12 @@
   {{ parent() }} - {{ advert.title | title }}
 {% endblock %}
 
-{% block knarfplatform_body %}    
+{% block knarfplatform_body %}
     
+    {{ parent() }}
     
     {% if advert.nomMedia is defined %} 
-        {% if advert.nomMedia ends with 'jpg' or advert.nomMedia ends with 'png' or advert.nomMedia ends with 'gif' %}                                           
+        {% if advert.nomMedia ends with 'jpg' or advert.nomMedia ends with 'JPG' or advert.nomMedia ends with 'png' or advert.nomMedia ends with 'gif' %}                                           
             <img class="img-responsive" src="{{vich_uploader_asset(advert, 'mediaFile') }}" alt="{{ advert.nomMedia }}"/>
         {% elseif advert.nomMedia ends with 'mp3' %}						
             <audio controls>
@@ -33,13 +34,14 @@
         {% else %}
             {{ advert.user.username }}
         {% endif %}    , le {{ advert.date|date('d/m/Y') }} à {{ advert.date|date('H:i') }}</i>
-    <div class="row">
-    {{ advert.content }}
+        <p>
+    <div class="">
+    {{ advert.content | raw }}
     </div>
     <p>
     <p>
     
-    <div class="row">
+    <div class="">
         <a href="{{ path('knarf_platform_home') }}" class="btn btn-default">
             <i class="glyphicon glyphicon-chevron-left"></i>
             Retour à la liste
@@ -76,13 +78,35 @@
             {% endfor %}  
         
         {% else %}
-            <div class="row">
+            <div class="">
             Aucun commentaire
             </div>
         {% endif %} 
     
     <p>
-        {% if app.user %}              
+        {% if app.user %}
+            
+                <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+    	<i class="fa fa-plus"></i> Ajouter un commentaire
+    </button>
+            
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalTitle" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalTitle">Ajout d'un commentaire</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!--
     
                 <div class="btn btn-default"  onclick="document.getElementById('formulaire-comment-annonce').style.display='block'" >
                     <i class="glyphicon glyphicon-exclamation-sign"></i>
@@ -91,9 +115,57 @@
                 <div id="formulaire-comment-annonce" style="display:none">
                     {{ include("KnarfPlatformBundle:Commentaire:form.html.twig") }}
                 </div> 
-
+            -->
+            
         {% else %}
             Vous devez vous <a href="{{ path('security_login_form') }}">connecter</a> pour commenter
         {% endif %}       
              
 {% endblock %}
+
+{% block javascripts %}
+    
+    {{ parent() }}
+   
+    <script>
+		$('#exampleModal').on('shown.bs.modal', function () {
+			var modal = $(this);
+			$.ajax('{{ path('commentaire_add', {'slug' : advert.slug}) }}', {
+				success: function(data) {
+					modal.find('.modal-body').html(data);
+				}
+			});
+		});
+ 
+        $(document).on('submit', 'form', function(e){
+			// il est impératif de commencer avec cette méthode qui va empêcher le navigateur d'envoyer le formulaire lui-même
+            e.preventDefault();
+            
+            $form = $(e.target);
+            modal = $('#exampleModal');
+ 
+			var title = $('#article_title').val();
+            
+        	var $submitButton = $form.find(':submit');
+    		$submitButton.html('<i class="fas fa-spinner fa-pulse"></i>');
+    		$submitButton.prop('disabled', true);
+ 
+			// ajaxSubmit du plugin ajaxForm nécessaire pour l'upload de fichier
+			$form.ajaxSubmit({
+				type: 'post',
+				success: function(data) {
+					if (data == 'ok') {
+						$('ul').append('<li>' + title + '</li>');
+						modal.modal('toggle');
+					} else {
+						modal.find('.modal-body').html(data);
+					}
+				},
+				error: function(jqXHR, status, error) {
+					  $submitButton.html(button.data('label'));
+					  $submitButton.prop('disabled', false);
+				}
+			});
+        });
+	</script>
+{% endblock %}     
