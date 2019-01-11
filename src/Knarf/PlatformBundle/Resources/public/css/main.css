@@ -66,6 +66,10 @@ ul {
 @media screen and (max-width: 800px) {
   .leftcolumn, .rightcolumn {
     width: 100%;
-    padding: 0;
+    padding: 0;    
+  }
+  
+  .rightcolumn {
+      background-color: #e0e0eb;
   }
 }
