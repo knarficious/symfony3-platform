@@ -31,12 +31,43 @@ class RegisterController extends Controller
     public function registerAction(Request $request)
     {
         // Si le visiteur est déjà identifié, on le redirige
-        if ($this->get('security.authorization_checker')->isGranted('ROLE_USER')) {
-        return $this->redirectToRoute('profile');
-    }
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_USER'))
+        {
+            return $this->redirectToRoute('profile');
+        }
+        
         $form = $this->createForm(RegistrationType::class, new Registration());
         
         if ($this->getRegistrationFormHandler()->handle($form, $request))
+        {
+            $email = $form->getData()->getEmail();
+            $this->addFlash('email', $email);
+            return $this->redirectToRoute('info_activation');
+        }
+        
+        return $this->render(
+            'KnarfUserBundle:Security:register.html.twig',
+            array('form' => $form->createView())
+        );
+    }
+    
+    /**
+     * @Route("/register-admin", name="register_admin")
+     * @param Request $request
+     * @Method({"GET", "POST"})
+     * @return type
+     */
+    public function registerAsAdminAction(Request $request)
+    {
+        // Si le visiteur est déjà identifié, on le redirige
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_USER'))
+        {
+            return $this->redirectToRoute('profile');
+        }
+        
+        $form = $this->createForm(RegistrationType::class, new Registration());
+        
+        if ($this->getRegistrationAdminFormHandler()->handle($form, $request))
         {
             $email = $form->getData()->getEmail();
             $this->addFlash('email', $email);
@@ -83,8 +114,8 @@ class RegisterController extends Controller
         
         if ($this->getAccountActivationHandler()->handle($request))
         {
-            $this->addFlash('notice', 'Votre compte est activé : Vous pouvez vous connecter');
-            return $this->redirectToRoute('security_login_form');
+           // $this->addFlash('notice', 'Votre compte est activé : Vous pouvez vous connecter');
+            return $this->redirect($this->generateUrl('security_login_form'));
         }
     }
     
@@ -96,9 +127,21 @@ class RegisterController extends Controller
         return $this->get('app.user_registration.handler');
     }
     
+    /**
+     * @return \Knarf\CoreBundle\Form\Handler\FormHandlerInterface
+     */
+    protected function getRegistrationAdminFormHandler()
+    {
+        return $this->get('app.admin_registration.handler');
+    }
     
+    /**
+     * @return \Knarf\CoreBundle\Form\Handler\FormHandlerInterface
+     */
     protected function getAccountActivationHandler()
     {
         return $this->get('app.account_activation.handler');
     }
+    
+    
 }
