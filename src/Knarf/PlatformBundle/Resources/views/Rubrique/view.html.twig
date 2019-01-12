@@ -7,16 +7,27 @@
 {% endblock %}
 
 {% block knarfplatform_body %}
+    
     {{ parent() }}
     
-    {% if rubrique.image is not empty %}
+
+    <div class="media">
+
+        {% if rubrique.image is not empty %}
+            <div class="media-left">        
+                <img class="" src="{{vich_uploader_asset(rubrique, 'mediaFile') | imagine_filter('my_thumb') }}" alt="{{ rubrique.image }}"/>
+            </div>
+        {% endif %}
         
-        <img class="img-responsive" src="{{vich_uploader_asset(rubrique, 'mediaFile') | imagine_filter('my_thumb') }}" alt="{{ rubrique.image }}"/>
+    <div class="media-body">
+   
+        <h2 class="media-heading">{{ rubrique.intitule }}</h2>
+        
+    </div>
+    </div>
 
-    {% endif %}
-    
-    <h2>{{ rubrique.intitule }}</h2>
-
+<p>
+<p>
       {% if rubrique.adverts is not empty %}
 
 
@@ -36,28 +47,31 @@
               Il n'y a pas d'annonces dans cette rubrique
 
           {% endif %}    
-
+          <p>
       <div class="">
-
-        <a href="{{ path('rubrique_home') }}" class="btn btn-default">
-          <i class="glyphicon glyphicon-chevron-left"></i>
-          Retour à la liste des rubriques
-        </a>
-
+         
         {% if is_granted('ROLE_ADMIN') %}
 
         <a href="{{ path('rubrique_edit', {'slug': rubrique.slug}) }}" class="btn btn-default">
             <i class="glyphicon glyphicon-edit"></i>
             Modifier la rubrique
         </a>
-
+   
         <a href="{{ path('rubrique_delete', {'slug': rubrique.slug}) }}" class="btn btn-danger">
             <i class="glyphicon glyphicon-trash"></i>
             Supprimer la rubrique
         </a>
 
-        {% endif %}  
+        {% endif %}
+        
+        <a href="{{ path('rubrique_home') }}" class="btn btn-default">
+          <i class="glyphicon glyphicon-chevron-left"></i>
+          Retour à la liste des rubriques
+        </a>
 
       </div>
+        <p>
+            
+
 
 {% endblock %}
