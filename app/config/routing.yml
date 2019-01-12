@@ -1,8 +1,3 @@
-knarf_core:
-    resource: "@KnarfCoreBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
 knarf_api:
     resource: "@KnarfApiBundle/Resources/config/routing.yml"
     prefix:   /api
