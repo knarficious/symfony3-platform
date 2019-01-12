@@ -41,7 +41,7 @@
                 {{ render(controller("KnarfPlatformBundle:Rubrique:menu")) }}
             </ul>
         </li>
-        {% if is_granted('IS_AUTHENTICATED_FULLY') %}              
+        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}              
           <li><a href="{{ path('knarf_platform_add') }}">Ajouter une annonce</a></li>          
           {% endif %}        
         <li><a href="{{ path('contact') }}">Contact</a></li>
@@ -58,9 +58,9 @@
         </form> 
 
       <ul class="nav navbar-nav navbar-right">
-        {% if is_granted('IS_AUTHENTICATED_FULLY') %}  
+        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}  
        
-    <li class="badge">
+    <li class="">
         {% if  app.user.nomMedia is not empty %}
         <img src="{{vich_uploader_asset(app.user, 'mediaFile') | imagine_filter('my_thumb') }}" alt="{{ app.user.nomMedia }}"  />
         {% else  %}
@@ -99,22 +99,29 @@
         </a>
       </p>
     </div>
-  <div class="container">  
-  <div class="row">     
+  <div class="container-fluid">      
+
+  <div class="row">
+      
+    {% set flashbag_notices = app.session.flashbag.get('notice') %}
+        {% if flashbag_notices is not empty %}
+            
+                <div class="glyphicon glyphicon-remove" id="msg" onClick="cacher();">
+                    {% for notice in flashbag_notices %}
+                        {{ notice }}
+                    {% endfor %}
+                </div>
+
+        {% endif %}
 
         
     <div class="leftcolumn">
         
+
+        
         {% block body %}
             
-            {% set flashbag_notices = app.session.flashbag.get('notice') %}
-            {% if flashbag_notices is not empty %}
-            <div class="glyphicon glyphicon-remove" id="msg" onClick="cacher();">
-		{% for notice in flashbag_notices %}
-                    {{ notice }}
-		{% endfor %}
-            </div>
-            {% endif %}
+
 
         {% endblock %}        
 
