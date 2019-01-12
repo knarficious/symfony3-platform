@@ -103,20 +103,21 @@
 
   <div class="row">
       
-    {% set flashbag_notices = app.session.flashbag.get('notice') %}
-        {% if flashbag_notices is not empty %}
-            
-                <div class="glyphicon glyphicon-remove" id="msg" onClick="cacher();">
-                    {% for notice in flashbag_notices %}
-                        {{ notice }}
-                    {% endfor %}
-                </div>
 
-        {% endif %}
 
         
     <div class="leftcolumn">
         
+        {% set flashbag_notices = app.session.flashbag.get('notice') %}
+        {% if flashbag_notices is not empty %}
+            
+            <div class="glyphicon glyphicon-remove" id="msg" onClick="cacher();">
+                {% for notice in flashbag_notices %}
+                    {{ notice }}
+                {% endfor %}
+            </div>
+
+        {% endif %}
 
         
         {% block body %}
@@ -129,7 +130,7 @@
     
     <div class="rightcolumn">
         
-        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
            {{ render(controller("KnarfUserBundle:Security:index")) }}
         {% endif %}
         
