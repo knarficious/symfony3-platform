@@ -4,12 +4,16 @@ namespace Knarf\PlatformBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * Rubrique
  *
  * @ORM\Table(name="rubrique")
  * @ORM\Entity(repositoryClass="Knarf\PlatformBundle\Repository\RubriqueRepository")
+ * @Vich\Uploadable
  */
 class Rubrique
 {
@@ -34,6 +38,35 @@ class Rubrique
      * @ORM\Column(length=255, unique=true)
      */
     private $slug;
+    
+    /**
+     * @var string
+     * @ORM\Column(name="image", type="string", length=255, nullable=true)
+     */
+    private $image;
+    
+    /**
+     * @var \DateTime
+     * 
+     * @ORM\Column(name="updateAt", type="datetime")
+     */
+    private $updateAt;
+    
+        /**
+     * NOTE: This is not a mapped field of entity metadata, just a simple property.
+     * 
+     * @Assert\File(
+     * 		maxSize="1M",
+     * 		mimeTypes={"image/png",
+     *                     "image/jpeg",
+     *                     "image/gif",
+     *                     "image/svg+xml"},
+     *                     uploadErrorMessage="Le fichier ne peut pas etre téléchargé :-(")
+     * @Vich\UploadableField(mapping="upload_media", fileNameProperty="image", nullable=true)
+     * 
+     * @var File
+     */
+    private $mediaFile;
     
         // === ASSOCIATIONS ===
     
@@ -168,5 +201,81 @@ class Rubrique
     }
 
     return $text;
+    }
+
+    /**
+     * Set image
+     *
+     * @param string $image
+     *
+     * @return Rubrique
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return string
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+    
+    /**
+     * Set mediaFile
+     * 
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $mediaFile
+     */
+     public function setMediaFile($mediaFile)
+    {
+	$this->mediaFile = $mediaFile;
+		 
+	if ($mediaFile instanceof UploadedFile)
+        {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->setUpdateAt(new \DateTime('now'));		
+        }	
+     }
+	 
+    /**
+     * Get mediaFile
+     * 
+     * @return File
+     */
+    public function getMediaFile()
+    {
+	  return $this->mediaFile;
+    } 
+
+
+    /**
+     * Set updateAt
+     *
+     * @param \DateTime $updateAt
+     *
+     * @return Rubrique
+     */
+    public function setUpdateAt($updateAt)
+    {
+        $this->updateAt = $updateAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updateAt
+     *
+     * @return \DateTime
+     */
+    public function getUpdateAt()
+    {
+        return $this->updateAt;
     }
 }
