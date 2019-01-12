@@ -9,7 +9,13 @@
 {% block knarfplatform_body %}
     {{ parent() }}
     
-      <h2>{{ rubrique.intitule }}</h2>
+    {% if rubrique.image is not empty %}
+        
+        <img class="img-responsive" src="{{vich_uploader_asset(rubrique, 'mediaFile') | imagine_filter('my_thumb') }}" alt="{{ rubrique.image }}"/>
+
+    {% endif %}
+    
+    <h2>{{ rubrique.intitule }}</h2>
 
       {% if rubrique.adverts is not empty %}
 
