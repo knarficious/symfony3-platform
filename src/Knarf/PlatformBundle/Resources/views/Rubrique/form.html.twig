@@ -1,6 +1,7 @@
 {# src/Knarf/PlatformBundle/Resources/views/Rubrique/form.html.twig #}
-{% form_theme form 'bootstrap_3_layout.html.twig' %}
 
+
+<div class="container-fluid">
   {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
 
   {# Les erreurs générales du formulaire. #}
@@ -17,16 +18,27 @@
   </div>
   
   <div class="form-group">
-   {{ form_label(form.media, "Icône", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
-   {{ form_errors(form.media) }}
-  <div class="">
-      {{ form_widget(form.media, {'attr': {'class': 'form-control'}}) }}
-  </div>
-  </div>
-  
+   
+   {{ form_errors(form.mediaFile) }}
+   <div class="col-sm-10">
+        
+      {{ form_widget(form.mediaFile, {'attr': {'class': 'form-control'}}) }}
+
+   </div>
  
-  {# Pour le bouton, pas de label ni d'erreur, on affiche juste le widget #}
-  {{ form_widget(form.enregistrer, {'attr': {'class': 'btn btn-primary'}}) }}
+   </div>
+  <p>
+  <p>
+  <p>
+ 
+  <div class="form-group">
+      <div class="col-sm-2">
+          <div class="col-sm-10">
+  
+              {{ form_widget(form.enregistrer, {'attr': {'class': 'btn btn-primary'}}) }}
+          </div>
+      </div>          
+  </div>
 
   {# Génération automatique des champs pas encore écrits.
      Dans cet exemple, ce serait le champ CSRF (géré automatiquement par Symfony !)
@@ -35,3 +47,4 @@
 
   {# Fermeture de la balise <form> du formulaire HTML #}
   {{ form_end(form) }}
+</div>
