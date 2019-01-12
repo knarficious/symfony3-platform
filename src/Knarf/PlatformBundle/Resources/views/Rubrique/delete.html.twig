@@ -17,8 +17,8 @@
       </p>
 
       {# On met l'id de l'annonce dans la route de l'action du formulaire #}
-      <form action="{{ path('rubrique_delete', {'id': rubrique.id}) }}" method="post">
-        <a href="{{ path('rubrique_view', {'id': rubrique.id}) }}" class="btn btn-default">
+      <form action="{{ path('rubrique_delete', {'slug': rubrique.slug}) }}" method="post">
+        <a href="{{ path('rubrique_view', {'slug': rubrique.slug}) }}" class="btn btn-default">
           <i class="glyphicon glyphicon-chevron-left"></i>
           Retour à la rubrique
         </a>
