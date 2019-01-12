@@ -49,6 +49,7 @@ twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
     form_themes:
+        - 'VichUploaderBundle:Form:fields.html.twig'
         - 'bootstrap_3_layout.html.twig'
         - '@FOSCKEditor/Form/ckeditor_widget.html.twig'
     globals:
