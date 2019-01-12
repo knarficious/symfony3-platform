@@ -62,13 +62,15 @@ class RubriqueController extends Controller{
     
         if(null === $rubrique)
         {
-            throw new NotFoundHttpException("La rubrique d'id ".$slug." n'existe pas!");
+            throw new NotFoundHttpException("La rubrique ".$slug." n'existe pas!");
         }
     
         $form = $this->createForm(RubriqueType::class, $rubrique);
     
         if($request->isMethod('POST') && $form->handleRequest($request)->isValid())
         {
+            $rubrique->setUpDateAt(new \DateTime());
+            $em->persist($rubrique);
             $em->flush();
         
             $request->getSession()->getFlashBag()->add('notice', 'Rubrique modifiée avec succès.');
@@ -138,8 +140,11 @@ class RubriqueController extends Controller{
     
     public function addAction(Request $request)
     {
+
         
         $rubrique = new Rubrique();
+        
+        $rubrique->setUpdateAt(new \DateTime());
         
         $form = $this->createForm(RubriqueType::class, $rubrique);
 
