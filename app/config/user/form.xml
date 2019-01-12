@@ -14,6 +14,11 @@ and open the template in the editor.
                  class="Knarf\UserBundle\Form\Handler\User\RegistrationFormHandler">
             <argument type="service" id="app.user_manager" />
         </service>
+        
+        <service id="app.admin_registration.handler"
+                 class="Knarf\UserBundle\Form\Handler\User\RegistrationAdminFormHandler">
+            <argument type="service" id="app.user_manager" />
+        </service>
 
         <service id="app.user_change_password.handler"
                  class="Knarf\UserBundle\Form\Handler\User\ChangePasswordFormHandler">
