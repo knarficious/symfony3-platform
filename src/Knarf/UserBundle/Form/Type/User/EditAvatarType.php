@@ -39,8 +39,12 @@ class EditAvatarType extends AbstractType
     }
     
     public function buildForm(FormBuilderInterface $builder, array $options) 
-            {
-        $builder->add('mediaFile', VichFileType::class, array('label' => false));
+    {
+        $builder->add('mediaFile', VichFileType::class, array(
+                'required' => false,
+                'label' => false,
+                'allow_delete' => true));
+        
         $builder->add('Register', SubmitType::class, array(
             'attr' => ['class' => 'btn btn-primary btn-lg btn-block'],
             'label' => 'user.registration.register'
@@ -52,5 +56,13 @@ class EditAvatarType extends AbstractType
         $resolver->setDefaults([
             'data_class' => 'Knarf\UserBundle\Entity\User\Avatar',
         ]);
+    }
+    
+        /**
+     * {@inheritdoc}
+     */
+    public function getBlockPrefix()
+    {
+        return 'knarf_userbundle_avatar';
     }
 }
