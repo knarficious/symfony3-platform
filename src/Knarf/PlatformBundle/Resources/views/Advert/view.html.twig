@@ -86,9 +86,9 @@
     <p>
         {% if app.user %}
             
-                <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-    	<i class="fa fa-plus"></i> Ajouter un commentaire
-    </button>
+            <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                <i class="fa fa-plus"></i> Ajouter un commentaire
+            </button>
             
             <!-- Modal -->
             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalTitle" aria-hidden="true">
@@ -101,21 +101,11 @@
                             </button>
                         </div>
                         <div class="modal-body">
+                            
                         </div>
                     </div>
                 </div>
             </div>
-            
-            <!--
-    
-                <div class="btn btn-default"  onclick="document.getElementById('formulaire-comment-annonce').style.display='block'" >
-                    <i class="glyphicon glyphicon-exclamation-sign"></i>
-                        Laisser un commentaire
-                </div>    
-                <div id="formulaire-comment-annonce" style="display:none">
-                    {{ include("KnarfPlatformBundle:Commentaire:form.html.twig") }}
-                </div> 
-            -->
             
         {% else %}
             Vous devez vous <a href="{{ path('security_login_form') }}">connecter</a> pour commenter
