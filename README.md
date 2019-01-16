@@ -10,4 +10,5 @@ Système sécurisé de gestion d'utilisateurs:
 -publication de commentaires imbriqués (2 niveaux)
 -gestion de profil d'utilisateur
 -optimisation des url pour le SEO
-etc.
+-Rest API
+...
