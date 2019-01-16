@@ -6,6 +6,16 @@ Knarf\UserBundle\Entity\User:
             groups: ['user', 'advert', 'commentaire']
         username:
             groups: ['user', 'advert', 'commentaire']
+        email:
+            groups: ['user', 'advert', 'commentaire']
+        createdAt:  
+            groups: ['user', 'advert', 'commentaire']
+        updatedAt:
+            groups: ['user', 'advert', 'commentaire']
+        lastTimeConnect:
+            groups: ['user', 'advert', 'commentaire']
+        nomMedia:
+            groups: ['user', 'advert', 'commentaire']
         adverts:
             groups: ['user']
         commentaires:
@@ -18,12 +28,19 @@ Knarf\PlatformBundle\Entity\Advert:
         
         title:
             groups: ['user', 'advert', 'commentaire', 'rubrique']
+            
+        content:
+            groups: ['user', 'advert', 'commentaire', 'rubrique']
         
         date:
             groups: ['user', 'advert', 'commentaire', 'rubrique']
             
         updateAt:
             groups: ['user', 'advert', 'commentaire', 'rubrique']
+            
+        nomMedia:
+            groups: ['user', 'advert', 'commentaire', 'rubrique']         
+                
             
         user:
             groups: ['advert']
@@ -40,6 +57,9 @@ Knarf\PlatformBundle\Entity\Rubrique:
             groups: ['advert', 'rubrique']
             
         intitule:
+            groups: ['advert', 'rubrique']
+            
+        image:
             groups: ['advert', 'rubrique']
             
         adverts:

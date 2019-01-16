@@ -20,8 +20,8 @@ class RubriqueType extends AbstractType
                 ->add('mediaFile',       VichFileType::class, array(
                     'required' => false,
                     'label' => false,
-                    'download_link' => false,
-                    'allow_delete' => true))
+                    'allow_delete' => true,
+                    'download_link' => false))
                 ->add('enregistrer', SubmitType::class);
     }
     

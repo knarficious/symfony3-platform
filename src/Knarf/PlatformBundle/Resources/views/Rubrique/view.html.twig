@@ -15,7 +15,7 @@
 
         {% if rubrique.image is not empty %}
             <div class="media-left">        
-                <img class="" src="{{vich_uploader_asset(rubrique, 'mediaFile') | imagine_filter('my_thumb') }}" alt="{{ rubrique.image }}"/>
+                <img class="media-object" src="{{vich_uploader_asset(rubrique, 'mediaFile') | imagine_filter('my_thumb') }}" alt="{{ rubrique.image }}"/>
             </div>
         {% endif %}
         

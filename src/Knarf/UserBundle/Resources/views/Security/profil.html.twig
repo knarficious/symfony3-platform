@@ -101,9 +101,8 @@
                 <li>
                     {% if commentaire.advert.id is defined %}
 
-                        <a href="{{ path('commentaire_view', {'id': commentaire.id}) }}">
-                        {{ commentaire.contenu }}
-                        </a>
+                        "{{ commentaire.contenu }}"
+                        
                         sur l'annonce: <a href="{{ path('knarf_platform_view', {'slug': commentaire.advert.slug}) }}">
                         {{ commentaire.advert.title }}
                         </a>

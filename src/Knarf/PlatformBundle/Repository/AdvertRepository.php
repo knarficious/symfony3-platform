@@ -19,7 +19,7 @@ class AdvertRepository extends AbstractGenericRepository implements AdvertReposi
     public function afficherDerniersArticles()
     {
         $qb = $this->createQueryBuilder('a')
-               // ->where('a.published = ?1')
+                //->where('a.published = ?1')
                 ->addOrderBy('a.date', 'DESC');
         
         return $qb->getQuery()->getResult();

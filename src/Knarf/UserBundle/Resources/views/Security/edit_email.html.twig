@@ -19,7 +19,11 @@
     <p>
         
     {{ form_start(form) }}
-        {{ form_row(form.email) }}
+        {{ form_errors(form) }}
+        <div class="form-group">
+            {{form_errors(form.email)}}
+            {{ form_widget(form.email) }}
+        </div>
         {{ form_widget(form.Register) }}
     {{ form_rest(form) }}    
     {{ form_end(form) }}

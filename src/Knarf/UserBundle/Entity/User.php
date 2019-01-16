@@ -134,7 +134,7 @@ class User implements UserInterface, \Serializable, EquatableInterface
      * @Assert\File(
      * 		maxSize="10M",
      * 		mimeTypes={"image/png", "image/jpeg", "image/gif"})
-     * @Vich\UploadableField(mapping="upload_media", fileNameProperty="nomMedia", nullable=true)
+     * @Vich\UploadableField(mapping="upload_avatar", fileNameProperty="nomMedia", nullable=true)
      * 
      * @var File
      */
@@ -171,14 +171,20 @@ class User implements UserInterface, \Serializable, EquatableInterface
     // === ASSOCIATIONS ===
     
     /**
-     * @ORM\OneToMany(targetEntity="Knarf\PlatformBundle\Entity\Advert", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="Knarf\PlatformBundle\Entity\Advert", cascade={"persist", "remove"}, mappedBy="user")
      */
     private $adverts;
     
     /**
-     * @ORM\OneToMany(targetEntity="Knarf\PlatformBundle\Entity\Commentaire", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="Knarf\PlatformBundle\Entity\Commentaire", cascade={"persist", "remove"}, mappedBy="user")
      */
     private $commentaires;
+    
+    /**
+     * @ORM\OneToOne(targetEntity=Image::class, cascade={"persist", "remove"}, mappedBy="user")
+     * @ORM\JoinColumn(name="image", nullable=true)
+     */
+    private $image;
     
 
 //    public function __construct($username, $password, $salt, array $roles)
@@ -841,4 +847,59 @@ class User implements UserInterface, \Serializable, EquatableInterface
 
     return $text;
     } 
+
+
+    /**
+     * Set image
+     *
+     * @param \Knarf\UserBundle\Entity\Image $image
+     *
+     * @return User
+     */
+    public function setImage(\Knarf\UserBundle\Entity\Image $image = null)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return \Knarf\UserBundle\Entity\Image
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+    
+    private $path;
+
+    public function getAbsolutePath()
+    {
+        return null === $this->path
+            ? null
+            : $this->getUploadRootDir().'/'.$this->path;
+    }
+
+    public function getWebPath()
+    {
+        return null === $this->path
+            ? null
+            : $this->getUploadDir().'/'.$this->path;
+    }
+
+    public function getUploadRootDir()
+    {
+        // the absolute directory path where uploaded
+        // documents should be saved
+        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+    }
+
+    public function getUploadDir()
+    {
+        // get rid of the __DIR__ so it doesn't screw up
+        // when displaying uploaded doc/image in the view.
+        return 'uploads';
+    }
 }

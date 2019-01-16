@@ -143,7 +143,7 @@ class UserManager extends AbstractGenericManager implements UserManagerInterface
     }
 
     public function updateUserImage(UserInterface $user, $nomMedia, $mediaFile) {
-        $user->setUpdatedAt();
+        $user->setUpdatedAt(new \DateTime('now'));
         $user->setNomMedia($nomMedia);
         $user->setMediaFile($mediaFile);
         $this->save($user, false, true);

@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use Knarf\CoreBundle\Validator\Constraints as CoreAssert;
 use Knarf\UserBundle\Validator\Constraints as KnarfAssert;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * Description of Profil

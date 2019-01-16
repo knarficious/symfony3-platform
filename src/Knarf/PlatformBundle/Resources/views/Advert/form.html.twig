@@ -1,70 +1,79 @@
 {# src/Knarf/PlatformBundle/Resources/views/Advert/form.html.twig #}
 
-{% form_theme form 'bootstrap_4_layout.html.twig' %}
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
 
 <div class="container-fluid">
-  {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
-
-  {# Les erreurs générales du formulaire. #}
-  {{ form_errors(form) }}
-
-
-  <div class="form-group">
-      {{ form_label(form.rubrique, "Rubrique de l'annonce", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
-      {{ form_errors(form.rubrique) }}       
-      {{ form_widget(form.rubrique, {'attr': {'class': 'form-control'}}) }}
-
-  </div>
-  
-  
-  <div class="form-group">
-    {# Génération du label. #}
-    {{ form_label(form.title, "Titre de l'annonce", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
-
-    {# Affichage des erreurs pour ce champ précis. #}
-    {{ form_errors(form.title) }}
-
-    <div class="col-sm-10">
-      {# Génération de l'input. #}
-      {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
-    </div>
-  </div>
-
-  {# Idem pour un autre champ. #}
-  <div class="form-group">
-    {{ form_label(form.content, "Contenu de l'annonce", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
-    {{ form_errors(form.content) }}
-    <div class="col-sm-10">
-      {{ form_widget(form.content, {'attr': {'class': 'form-control'}}) }}
-    </div>
-  </div>
     
-  <div class="form-group">
-   {{ form_label(form.mediaFile, "Media de l'annonce", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
-   {{ form_errors(form.mediaFile) }}
-  <div class="col-sm-10">
-      {{ form_widget(form.mediaFile) }}
-  </div>
-  </div>
+    {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
 
-  {{ form_row(form.published, {'attr': {'class': 'col-sm-offset-2 col-sm-10'}}) }}
-  
-    <a href="{{ path('profile') }}" class="btn btn-default" >
-      <i class="glyphicon glyphicon-chevron-left"></i>
-      Annuler
-  </a>    
+        {# Les erreurs générales du formulaire. #}
+        {{ form_errors(form) }}
 
-  {# Pour le bouton, pas de label ni d'erreur, on affiche juste le widget #}
-  {{ form_widget(form.enregistrer, {'attr': {'class': 'btn btn-primary'}}) }}
-  {{ form_widget(form.effacer, {'attr': {'class': 'btn btn-danger'}}) }}
 
-  {# Génération automatique des champs pas encore écrits.
-     Dans cet exemple, ce serait le champ CSRF (géré automatiquement par Symfony !)
-     et tous les champs cachés (type « hidden »). #}
-  {{ form_rest(form) }} 
+        <div class="form-group">
+            {{ form_label(form.rubrique, "Rubrique de l'annonce", {'label_attr': {'class': 'control-label'}}) }}
+            {{ form_errors(form.rubrique) }}       
+            {{ form_widget(form.rubrique, {'attr': {'class': 'form-control'}}) }}
 
-  {# Fermeture de la balise <form> du formulaire HTML #}
-  {{ form_end(form) }}
+        </div>
+
+        <div class="form-group">            
+            {{ form_label(form.title, "Titre de l'annonce", {'label_attr': {'class': 'control-label'}}) }}
+            {{ form_errors(form.title) }}
+
+            
+                {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
+            
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.mediaFile, "Media de l'annonce", {'label_attr': {'class': 'media-heading  control-label'}}) }}
+            {{ form_errors(form.mediaFile) }}
+            {% if advert.nomMedia is not empty %}
+                    <img class="img-responsive media-object" src="{{vich_uploader_asset(advert, 'mediaFile') }}" alt="{{ advert.nomMedia }}"/>
+                
+            
+                <div class="col-sm-8">
+                {{ form_widget(form.mediaFile.delete) }}
+                </div>
+            {% endif %}
+            
+            <p>
+            <hr>
+            <p>
+            <div class="col-sm-10">
+                {{ form_widget(form.mediaFile) }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.content, "Contenu de l'annonce", {'label_attr': {'class': 'control-label'}}) }}
+            {{ form_errors(form.content) }}
+            
+                {{ form_widget(form.content, {'attr': {'class': 'form-control'}}) }}
+            
+        </div>   
+
+        <div class="form-group">
+            {{ form_widget(form.published, {'attr': {'class': 'col-sm-offset-2 col-sm-4'}}) }}
+        </div>
+        
+        <a href="{{ path('profile') }}" class="btn btn-default" >
+        <i class="glyphicon glyphicon-chevron-left"></i>
+        Annuler
+        </a>    
+
+        {# Pour le bouton, pas de label ni d'erreur, on affiche juste le widget #}
+        {{ form_widget(form.enregistrer, {'attr': {'class': 'btn btn-primary'}}) }}
+        {{ form_widget(form.effacer, {'attr': {'class': 'btn btn-danger'}}) }}
+
+        {# Génération automatique des champs pas encore écrits.
+        Dans cet exemple, ce serait le champ CSRF (géré automatiquement par Symfony !)
+        et tous les champs cachés (type « hidden »). #}
+        {{ form_rest(form) }} 
+
+    {# Fermeture de la balise <form> du formulaire HTML #}
+    {{ form_end(form) }}
   
 
 </div>

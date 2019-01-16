@@ -34,7 +34,7 @@ class Avatar
      * @Assert\File(
      * 		maxSize="10M",
      * 		mimeTypes={"image/png", "image/jpeg", "image/gif"})
-     * @Vich\UploadableField(mapping="upload_media", fileNameProperty="nomMedia", nullable=true)
+     * @Vich\UploadableField(mapping="upload_avatar", fileNameProperty="nomMedia", nullable=true)
      * 
      * @var File
      */
@@ -92,7 +92,7 @@ class Avatar
         {
             // It is required that at least one field changes if you are using doctrine
             // otherwise the event listeners won't be called and the file is lost
-            $this->setUpdatedAt();		
+            $this->setUpdatedAt(new \DateTime('now'));		
         }	
      }
 	 

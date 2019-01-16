@@ -12,18 +12,25 @@
 {% block knarfuser_body %}
     {{ parent() }}
     <h3>Modifier votre avatar, {{ app.user.username }}</h3>
-    {% if  app.user.nomMedia is not empty %}
-        <img src="{{vich_uploader_asset(app.user, 'mediaFile') | imagine_filter('my_thumb') }}" alt="{{ app.user.nomMedia }}"  />
-    {% endif %}
+
 
 <p>
 
 {{ form_start(form) }}
 {{ form_errors(form) }}
-    {{ form_widget(form.mediaFile) }}
+<div class="form-group">
+    {% if  app.user.nomMedia is not empty %}
+        <img src="{{vich_uploader_asset(app.user, 'mediaFile') | imagine_filter('my_thumb_resize') }}" alt="{{ app.user.nomMedia }}"  />
+    {# {{ form_widget(form.mediaFile.delete) }} #}
+    {% endif %} 
+    {{ form_widget(form.mediaFile, {'attr': {'class': 'form-control'}}) }}
     {{ form_errors(form.mediaFile) }}
+</div>
+    {{ form_widget(form.register, {'attr': {'class': 'btn btn-primary'}}) }}
+
 {{ form_rest(form) }}    
 {{ form_end(form) }}
+<p>
 <p>
     <a href="{{ path('profile') }}" class="btn btn-default">
       <i class="glyphicon glyphicon-chevron-left"></i>

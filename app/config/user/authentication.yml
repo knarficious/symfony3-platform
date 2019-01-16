@@ -19,3 +19,5 @@ services:
         arguments:  ["@logger", "@app.user_manager"]
         tags:
             - { name: 'monolog.logger', channel: 'mywebsite_user' }
+            
+    

@@ -78,8 +78,8 @@ class AuthenticationSuccessHandler implements AuthenticationSuccessHandlerInterf
        // $response = parent::onAuthenticationSuccess($request, $token);
         $response->headers->setCookie(new Cookie('success_connection', $token->getUsername(), 0));
         $request->getSession()->getFlashBag()->add('notice', 'Bienvenue '.$token->getUsername()  .', VOUS ETES CONNECTE');
-        $this->userManager->setLastConnexion($user, new \DateTime('now'));
-        $this->userManager->save($user, true, true);
+//        $this->userManager->setLastConnexion($user, new \DateTime('now'));
+//        $this->userManager->save($user, false, true);
         
         return $response;
     }

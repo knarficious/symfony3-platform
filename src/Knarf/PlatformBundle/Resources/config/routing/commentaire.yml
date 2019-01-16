@@ -6,7 +6,7 @@ commentaire_home:
         _controller: KnarfPlatformBundle:Commentaire:index
   
 commentaire_add:
-    path:   /ajout
+    path:   /commenter/{slug}
     defaults:
         _controller: KnarfPlatformBundle:Commentaire:add
         

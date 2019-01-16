@@ -11,7 +11,7 @@ class AdvertEditType extends AbstractType
   
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->remove('date');
+        parent::buildForm($builder, $options);
     }
     
     /**
@@ -19,7 +19,7 @@ class AdvertEditType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'knarf_platformbundle_advert_edit';
+        parent::getBlockPrefix();
     }
     
     

@@ -19,65 +19,47 @@
         
         {% if advert.published == 1 %}
 
-      <div class="col-md-4">
-          
-          <div class="thumbnail hvr-grow">
-          <a href="{{ path('knarf_platform_view', {'slug': advert.slug}) }}">
-          {% if advert.nomMedia is defined %}
-        
-                
-        {% if advert.nomMedia ends with 'jpg' or advert.nomMedia ends with 'png' or advert.nomMedia ends with 'gif' %}
-                                       
-            <img src="{{vich_uploader_asset(advert, 'mediaFile') }}" alt="{{ advert.nomMedia }}"/>
-            
-        
-        {% elseif advert.nomMedia ends with 'mp3' %}
-						
-            <span class="glyphicon glyphicon-play">
-            </span>
-       
-        {% elseif advert.nomMedia ends with 'mp4' %}
-            <div class="embed-responsive embed-responsive-16by9">
-            <video controls>
-            <source src="{{ asset('uploads/medias/') }}{{ advert.nomMedia }}" type="video/mp4">
-            </video>          
-            </div>
- 
-        {% else %}                                    
-        {% endif %}
-        
-    
-    {% endif %}
-        
-        <div class="caption">
-        
+            <div class="col-md-4">
 
-            <b> {{ advert.title }}</b>
+                <div class="thumbnail hvr-grow">
+                <a href="{{ path('knarf_platform_view', {'slug': advert.slug}) }}">
+                    {% if advert.nomMedia is defined %}        
 
-        
+                        {% if advert.nomMedia ends with 'jpg' or advert.nomMedia ends with 'png' or advert.nomMedia ends with 'gif' %}
 
-        par {{ advert.user.username }},
-
-        le {{ advert.date|date('d/m/Y') }}
-        
-        dans la rubrique {{ advert.rubrique.intitule }}
-        </div>
-        </a>
-      </div>
-      </div> 
-      
-        
-
-    {% else %}
-
-      Pas (encore !) d'annonces
-    {% endif %}  
-
-    {% endfor %}    
-
-  {{ parent() }}   
+                            <img src="{{vich_uploader_asset(advert, 'mediaFile') }}" alt="{{ advert.nomMedia }}"/>
 
 
+                        {% elseif advert.nomMedia ends with 'mp3' %}
+
+                            <span class="glyphicon glyphicon-play">
+                            </span>
+
+                        {% elseif advert.nomMedia ends with 'mp4' %}
+
+                            <div class="embed-responsive embed-responsive-16by9">
+                            <video controls>
+                            <source src="{{ asset('uploads/medias/') }}{{ advert.nomMedia }}" type="video/mp4">
+                            </video>          
+                            </div>
+
+                        {% else %}                                    
+                        {% endif %}        
+
+                    {% endif %}
+
+                    <div class="caption">
+                        <b>{{ advert.title }}</b>par <em>{{ advert.user.username }}</em>, le {{ advert.date|date('d/m/Y') }} dans la rubrique {{ advert.rubrique.intitule }}
+                    </div>
+                </a>
+                </div>
+            </div>        
+
+        {% else %}
+            Pas (encore !) d'annonces
+        {% endif %}  
+
+    {% endfor %}
 
 {% endblock %}
 

@@ -42,10 +42,10 @@ class EditAvatarType extends AbstractType
     {
         $builder->add('mediaFile', VichFileType::class, array(
                 'required' => false,
-                'label' => false,
-                'allow_delete' => true));
+                'allow_delete' => true,
+                'download_link' => true));
         
-        $builder->add('Register', SubmitType::class, array(
+        $builder->add('register', SubmitType::class, array(
             'attr' => ['class' => 'btn btn-primary btn-lg btn-block'],
             'label' => 'user.registration.register'
         ));

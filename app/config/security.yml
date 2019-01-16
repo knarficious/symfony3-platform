@@ -50,8 +50,8 @@ security:
               
             remember_me:
                 secret: '%secret%'
-                lifetime: 2628000
-                    #   1 mois
+                lifetime: 604800
+                    #   1 semaine
                 path: /
                 #always_remember_me: true
             logout:
@@ -75,5 +75,6 @@ security:
         - { path: ^/rubrique/edit, roles: ROLE_ADMIN }
         - { path: ^/rubrique/ajout, roles: ROLE_ADMIN }
         - { path: ^/login | register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/ajout, roles: ROLE_USER }      
+        - { path: ^/ajout, roles: ROLE_USER }
+        - { path: ^/reply, roles: ROLE_USER }
        # - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }

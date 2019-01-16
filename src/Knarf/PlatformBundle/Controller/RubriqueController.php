@@ -11,6 +11,7 @@ namespace Knarf\PlatformBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Knarf\PlatformBundle\Form\RubriqueType;
+use Knarf\PlatformBundle\Form\RubriqueEditType;
 use Knarf\PlatformBundle\Entity\Rubrique;
 
 /**
@@ -65,7 +66,7 @@ class RubriqueController extends Controller{
             throw new NotFoundHttpException("La rubrique ".$slug." n'existe pas!");
         }
     
-        $form = $this->createForm(RubriqueType::class, $rubrique);
+        $form = $this->createForm(RubriqueEditType::class, $rubrique);
     
         if($request->isMethod('POST') && $form->handleRequest($request)->isValid())
         {

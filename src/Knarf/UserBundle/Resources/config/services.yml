@@ -2,3 +2,10 @@ services:
 #    knarf_user.example:
 #        class: Knarf\UserBundle\Example
 #        arguments: ["@service_id", "plain_value", "%parameter%"]
+        knarf_user.avatar_listener:
+            class: Knarf\UserBundle\Listeners\AvatarListener
+            arguments: ["@liip_imagine.cache.manager", "@vich_uploader.templating.helper.uploader_helper"]
+            tags:
+                - { name: doctrine.event_listener, event: postUpdate }
+                - { name: doctrine.event_listener, event: preRemove }
+                - { name: kernel.event_listener, event: vich_uploader.pre_remove}

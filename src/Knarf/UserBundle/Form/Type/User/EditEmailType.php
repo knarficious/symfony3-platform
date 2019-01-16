@@ -39,7 +39,8 @@ class EditEmailType extends AbstractType
     }
     
     public function buildForm(FormBuilderInterface $builder, array $options) 
-            {
+    {
+   //   $builder->setMethod('PATCH');
         $builder->add('email', EmailType::class);
         $builder->add('Register', SubmitType::class, array(
             'attr' => ['class' => 'btn btn-primary btn-lg btn-block'],
@@ -52,5 +53,13 @@ class EditEmailType extends AbstractType
         $resolver->setDefaults([
             'data_class' => 'Knarf\UserBundle\Entity\User\Profile',
         ]);
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getBlockPrefix()
+    {
+        return 'knarf_userbundle_profile';
     }
 }

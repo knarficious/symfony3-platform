@@ -33,8 +33,7 @@ class DefaultController extends Controller
     {
         $user = $this->get('doctrine.orm.entity_manager')
                 ->getRepository('KnarfUserBundle:User')
-                ->find($request->get('id')); // L'identifiant en tant que paramétre n'est plus nécessaire
-        /* @var $user Place */
+                ->find($request->get('id')); // L'identifiant en tant que paramétre n'est plus nécessaire     
 
         if (empty($user)) {
             return $this->userNotFound();
