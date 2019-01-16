@@ -154,9 +154,10 @@
 			$form.ajaxSubmit({
 				type: 'post',
 				success: function(data) {
-					if (data == 'ok') {
+					if (data == 'success') {
 						$('ul').append('<li>' + title + '</li>');
 						modal.modal('toggle');
+                                                location.reload();
 					} else {
 						modal.find('.modal-body').html(data);
 					}
