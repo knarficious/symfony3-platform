@@ -75,32 +75,10 @@ class AdvertController extends Controller
             {
                 throw new NotFoundHttpException("L'annonce ".$slug." n'existe pas!");
             }
-      $commentaire = new Commentaire();
-      $user = $this->getUser();
-      $commentaire->setUser($user);
-      $commentaire->setAdvert($advert);
-      
-      $form = $this->createForm(CommentaireType::class, $commentaire);
-      
-      if($request->isMethod('POST') && $form->handleRequest($request)->isValid())
-      {
-            $em = $this->getDoctrine()->getManager();
-            //$em->persist($advert);
-            $em->persist($commentaire);
-            $em->flush();
-            
-             $this->addFlash('notice', 'Commentaire ajouté avec succès.');
-      }
 
         return $this->render('KnarfPlatformBundle:Advert:view.html.twig', array(
 
-        'advert' => $advert, 'active' => 'advert', 'commentaire' => $commentaire,
-            'form' => $form->createView()
-
-        ));
-	
-			
-	//return $this->redirectToRoute('knarf_platform_home');
+        'advert' => $advert, 'active' => 'advert'));
     }
     
 
@@ -172,20 +150,18 @@ class AdvertController extends Controller
         
                 $this->addFlash('notice', 'Annonce modifiée avec succès.');
         
-            return $this->redirectToRoute('knarf_platform_view', array('slug' => $advert->getSlug()));
+                return $this->redirectToRoute('knarf_platform_view', array('slug' => $advert->getSlug()));
             }
 
 
-            return $this->render('KnarfPlatformBundle:Advert:edit.html.twig', array('advert' => $advert,
-            'form' => $form->createView()));
+            return $this->render('KnarfPlatformBundle:Advert:edit.html.twig',
+                    array('advert' => $advert,'form' => $form->createView()));
         }
         
         else
         {            
             return $this->redirectToRoute('knarf_platform_view', array('slug' => $advert->getSlug()));
-        }    
-
-
+        }
     }
 
 
@@ -233,7 +209,6 @@ class AdvertController extends Controller
     }
   
   public function menuAction()
-
   {
 
     $listAdverts = $this->getDoctrine()
