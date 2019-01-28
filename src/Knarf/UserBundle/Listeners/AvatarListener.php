@@ -10,10 +10,11 @@ namespace Knarf\UserBundle\Listeners;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Liip\ImagineBundle\Imagine\Cache\CacheManager;
-use Knarf\UserBundle\Entity\User;
+use Knarf\UserBundle\Entity\Avatar;
 //use AppBundle\Services\ImageTransformer;
 use Vich\UploaderBundle\Event\Event;
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityManager;
+use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 /**
  * Description of AvatarListener
@@ -23,28 +24,32 @@ use Doctrine\ORM\EntityManagerInterface;
 class AvatarListener 
 {
     private $cacheManager;
-    private $vichUploaderStorage;
+    private $vichUploaderHelper;
+   // private $orm;
     
-    public function __construct($cacheManager, $vichUploaderStorage)
+    public function __construct(CacheManager $cacheManager, UploaderHelper $vichUploaderHelper)
     {
         $this->cacheManager = $cacheManager;
-        $this->vichUploaderStorage = $vichUploaderStorage;
+        $this->vichUploaderHelper = $vichUploaderHelper;
+    //    $this->orm = $orm;
     }
 
     public function onVichUploaderPreRemove(Event $event)
     {
         $entity= $event->getObject();
-        $browserPath= $this->vichUploaderStorage->asset($entity, 'mediaFile');
+        $browserPath= $this->vichUploaderHelper->asset($entity, 'mediaFile');
         $this->cacheManager->remove($browserPath);
+    //    $this->orm->remove($entity);
     }
     
     public function postUpdate(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
 
-        if ($entity instanceof User) {
+        if ($entity instanceof Avatar) {
         // clear cache of thumbnail
         $this->cacheManager->remove($entity->getUploadDir());
+     //   $this->orm->remove($entity);
         }
     }
 
@@ -53,9 +58,11 @@ class AvatarListener
     {
         $entity = $args->getEntity();
 
-        if ($entity instanceof User) {
+        if ($entity instanceof Avatar) {
 
         $this->cacheManager->remove($entity->getWebPath());
-        }
+//        $this->orm->remove($entity);
+//        $this->orm->flush();
+       }
     }
 }
