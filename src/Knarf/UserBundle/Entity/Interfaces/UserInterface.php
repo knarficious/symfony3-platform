@@ -42,11 +42,8 @@ interface UserInterface extends SecurityUserInterface
     public function getLastTimeConnect();
     public function setLastTimeConnect(\DateTime $lastTimeConnect);
     
-    public function getNomMedia();
-    public function setNomMedia($nomMedia);
-    
-    public function getMediaFile();
-    public function setMediaFile($mediaFile);
+    public function getAvatar();
+    public function setAvatar(\Knarf\UserBundle\Entity\Avatar $avatar = null);
     
     public function setUpdatedAt();
     
