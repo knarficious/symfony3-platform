@@ -1,0 +1,35 @@
+{# src/Knarf/UserBundle/Resources/views/Security/add_avatar.html.twig #}
+
+{% extends 'KnarfUserBundle::layout.html.twig' %}
+
+
+
+{% block title %}
+    
+    Avatar de {{ app.user.username }} - {{ parent()}}
+{% endblock %}
+
+{% block knarfuser_body %}
+    {{ parent() }}
+    <h3>Ajouter votre avatar, {{ app.user.username }}</h3>
+
+<p>
+
+{{ form_start(form) }}
+{{ form_errors(form) }}
+<div class="form-group">
+    {{ form_widget(form.mediaFile, {'attr': {'class': 'form-control'}}) }}
+    {{ form_errors(form.mediaFile) }}
+</div>
+
+    {{ form_widget(form.register, {'attr': {'class': 'btn btn-primary'}}) }}
+
+{{ form_rest(form) }}    
+{{ form_end(form) }}
+<p>
+<p>
+    <a href="{{ path('profile') }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-chevron-left"></i>
+      Retour à mon profil
+    </a>
+{% endblock %}

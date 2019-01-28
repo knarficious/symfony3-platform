@@ -1,0 +1,103 @@
+{# src/Knarf/userBundle/Resources/views/Security/delete.html.twig #}
+
+{% extends "KnarfUserBundle::layout.html.twig" %}
+
+{% block title %}
+  Modifier votre avatar - {{ parent() }}
+{% endblock %}
+
+{% block knarfuser_body %}
+    
+    {{ parent() }}  
+    
+{{ form_start(formulaire) }}
+{{ form_errors(formulaire) }}
+<div class="form-group">   
+    {{ form_widget(formulaire.mediaFile, {'attr': {'class': 'form-control'}}) }}
+    {{ form_errors(formulaire.mediaFile) }}
+</div>
+
+    {{ form_widget(formulaire.register, {'attr': {'class': 'btn btn-primary'}}) }}
+
+{{ form_rest(formulaire) }}    
+{{ form_end(formulaire) }}
+<p>
+<p>
+<div class="">
+{#    <a href="{{ path('delete_avatar') }}" class="btn btn-dark">        
+        <i class="glyphicon glyphicon-chevron-right"></i>
+        Supprimer l'avatar de mon profil
+    </a>#}
+        <p>
+        <p>
+    <a href="{{ path('profile') }}" class="btn btn-default">
+        <i class="glyphicon glyphicon-chevron-left"></i>
+        Retour à mon profil
+    </a>
+</div>
+
+<!-- Modal -->
+{#<div class="modal fade" id="avatarModal" tabindex="-1" role="dialog" aria-labelledby="avatarModalTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="avatarModalTitle">Supprimer l'avatar de mon profil</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+        </div>
+    </div>
+</div>   #} 
+{%  endblock %}
+
+{#{% block javascripts %}
+    
+    {{ parent() }}
+   
+    <script>
+		$('#avatarModal').on('shown.bs.modal', function () {
+			var modal = $(this);
+			$.ajax('{{ path('delete_avatar') }}', {
+				success: function(data) {
+					modal.find('.modal-body').html(data);
+				}
+			});
+		});
+ 
+        $(document).on('submit', 'form', function(e){
+			// il est impératif de commencer avec cette méthode qui va empêcher le navigateur d'envoyer le formulaire lui-même
+            e.preventDefault();
+            
+            $form = $(e.target);
+            modal = $('#avatarModal');
+ 
+			var title = $('#article_title').val();
+            
+        	var $submitButton = $form.find(':submit');
+    		$submitButton.html('<i class="fas fa-spinner fa-pulse"></i>');
+    		$submitButton.prop('disabled', true);
+ 
+			// ajaxSubmit du plugin ajaxForm nécessaire pour l'upload de fichier
+			$form.ajaxSubmit({
+				type: 'post',
+				success: function(data) {
+					if (data == 'success') {
+						$('ul').append('<li>' + title + '</li>');
+						modal.modal('toggle');
+                                                location = '{{ path('profile') }}';
+					} else {
+						modal.find('.modal-body').html(data);
+					}
+				},
+				error: function(jqXHR, status, error) {
+					  $submitButton.html(button.data('label'));
+					  $submitButton.prop('disabled', false);
+				}
+			});
+        });
+	</script>
+{% endblock %}   #}  

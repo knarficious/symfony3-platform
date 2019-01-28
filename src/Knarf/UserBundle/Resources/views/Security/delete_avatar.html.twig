@@ -1,0 +1,24 @@
+{# src/Knarf/userBundle/Resources/views/Security/delete.html.twig #}
+
+{% extends "KnarfUserBundle::layout.html.twig" %}
+
+{% block title %}
+  Supprimer votre avatar - {{ parent() }}
+{% endblock %}
+
+{% block knarfuser_body %}
+    
+    {{ parent() }}    
+    
+  <form action="{{ path('delete_avatar') }}" method="post">
+    <a href="{{ path('profile') }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-chevron-left"></i>
+      Retour à votre profil
+    </a>
+    {# Ici j'ai écrit le bouton de soumission à la main #}
+    <input type="submit" value="Supprimer" class="btn btn-danger" />
+    {# Ceci va générer le champ CSRF #}
+    {{ form_rest(form) }}
+  </form>
+    
+{%  endblock %}    
