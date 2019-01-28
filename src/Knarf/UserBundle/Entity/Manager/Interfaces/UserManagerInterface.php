@@ -97,11 +97,10 @@ interface UserManagerInterface extends GenericManagerInterface
     
     /**
      * @param UserInterface $user
-     * @param $nomMedia
-     * @param $mediaFile
+     * @param $avatar
      * @return mixed
      */
-    public function updateUserImage(UserInterface $user, $nomMedia, $mediaFile);
+    public function updateUserAvatar(UserInterface $user, $avatar);
     
     /**
      * @param UserInterface $user
