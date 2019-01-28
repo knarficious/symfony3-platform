@@ -12,20 +12,24 @@
 
     <div class="well">
         <h3> {{ user.username }}</h3>
-        <p> {% if is_granted('ROLE_ADMIN') %}
+        <p>
+            {% if is_granted('ROLE_ADMIN') %}
             Administrateur
-            {% endif %}
-        <a href="{{ path('change_image') }}" data-toggle="tooltip" data-placement="right" title="Modifier votre avatar">
-        {% if  user.nomMedia is not empty %}
+            {% endif %}        
+        {% if  user.avatar is not empty %}
         <div class="">
-            <img src="{{vich_uploader_asset(user, 'mediaFile') | imagine_filter('my_thumb_resize') }}" alt="{{ user.nomMedia }}"  />
+            <a href="{{ path('edit_avatar') }}" data-toggle="tooltip" data-placement="right" title="Modifier votre avatar">
+            <img src="{{vich_uploader_asset(user.avatar, 'mediaFile') | imagine_filter('my_thumb') }}" alt="{{ user.avatar.nomMedia }}"/>
+            </a>
         </div>
         {% else %}
+        <a href="{{ path('add_avatar') }}" data-toggle="tooltip" data-placement="right" title="Ajouter votre avatar">
             {% image '@KnarfUserBundle/Resources/public/images/if_icon-person_211874.png' %}
-            <img class="media-object" src="{{ asset_url }}" alt="" />
+            <img class="media-object" src="{{ asset_url }}" alt="" />            
             {% endimage %}
+        </a>    
         {% endif %}
-        </a>
+        
         <p>
         Vous êtes membre depuis le: {{ user.createdAt|date('d/m/Y') }}
         <p>
@@ -58,20 +62,19 @@
                 {% for entity in app.user.adverts %}
 
                     {% if entity.published == 1 %}
+                        Publiée:
 
                     <ul class="nav nav-pills nav-stacked">
                     <li>
-
                         <a href="{{ path('knarf_platform_view', { 'slug': entity.slug }) }}">
                             {{ entity.title }}</a>
                     </li>
                     </ul>
                     {% else %}
+                        En attente:
 
                     <ul class="nav nav-pills nav-stacked">    
                     <li>
-
-
                         <a href="{{ path('knarf_platform_view', { 'slug': entity.slug }) }}">
                             {{ entity.title }}</a>
                     </li>
