@@ -1,6 +1,8 @@
 {# app/Resources/views/layout.html.twig #}
 
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"> 
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
 <html>
 <head>
   <meta charset="utf-8">
@@ -61,8 +63,8 @@
         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}  
        
     <li class="">
-        {% if  app.user.nomMedia is not empty %}
-        <img src="{{vich_uploader_asset(app.user, 'mediaFile') | imagine_filter('my_thumb') }}" alt="{{ app.user.nomMedia }}"  />
+        {% if  app.user.avatar is not empty %}
+        <img src="{{vich_uploader_asset(app.user.avatar, 'mediaFile') | imagine_filter('my_thumb') }}" alt=""  />
         {% else  %}
         {% image '@KnarfUserBundle/Resources/public/images/if_icon-person_211874.png' %}
         <img src="{{ asset_url }}" alt="" />
