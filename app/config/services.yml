@@ -14,3 +14,11 @@ services:
         # if you need to do this, you can override this setting on individual services
         public: false
     
+
+    vich_uploader.namer_origname.upload_media:
+        class: Vich\UploaderBundle\Naming\OrignameNamer
+        public: true
+    
+    vich_uploader.namer_origname.upload_avatar:
+        class: Vich\UploaderBundle\Naming\OrignameNamer
+        public: true
