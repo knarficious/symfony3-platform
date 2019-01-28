@@ -9,3 +9,15 @@ services:
                 - { name: doctrine.event_listener, event: postUpdate }
                 - { name: doctrine.event_listener, event: preRemove }
                 - { name: kernel.event_listener, event: vich_uploader.pre_remove}
+                
+#        knarf_avatar_subscriber.listener:
+#            class: Knarf\UserBundle\Event\AvatarSubscriber
+#            arguments: [ "@vich_uploader.templating.helper.uploader_helper" ]
+#            tags:
+#                - { name: jms_serializer.event_subscriber }
+        
+        knarf_avatar.subscriber:
+            class: Knarf\UserBundle\Listeners\AvatarSubscriber
+            arguments: [ "@liip_imagine.cache.manager" ]
+            tags:
+                - { name: jms_serializer.event_subscriber }        
