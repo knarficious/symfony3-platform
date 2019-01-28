@@ -5,6 +5,7 @@ imports:
     - { resource: validator.yml }
     - { resource: mail_blacklist.yml }
     - { resource: "@KnarfCoreBundle/Resources/config/services.yml" }
+    - { resource: "@KnarfCoreBundle/Resources/config/validator.yml" }
     - { resource: user/authentication.yml }
     - { resource: user/form.xml }
     - { resource: user/manager.xml }
@@ -48,9 +49,9 @@ framework:
 twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
-    form_themes:
+    form_themes:        
+        - 'bootstrap_3_layout.html.twig'        
         - 'VichUploaderBundle:Form:fields.html.twig'
-        - 'bootstrap_3_layout.html.twig'
         - '@FOSCKEditor/Form/ckeditor_widget.html.twig'
     globals:
         website: mywebsite    
@@ -107,13 +108,15 @@ vich_uploader:
        upload_media:
         uri_prefix: /uploads/medias
         upload_destination: '%kernel.root_dir%/../web/uploads/medias'
-        inject_on_load: false
+        namer: vich_uploader.namer_origname
+        inject_on_load: true
         delete_on_update: true
         delete_on_remove: true
        upload_avatar:
-         uri_prefix: /uploads/avatars
+         uri_prefix: ""
          upload_destination: '%kernel.root_dir%/../web/uploads/avatars/'
-         inject_on_load: false
+         namer: vich_uploader.namer_origname
+         inject_on_load: true
          delete_on_update: true
          delete_on_remove: true           
            
@@ -121,29 +124,33 @@ vich_uploader:
 # LiipImagineBundle Configuration
 liip_imagine:
     resolvers:
-       default:
-         web_path: ~
+       avatar:
+         web_path:
+             web_root: '%kernel.root_dir%/../web/'
+             cache_prefix: 'media/cache'
             
     loaders:
-        default:
+        avatar:
             filesystem:
                 data_root:
-                    - '%kernel.root_dir%/../web/' 
+                    - '%kernel.root_dir%/../web/uploads/avatars/' 
     driver:               gd
-    cache:                default
-    data_loader:          default  
+    cache: avatar
+    data_loader: avatar
     filter_sets:        
         my_thumb:
+            data_loader: avatar
             quality: 85
             filters:                
-                auto_rotate: ~
-                thumbnail: { size: [50, 50], mode: outbound }
+                auto_rotate: true
+                thumbnail: { size: [100, 50], mode: inset }
         my_thumb_resize:            
+            data_loader: avatar
             quality: 50
             cache: false
             filters:
-                auto_rotate: ~
-                thumbnail: { size: [120, 120], mode: outbound }
+                auto_rotate: true
+                thumbnail: { size: [240, 120], mode: inset}
                 relative_resize: { heighten: 78 }
 
 # Assetic Configuration
@@ -206,20 +213,23 @@ fos_ck_editor:
     configs:
         full_config:
             jquery: true
+            require_js: true
+            enterMode: CKEDITOR.ENTER_BR
             height: '900px'
             language: '%locale%'
             #toolbar: standard
             #filebrowserBrowseRoute: elfinder
             #filebrowserBrowseRouteParameters: []
             extraPlugins: 'youtube'
-            uiColor: '#cccccc'
+            uiColor: '#cccccc'            
         basic_config:
             jquery: true
             heihgt: '250px'
             language: '%locale%'
-            toolbar: basic
+            toolbar: basic            
         plugins:
             youtube:
                 path: '/web/bundles/fosckeditor/plugins/youtube/'
                 filename: 'plugin.js'
+           
     
