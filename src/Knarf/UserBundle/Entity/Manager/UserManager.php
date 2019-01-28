@@ -139,15 +139,13 @@ class UserManager extends AbstractGenericManager implements UserManagerInterface
     
     public function updateUserEmail(UserInterface $user, $email) {
         $user->setEmail($email);
-        $this->save($user, true, true);
+        $this->save($user, false, true);
     }
 
-    public function updateUserImage(UserInterface $user, $nomMedia, $mediaFile) {
+    public function updateUserAvatar(UserInterface $user, $avatar) {
         $user->setUpdatedAt(new \DateTime('now'));
-        $user->setNomMedia($nomMedia);
-        $user->setMediaFile($mediaFile);
-        $this->save($user, false, true);
-        
+        $user->setAvatar($avatar);
+        $this->save($user, false, true);        
     }
 
     public function setIp(UserInterface $user, $adresseIp) {
