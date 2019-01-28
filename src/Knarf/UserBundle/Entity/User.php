@@ -39,7 +39,7 @@ class User implements UserInterface, \Serializable, EquatableInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="username", type="string", length=255, unique=true)     * 
+     * @ORM\Column(name="username", type="string", length=255, unique=true)
      * @Assert\NotBlank(message="Give us at least 3 characters")
      * @Assert\Length(min=3, minMessage="Give us at least 3 characters!")
      */
@@ -48,7 +48,7 @@ class User implements UserInterface, \Serializable, EquatableInterface
     /**
      * @var string
      * 
-     * @ORM\Column(name="email", type="string", length=255, unique=true)     * 
+     * @ORM\Column(name="email", type="string", length=255, unique=true)
      * @Assert\NotBlank
      * @Assert\Email
      */
@@ -128,24 +128,24 @@ class User implements UserInterface, \Serializable, EquatableInterface
      */
     private $plainPassword;
     
-    /**
-     * NOTE: This is not a mapped field of entity metadata, just a simple property.
-     * 
-     * @Assert\File(
-     * 		maxSize="10M",
-     * 		mimeTypes={"image/png", "image/jpeg", "image/gif"})
-     * @Vich\UploadableField(mapping="upload_avatar", fileNameProperty="nomMedia", nullable=true)
-     * 
-     * @var File
-     */
-    private $mediaFile;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="nom_media", type="string", length=255, nullable=true)
-     */
-    private $nomMedia;
+//    /**
+//     * NOTE: This is not a mapped field of entity metadata, just a simple property.
+//     * 
+//     * @Assert\File(
+//     * 		maxSize="10M",
+//     * 		mimeTypes={"image/png", "image/jpeg", "image/gif"})
+//     * @Vich\UploadableField(mapping="upload_avatar", fileNameProperty="nomMedia")
+//     * 
+//     * @var File
+//     */
+//    private $mediaFile;
+//
+//    /**
+//     * @var string
+//     *
+//     * @ORM\Column(name="nom_media", type="string", length=255, nullable=true)
+//     */
+//    private $nomMedia;
          
     /**
      * @var bool
@@ -181,10 +181,10 @@ class User implements UserInterface, \Serializable, EquatableInterface
     private $commentaires;
     
     /**
-     * @ORM\OneToOne(targetEntity=Image::class, cascade={"persist", "remove"}, mappedBy="user")
-     * @ORM\JoinColumn(name="image", nullable=true)
+     * @ORM\OneToOne(targetEntity="Knarf\UserBundle\Entity\Avatar", cascade={"remove"})
+     * @ORM\JoinColumn(name="avatar", nullable=true, onDelete="SET NULL")
      */
-    private $image;
+    private $avatar;
     
 
 //    public function __construct($username, $password, $salt, array $roles)
@@ -210,6 +210,8 @@ class User implements UserInterface, \Serializable, EquatableInterface
     {
         return $this->id;
     }
+    
+
 
     /**
      * Set username
@@ -497,49 +499,49 @@ class User implements UserInterface, \Serializable, EquatableInterface
      *
      * @return User
      */
-    public function setNomMedia($nomMedia)
-    {
-        $this->nomMedia = $nomMedia;
-
-        return $this;
-    }
-
-    /**
-     * Get nomMedia
-     *
-     * @return string
-     */
-    public function getNomMedia()
-    {
-        return $this->nomMedia;
-    }
-    
-    /**
-     * Set mediaFile
-     * 
-     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $media
-     */
-     public function setMediafile($media)
-    {
-	$this->mediaFile = $media;
-		 
-	if ($media instanceof UploadedFile)
-        {
-            // It is required that at least one field changes if you are using doctrine
-            // otherwise the event listeners won't be called and the file is lost
-            $this->setUpdatedAt();		
-        }	
-     }
-	 
-        /**
-	 * Get mediaFile
-	 * 
-	 * @return File
-	 */
-	public function getMediaFile()
-	{
-	  return $this->mediaFile;
-	} 
+//    public function setNomMedia($nomMedia)
+//    {
+//        $this->nomMedia = $nomMedia;
+//
+//        return $this;
+//    }
+//
+//    /**
+//     * Get nomMedia
+//     *
+//     * @return string
+//     */
+//    public function getNomMedia()
+//    {
+//        return $this->nomMedia;
+//    }
+//    
+//    /**
+//     * Set mediaFile
+//     * 
+//     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $media
+//     */
+//     public function setMediafile($media)
+//    {
+//	$this->mediaFile = $media;
+//		 
+//	if ($media instanceof UploadedFile)
+//        {
+//            // It is required that at least one field changes if you are using doctrine
+//            // otherwise the event listeners won't be called and the file is lost
+//            $this->setUpdatedAt();		
+//        }	
+//     }
+//	 
+//        /**
+//	 * Get mediaFile
+//	 * 
+//	 * @return File
+//	 */
+//	public function getMediaFile()
+//	{
+//	  return $this->mediaFile;
+//	} 
 
     /**
      * Set updatedAt
@@ -566,7 +568,8 @@ class User implements UserInterface, \Serializable, EquatableInterface
     public function getUpdatedAt()
     {
         return $this->updatedAt;
-    }
+    }    
+
 
     /**
      * Add advert
@@ -850,56 +853,26 @@ class User implements UserInterface, \Serializable, EquatableInterface
 
 
     /**
-     * Set image
-     *
-     * @param \Knarf\UserBundle\Entity\Image $image
-     *
-     * @return User
+     * Set avatar
+     * 
+     * @return \Knarf\UserBundle\Entity\Avatar
      */
-    public function setImage(\Knarf\UserBundle\Entity\Image $image = null)
+    public function setAvatar(\Knarf\UserBundle\Entity\Avatar $avatar = null)
     {
-        $this->image = $image;
+        $this->avatar = $avatar;
 
         return $this;
     }
 
     /**
-     * Get image
+     * Get avatar
      *
-     * @return \Knarf\UserBundle\Entity\Image
+     * @return \Knarf\UserBundle\Entity\Avatar
      */
-    public function getImage()
+    public function getAvatar()
     {
-        return $this->image;
+        return $this->avatar;
     }
     
-    private $path;
-
-    public function getAbsolutePath()
-    {
-        return null === $this->path
-            ? null
-            : $this->getUploadRootDir().'/'.$this->path;
-    }
-
-    public function getWebPath()
-    {
-        return null === $this->path
-            ? null
-            : $this->getUploadDir().'/'.$this->path;
-    }
-
-    public function getUploadRootDir()
-    {
-        // the absolute directory path where uploaded
-        // documents should be saved
-        return __DIR__.'/../../../../web/'.$this->getUploadDir();
-    }
-
-    public function getUploadDir()
-    {
-        // get rid of the __DIR__ so it doesn't screw up
-        // when displaying uploaded doc/image in the view.
-        return 'uploads';
-    }
+    
 }
