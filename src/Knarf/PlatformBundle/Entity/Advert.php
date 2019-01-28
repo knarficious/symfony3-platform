@@ -43,7 +43,7 @@ class Advert
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank
      * @ORM\Column(name="title", type="string", length=255)
      */
     private $title;
@@ -56,7 +56,7 @@ class Advert
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank(message="Veuillez remplir le champ")
      * @ORM\Column(name="content", type="text")
      */
     private $content;    
@@ -82,7 +82,7 @@ class Advert
      *                     "video/avi",
      *                     "video/x-msvideo"},
      *                     uploadErrorMessage="Le fichier ne peut pas etre téléchargé :-(")
-     * @Vich\UploadableField(mapping="upload_media", fileNameProperty="nomMedia", nullable=true)
+     * @Vich\UploadableField(mapping="upload_media", fileNameProperty="nomMedia")
      * 
      * @var File
      */
