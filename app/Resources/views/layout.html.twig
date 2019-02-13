@@ -44,9 +44,13 @@
             </ul>
         </li>
         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}              
-          <li><a href="{{ path('knarf_platform_add') }}">Ajouter une annonce</a></li>          
-          {% endif %}        
-        <li><a href="{{ path('contact') }}">Contact</a></li>
+        <li>
+            <a href="{{ path('knarf_platform_add') }}">Ajouter une annonce</a>
+        </li>          
+        {% endif %}        
+        <li>
+            <a href="{{ path('contact') }}">Contact</a>
+        </li>
       </ul>
         <form class="navbar-form navbar-left" action="">
             <div class="input-group">
@@ -92,34 +96,37 @@
 
     <div id="header" class="jumbotron text-center">
       
-      <p>
-       <h1> Ce projet est propulsé avec Symfony3 par Norminfo</h1>
-      
+       <h1> Ce projet est propulsé avec Symfony3 par Norminfo</h1>      
       <p>
         <a class="btn btn-primary btn-lg" href="https://norminfo.eu" target="blank">
           Aller voir Norminfo »
         </a>
       </p>
     </div>
-  <div class="container-fluid">      
+  <div class="container-fluid">
+  
 
-  <div class="row">
-      
-
-
-        
-    <div class="leftcolumn">
-        
         {% set flashbag_notices = app.session.flashbag.get('notice') %}
         {% if flashbag_notices is not empty %}
+
             
             <div class="glyphicon glyphicon-remove" id="msg" onClick="cacher();">
                 {% for notice in flashbag_notices %}
                     {{ notice }}
                 {% endfor %}
             </div>
+            
 
         {% endif %}
+
+  
+  <div class="row">
+      
+    
+        
+    <div class="leftcolumn">
+        
+        
 
         
         {% block body %}
@@ -143,8 +150,18 @@
 </div>   
 <hr>
     <div class="footer">
-      <p>© knarficious {{ 'now'|date('Y') }}</p>
-      <p>
+        <nav class="navbar">
+        <div class="container-fluid">
+            <div class="nav navbar-nav navbar-left">
+          <p>© knarficious {{ 'now'|date('Y') }}</p>
+            </div>
+          <ul class="nav navbar-nav navbar-right">          
+            <li>
+                <a href="{{ path('nelmio_api_doc_index') }}">API Documentation</a>
+            </li>
+          </ul>
+        </div>
+        </nav>
     </div>
    
   <div id="back-to-top" style="display:bloc;">
