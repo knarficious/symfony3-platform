@@ -51,8 +51,11 @@
         <li>
             <a href="{{ path('contact') }}">Contact</a>
         </li>
+        <li>
+            <a href="{{ path('knarf_chat') }}">Chatroom</></a>
+        </li>
       </ul>
-        <form class="navbar-form navbar-left" action="">
+{#        <form class="navbar-form navbar-left" action="">
             <div class="input-group">
                 <input type="text" class="form-control" placeholder="Rechercher">
                 <div class="input-group-btn">
@@ -61,7 +64,7 @@
                     </button>
                 </div>
             </div>
-        </form> 
+        </form> #}
 
       <ul class="nav navbar-nav navbar-right">
         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}  
@@ -78,7 +81,7 @@
 
         {% if app.request.get('_route')!= 'profile'%}
                     
-        <li><a href="{{ path('profile') }}">{{ app.user.username }}</a></li>        
+        <li><a href="{{ path('profile') }}">{{app.user.username}}</a></li>        
             
         {% endif %}
         
@@ -96,10 +99,10 @@
 
     <div id="header" class="jumbotron text-center">
       
-       <h1> Ce projet est propulsé avec Symfony3 par Norminfo</h1>      
+       <h1> Ce projet est propulsé avec Symfony3 par Franck</h1>      
       <p>
-        <a class="btn btn-primary btn-lg" href="https://norminfo.eu" target="blank">
-          Aller voir Norminfo »
+        <a class="btn btn-primary btn-lg" href="https://franckruer" target="blank">
+          Aller voir Franck »
         </a>
       </p>
     </div>

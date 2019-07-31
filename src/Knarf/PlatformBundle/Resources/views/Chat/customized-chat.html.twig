@@ -1,0 +1,62 @@
+{# src/Knarf/PlatformBundle/Resources/views/Chat/customized-chat.html.twig #}
+{% extends 'KnarfPlatformBundle::layout.html.twig' %}
+
+{% block title %}
+    Chat - {{ parent() }}
+{% endblock %}
+
+{% block knarfplatform_body %}
+    
+    {{ parent() }}
+
+  <div class="chat-container">
+    <aside class="chat-sidebar">
+      <nav class="chat-left-sidebar">
+        <h2>
+          <a href="{{ path('knarf_platform_home') }}" class="knarf-logo">KNARF</a>
+        </h2>
+        <ul>
+          <li><a href="" class="christmas-icon ci-tree"></a></li>
+          <li><a href="" class="christmas-icon ci-ball"></a></li>
+          <li class="active"><a href="" class="christmas-icon ci-rudolph">Chat</a></li>
+          <li><a href="" class="christmas-icon ci-star">GitHub</a></li>
+          <li><a href="" class="christmas-icon ci-rocket">Heroku</a></li>
+        </ul>
+      </nav>
+      <nav class="chat-right-sidebar">
+        <h1>KNARF Chat</h1>
+        <div id="sf-username" hidden>{{ app.user.username }}</div>
+        <ul id="ws-channels-list" class="channels-list"></ul>
+      </nav>
+    </aside>
+    <main class="main-content">
+      <header class="main-content-header">
+        <p class="warning">
+          <strong>This website is just a demo.</strong> Nothing is stored.
+        </p>
+        <aside class="user-menu">
+          <i id="ws-connection-status" class="connection-status"></i>          
+          <span class="username" id="ws-username">{{ app.user.username }}</span>
+        </aside>
+      </header>
+      <ul id="ws-content-receiver" class="chat-messages-list"></ul>
+      <form method="post" class="message-form">
+        <label for="chat-message">Type your message</label>
+        <input type="text" id="ws-content-to-send" name="chat-message"
+            placeholder="Type your message" autocomplete="off" />
+        <button id="ws-send-content">Send</button>
+      </form>
+    </main>
+  </div>
+  <footer class="chat-footer">
+    Made with ♥ in Rouen by <a href="{{ knarf_website }}">Franck Ruer</a> |
+    &copy; All rights reserved - {{ 'now'|date('Y') }}
+  </footer>
+{% endblock %}
+{% block javascripts %}
+    <script type="text/javascript">
+      var wsUrl = '{{ ws_url }}';
+    </script>
+    <script type="text/javascript" src="{{ asset('bundles/knarfplatform/js/sf3-websocket.js') }}"></script>
+{% endblock %}
+
