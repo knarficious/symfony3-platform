@@ -60,7 +60,7 @@ abstract class AbstractGenericRepository extends EntityRepository
     /**
      * @inheritdoc
      */
-    public function count($enabled = false)
+    public function count(array $enabled)
     {
         if ($enabled) {
             return $this->_em
