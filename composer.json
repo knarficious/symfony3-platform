@@ -43,7 +43,8 @@
         "symfony/swiftmailer-bundle": "^2.3.10",
         "symfony/symfony": "3.4.*",
         "twig/twig": ">=1.35 <=2.4.4",
-        "vich/uploader-bundle": "~1.6"
+        "vich/uploader-bundle": "~1.6",
+        "friendsofsymfony/oauth-server-bundle": "dev-master"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
