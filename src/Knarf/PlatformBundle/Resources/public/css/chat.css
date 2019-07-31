@@ -1,0 +1,220 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 31 juil. 2019, 17:58:09
+    Author     : franck
+*/
+.icon, .christmas-icon, .chat-left-sidebar .afsy-logo,
+.logo {
+  display: block;
+  overflow: hidden;
+  font: 0/0 a; }
+
+.christmas-icon {
+  width: 100%;
+  height: 80px;
+  background: center center no-repeat; }
+  .christmas-icon.ci-ball {
+    background-image: url("/images/icons/christmas-ball.png"); }
+  .christmas-icon.ci-star {
+    background-image: url("/images/icons/christmas-star.png"); }
+  .christmas-icon.ci-tree {
+    background-image: url("/images/icons/christmas-tree.png"); }
+  .christmas-icon.ci-rocket {
+    background-image: url("/images/icons/rocket.png"); }
+  .christmas-icon.ci-rudolph {
+    background-image: url("/images/icons/rudolph.png"); }
+
+body {
+  background: #000;
+  font-family: "Roboto", "Helvetica", "Arial", Sans-serif;
+  font-size: 14px; }
+
+.body-container {
+  max-width: 1140px;
+  height: 100%;
+  margin: 30px auto;
+  display: flex;
+  flex-flow: column;
+  justify-items: center; }
+
+.chat-container {
+  display: flex;
+  flex-flow: row;
+  background: #f0f0f0; }
+
+.chat-sidebar {
+  display: flex;
+  flex-flow: row; }
+
+.main-content {
+  flex-grow: 1; }
+
+.chat-footer {
+  margin: 10px 0 50px;
+  text-align: center;
+  color: #3a465b;
+  font-size: 11px; }
+  .chat-footer a {
+    color: #495367; }
+
+.chat-left-sidebar {
+  width: 115px;
+  background: #18202f; }
+  .chat-left-sidebar h2 {
+    height: 115px; }
+  .chat-left-sidebar .afsy-logo {
+    width: 100%;
+    height: 115px;
+    background: url("/images/icons/afsy-logo.png") center center no-repeat;
+    border-bottom: 1px solid #495367; }
+  .chat-left-sidebar ul {
+    width: 100%;
+    margin: 1px 0 0;
+    padding: 0; }
+    .chat-left-sidebar ul li {
+      height: 80px; }
+      .chat-left-sidebar ul li.active, .chat-left-sidebar ul li:hover {
+        background: #262e3e; }
+  .chat-left-sidebar a {
+    color: #495367; }
+
+.chat-right-sidebar {
+  max-width: 250px;
+  display: flex;
+  flex-flow: column;
+  flex-grow: 1;
+  background: #262e3e; }
+  .chat-right-sidebar h1 {
+    height: 115px;
+    margin: 0;
+    padding: 0 30px;
+    line-height: 115px;
+    font: bold 24px/115px "Roboto", "Helvetica", "Arial", Sans-serif;
+    color: #e1ebff;
+    border-bottom: 1px solid #495367; }
+  .chat-right-sidebar ul {
+    flex-grow: 1;
+    margin: 0 0 0;
+    padding: 30px 0 0 30px; }
+    .chat-right-sidebar ul li {
+      min-height: 50px;
+      padding: 0 50px 0 15px;
+      font: normal 14px "Roboto", "Helvetica", "Arial", Sans-serif; }
+      .chat-right-sidebar ul li a {
+        line-height: 50px;
+        color: #f0f1eb;
+        text-decoration: none; }
+      .chat-right-sidebar ul li.active {
+        margin: 10px 0;
+        background: #f0f0f0; }
+        .chat-right-sidebar ul li.active:first-child {
+          margin-top: 0; }
+        .chat-right-sidebar ul li.active a {
+          color: #18202f;
+          font-weight: bold; }
+
+.main-content-header {
+  width: calc(100% - 100px);
+  height: 15px;
+  padding: 50px;
+  border-bottom: 1px solid #495367;
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between; }
+  .main-content-header .warning {
+    color: #262e3e; }
+  .main-content-header .christmas-theme {
+    color: #3e6a34; }
+
+.user-menu {
+  min-width: 130px;
+  min-height: 14px;
+  display: flex;
+  align-items: center;
+  margin: -16px 0 0;
+  padding: 15px;
+  line-height: 1.5em;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  background: #fff; }
+  .user-menu .connection-status {
+    width: 7px;
+    height: 7px;
+    margin: 0 7px 0 0;
+    display: inline-block;
+    border-radius: 50%;
+    background: #d0021b; }
+    .user-menu .connection-status.active {
+      background: #7ed321; }
+  .user-menu .username {
+    max-width: 95%;
+    display: inline-block; }
+
+.chat-messages-list {
+  height: 410px;
+  padding: 50px;
+  overflow: auto; }
+  .chat-messages-list li {
+    margin: 0 0 20px;
+    padding: 20px;
+    color: #18202f;
+    background: #fff; }
+    .chat-messages-list li.mine {
+      color: #f0f0f0;
+      background: #262e3e; }
+    .chat-messages-list li.success {
+      color: #18202f;
+      background: #7ed321; }
+    .chat-messages-list li.error {
+      color: #18202f;
+      background: #d0021b; }
+    .chat-messages-list li.disabled {
+      color: #495367;
+      background: #e0e0e0; }
+
+.message-form {
+  display: flex;
+  background: #fff;
+  border-top: 1px solid #e1ebff; }
+  .message-form label {
+    display: none; }
+  .message-form input {
+    flex-grow: 1;
+    padding: 50px;
+    font-size: 14px;
+    color: #262e3e;
+    outline: 0;
+    border: 0; }
+    .message-form input.disabled {
+      color: #d0021b; }
+  .message-form button {
+    width: 60px;
+    height: 60px;
+    margin: 30px 50px 30px 0;
+    color: #fff;
+    border: 0;
+    background: #262e3e url("/images/icons/paper-plane.png") center center no-repeat;
+    font: 0/0 a;
+    border-radius: 5px;
+    cursor: pointer; }
+    .message-form button.disabled {
+      background-color: #d0021b; }
+    
+body{
+    background: #ebeff2;}
+.bck1{background: #fff;}
+
+/*generique*/
+.padded{padding: 15px;}
+
+/*header*/
+header#header {margin-bottom: 20px;padding: 10px;}
+header#header h1 {text-align: center;color: #5cb85c;}
+
+/*footer*/
+footer#footer{margin-top: 20px;padding: 10px;}
+
