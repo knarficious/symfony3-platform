@@ -62,7 +62,7 @@ class Rubrique
      *                     "image/gif",
      *                     "image/svg+xml"},
      *                     uploadErrorMessage="Le fichier ne peut pas etre téléchargé :-(")
-     * @Vich\UploadableField(mapping="upload_media", fileNameProperty="image", nullable=true)
+     * @Vich\UploadableField(mapping="upload_media", fileNameProperty="image")
      * 
      * @var File
      */

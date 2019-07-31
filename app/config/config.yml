@@ -54,7 +54,7 @@ twig:
         - 'VichUploaderBundle:Form:fields.html.twig'
         - '@FOSCKEditor/Form/ckeditor_widget.html.twig'
     globals:
-        website: mywebsite    
+        website: franckruer.fr    
 
 # Doctrine Configuration
 doctrine:
@@ -202,6 +202,18 @@ fos_rest:
         templating: templating
         view_handler: fos_rest.view_handler.default    
     
+#fos_oauth
+fos_oauth_server:
+    db_driver: orm       
+    client_class:        Knarf\ApiBundle\Entity\Client
+    access_token_class:  Knarf\ApiBundle\Entity\AccessToken
+    refresh_token_class: Knarf\ApiBundle\Entity\RefreshToken
+    auth_code_class:     Knarf\ApiBundle\Entity\AuthCode
+    service:
+        user_provider: database_users
+        options:
+                supported_scopes: user   
+
 stof_doctrine_extensions:
     default_locale: fr_FR
     orm:

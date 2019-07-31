@@ -99,13 +99,13 @@ class Advert
     
     /**
      * @ORM\ManyToOne(targetEntity="Knarf\UserBundle\Entity\User", inversedBy="adverts")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="user", referencedColumnName="id")
      */
     private $user;
     
     /**
      * @ORM\ManyToOne(targetEntity="Knarf\PlatformBundle\Entity\Rubrique", inversedBy="adverts")
-     * @ORM\JoinColumn(name="rubrique_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="rubrique", referencedColumnName="id")
      */
     private $rubrique;
     

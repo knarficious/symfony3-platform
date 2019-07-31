@@ -22,12 +22,33 @@ security:
         # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false     
-        
-        doc:
-            pattern: ^/documentation
-            security: false    
+            security: false
             
+        oauth_authorize:
+            pattern:    ^/oauth/v2/auth
+            form_login:
+                provider: database_users
+                check_path: knarf_oauth_server_auth_login_check
+                login_path: knarf_oauth_server_auth_login
+            anonymous: false
+            logout_on_user_change: true
+            
+        oauth_token:
+            pattern:    ^/oauth/v2/token
+            security:   false
+        
+        api:
+            pattern: ^/api
+            fos_oauth: true
+            stateless: true
+            anonymous: false
+
+        api_doc:
+            pattern: ^/api/documentation
+            security:  false
+            stateless: true
+            anonymous: true  
+        
         main:
             pattern: ^/
             anonymous: true
@@ -42,7 +63,7 @@ security:
               provider: database_users
               login_path: security_login_form
               check_path: security_login_check
-              use_referer: true          
+              use_referer: false
               csrf_token_generator: security.csrf.token_manager
               failure_path: security_login_form
               success_handler: security_authentication_success_handler
@@ -60,8 +81,9 @@ security:
                 handlers: [security_logout_success_handler]
                 invalidate_session: true
                 
-            logout_on_user_change: true    
-    
+            logout_on_user_change: true           
+        
+            
     access_decision_manager:
         #   affirmative (default) => This grants access as soon as there is one voter granting access;
         #   consensus => This grants access if there are more voters granting access than denying;
@@ -69,12 +91,16 @@ security:
         strategy: affirmative
 
     access_control:
+        - { path: ^/oauth/v2/, roles: [ IS_AUTHENTICATED_FULLY, IS_AUTHENTICATED_ANONYMOUSLY ] }
+        - { path: ^/api, roles: [ IS_AUTHENTICATED_ANONYMOUSLY ] }        
+        - { path: ^/api/documentation, roles: [ IS_AUTHENTICATED_FULLY, IS_AUTHENTICATED_ANONYMOUSLY ] }        
+        - { path: ^/login | register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/profile, roles: ROLE_USER }
         - { path: ^/rubrique/delete, roles: ROLE_ADMIN }
         - { path: ^/rubrique/edit, roles: ROLE_ADMIN }
-        - { path: ^/rubrique/ajout, roles: ROLE_ADMIN }
-        - { path: ^/login | register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/rubriques/ajout, roles: ROLE_ADMIN } 
         - { path: ^/ajout, roles: ROLE_USER }
         - { path: ^/reply, roles: ROLE_USER }
-       # - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/logout, roles: ROLE_USER }
+        
