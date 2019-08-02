@@ -41,7 +41,7 @@ class RegisterController extends Controller
         if ($this->getRegistrationFormHandler()->handle($form, $request))
         {
             $email = $form->getData()->getEmail();
-            $this->addFlash('email', $email);
+            $this->addFlash('info', 'Un e-mail d\'activation de votre compte a été envoyé à l\'adresse: '.$email);
             return $this->redirectToRoute('info_activation');
         }
         
