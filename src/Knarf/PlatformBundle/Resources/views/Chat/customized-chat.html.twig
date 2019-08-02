@@ -54,6 +54,9 @@
   </footer>
 {% endblock %}
 {% block javascripts %}
+    
+    {{ parent() }}
+    
     <script type="text/javascript">
       var wsUrl = '{{ ws_url }}';
     </script>

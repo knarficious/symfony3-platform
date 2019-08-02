@@ -55,13 +55,17 @@ class AuthenticationSuccessHandler implements AuthenticationSuccessHandlerInterf
     
     public function onAuthenticationSuccess(Request $request, TokenInterface $token)
     {
-        $session = $request->getSession();
+        $session = $request->getSession();        
 
-        if ($session->has('referer'))
+        //$response = new RedirectResponse($session->get('_security.main.target_path')) ;
+        
+        //$referer = $request->headers->get('referer');
+                
+        if ($session->has('_security.main.target_path'))
         {
-            if ($session->get('referer') !== null && $session->get('referer') !== '')
+            if ($session->get('_security.main.target_path') !== null && $session->get('_security.main.target_path') !== '')
             {
-                $response = new RedirectResponse($session->get('referer'));
+                $response = new RedirectResponse($session->get('_security.main.target_path'));
             } 
             else
             {

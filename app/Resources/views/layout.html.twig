@@ -1,8 +1,7 @@
 {# app/Resources/views/layout.html.twig #}
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"> 
+<!DOCTYPE html>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
 <html>
 <head>
   <meta charset="utf-8">
@@ -102,7 +101,7 @@
       
        <h1> Ce projet est propulsé avec Symfony3 par Franck</h1>      
       <p>
-        <a class="btn btn-primary btn-lg" href="https://franckruer" target="blank">
+        <a class="btn btn-primary btn-lg" href="https://franckruer.fr" target="blank">
           Aller voir Franck »
         </a>
       </p>
@@ -114,7 +113,7 @@
         {% if flashbag_notices is not empty %}
 
             
-            <div class="glyphicon glyphicon-remove" id="msg" onClick="cacher();">
+            <div class="glyphicon glyphicon-remove" id="msg" >
                 {% for notice in flashbag_notices %}
                     {{ notice }}
                 {% endfor %}
@@ -171,52 +170,52 @@
   <div id="back-to-top" style="display:bloc;">
       <a href="#" class="btn btn-primary btn-lg back-to-top" role="button" title="Revenir en haut de la page" data-toggle="tooltip" data-placement="left"><span class="glyphicon glyphicon-chevron-up"></span></a>
   </div>
-      {% block javascripts %}
+{% block javascripts %}
     {# Ajoutez ces lignes JavaScript si vous comptez vous servir des fonctionnalités du bootstrap Twitter #}
     <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js"></script>
     <script>
-                $(document).ready(function(){
-                $(document.getElementById("msg")).click(function(){
-                $(this).hide();
-                });
-                });
+        $(document).ready(function(){
+        $(document.getElementById("msg")).click(function(){
+        $(this).hide();
+        });
+        });  
+    </script>
+    <script>        
+        $(document).ready(function(){
+        $(document.getElementById("commentaire")).click(function(){
+        $(this).hide();
+        });
+        });
     </script>
     <script>
-                $(document).ready(function(){
-                $(document.getElementById("commentaire")).click(function(){
-                $(this).hide();
-                });
-                });
+        $(document).ready(function(){
+        $(window).scroll(function () {
+        if ($(this).scrollTop() > 50) {
+        $('#back-to-top').fadeIn();
+        } else {
+        $('#back-to-top').fadeOut();
+        }
+        });
+        // scroll body to 0px on click
+        $('#back-to-top').click(function () {
+        $('#back-to-top').tooltip();
+        $('body,html').animate({
+        scrollTop: 0
+        }, 800);
+        return false;
+        });        
+        $('#back-to-top').tooltip();
+        });
     </script>
     <script>
-            $(document).ready(function(){
-            $(window).scroll(function () {
-            if ($(this).scrollTop() > 50) {
-            $('#back-to-top').fadeIn();
-            } else {
-            $('#back-to-top').fadeOut();
-            }
-            });
-            // scroll body to 0px on click
-            $('#back-to-top').click(function () {
-            $('#back-to-top').tooltip();
-            $('body,html').animate({
-            scrollTop: 0
-            }, 800);
-            return false;
-            });        
-            $('#back-to-top').tooltip();
-            });
-    </script>
-    <script>
-            $(document).ready(function(){
-            $('[data-toggle="tooltip"]').tooltip();
-            });
+        $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+        });
     </script>
     
-  {% endblock %}
+{% endblock %}
 
 </body>
 </html>
