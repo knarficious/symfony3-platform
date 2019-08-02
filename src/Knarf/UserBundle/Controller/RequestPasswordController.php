@@ -36,7 +36,7 @@ class RequestPasswordController extends Controller
         if ($this->getRequestPasswordFormHandler()->handle($form, $request)) {
             
             $translated = $this->get('translator')->trans('user.request_password.mail_sent');
-            $this->addFlash('notice', $translated);
+            $this->addFlash('info', $translated);
             return $this->redirect($this->generateUrl('knarf_platform_home'));
         }
         return $this->render('KnarfUserBundle:Security:request-password.html.twig', [

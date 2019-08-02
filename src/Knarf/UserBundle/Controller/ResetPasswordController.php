@@ -42,7 +42,7 @@ public function resetPasswordAction( Request $request)
     
     if($this->getResetPasswordFormHandler()->handle($form, $request))
     {
-        $this->addFlash('notice', 'Votre mot de passe a été modifié avec succès');
+        $this->addFlash('success', 'Votre mot de passe a été modifié avec succès');
         return $this->redirect($this->generateUrl('security_login_form'));
     }
     

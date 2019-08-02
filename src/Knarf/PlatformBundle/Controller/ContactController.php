@@ -54,7 +54,7 @@ class ContactController extends Controller{
             $this->get('mailer')->send($email);           
              
              
-            $this->addFlash('notice', 'Votre email a été envoyé avec succès'); 
+            $this->addFlash('success', 'Votre email a été envoyé avec succès'); 
             
             return $this->redirectToRoute('knarf_platform_home');
             

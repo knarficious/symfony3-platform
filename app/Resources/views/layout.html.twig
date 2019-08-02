@@ -107,9 +107,15 @@
       </p>
     </div>
   <div class="container-fluid">
+      
+    <div class="row">
+        <div class="col-sm-12">
+                {% include ('::flash-messages.html.twig') %}
+        </div>
+    </div>
   
 
-        {% set flashbag_notices = app.session.flashbag.get('notice') %}
+{#        {% set flashbag_notices = app.session.flashbag.get('notice') %}
         {% if flashbag_notices is not empty %}
 
             
@@ -120,7 +126,7 @@
             </div>
             
 
-        {% endif %}
+        {% endif %}#}
 
   
   <div class="row">
@@ -175,13 +181,7 @@
     <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js"></script>
-    <script>
-        $(document).ready(function(){
-        $(document.getElementById("msg")).click(function(){
-        $(this).hide();
-        });
-        });  
-    </script>
+
     <script>        
         $(document).ready(function(){
         $(document.getElementById("commentaire")).click(function(){

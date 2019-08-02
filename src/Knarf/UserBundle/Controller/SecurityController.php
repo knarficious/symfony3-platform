@@ -26,7 +26,7 @@ class SecurityController extends Controller
     // (mauvais mot de passe par exemple)
     $authenticationUtils = $this->get('security.authentication_utils');
 
-    return $this->render('KnarfUserBundle:Security:login.html.twig', array(
+    return $this->render('KnarfUserBundle:Security:login_.html.twig', array(
       'last_username' => $authenticationUtils->getLastUsername(),
       'error'         => $authenticationUtils->getLastAuthenticationError(),
     ));
@@ -143,7 +143,7 @@ class SecurityController extends Controller
                 $this->get('security.token_storage')->setToken(null);
                 $request->getSession()->invalidate();
 
-                $this->addFlash('notice', "Votre profil a été supprimé avec succès");
+                $this->addFlash('success', "Votre profil a été supprimé avec succès");
 
                 return $this->redirect($this->generateUrl('knarf_platform_home'));    
             }

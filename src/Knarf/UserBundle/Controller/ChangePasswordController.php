@@ -34,7 +34,7 @@ class ChangePasswordController extends Controller
         $data = new ChangePassword($this->getUser());
         $form = $this->createForm(ChangePasswordType::class, $data);
         if ($this->getChangePasswordFormHandler()->handle($form, $request)) {
-            $this->addFlash('notice', 'The password has been changed successfully.');
+            $this->addFlash('success', 'The password has been changed successfully.');
             return $this->redirect($this->generateUrl('profile'));
         }
         return $this->render('KnarfUserBundle:Security:change_password.html.twig', [

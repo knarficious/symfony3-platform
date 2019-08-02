@@ -105,7 +105,7 @@ class AdvertController extends Controller
             $em->persist($advert);
             $em->flush();
 
-            $this->addFlash('notice', 'Annonce bien enregistrée.');
+            $this->addFlash('success', 'Annonce bien enregistrée.');
 
             // Puis on redirige vers la page de visualisation de cettte annonce
 
@@ -148,7 +148,7 @@ class AdvertController extends Controller
                 $em->persist($advert);
                 $em->flush();
         
-                $this->addFlash('notice', 'Annonce modifiée avec succès.');
+                $this->addFlash('success', 'Annonce modifiée avec succès.');
         
                 return $this->redirectToRoute('knarf_platform_view', array('slug' => $advert->getSlug()));
             }
@@ -190,7 +190,7 @@ class AdvertController extends Controller
                 $em->remove($advert);
                 $em->flush();
         
-                $this->addFlash('notice', "L'annonce a été supprimée avec succès");
+                $this->addFlash('success', "L'annonce a été supprimée avec succès");
         
             return $this->redirect($this->generateUrl('knarf_platform_home'));    
             }

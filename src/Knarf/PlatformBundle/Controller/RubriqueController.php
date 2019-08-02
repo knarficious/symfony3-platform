@@ -74,7 +74,7 @@ class RubriqueController extends Controller{
             $em->persist($rubrique);
             $em->flush();
         
-            $request->getSession()->getFlashBag()->add('notice', 'Rubrique modifiée avec succès.');
+            $request->getSession()->getFlashBag()->add('success', 'Rubrique modifiée avec succès.');
         
             return $this->redirectToRoute('rubrique_view', array('slug' => $rubrique->getSlug()));
         }
@@ -107,7 +107,7 @@ class RubriqueController extends Controller{
             $em->remove($rubrique);
             $em->flush();
         
-        $request->getSession()->getFlashBag()->add('notice', "La rubrique a été supprimée avec succès");
+        $request->getSession()->getFlashBag()->add('success', "La rubrique a été supprimée avec succès");
         
         return $this->redirect($this->generateUrl('knarf_platform_home'));
     
@@ -154,7 +154,7 @@ class RubriqueController extends Controller{
             $em->persist($rubrique);
             $em->flush();
 
-            $request->getSession()->getFlashBag()->add('notice', 'Rubrique bien enregistrée.');
+            $request->getSession()->getFlashBag()->add('success', 'Rubrique bien enregistrée.');
 
             // Puis on redirige vers la page de visualisation de cettte annonce
 

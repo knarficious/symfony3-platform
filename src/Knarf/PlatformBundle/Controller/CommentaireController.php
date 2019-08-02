@@ -96,7 +96,7 @@ class CommentaireController extends Controller
             $em->persist($commentaire);
             $em->flush();
 
-            $request->getSession()->getFlashBag()->add('notice', 'Commentaire bien enregistré.');
+            $request->getSession()->getFlashBag()->add('success', 'Commentaire bien enregistré.');
 
             return new Response('success');
             // Puis on redirige vers la page de visualisation de cettte annonce
@@ -144,7 +144,7 @@ class CommentaireController extends Controller
             {
                 $em->flush();
         
-                $request->getSession()->getFlashBag()->add('notice', 'Commentaire modifié avec succès.');
+                $request->getSession()->getFlashBag()->add('success', 'Commentaire modifié avec succès.');
         
             return $this->redirectToRoute('knarf_platform_view', array('slug' => $advert->getSlug()));
             }
@@ -196,7 +196,7 @@ class CommentaireController extends Controller
             $em->remove($commentaire);
             $em->flush();   
         
-            $this->addFlash('notice', "Le commentaire sur la publication ".$advert->getSlug()." a été supprimé avec succès");
+            $this->addFlash('success', "Le commentaire sur la publication ".$advert->getSlug()." a été supprimé avec succès");
              
                  return $this->redirectToRoute('knarf_platform_view', array('slug' => $advert->getSlug()));
         
@@ -274,7 +274,7 @@ class CommentaireController extends Controller
         $em->persist($reponse);
         $em->flush();
             
-        $request->getSession()->getFlashBag()->add('notice', 'Commentaire bien enregistré.');
+        $request->getSession()->getFlashBag()->add('success', 'Commentaire bien enregistré.');
         
 
         return new Response('success');            

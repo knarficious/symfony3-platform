@@ -40,7 +40,7 @@ class UpdateProfileController extends Controller
         
         if($this->getEmailProfileFormHandler()->handle($form, $request))
         {
-            $this->addFlash('notice', 'Votre profil a bien été mis à jour.');
+            $this->addFlash('success', 'Votre profil a bien été mis à jour.');
             return $this->redirect($this->generateUrl('profile'));
         }
         
@@ -79,7 +79,7 @@ class UpdateProfileController extends Controller
             $user->setAvatar($avatar);
             $em->flush();
             
-            $this->addFlash('notice', 'Votre avatar a bien été mis à jour.');
+            $this->addFlash('success', 'Votre avatar a bien été mis à jour.');
             return $this->redirect($this->generateUrl('profile'));
         }
         
@@ -114,7 +114,7 @@ class UpdateProfileController extends Controller
             $user->setAvatar($avatar);
             $em->flush();
             
-            $this->addFlash('notice', 'Votre avatar a bien été mis à jour.');
+            $this->addFlash('success', 'Votre avatar a bien été mis à jour.');
             return $this->redirect($this->generateUrl('profile'));
         }
         
@@ -145,7 +145,7 @@ class UpdateProfileController extends Controller
                 $user->setAvatar(null);
                 $em->flush();
         
-                $this->addFlash('notice', "L'avatar a été supprimé avec succès");
+                $this->addFlash('success', "L'avatar a été supprimé avec succès");
         
             return $this->redirect($this->generateUrl('profile'));    
             }
