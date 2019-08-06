@@ -12,8 +12,8 @@
   {% block stylesheets %}
     <link href="{{ asset('bundles/knarfplatform/css/main.css') }}" type="text/css" rel="stylesheet">  
     <link href="{{ asset('bundles/knarfplatform/css/hover-min.css') }}" type="text/css" rel="stylesheet">   
-    <link href="{{ asset('bundles/knarfuser/css/login.css') }}" type="text/css" rel="stylesheet">
-    <link href="{{ asset('bundles/knarfplatform/css/chat.css') }}" type="text/css" rel="stylesheet">
+    
+    
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   {% endblock %}
 </head>
@@ -73,9 +73,8 @@
         {% if  app.user.avatar is not empty %}
         <img src="{{vich_uploader_asset(app.user.avatar, 'mediaFile') | imagine_filter('my_thumb') }}" alt=""  />
         {% else  %}
-        {% image '@KnarfUserBundle/Resources/public/images/if_icon-person_211874.png' %}
-        <img src="{{ asset_url }}" alt="" />
-        {% endimage %}
+        <img src="{{ asset('/images/icon-person_211874.png') }}" alt="icon person"/> 
+
     </li>
         {% endif %}
 
@@ -99,12 +98,17 @@
 
     <div id="header" class="jumbotron text-center">
       
-       <h1> Ce projet est propulsé avec Symfony3 par Franck</h1>      
-      <p>
-        <a class="btn btn-primary btn-lg" href="https://franckruer.fr" target="blank">
-          Aller voir Franck »
-        </a>
-      </p>
+        <h1> Symfony3 </h1>      
+            <p>
+            <a class="btn btn-primary btn-lg" href="https://franckruer.fr" target="blank">
+                Aller voir Franck »
+            </a>
+            </p>
+            <p>Click the button to get your coordinates.</p>
+
+                <button onclick="getLocation()">Try It</button>
+
+            <p id="geoloc"></p>
     </div>
   <div class="container-fluid">
       
@@ -214,6 +218,22 @@
         $('[data-toggle="tooltip"]').tooltip();
         });
     </script>
+    <script>
+var x = document.getElementById("geoloc");
+
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else { 
+    x.innerHTML = "Geolocation is not supported by this browser.";
+  }
+}
+
+function showPosition(position) {
+  x.innerHTML = "Latitude: " + position.coords.latitude + 
+  "<br>Longitude: " + position.coords.longitude;
+}
+</script>
     
 {% endblock %}
 
