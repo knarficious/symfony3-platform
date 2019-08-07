@@ -15,7 +15,7 @@
             <img class="img-responsive" src="{{vich_uploader_asset(advert, 'mediaFile') }}" alt="{{ advert.nomMedia }}"/>
         {% elseif advert.nomMedia ends with 'mp3' %}						
             <audio controls>
-            <source src="{{ asset('uploads/') }}{{ advert.nomMedia }}" type="audio/mpeg">
+            <source src="{{ asset('uploads/medias/') }}{{ advert.nomMedia }}" type="audio/mpeg">
             </audio>       
         {% elseif advert.nomMedia ends with 'mp4' %}
         <div class="embed-responsive embed-responsive-16by9" >    
