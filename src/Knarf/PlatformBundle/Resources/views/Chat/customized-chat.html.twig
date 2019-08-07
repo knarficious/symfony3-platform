@@ -5,6 +5,14 @@
     Chat - {{ parent() }}
 {% endblock %}
 
+{% block stylesheets %}
+    
+    {{ parent() }}
+    
+    <link href="{{ asset('bundles/knarfplatform/css/chat.css') }}" type="text/css" rel="stylesheet">
+    
+{%  endblock %}
+
 {% block knarfplatform_body %}
     
     {{ parent() }}
