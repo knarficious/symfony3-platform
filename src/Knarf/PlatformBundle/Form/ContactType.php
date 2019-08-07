@@ -31,14 +31,13 @@ class ContactType extends AbstractType
                     new NotBlank(array('message' => 'Veuillez remplir ce champ')),
                     new Assert\Email(array('message' => 'Veuillez donner une adresse email valide', 'checkMX' => true))
                 )))
-                ->add('nomFichier')
                 ->add('objet',      TextType::class, array('constraints' => array(
                     new NotBlank(array('message' => 'Veuillez remplir ce champ'))
                 )))
                 ->add('message',    TextareaType::class, array('constraints' => array(
                     new NotBlank(array('message' => 'Veuillez remplir ce champ'))
                 )))
-                ->add('Envoyer',    SubmitType::class);
+                ->add('envoyer',    SubmitType::class);
     }/**
      * {@inheritdoc}
      */

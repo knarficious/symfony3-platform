@@ -3,7 +3,9 @@
 {% extends "KnarfPlatformBundle::layout.html.twig" %}
 
 {% block title %}
-  Lecture d'une rubrique - {{ parent() }}
+    
+    {{ parent() }}|{{ rubrique.intitule }}
+    
 {% endblock %}
 
 {% block knarfplatform_body %}

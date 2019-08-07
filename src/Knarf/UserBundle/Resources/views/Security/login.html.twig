@@ -45,7 +45,10 @@
                     <input type="checkbox" name="_remember_me">
                     Se souvenir de moi
                     </label>
-                </div>    
+                </div>
+                {% if app.request.get('_route') != app.request.headers.get('referer') %}   
+                <input type="hidden" name="_target_path" value="{{ app.request.headers.get('referer') }}" />   
+                {% endif %}
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
             </div>
         </form>

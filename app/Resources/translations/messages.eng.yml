@@ -1,3 +1,24 @@
+contact:
+    knowledge: Comment avez-vous connu notre site ?
+    internet.knowledge: Recherche sur internet
+    facebook.knowledge: Facebook
+    pubpapier.knowledge: Publicité papier
+    boucheaoreille.knowledge: Bouche à oreille
+    newspaper.knowledge: Presse
+    network.knowledge: Réseaux sociaux
+    autre.knowledge: Autre
+    nom: Votre nom
+    first_name: Prénom
+    last_name: Nom
+    phone: Téléphone
+    email: Your email
+    objet: The object
+    contenu: Just write...
+    additional_information: Renseignements complémentaires
+    envoyer: Send
+    message_subject: Message de %name%
+    autre: Autre
+    
 menu:
     accueil: Home
     contact: Contact us

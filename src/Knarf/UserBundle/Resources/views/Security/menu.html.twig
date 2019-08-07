@@ -14,14 +14,18 @@
       {% if user.isActive == 1 %}
 
         <div class="media">
-        <div class="media-left">  
-        {% if user.avatar is not empty %}
-        <img class="media-object" src="{{vich_uploader_asset(user.avatar, 'mediaFile') | imagine_filter('my_thumb') }}" alt=""  />
-        {% else %}
-        {% image '@KnarfUserBundle/Resources/public/images/if_icon-person_211874.png' %}
-        <img class="media-object" src="{{ asset_url }}" alt="" />
-        {% endimage %}
-        {% endif %}
+            
+            <div class="media-left">
+                
+                {% if user.avatar is not empty %}
+                    
+                    <img class="media-object" src="{{vich_uploader_asset(user.avatar, 'mediaFile') | imagine_filter('my_thumb') }}" alt="mythumb"  />
+                
+                {% else %}
+                    
+                    <img src="{{ asset('/images/icon-person_211874.png') }}" alt="icon person" />
+
+                {% endif %}
         </div>
         <div class="media-body">
             <h4 class="media-heading">

@@ -1,5 +1,3 @@
-## YAML Template.
----
 contact:
     knowledge: Comment avez-vous connu notre site ?
     internet.knowledge: Recherche sur internet
@@ -9,12 +7,15 @@ contact:
     newspaper.knowledge: Presse
     network.knowledge: Réseaux sociaux
     autre.knowledge: Autre
+    nom: Votre nom
     first_name: Prénom
     last_name: Nom
     phone: Téléphone
-    email: Adresse mail
+    email: Adresse email
+    objet: L'objet de votre message
+    contenu: Écrivez votre message...
     additional_information: Renseignements complémentaires
-    validation_button: envoyer
+    envoyer: Envoyer
     message_subject: Message de %name%
     autre: Autre
     

@@ -2,17 +2,16 @@
 
 {% extends "::layout.html.twig" %}
 
-{% block title %}
-  Annonces - {{ parent() }}
+{% block title %}    
+  {{ parent() }}
 {% endblock %}
 
-{% block body %}   
- 
+{% block body %} 
 
   {# On définit un nouveau bloc, que les vues du bundle pourront remplir #}
   {% block knarfuser_body %}      
       
       <div class="container-fluid">
-  {% endblock %}  
+  {% endblock %}
        </div>
 {% endblock %}
