@@ -77,7 +77,7 @@ security:
                 #always_remember_me: true
             logout:
                 path: security_logout
-                target: /
+                #target: /
                 handlers: [security_logout_success_handler]
                 invalidate_session: true
                 
@@ -99,7 +99,8 @@ security:
         - { path: ^/profile, roles: ROLE_USER }
         - { path: ^/rubrique/delete, roles: ROLE_ADMIN }
         - { path: ^/rubrique/edit, roles: ROLE_ADMIN }
-        - { path: ^/rubriques/ajout, roles: ROLE_ADMIN } 
+        - { path: ^/rubriques/ajout, roles: ROLE_ADMIN }
+        - { path: ^/commentaire, role: ROLE_USER }
         - { path: ^/ajout, roles: ROLE_USER }
         - { path: ^/reply, roles: ROLE_USER }
         - { path: ^/logout, roles: ROLE_USER }
