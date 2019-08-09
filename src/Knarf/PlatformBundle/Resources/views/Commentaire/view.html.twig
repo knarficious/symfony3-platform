@@ -1,16 +1,14 @@
-{# src/Knarf/PlatformBundle/Resources/view/Commentaire/view.html.twig #}
+{# src/Knarf/PlatformBundle/Resources/views/Commentaire/view.html.twig #}
 
 {% block knarfplatform_body %}
     
 
     <div class="media">
       <div class="media-left">
-        {% if  commentaire.user.nomMedia is not empty %}
-        <img src="{{vich_uploader_asset(commentaire.user, 'mediaFile') | imagine_filter('my_thumb') }}" alt="{{ commentaire.user.nomMedia }}"  />
+        {% if  commentaire.user.avatar is not empty %}
+        <img src="{{vich_uploader_asset(commentaire.user.avatar, 'mediaFile') | imagine_filter('my_thumb') }}" alt="{{ commentaire.user.avatar.nomMedia }}"  />
         {% else  %}
-        {% image '@KnarfUserBundle/Resources/public/images/if_icon-person_211874.png' %}
-        <img src="{{ asset_url }}" alt="" />
-        {% endimage %}
+        <img src="{{ asset('/images/icon-person_211874.png') }}" alt="icon person" />
         {% endif %}
       </div>
       
@@ -19,7 +17,7 @@
           </h4>
     {{ commentaire.contenu }}
     
-    {% if app.user and commentaire.user is not same as( app.user ) %}
+{#   {% if app.user and commentaire.user is not same as( app.user ) %}#}
         
         <button class="btn btn-primary" data-toggle="modal" data-target="#commentaireModal">
     	<i class="fa fa-plus"></i> Répondre
@@ -41,7 +39,7 @@
                 </div>
             </div>
             
-    {% endif %} 
+{#    {% endif %} #}
 
     {% if commentaire.commentaires %}
         {% for comment in commentaire.commentaires %}
@@ -49,12 +47,10 @@
                 
                 <div class="media-left">
                     
-                    {% if  comment.user.nomMedia is not empty %}
-                        <img src="{{vich_uploader_asset(comment.user, 'mediaFile') | imagine_filter('my_thumb') }}" alt="{{ comment.user.nomMedia }}"  />
+                    {% if comment.user.avatar.nomMedia is not empty %}
+                        <img src="{{vich_uploader_asset(comment.user.avatar, 'mediaFile') | imagine_filter('my_thumb') }}" alt="{{ comment.user.avatar.nomMedia }}"  />
                     {% else  %}
-                        {% image '@KnarfUserBundle/Resources/public/images/if_icon-person_211874.png' %}
-                        <img src="{{ asset_url }}" alt="" />
-                        {% endimage %}
+                        <img src="{{ asset('/images/icon-person_211874.png') }}" alt="icon person" />
                     {% endif %}
                 </div>
                 <div class="media-body">
