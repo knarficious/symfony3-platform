@@ -6,7 +6,7 @@
     <div class="media">
       <div class="media-left">
         {% if  commentaire.user.avatar is not empty %}
-        <img src="{{vich_uploader_asset(commentaire.user.avatar, 'mediaFile') | imagine_filter('my_thumb') }}" alt="{{ commentaire.user.avatar.nomMedia }}"  />
+        <img src="{{vich_uploader_asset(commentaire.user.avatar, 'mediaFile') | imagine_filter('my_thumb') |replace({'http://':'https://'}) }}" alt="{{ commentaire.user.avatar.nomMedia }}"  />
         {% else  %}
         <img src="{{ asset('/images/icon-person_211874.png') }}" alt="icon person" />
         {% endif %}
