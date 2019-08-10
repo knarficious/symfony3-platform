@@ -14,6 +14,7 @@ use Knarf\CoreBundle\Services\Interfaces\MailerServiceInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
+use Psr\Log\LoggerInterface;
 
 
 /**
@@ -23,6 +24,11 @@ use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
  */
 class SendConfirmationMailListener 
 {
+    /**
+     * @var LoggerInterface $logger
+     */    
+    protected $logger;
+    
     /**
      * @var MailerServiceInterface $mailerService
      */
@@ -65,6 +71,7 @@ class SendConfirmationMailListener
      * @param string $from
      */
     public function __construct(
+            LoggerInterface $logger,
             MailerServiceInterface $mailerService, 
             \Twig_Environment $templating,
             RouterInterface $router,
@@ -73,6 +80,7 @@ class SendConfirmationMailListener
             $template, 
             $from)
     {
+        $this->logger = $logger;
         $this->mailerService = $mailerService;
         $this->templating = $templating;
         $this->template = $template;
@@ -101,5 +109,6 @@ class SendConfirmationMailListener
                         ['token' => $token], UrlGeneratorInterface::ABSOLUTE_URL)
                 ])
         );
+        $this->logger->info('User ' . $user->getUsername(). ' CREATED A NEW ACCOUNT', ['user' => $user]);
     }
 }

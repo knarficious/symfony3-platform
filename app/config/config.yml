@@ -126,7 +126,7 @@ liip_imagine:
     resolvers:
        avatar:
          web_path:
-             web_root: '%kernel.root_dir%/../web/'
+             web_root: '%kernel.project_dir%/web'
              cache_prefix: 'media/cache'
             
     loaders:
@@ -152,13 +152,6 @@ liip_imagine:
                 auto_rotate: true
                 thumbnail: { size: [240, 120], mode: inset}
                 relative_resize: { heighten: 78 }
-
-# Assetic Configuration
-assetic:
-    debug:          '%kernel.debug%'
-    use_controller: '%kernel.debug%'
-    filters:
-        cssrewrite: ~
         
 # Fos_Rest Configuration
 fos_rest:
@@ -244,4 +237,12 @@ fos_ck_editor:
                 path: '/web/bundles/fosckeditor/plugins/youtube/'
                 filename: 'plugin.js'
            
-    
+nelmio_api_doc:
+    sandbox:
+        authentication:
+            name: access_token
+            delivery: query
+            type: bearer
+
+            custom_endpoint: false
+        enabled:  true             

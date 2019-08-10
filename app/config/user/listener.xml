@@ -12,6 +12,7 @@ and open the template in the editor.
     <services>
         <service id="app.user_send_confirmation_mail_listener"
                  class="Knarf\UserBundle\EventListener\SendConfirmationMailListener">
+            <argument type="service" id="logger"/>
             <argument type="service" id="knarf.mailer_service"/>
             <argument type="service" id="twig" />
             <argument type="service" id="router" />
@@ -20,6 +21,7 @@ and open the template in the editor.
             <argument>KnarfUserBundle:Security:registration.html.twig</argument>
             <argument>%email_from%</argument>
             <tag name="kernel.event_listener" event="app.new_account_created" method="onNewAccountCreated" />
+            <tag name="monolog.logger" channel="mywebsite_user"/>
         </service>
 
         <service id="app.user_send_request_password_mail_listener"

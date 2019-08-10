@@ -52,8 +52,8 @@
                 
                 <div class="media-left">
                     
-                    {% if comment.user.avatar.nomMedia is not empty %}
-                        <img src="{{vich_uploader_asset(comment.user.avatar, 'mediaFile') | imagine_filter('my_thumb') }}" alt="{{ comment.user.avatar.nomMedia }}"  />
+                    {% if comment.user.avatar is not empty %}
+                        <img src="{{vich_uploader_asset(comment.user.avatar, 'mediaFile') | imagine_filter('my_thumb') |replace({'http://':'https://'}) }}" alt="{{ comment.user.avatar.nomMedia }}"  />
                     {% else  %}
                         <img src="{{ asset('/images/icon-person_211874.png') }}" alt="icon person" />
                     {% endif %}

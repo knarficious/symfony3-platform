@@ -71,7 +71,7 @@
        
     <li class="">
         {% if  app.user.avatar is not empty %}
-        <img src="{{vich_uploader_asset(app.user.avatar, 'mediaFile') | imagine_filter('my_thumb') }}" alt=""  />
+        <img src="{{vich_uploader_asset(app.user.avatar, 'mediaFile') | imagine_filter('my_thumb') | replace({'http://':'https://'}) }}" alt=""  />
         {% else  %}
         <img src="{{ asset('/images/icon-person_211874.png') }}" alt="icon person"/> 
 
