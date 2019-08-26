@@ -14,23 +14,24 @@
     <link href="{{ asset('bundles/knarfplatform/css/hover-min.css') }}" type="text/css" rel="stylesheet">   
     
     
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   {% endblock %}
 </head>
 
 <body>
-<nav class="navbar navbar-inverse navbar-fixed-top">
+<nav class="navbar navbar-inverse navbar-fixed-top dynamicheader">
   <div class="container-fluid">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#myNavbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>                        
       </button>
-      <a class="navbar-brand" href="{{ path('knarf_platform_home') }}">I</a>
+      <a class="navbar-brand" href="{{ path('knarf_platform_home') }}">Knarf Media</a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav">        
+      <ul class="nav navbar-nav navbar-right">        
         <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="">Annonces<span class="caret"></span></a>
           <ul class="dropdown-menu">
@@ -54,6 +55,31 @@
         <li>
             <a href="{{ path('knarf_chat') }}">Chatroom</></a>
         </li>
+                {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}  
+       
+{#        <li>
+        {% if  app.user.avatar is not empty %}
+        <img src="{{vich_uploader_asset(app.user.avatar, 'mediaFile') | imagine_filter('my_thumb') }}" alt=""  />
+        {% else  %}
+        <img src="{{ asset('/images/icon-person_211874.png') }}" alt="icon person"/> 
+        {% endif %}
+        </li>#}
+        
+
+        {% if app.request.get('_route')!= 'profile'%}
+                    
+        <li><a id="profile" href="{{ path('profile') }}">{{app.user.username}}</a></li>        
+            
+        {% endif %}
+        
+        <li><a href="{{ path('security_logout') }}"><span class="glyphicon glyphicon-log-out"></span> Déconnexion</a></li>
+        
+        {% else %}
+            
+        <li><a href="{{ path('register') }}"><span class="glyphicon glyphicon-user"></span> S'enregistrer</a></li>
+        <li><a href="{{ path('security_login_form') }}"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
+      
+      {% endif %}
       </ul>
 {#        <form class="navbar-form navbar-left" action="">
             <div class="input-group">
@@ -65,33 +91,7 @@
                 </div>
             </div>
         </form> #}
-
-      <ul class="nav navbar-nav navbar-right">
-        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}  
-       
-    <li class="">
-        {% if  app.user.avatar is not empty %}
-        <img src="{{vich_uploader_asset(app.user.avatar, 'mediaFile') | imagine_filter('my_thumb') | replace({'http://':'https://'}) }}" alt=""  />
-        {% else  %}
-        <img src="{{ asset('/images/icon-person_211874.png') }}" alt="icon person"/> 
-
-    </li>
-        {% endif %}
-
-        {% if app.request.get('_route')!= 'profile'%}
-                    
-        <li><a href="{{ path('profile') }}">{{app.user.username}}</a></li>        
-            
-        {% endif %}
-        
-        <li><a href="{{ path('security_logout') }}"><span class="glyphicon glyphicon-log-out"></span> Déconnexion</a></li>
-        
-        {% else %}
-            
-        <li><a href="{{ path('register') }}"><span class="glyphicon glyphicon-user"></span> S'enregistrer</a></li>
-        <li><a href="{{ path('security_login_form') }}"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
-      </ul>
-      {% endif %}
+ 
     </div>
   </div>
 </nav>
@@ -180,15 +180,14 @@
     {# Ajoutez ces lignes JavaScript si vous comptez vous servir des fonctionnalités du bootstrap Twitter #}
     <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js"></script>
 
-    <script>        
+{#    <script>        
         $(document).ready(function(){
         $(document.getElementById("commentaire")).click(function(){
         $(this).hide();
         });
         });
-    </script>
+    </script>#}
     <script>
         $(document).ready(function(){
         $(window).scroll(function () {
