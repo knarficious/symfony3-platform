@@ -6,6 +6,7 @@ namespace Knarf\PlatformBundle\Repository;
 use Doctrine\ORM\QueryBuilder;
 use Knarf\CoreBundle\Repository\AbstractGenericRepository;
 use Knarf\PlatformBundle\Entity\Advert;
+use Knarf\PlatformBundle\Entity\Rubrique;
 use Knarf\PlatformBundle\Repository\Interfaces\AdvertRepositoryInterface;
 
 /**
@@ -16,14 +17,6 @@ use Knarf\PlatformBundle\Repository\Interfaces\AdvertRepositoryInterface;
  */
 class AdvertRepository extends AbstractGenericRepository implements AdvertRepositoryInterface
 {
-    public function afficherDerniersArticles()
-    {
-        $qb = $this->createQueryBuilder('a')
-                //->where('a.published = ?1')
-                ->addOrderBy('a.date', 'DESC');
-        
-        return $qb->getQuery()->getResult();
-    }
 
     public function getQueryResultFilter($requestVal) {
         
@@ -36,5 +29,7 @@ class AdvertRepository extends AbstractGenericRepository implements AdvertReposi
     public function getResultFilterPaginated($requestVal, $limit = 20, $offset = 0) {
         
     }
+    
+
 
 }
