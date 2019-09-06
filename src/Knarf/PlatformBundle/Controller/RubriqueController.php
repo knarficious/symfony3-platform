@@ -10,6 +10,8 @@ namespace Knarf\PlatformBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\Annotation\Route;
 use Knarf\PlatformBundle\Form\RubriqueType;
 use Knarf\PlatformBundle\Form\RubriqueEditType;
 use Knarf\PlatformBundle\Entity\Rubrique;
@@ -21,37 +23,94 @@ use Knarf\PlatformBundle\Entity\Rubrique;
  */
 class RubriqueController extends Controller{
     
-    
+    /**
+     * @Route("/", name="knarf_platform_home")
+     * @return type
+     */    
     public function indexAction()
     {
         $repository = $this->getDoctrine()->getManager()->getRepository('KnarfPlatformBundle:Rubrique');
-        $listRubriques = $repository->findAll();
+        $listRubriques = $repository->GetRubriquesEtAdverts();
         
         return $this->render('KnarfPlatformBundle:Rubrique:index.html.twig', array(
         'listRubriques' => $listRubriques
         ));
+    }
 
+    /**
+     * @Route("/rubriques", name="rubrique_ext_index")
+     * @return type
+     */
+    public function extendedIndexAction()
+    {
+        $repository = $this->getDoctrine()->getManager()->getRepository('KnarfPlatformBundle:Rubrique');
+        $listRubriques = $repository->getRubriques();
+        
+        return $this->render('KnarfPlatformBundle:Rubrique:index_ext.html.twig', array(
+        'listRubriques' => $listRubriques
+        ));
+    }
+
+        
+    /**
+     * @Route("/rubrique/{slug}", name="rubrique_ext")
+     * @param type $slug
+     * @return type
+     * @throws NotFoundHttpException
+     */
+    public function extendedViewAction($slug, Request $request)
+    {
+        $rubrique = $this
+                ->getDoctrine()
+                ->getRepository('KnarfPlatformBundle:Rubrique')
+                ->findOneBy(array('slug'=> $slug));
+
+        $adverts = $rubrique->getAdverts();        
+        
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $adverts,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 6));
+		 
+	return $this->render('KnarfPlatformBundle:Rubrique:ext.html.twig', array( 'rubrique' => $rubrique, 'pagination' => $pagination));
+		    
     }
     
+    /**
+     * @Route("/rubrique/{slug}", name="rubrique_view")
+     * @param type $slug
+     * @return type
+     * @throws NotFoundHttpException
+     */
     public function viewAction($slug)
-    {
-       $repository = $this
+    {        
+        $repository = $this
         ->getDoctrine()
         ->getManager()
         ->getRepository('KnarfPlatformBundle:Rubrique');
 
         $rubrique = $repository->findOneBy(array('slug' => $slug));
+        
+        if(null === $rubrique)
+        {
+            throw new NotFoundHttpException("La rubrique ".$slug." n'existe pas!");
+        }        
 
         return $this->render('KnarfPlatformBundle:Rubrique:view.html.twig', array(
 
         'rubrique' => $rubrique
 
         ));
-	
-			
-	//return $this->redirectToRoute('knarf_platform_home');
     }
     
+    /**
+     * @Route("/rubrique/edit/{slug}", name="rubrique_edit")
+     * @param type $slug
+     * @param Request $request
+     * @return type
+     * @throws NotFoundHttpException
+     */
     public function editAction($slug, Request $request)
     {
 
@@ -88,6 +147,13 @@ class RubriqueController extends Controller{
 
     }
 
+    /**
+     * @Route("/rubrique/delete/{slug}", name="rubrique_delete")
+     * @param type $slug
+     * @param Request $request
+     * @return type
+     * @throws NotFoundHttpException
+     */
     public function deleteAction($slug, Request $request)
     {
 
@@ -124,24 +190,25 @@ class RubriqueController extends Controller{
     {
 
         $repository = $this->getDoctrine()->getManager()->getRepository('KnarfPlatformBundle:Rubrique');
-        $listRubriques = $repository->findAll();
+        $listRubriques = $repository->getRubriques();
 
 
         return $this->render('KnarfPlatformBundle:Rubrique:menu.html.twig', array(
-
-      // Tout l'intérêt est ici : le contrôleur passe
-
-      // les variables nécessaires au template !
+ 
 
         'listRubriques' => $listRubriques
 
         ));
-
     }
     
+    /**
+     * @Route("/rubriques/ajout", name="rubrique_ajout")
+     * @param Request $request
+     * @return type
+     */
     public function addAction(Request $request)
     {
-
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
         
         $rubrique = new Rubrique();
         

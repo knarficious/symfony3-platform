@@ -56,8 +56,8 @@ class CommentaireController extends Controller
     
     /**
      * @Route("/commenter/{slug}", name="commentaire_add", condition="request.isXmlHttpRequest()")
-     * @param Request $request
      * @param type $slug
+     * @param Request $request
      * @return Response
      */
     public function addAction($slug, Request $request)
@@ -69,7 +69,7 @@ class CommentaireController extends Controller
 
         $advert = $repository1->findOneBy(array('slug' => $slug));
         
-                    if(null === $advert)
+        if(null === $advert)
             {
                 throw new NotFoundHttpException("L'annonce ".$slug." n'existe pas!");
             }
@@ -81,17 +81,15 @@ class CommentaireController extends Controller
         $commentaire->setAdvert($advert);
         $commentaire->setDatePublication(new \DateTime());
         
-        $formulaire = $this->createForm(CommentaireType::class, $commentaire,
-                                        array('action' => $this->generateUrl($request->get('_route'), array('slug' => $slug)))
+        $formulaire = $this->createForm(
+                CommentaireType::class,
+                $commentaire,
+                array('action' => $this->generateUrl($request->get('_route'),
+                        array('slug' => $slug)))
                                         );
 
-        if ($formulaire->handleRequest($request)->isValid()) {
-            
-           
-            //var_dump($commentaire->getUser()->getUsername());
-            //var_dump($commentaire->getAdvert()->getTitle());
-            //var_dump($commentaire->getCommentaire()->getContenu());
-            
+        if ($formulaire->handleRequest($request)->isValid())
+        {   
             $em = $this->getDoctrine()->getManager();
             $em->persist($commentaire);
             $em->flush();
@@ -99,15 +97,9 @@ class CommentaireController extends Controller
             $request->getSession()->getFlashBag()->add('success', 'Commentaire bien enregistré.');
 
             return new Response('success');
-            // Puis on redirige vers la page de visualisation de cettte annonce
-
-           // return $this->redirect($this->generateUrl('commentaire_view', array('id' => $commentaire->getId())));
-           
         }
-
-        // Si on n'est pas en POST, alors on affiche le formulaire
-    
-    return $this->render('KnarfPlatformBundle:Commentaire:form.html.twig', array('form' => $formulaire->createView()));
+        
+        return $this->render('KnarfPlatformBundle:Commentaire:form.html.twig', array('form' => $formulaire->createView()));
     
     }
   
@@ -274,15 +266,14 @@ class CommentaireController extends Controller
         $em->persist($reponse);
         $em->flush();
             
-        $request->getSession()->getFlashBag()->add('success', 'Commentaire bien enregistré.');
-        
+        $request->getSession()->getFlashBag()->add('success', 'Commentaire bien enregistré.');        
 
         return new Response('success');            
       }
 
         return $this->render('KnarfPlatformBundle:Commentaire:formulaire.html.twig', array(
 
-        'commentaire' => $commentaire, 'active' => 'commentaire', 'formulaire' => $formulaire->createView()
+        'commentaire' => $commentaire, 'formulaire' => $formulaire->createView()
 
         ));			
 	

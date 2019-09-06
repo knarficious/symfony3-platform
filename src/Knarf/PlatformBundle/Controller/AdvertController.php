@@ -9,31 +9,33 @@ namespace Knarf\PlatformBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Knp\Component\Pager\PaginatorInterface;
 use Knarf\PlatformBundle\Form\AdvertType;
 use Knarf\PlatformBundle\Form\AdvertEditType;
 use Knarf\PlatformBundle\Entity\Advert;
+use Knarf\PlatformBundle\Entity\Rubrique;
 use Knarf\PlatformBundle\Entity\Commentaire;
 use Knarf\PlatformBundle\Form\CommentaireType;
 
 class AdvertController extends Controller
 
 {
-
-    /**
-     * @Route("/", name="knarf_platform_home")
-     * @return type
-     */
-    public function indexAction()
-
+    public function indexAction(Request $request)
     {
         $repository = $this->getDoctrine()->getManager()->getRepository('KnarfPlatformBundle:Advert');
-        $listAdverts = $repository->afficherDerniersArticles();
+        $listAdverts = $repository->findAll();
+        
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+                $listAdverts,
+                $request->query->getInt('page', 1),
+                $request->query->getInt('limit', 6));
         
         return $this->render('KnarfPlatformBundle:Advert:index.html.twig', array(
-        'listAdverts' => $listAdverts
+        'listAdverts' => $pagination
         ));
 
     }
@@ -213,7 +215,8 @@ class AdvertController extends Controller
 
     $listAdverts = $this->getDoctrine()
             ->getRepository(Advert::class)
-            ->afficherDerniersArticles();
+        //    ->afficherDerniersArticles()
+            ->findAll();
 
 
     return $this->render('KnarfPlatformBundle:Advert:menu.html.twig', array(
@@ -227,6 +230,11 @@ class AdvertController extends Controller
   public function getAdvertManager()
   {
       return $this->get('app.advert.manager');
+  }
+  
+  public function getAdvertRepository()
+  {
+      return $this->get('app.advert.repository');
   }
   
   
