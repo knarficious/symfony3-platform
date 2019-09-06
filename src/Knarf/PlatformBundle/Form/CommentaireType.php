@@ -18,9 +18,9 @@ class CommentaireType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('contenu',           TextareaType::class)
-                ->add('Enregistrer',            SubmitType::class)
-                ->add('Effacer',           ResetType::class)
-            //  ->add('Annuler',         ButtonType::class)
+                ->add('envoyer', SubmitType::class, [
+                    'attr' => ['class' => 'save btn btn-primary'],
+])
                ;
     }
     
