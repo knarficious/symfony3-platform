@@ -15,5 +15,13 @@ xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/sc
                 <argument type="service" id="app.manager_container_service"/>
             </call>
         </service>
+        <service id="knarf.platformbundle.acl.comment.roles" class="Knarf\PlatformBundle\Acl\RoleCommentAcl" >
+        <argument type="service" id="security.token_storage" />
+        <argument>IS_AUTHENTICATED_FULLY</argument> <!-- Create role -->
+        <argument>IS_AUTHENTICATED_ANONYMOUSLY</argument> <!-- View role -->
+        <argument>ROLE_USER</argument> <!-- Edit role -->
+        <argument>ROLE_USER</argument> <!-- Delete role -->
+        <argument>%fos_comment.model.comment.class%</argument>
+    </service>
     </services>
 </container>

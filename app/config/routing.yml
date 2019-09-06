@@ -17,10 +17,6 @@ registration:
     path: /activate
     defaults:
         _controller: KnarfUserBundle:Register:activate
-    
-rubrique:
-    resource: "@KnarfPlatformBundle/Resources/config/routing/rubrique.yml"
-    prefix: /rubrique
 
 commentaire:
     resource: "@KnarfPlatformBundle/Resources/config/routing/commentaire.yml"
@@ -51,7 +47,13 @@ oauth_server_auth_login:
 oauth_server_auth_login_check:
     path:  /oauth/v2/auth_login_check
     defaults: { _controller: KnarfUserBundle:Security:loginCheck }
-        
+    
+fos_comment_api:
+    type: rest
+    resource: "@FOSCommentBundle/Resources/config/routing.yml"
+    prefix: /comment/api
+    defaults: { _format: html }    
+
 
 
         

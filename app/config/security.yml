@@ -3,9 +3,11 @@
 security:
 
     # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
+    acl:
+        connection: default
     encoders:
         #Symfony\Component\Security\Core\User\User: bcrypt
-        Knarf\UserBundle\Entity\User: bcrypt
+        Knarf\UserBundle\Entity\App_User: bcrypt
 
     role_hierarchy:
         ROLE_ADMIN:       ROLE_USER
@@ -14,7 +16,7 @@ security:
     providers:
         database_users:
             entity:
-                class:      KnarfUserBundle:User
+                class:      KnarfUserBundle:App_User
                 #property:   identifier
        
 

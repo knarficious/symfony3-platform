@@ -1,6 +1,6 @@
 services:
-    app.advert.repository::
-        class: KnarfPlatFormBundle\Repository\AdvertRepository
+    app.advert.repository:
+        class: Knarf\PlatFormBundle\Repository\AdvertRepository
         factory: ["@doctrine.orm.default_entity_manager", getRepository]
-        arguments: ['KnarfPlatformBundle\Entity\Advert']
+        arguments: ['Knarf\PlatformBundle\Entity\Advert']
         lazy: true
