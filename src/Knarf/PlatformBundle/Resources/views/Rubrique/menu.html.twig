@@ -1,9 +1,7 @@
 {# src/Knarf/PlatformBundle/Resources/views/Rubrique/menu.html.twig #}
 
 
-{# Ce template n'hérite de personne,
-
-   tout comme le template inclus avec {{ include() }}. #}
+{# Ce template n'hérite de personne  #}
 
 
 <ul class="nav nav-pills nav-stacked">
@@ -12,7 +10,7 @@
 
     <li>
 
-      <a href="{{ path('rubrique_view', {'slug': rubrique.slug}) }}">
+      <a href="{{ path('rubrique_ext', {'slug': rubrique.slug}) }}">
 
         {{ rubrique.intitule }}
 

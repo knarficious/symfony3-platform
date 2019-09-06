@@ -7,14 +7,22 @@
   {{ form_errors(form) }}
   
   <div class="form-group">
-      {{ form_label(form.intitule, "Intitulé", {'label_attr': {'class': 'control-label'}}) }}
+      {{  'rubrique.intitule' | trans }}
       {{ form_errors(form.intitule) }}
       {{ form_widget(form.intitule, {'attr': {'class': 'form-control'}}) }}
   </div>
   
   <div class="form-group">   
    {{ form_errors(form.mediaFile) }}
-   {{ form_widget(form.mediaFile, {'attr': {'class': 'form-control'}}) }}
+   {% if rubrique.image is not empty %}
+       <img class="media-object" src="{{vich_uploader_asset(rubrique, 'mediaFile') }}" alt="{{ rubrique.image }}"/>
+       {{ form_widget(form.mediaFile.delete) }}
+       
+    {% else %}
+        {{ form_widget(form.mediaFile, {'attr': {'class': 'form-control'}}) }}
+        
+    {% endif %}
+ 
    </div>
   <p>
   <p>

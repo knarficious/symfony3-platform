@@ -2,6 +2,11 @@
 
 {% extends "KnarfPlatformBundle::layout.html.twig" %}
 
+  {% block stylesheets %}
+      {{ parent() }}
+    <link href="{{ asset('bundles/foscomment/css/comments.css') }}" type="text/css" rel="stylesheet">
+  {% endblock %}
+
 {% block title %}
   {{ parent() }} - {{ advert.title | title }}
 {% endblock %}
@@ -42,9 +47,9 @@
     <p>
     
     <div class="">
-        <a href="{{ path('knarf_platform_home') }}" class="btn btn-default">
-            <i class="glyphicon glyphicon-chevron-left"></i>
-            Retour à la liste
+        <a href="{{ path('rubrique_ext', {'slug': advert.rubrique.slug}) }}" class="btn btn-default">
+            <i class="glyphicon glyphicon-chevron-right"></i>
+            Voir les publications dans cette rubrique
         </a>
         
     
@@ -67,35 +72,29 @@
     </div>
     {# bloc des commentaires #}
     
-    
-        <h4>Commentaires</h4>        
-        <hr>
-      
-        {% if advert.commentaires is not empty or commentaire.commentaire.id is defined%} 
-            
-            {% for commentaire in advert.commentaires %}
-              {{ include("KnarfPlatformBundle:Commentaire:view.html.twig", {'commentaire' : commentaire }) }}
-            {% endfor %}  
-        
-        {% else %}
-            <div class="">
-            Aucun commentaire
-            </div>
-        {% endif %} 
-    
-    <p>
-        {% if app.user %}
-            
-            <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+    <section class="" id="commentaires">
+{#        <h4>Commentaires</h4>   
+        {% if app.user %}          
+            <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">
                 <i class="fa fa-plus"></i> Ajouter un commentaire
-            </button>
+            </button> 
             
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalTitle" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
+        {% else %}
+            Vous devez vous <a href="{{ path('security_login_form') }}">connecter</a> pour commenter
+        {% endif %}#}
+{% include '@FOSComment/Thread/async.html.twig' with {'id': 'advert' ~ advert.id} %}
+    </section>
+    <hr>
+
+        {% if not app.user %}
+            Vous devez vous <a href="{{ path('security_login_form') }}">connecter</a> pour commenter
+        {% endif %}
+{#            <!-- Modal -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModal" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content" role="dialog">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalTitle">Ajout d'un commentaire</h5>
+                            <h5 class="modal-title" id="MyModal">Ajout d'un commentaire</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                             </button>
@@ -105,47 +104,61 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            
-        {% else %}
-            Vous devez vous <a href="{{ path('security_login_form') }}">connecter</a> pour commenter
-        {% endif %}       
-             
+            </div> #}       
 {% endblock %}
 
 {% block javascripts %}
     
     {{ parent() }}
+    
+    {#<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js"></script>
    
     <script>
-		$('#exampleModal').on('shown.bs.modal', function () {
-			var modal = $(this);
-			$.ajax('{{ path('commentaire_add', {'slug' : advert.slug}) }}', {
-				success: function(data) {
-					modal.find('.modal-body').html(data);
-				}
-			});
-		});
+        $j = jQuery.noConflict();
+                    $j.xhrPool = []; // array of uncompleted requests
+            $j.xhrPool.abortAll = function() { // our abort function
+            $j(this).each(function(idx, jqXHR) { 
+                jqXHR.abort();
+                });
+            $j.xhrPool.length = 0
+            };
+     
+            $j.ajaxSetup({
+                beforeSend: function(jqXHR) { // before jQuery send the request we will push it to our array
+                $j.xhrPool.push(jqXHR);
+                            },
+                complete: function(jqXHR) { // when some of the requests completed it will splice from the array
+                    var index = $j.xhrPool.indexOf(jqXHR);
+                    if (index > -1) {
+                        $j.xhrPool.splice(index, 1);
+                    }
+                        }
+            });
+        
+        $j(document).ready(function(){
+            
+
  
-        $(document).on('submit', 'form', function(e){
+        $j(document).on('submit', 'form', function(e){
 			// il est impératif de commencer avec cette méthode qui va empêcher le navigateur d'envoyer le formulaire lui-même
             e.preventDefault();
             
-            $form = $(e.target);
-            modal = $('#exampleModal');
+            $jform = $j(e.target);
+            modal = $j('#myModal');
  
-			var title = $('#article_title').val();
+			
             
-        	var $submitButton = $form.find(':submit');
-    		$submitButton.html('<i class="fas fa-spinner fa-pulse"></i>');
-    		$submitButton.prop('disabled', true);
+        	var $jsubmitButton = $jform.find(':submit');
+    		$jsubmitButton.html('<i class="fas fa-spinner fa-pulse"></i>');
+    		$jsubmitButton.prop('disabled', true);
  
 			// ajaxSubmit du plugin ajaxForm nécessaire pour l'upload de fichier
-			$form.ajaxSubmit({
+			$jform.ajaxSubmit({
 				type: 'post',
+                                beforeSubmit: showRequest,
 				success: function(data) {
-					if (data == 'success') {
-						$('ul').append('<li>' + title + '</li>');
+					if (data === 'success') {
+						
 						modal.modal('toggle');
                                                 location.reload();
 					} else {
@@ -153,10 +166,43 @@
 					}
 				},
 				error: function(jqXHR, status, error) {
-					  $submitButton.html(button.data('label'));
-					  $submitButton.prop('disabled', false);
+					  $jsubmitButton.html(button.data('label'));
+					  $jsubmitButton.prop('disabled', false);
 				}
 			});
         });
-	</script>
+        $j(document).on('shown.bs.modal', function () {
+        var modal = $j(this);
+        var xhr;   
+        
+            if(xhr && xhr.readyState !== 4){
+            xhr.abort();
+            }
+        
+        xhr = $j.ajax('{{ path('commentaire_add', {'slug' : advert.slug}) }}', {
+       
+        success: function(data) {
+                        modal.find('.modal-body').html(data);
+                }
+        });
+                
+        });
+        });
+               // pre-submit callback 
+    function showRequest(formData, jqForm, options) { 
+    // formData is an array; here we use $j.param to convert it to a string to display it 
+    // but the form plugin does this for you automatically when it submits the data 
+    var queryString = $j.param(formData); 
+ 
+    // jqForm is a jQuery object encapsulating the form element.  To access the 
+    // DOM element for the form do this: 
+    // var formElement = jqForm[0]; 
+ 
+    console.log('About to submit: \n\n' + queryString); 
+ 
+    // here we could return false to prevent the form from being submitted; 
+    // returning anything other than false will allow the form submit to continue 
+    return true; 
+} 
+	</script>#}
 {% endblock %}     

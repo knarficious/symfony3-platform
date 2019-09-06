@@ -3,77 +3,58 @@
 {% block knarfplatform_body %}
     
 
-    <div class="media">
+    <div class="media" id="commentaire">
       <div class="media-left">
         {% if  commentaire.user.avatar is not empty %}
-        <img src="{{vich_uploader_asset(commentaire.user.avatar, 'mediaFile') | imagine_filter('my_thumb') |replace({'http://':'https://'}) }}" alt="{{ commentaire.user.avatar.nomMedia }}"  />
+        <img src="{{vich_uploader_asset(commentaire.user.avatar, 'mediaFile') | imagine_filter('my_thumb') }}" alt="{{ commentaire.user.avatar.nomMedia }}"  />
         {% else  %}
         <img src="{{ asset('/images/icon-person_211874.png') }}" alt="icon person" />
         {% endif %}
       </div>
       
       <div class="media-body">
-          <h4 class="media-heading">{{ commentaire.user.username }}, le {{ commentaire.datePublication|date('d/m/Y') }}
-          </h4>
-    {{ commentaire.contenu }}
+          <h5 class="media-heading">{{ commentaire.user.username }}, le {{ commentaire.datePublication|date('d/m/Y') }}  à {{ commentaire   .datePublication|date('H:i') }}
+          </h5>
+          <h4>{{ commentaire.contenu }}</h4>
     
 {#   {% if app.user and commentaire.user is not same as( app.user ) %}#}
 {% if app.user %}
-        
-        <button class="btn btn-primary" data-toggle="modal" data-target="#commentaireModal">
+       
+        <button class="btn btn-primary openModal" data-id="{{ commentaire.id }}" data-toggle="modal" data-target="#commentaireModal">
     	<i class="fa fa-plus"></i> Répondre
-        </button>
-            
-            <!-- Modal -->
-            <div class="modal fade" id="commentaireModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalTitle" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalTitle">Ajout d'un commentaire</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                        </div>
-                        <div class="modal-footer">
-{#                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        button type="button" class="btn btn-primary">Save changes</button>#}
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
+        </button> 
+           
     {% endif %} 
 
     {% if commentaire.commentaires %}
         {% for comment in commentaire.commentaires %}
-            <div class="media">          
+            <div class="media" id="commentaire">    
                 
                 <div class="media-left">
                     
                     {% if comment.user.avatar is not empty %}
-                        <img src="{{vich_uploader_asset(comment.user.avatar, 'mediaFile') | imagine_filter('my_thumb') |replace({'http://':'https://'}) }}" alt="{{ comment.user.avatar.nomMedia }}"  />
+                        <img src="{{vich_uploader_asset(comment.user.avatar, 'mediaFile') | imagine_filter('my_thumb') }}" alt="{{ comment.user.avatar.nomMedia }}"  />
                     {% else  %}
                         <img src="{{ asset('/images/icon-person_211874.png') }}" alt="icon person" />
                     {% endif %}
                 </div>
                 <div class="media-body">
-                    <h4 class="media-heading">{{ comment.user.username }}, le {{ comment.datePublication|date('d/m/Y') }}</h4>
+                    <h5 class="media-heading">{{ comment.user.username }}, le {{ comment.datePublication|date('d/m/Y') }} à {{ comment.datePublication|date('H:iY') }} </h5>
             
-                    {{ comment.contenu }}
+                    <h4>{{ comment.contenu }}</h4>
                 </div>
                 
                 {% if comment.user == app.user %}
+                        <div class="media-right">
+                            <a href="{{ path('commentaire_edit', {'id': comment.id}) }}" class="btn btn-default">
+                            <i class="glyphicon glyphicon-edit"></i>
+                            </a>
+                            <a href="{{ path('commentaire_delete', {'id': comment.id}) }}" class="btn btn-danger">
+                            <i class="glyphicon glyphicon-trash"></i>
+                            </a>        
+                        </div>
         
-                    <a href="{{ path('commentaire_edit', {'id': comment.id}) }}" class="btn btn-default">
-                        <i class="glyphicon glyphicon-edit"></i>
-                            Modifier le commentaire
-                    </a>
-                    <a href="{{ path('commentaire_delete', {'id': comment.id}) }}" class="btn btn-danger">
-                        <i class="glyphicon glyphicon-trash"></i>
-                            Supprimer le commentaire
-                    </a>
+
                 {% endif %} 
             </div>
             <hr>
@@ -81,70 +62,116 @@
     {% endif %}        
     
     </div>
-    </div>
-    <p>
-    <p>  
-
-    {% if commentaire.user == app.user %}
+    <div class="media-right">
+                {% if commentaire.user == app.user %}
         
-        <a href="{{ path('commentaire_edit', {'id': commentaire.id}) }}" class="btn btn-default">
-            <i class="glyphicon glyphicon-edit"></i>
-                Modifier le commentaire
-        </a>
-        <a href="{{ path('commentaire_delete', {'id': commentaire.id}) }}" class="btn btn-danger">
-            <i class="glyphicon glyphicon-trash"></i>
-                Supprimer le commentaire
-        </a>
-    {% endif %} 
-    </p>
+            <a href="{{ path('commentaire_edit', {'id': commentaire.id}) }}" class="btn btn-default">
+                <i class="glyphicon glyphicon-edit"></i>
+            </a>
+            <a href="{{ path('commentaire_delete', {'id': commentaire.id}) }}" class="btn btn-danger">
+                <i class="glyphicon glyphicon-trash"></i>
+            </a>
+        {% endif %} 
+    </div>
+    </div>
+
+
     <hr>
+                <!-- Modal -->
+            <div class="modal fade" id="commentaireModal" tabindex="-1" role="dialog" aria-labelledby="commentaireModal" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content" >
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalTitle">Réponse</h5>
+
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" id="modalId" />
+                        </div>
+                        <div class="modal-footer">
+{#                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>#}
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
 {% endblock %}
 
 {% block javascripts %}
     
-    <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js" integrity="sha384-FzT3vTVGXqf7wRfy8k4BiyzvbNfeYjK+frTVqZeNDFl8woCbF0CYG6g2fMEFFo/i" crossorigin="anonymous"></script>
     
    
     <script>
-		$('#commentaireModal').on('shown.bs.modal', function () {
-			var modal = $(this);
-			$.ajax('{{ path('commentaire_repond', {'id' : commentaire.id}) }}', {
-				success: function(data) {
-					modal.find('.modal-body').html(data);
-				}
-			});
-		});
- 
-        $(document).on('submit', 'formulaire', function(e){
-			// il est impératif de commencer avec cette méthode qui va empêcher le navigateur d'envoyer le formulaire lui-même
-            e.preventDefault();
-            
-            $form = $(e.target);
-            modal = $('#commentaireModal');
- 
-			var title = $('#article_title').val();
-            
-        	var $submitButton = $form.find(':submit');
-    		$submitButton.html('<i class="fas fa-spinner fa-pulse"></i>');
-                $submitButton.prop('disabled', true); 
-			
-			$form.ajaxSubmit({
-				type: 'post',
-				success: function(data) {
-					if (data == 'success') {
-						$('ul').append('<li>' + title + '</li>');
-						modal.modal('toggle');
-					} else {
-						modal.find('.modal-body').html(data);
-					}
-				},
-				error: function(jqXHR, status, error) {
-					  $submitButton.html(button.data('label'));
-					  $submitButton.prop('disabled', false);
-				}
-			});
+        $j = jQuery.noConflict();     
+
+        $j(document).ready(function(){
+
+        $j(document).on('submit', 'formulaire', function(e){
+        // il est impératif de commencer avec cette méthode qui va empêcher le navigateur d'envoyer le formulaire lui-même
+        e.preventDefault();
+        $jform = $j(e.target);
+        modalB = $j('#commentaireModal');
+        {#var title = $j('#article_title').val();#}
+        var $jsubmitButton = $jform.find(':submit');
+        $jsubmitButton.html('<i class="fas fa-spinner fa-pulse"></i>');
+        $jsubmitButton.prop('disabled', true); 
+        $jform.ajaxSubmit({
+            type: 'post',
+            beforeSubmit: showRequest,            
+            success: function(data) {
+                    if (data === 'success') {
+                            {#$j('ul').append('<li>' + title + '</li>');#}
+                            modalB.modal('toggle');
+                    } else {
+                            modalB.find('.modal-body').html(data);
+                    }
+            },
+            error: function(jqXHR, status, error) {
+                      $jsubmitButton.html(button.data('label'));
+                      $jsubmitButton.prop('disabled', false);
+            }
+                    })
+            .done(function(data){
+                        console.log(data)});
         });
+        $j('.openModal').on('click', function () {
+        var commentId = $j('#modalId').val();
+        console.log(commentId);
+        
+        var xhr;
+       
+            if(xhr && xhr.readyState !== 4){
+            xhr.abort();
+            }
+        xhr = $j.ajax('{{ path('commentaire_repond', {'id' : commentaire.id}) }}', {
+                success: function(data) {
+                        console.log(data);
+                }
+        });
+    
+        });
+        });
+        // pre-submit callback 
+    function showRequest(formData, jqForm, options) { 
+    // formData is an array; here we use $j.param to convert it to a string to display it 
+    // but the form plugin does this for you automatically when it submits the data 
+    var queryString = $j.param(formData); 
+ 
+    // jqForm is a jQuery object encapsulating the form element.  To access the 
+    // DOM element for the form do this: 
+    // var formElement = jqForm[0]; 
+ 
+    console.log('About to submit: \n\n' + queryString); 
+ 
+    // here we could return false to prevent the form from being submitted; 
+    // returning anything other than false will allow the form submit to continue 
+    return true; 
+} 
 	</script>
 {% endblock %}     

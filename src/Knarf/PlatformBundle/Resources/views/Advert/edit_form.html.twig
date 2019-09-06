@@ -1,4 +1,4 @@
-{# src/Knarf/PlatformBundle/Resources/views/Advert/form.html.twig #}
+{# src/Knarf/PlatformBundle/Resources/views/Advert/edit_form.html.twig #}
 
 {% form_theme form 'bootstrap_3_layout.html.twig' %}
 
@@ -19,20 +19,39 @@
 
         <div class="form-group">            
             {{ form_label(form.title, "Titre de l'annonce", {'label_attr': {'class': 'control-label'}}) }}
-            {{ form_errors(form.title) }}            
-            {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}            
+            {{ form_errors(form.title) }}
+
+            
+                {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
+            
         </div>
 
         <div class="form-group">
             {{ form_label(form.mediaFile, "Media de l'annonce", {'label_attr': {'class': 'media-heading  control-label'}}) }}
-            {{ form_errors(form.mediaFile) }}           
-            {{ form_widget(form.mediaFile) }}            
+            {{ form_errors(form.mediaFile) }}
+            {% if advert.nomMedia is not empty %}
+                    <img class="img-responsive media-object" src="{{vich_uploader_asset(advert, 'mediaFile') }}" alt="{{ advert.nomMedia }}"/>
+                
+            
+                <div class="col-sm-8">
+                {{ form_widget(form.mediaFile.delete) }}
+                </div>
+            {% endif %}
+            
+            <p>
+            <hr>
+            <p>
+            <div class="col-sm-10">
+                {{ form_widget(form.mediaFile) }}
+            </div>
         </div>
 
         <div class="form-group">
             {{ form_label(form.content, "Contenu de l'annonce", {'label_attr': {'class': 'control-label'}}) }}
-            {{ form_errors(form.content) }}            
-            {{ form_widget(form.content, {'attr': {'class': 'form-control'}}) }}            
+            {{ form_errors(form.content) }}
+            
+                {{ form_widget(form.content, {'attr': {'class': 'form-control'}}) }}
+            
         </div>   
 
         <div class="form-group">

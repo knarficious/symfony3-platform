@@ -1,0 +1,61 @@
+{# src/Knarf/PlatformBundle/Resources/views/Rubrique/index.html.twig #}
+
+
+{% extends "KnarfPlatformBundle::layout.html.twig" %}
+
+
+{% block title %}
+
+  Accueil - {{ parent() }}
+
+{% endblock %}
+
+
+{% block knarfplatform_body %}
+
+    {{ parent() }}
+  <h2>Liste des rubriques</h2>
+  
+
+    {% for rubrique in listRubriques %}        
+
+      <div class="row">
+          <div class="well">
+            <a href="{{ path('rubrique_ext', {'slug': rubrique.slug}) }}">
+            
+                {{ rubrique.intitule }}
+
+            </a>
+                 {% if rubrique.adverts %}                    
+                     
+                  {% set count = 0 %}
+                  {% for entity in rubrique.adverts %}
+                      
+                      {% set count = count + 1 %}
+                      
+                  {% endfor %}
+                  
+                  ({{ count }} publications)
+                  
+              {% endif %}   
+            </div>
+
+</div>
+
+    {% endfor %}
+
+  
+    
+    {% if is_granted('ROLE_ADMIN') %}
+        
+        <a class="btn btn-primary btn-lg" href="{{ path('rubrique_ajout') }}">
+          Ajouter une rubrique »
+        </a>
+
+    {% endif %}
+
+
+{% endblock %}
+
+
+

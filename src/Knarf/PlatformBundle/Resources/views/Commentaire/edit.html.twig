@@ -15,10 +15,17 @@
 
 
   <p>
-    <a href="{{ path('knarf_platform_view', {'slug': commentaire.advert.slug}) }}" class="btn btn-default">
+      {% if commentaire.commentaire %}
+    <a href="{{ path('knarf_platform_view', {'slug': commentaire.commentaire.advert.slug}) }}#commentaire" class="btn btn-default">
       <i class="glyphicon glyphicon-chevron-left"></i>
-      Retour à l'article
+      Retour
     </a>
+      {% else %}
+    <a href="{{ path('knarf_platform_view', {'slug': commentaire.advert.slug}) }}#commentaire" class="btn btn-default">
+      <i class="glyphicon glyphicon-chevron-left"></i>
+      Retour
+    </a>
+      {% endif %}
   </p>
 
 {% endblock %}

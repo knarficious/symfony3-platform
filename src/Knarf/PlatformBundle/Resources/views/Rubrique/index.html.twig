@@ -1,52 +1,75 @@
 {# src/Knarf/PlatformBundle/Resources/views/Rubrique/index.html.twig #}
 
-
 {% extends "KnarfPlatformBundle::layout.html.twig" %}
 
 
 {% block title %}
 
-  Accueil - {{ parent() }}
+Accueil - {{ parent() }}
 
 {% endblock %}
 
 
 {% block knarfplatform_body %}
 
-    {{ parent() }}
-  <h2>Liste des rubriques</h2>
+    {{ parent() }}  
 
 
-  <ul>
+{% for rubrique in listRubriques %}   
 
-    {% for rubrique in listRubriques %}        
+    <section class="container-fluid" id="section-rubrique">                     
+            {% if rubrique.adverts is not empty %}
+                  
+            <div class="well">
+                <a href="{{ path('rubrique_ext', {'slug': rubrique.slug}) }}">{{ rubrique.intitule }}</a>
+            </div>
+                  
+            {% for entity in rubrique.adverts|slice(0, 6) %}
+                      
+            <article class="col-md-4">
 
-      <li>
+                <div class="thumbnail hvr-grow">
+                    <a href="{{ path('knarf_platform_view', {'slug': entity.slug}) }}">
+                    {% if entity.nomMedia is defined %}        
 
-        <a href="{{ path('rubrique_view', {'slug': rubrique.slug}) }}">
+                    {% if entity.nomMedia ends with 'jpg' or entity.nomMedia ends with 'png' or entity.nomMedia ends with 'gif' %}
 
-          {{ rubrique.intitule }}
-
-        </a>
-
-
-      </li>
+                    <img src="{{vich_uploader_asset(entity, 'mediaFile') }}" alt="{{ entity.nomMedia }}"/>
 
 
-    {% endfor %}
+                    {% elseif entity.nomMedia ends with 'mp3' %}
 
-  </ul>
-    
-    {% if is_granted('ROLE_ADMIN') %}
+                    <span class="glyphicon glyphicon-play">
+                    </span>
+
+                    {% elseif entity.nomMedia ends with 'mp4' %}
+
+                    <div class="embed-responsive embed-responsive-16by9">
+                    <video controls>
+                    <source src="{{ asset('uploads/medias/') }}{{ entity.nomMedia }}" type="video/mp4">
+                    </video>          
+                    </div>
+
+                    {% else %}                                    
+                    {% endif %}        
+
+                    {% endif %}
+
+                    <div class="caption">
+                        <b>{{ entity.title }}</b> par <em>{{ entity.user.username }}</em>, le {{ entity.date|date('d/m/Y') }}
+                    </div>
+                    </a>
+                </div>
+            </article>        
+                      
+            {% endfor %}
+                  
+            {% endif %}    
         
-        <a class="btn btn-primary btn-lg" href="{{ path('rubrique_ajout') }}">
-          Ajouter une rubrique »
-        </a>
+    </section>            
 
-    {% endif %}
+{% endfor %}
 
+{{ include('KnarfPlatformBundle:Map:map_view.html.twig') }}
 
-{% endblock %}
-
-
-
+{%  endblock %}

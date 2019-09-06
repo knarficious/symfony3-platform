@@ -1,0 +1,34 @@
+{# src/Knarf/PlatformBundle/Resources/views/Chat/chat.html.twig #}
+{% extends 'KnarfPlatformBundle::layout.html.twig' %}
+{% block title %}
+    Chat - {{ parent() }}
+{% endblock %}
+
+{% block knarfplatform_body %}
+
+    {{ parent() }}
+{#    <div class="container">
+        
+        <h1>WebSockets and Symfony</h1>
+        <div id="ws-username">{{app.user.username}}</div>
+        <div id="ws-content-receiver"></div>
+        <input type="text" id="ws-content-to-send" />
+        <button id="ws-send-content">Send</button>
+        <button id="disconnect">Disconnect</button>
+    </div>#}
+    <div class="container">
+        <h1>Public chat</h1>
+        <div id="ws-username">{{app.user.username}}</div>
+        <ul id="chat-list"></ul>
+        <hr>
+        <textarea id="form-message" placeholder="Your public message here"></textarea>
+        <input type="button" id="form-submit" value="Send message"/>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script type="text/javascript">
+      var wsUrl = '{{ ws_url }}';
+    </script>
+    <script type="text/javascript" src="{{ asset('bundles/knarfplatform/js/sf-websocket.js') }}"></script>
+{% endblock %}
+

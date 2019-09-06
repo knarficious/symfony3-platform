@@ -6,60 +6,71 @@
 
 {% block title %}
 
-  Accueil - {{ parent() }}
+Accueil - {{ parent() }}
 
 {% endblock %}
 
 
 {% block knarfplatform_body %}
 
-  {{ parent() }}
+    {{ parent() }}
+                  
+{% for entity in listAdverts %}
 
-    {% for advert in listAdverts %}
-        
-        {% if advert.published == 1 %}
+<article class="col-md-4">
 
-            <div class="col-md-4">
+    <div class="thumbnail hvr-grow">
+        <a href="{{ path('knarf_platform_view', {'slug': entity.slug}) }}">
+        {% if entity.nomMedia is defined %}        
 
-                <div class="thumbnail hvr-grow">
-                <a href="{{ path('knarf_platform_view', {'slug': advert.slug}) }}">
-                    {% if advert.nomMedia is defined %}        
+        {% if entity.nomMedia ends with 'jpg' or entity.nomMedia ends with 'png' or entity.nomMedia ends with 'gif' %}
 
-                        {% if advert.nomMedia ends with 'jpg' or advert.nomMedia ends with 'png' or advert.nomMedia ends with 'gif' %}
-
-                            <img src="{{vich_uploader_asset(advert, 'mediaFile') }}" alt="{{ advert.nomMedia }}"/>
+        <img src="{{vich_uploader_asset(entity, 'mediaFile') }}" alt="{{ entity.nomMedia }}"/>
 
 
-                        {% elseif advert.nomMedia ends with 'mp3' %}
+        {% elseif entity.nomMedia ends with 'mp3' %}
 
-                            <span class="glyphicon glyphicon-play">
-                            </span>
+        <span class="glyphicon glyphicon-play">
+        </span>
 
-                        {% elseif advert.nomMedia ends with 'mp4' %}
+        {% elseif entity.nomMedia ends with 'mp4' %}
 
-                            <div class="embed-responsive embed-responsive-16by9">
-                            <video controls>
-                            <source src="{{ asset('uploads/medias/') }}{{ advert.nomMedia }}" type="video/mp4">
-                            </video>          
-                            </div>
+        <div class="embed-responsive embed-responsive-16by9">
+        <video controls>
+        <source src="{{ asset('uploads/medias/') }}{{ entity.nomMedia }}" type="video/mp4">
+        </video>          
+        </div>
 
-                        {% else %}                                    
-                        {% endif %}        
+        {% else %}                                    
+        {% endif %}        
 
-                    {% endif %}
+        {% endif %}
 
-                    <div class="caption">
-                        <b>{{ advert.title }}</b> par <em>{{ advert.user.username }}</em>, le {{ advert.date|date('d/m/Y') }} dans la rubrique {{ advert.rubrique.intitule }}
-                    </div>
-                </a>
-                </div>
-            </div>        
+        <div class="caption">
+            <b>{{ entity.title }}</b> par <em>{{ entity.user.username }}</em>, le {{ entity.date|date('d/m/Y') }}
+        </div>
+        </a>
+    </div>
+</article>        
 
-        {% else %}
-           
-        {% endif %}  
+{% endfor %}
 
-    {% endfor %}
+    
+{#<section class="" id="third_section">
+    <div class="row">
+    {{ render(controller('KnarfPlatformBundle:Rubrique:view', {'slug': 'rubrique-1'})) }}
+    </div>
+</section>
+<section class="" id="fourth_section">
+    <div class="row">
+    {{ render(controller('KnarfPlatformBundle:Rubrique:view', {'slug': 'rubrique-2'})) }}
+    </div>
+</section>#}
+
+    {# display navigation #}
+<div class="navigation text-center">
+    {{ knp_pagination_render(listAdverts) }}
+</div>
 
 {% endblock %}
 
