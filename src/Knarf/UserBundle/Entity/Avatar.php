@@ -64,8 +64,8 @@ class Avatar
     /// ASSOCIATIONS ///
     
     /**
-     * @ORM\OneToOne(targetEntity="Knarf\UserBundle\Entity\User")
-     * @ORM\JoinColumn(name="user", nullable=true, onDelete="SET NULL")
+     * @ORM\OneToOne(targetEntity="Knarf\UserBundle\Entity\App_User")
+     * @ORM\JoinColumn(name="app_user", nullable=true, onDelete="SET NULL")
      */
     private $user;
     
@@ -88,7 +88,7 @@ class Avatar
     /**
      * Get user
      * 
-     * @return \Knarf\UserBundle\Entity\User
+     * @return \Knarf\UserBundle\Entity\App_User
      */
     public function getUser()
     {
@@ -98,11 +98,11 @@ class Avatar
     /**
      * Set user
      * 
-     * @param \Knarf\UserBundle\Entity\User
+     * @param \Knarf\UserBundle\Entity\App_User
      * 
      * @return Avatar 
      */
-    public function setUser(\Knarf\UserBundle\Entity\User $user){
+    public function setUser(\Knarf\UserBundle\Entity\App_User $user){
         
         $this->user = $user;
     }
