@@ -20,7 +20,6 @@ class AppKernel extends Kernel
             new Oneup\FlysystemBundle\OneupFlysystemBundle(),
             new Knarf\PlatformBundle\KnarfPlatformBundle(),
             new Knarf\UserBundle\KnarfUserBundle(),
-            new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new FOS\RestBundle\FOSRestBundle(),
             new Knarf\CoreBundle\KnarfCoreBundle(),
             new Knarf\ApiBundle\KnarfApiBundle(),
@@ -29,17 +28,20 @@ class AppKernel extends Kernel
             new FOS\CKEditorBundle\FOSCKEditorBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new FOS\OAuthServerBundle\FOSOAuthServerBundle(),
+            new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+            new FOS\CommentBundle\FOSCommentBundle(),
+            new CyberJaw\GoogleMapsBundle\GoogleMapsBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
             $bundles[] = new Symfony\Bundle\DebugBundle\DebugBundle();
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
+            $bundles[] = new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle();
 
             if ('dev' === $this->getEnvironment()) {
                 $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
                 $bundles[] = new Symfony\Bundle\WebServerBundle\WebServerBundle();
-                $bundles[] = new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle();
             }
         }
 
