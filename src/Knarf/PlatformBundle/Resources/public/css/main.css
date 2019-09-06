@@ -28,10 +28,14 @@ footer, header, hgroup, menu, nav, section {
   display: block; }
 
 body {
+    font-family: "Montserrat", sans-serif;
+    font-size: 18px;
+    font-weight: 400;
   line-height: 1; }
 
 ol, ul {
   list-style: none; }
+
 
 blockquote, q {
   quotes: none; }
@@ -48,13 +52,79 @@ table {
 strong {
   font-weight: bold; }
 
+.navbar-inverse, .navbar-collapse, .navbar-inverse .navbar-form {
+    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+    border: 0 none;
+}
+
+a {
+    transition: all 0.3s ease 0s;
+}
+.navbar-inverse .navbar-nav > li > a {
+    color: #e23813;
+    font-size: 12px;
+    padding: 15px 17px 15px 0;
+    text-transform: uppercase;
+}
+.navbar-inverse .navbar-brand {
+    color: #e23813;
+}
+.navbar-brand {
+    background: rgba(0, 0, 0, 0) url("/images/totoro_avatar.jpg") no-repeat scroll left center / 42px 42px;
+    font-size: 16px;
+    padding-left: 54px;
+    text-transform: uppercase;
+}
+.navbar-inverse .navbar-toggle {
+    border: 0 none;
+}
+@media screen and (max-width: 991px) {
+.navbar-inverse .navbar-toggle, .navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:active {
+    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+    border: 0 none;
+    margin: 10px -21px 0 0;
+}
+.navbar-inverse .navbar-toggle .icon-bar {
+    background: #e23813 none repeat scroll 0 0;
+}
+}
+ol, ul {
+    padding-left: 20px;
+}
+.dynamicheader {
+    background: transparent none repeat scroll 0 0;
+    padding: 0 30px;
+    transition: background 0.7s ease 0s;
+}
+.dynamicheader {
+    background: rgba(17, 22, 31, 0.9) none repeat scroll 0 0;
+}
+@media screen and (max-width: 768px) {
+body.home .dynamicheader, body.home .dynamicheader.shrink {
+    background: rgba(17, 22, 31, 0.9) none repeat scroll 0 0;
+}
+body.home .dynamicheader .navbar-brand {
+    display: none;
+}
+body.home .dynamicheader.shrink .navbar-brand {
+    display: block;
+}
+}
+
+#commentaires {
+    background: #DDD;
+}
+
+#commentaire.media-heading {
+    font-size-adjust: 0.5;
+}
+
 #commentaire:after {
     content: "";
     display: block;
     height: 1px;
     width: 20%;
     margin: 0px;
-    background: #f00;
 }
 
 #msg {
