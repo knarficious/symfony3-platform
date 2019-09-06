@@ -28,6 +28,8 @@ menu:
     changement_password: Password Changement
     choisir_langue: Choose a language
 
+rubrique:
+    intitule: Title
 user:
     connexion:
             new_password: New password

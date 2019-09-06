@@ -27,7 +27,8 @@ menu:
       inscription: Inscription
       changement_password: Changement de mot de passe
       choisir_langue: Choisir la langue    
-
+rubrique:
+    intitule: Intitulé
 user:
     connexion:
             new_password: Nouveau mot de passe
