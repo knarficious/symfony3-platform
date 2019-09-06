@@ -1,5 +1,10 @@
 ## YAML Template.
 ---
+rubrique_ext_index:
+    path: /
+    defaults:
+        _controller: KnarfPlatformBundle:Rubrique:extendedIndex
+
 rubrique_home:
     path:     /
     defaults: 
@@ -21,8 +26,15 @@ rubrique_delete:
         _controller: KnarfPlatformBundle:Rubrique:delete
     requirements:
         
+rubrique_ext:
+    path:   /{slug}
+    defaults:
+        _controller: KnarfPlatformBundle:Rubrique:extended
+
 rubrique_view:
     path:      /{slug}
     defaults:
         _controller: KnarfPlatformBundle:Rubrique:view
+        
+
 
