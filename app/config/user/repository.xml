@@ -14,7 +14,7 @@ and open the template in the editor.
         <service id="app.user_repository"
                  class="Knarf\UserBundle\Repository\UserRepository" lazy="true">
                 <factory service="doctrine.orm.default_entity_manager" method="getRepository" />
-                <argument>Knarf\UserBundle\Entity\User</argument>
+                <argument>Knarf\UserBundle\Entity\App_User</argument>
         </service>
     </services>
 </container>
