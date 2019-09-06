@@ -11,15 +11,15 @@
     {{ parent() }}
 
     <div class="well">
-        <h3> {{ user.username }}</h3>
+        <h3> {{ app.user.username }}</h3>
         <p>
             {% if is_granted('ROLE_ADMIN') %}
             Administrateur
             {% endif %}        
-        {% if  user.avatar is not empty %}
+        {% if  app.user.avatar is not empty %}
         <div class="">
             <a href="{{ path('edit_avatar') }}" data-toggle="tooltip" data-placement="right" title="Modifier votre avatar">
-            <img src="{{vich_uploader_asset(user.avatar, 'mediaFile') | imagine_filter('my_thumb') |replace({'http://':'https://'}) }}" alt="{{ user.avatar.nomMedia }}"/>
+            <img src="{{vich_uploader_asset(app.user.avatar, 'mediaFile') | imagine_filter('my_thumb') }}" alt="{{ app.user.avatar.nomMedia }}"/>
             </a>
         </div>
         {% else %}
@@ -29,16 +29,16 @@
         {% endif %}
         
         <p>
-        Vous êtes membre depuis le: {{ user.createdAt|date('d/m/Y') }}
+        Vous êtes membre depuis le: {{ app.user.createdAt|date('d/m/Y') }}
         <p>
 
-        Dernière connection le: {{ user.lastTimeConnect|date('d/m/Y H:i:s')}}
+        Dernière connection le: {{ app.user.lastTimeConnect|date('d/m/Y H:i:s')}}
 
 
     </div>
 
     <div class="well">
-        Votre adresse email: {{ user.email }}
+        Votre adresse email: {{ app.user.email }}
         <p>
         <p>
         {% if is_granted('ROLE_USER') %}
@@ -55,31 +55,30 @@
     {% if app.user.adverts is not empty%}
         <div class="well">
 
-            <h3>Vos annonces</h3>
-
-                {% for entity in app.user.adverts %}
-
-                    {% if entity.published == 1 %}
-                        Publiée:
-
-                    <ul class="nav nav-pills nav-stacked">
-                    <li>
-                        <a href="{{ path('knarf_platform_view', { 'slug': entity.slug }) }}">
-                            {{ entity.title }}</a>
-                    </li>
-                    </ul>
-                    {% else %}
-                        En attente:
-
-                    <ul class="nav nav-pills nav-stacked">    
-                    <li>
-                        <a href="{{ path('knarf_platform_view', { 'slug': entity.slug }) }}">
-                            {{ entity.title }}</a>
-                    </li>
-                    </ul>
-
-                    {% endif %} 
-                {% endfor %}
+            <h3>Vos annonces</h3>  
+                    
+                    <table style="width:100%">
+                        <tr>                            
+                            <th>Publiées</th>
+                            <th>Date</th>
+                            <th>En attente</th>
+                        </tr>
+                        {% for entity in app.user.adverts %}
+                            
+                        <tr>                            
+                            {% if entity.published == 1 %}
+                            <td><a href="{{ path('knarf_platform_view', { 'slug': entity.slug }) }}">
+                                    {{ entity.title }}</a></td>
+                            <td>{{ entity.date|date('d/m/Y') }}</td>
+                            {% else %}
+                            <td><a href="{{ path('knarf_platform_view', { 'slug': entity.slug }) }}">
+                                    {{ entity.title }}</a></td>
+                            {% endif %}
+                        </tr>
+                        {% endfor %}
+                            
+                    </table>
+                
         </div>
     {% else %}
     {% endif %}
@@ -98,26 +97,25 @@
             <h4>Vos commentaires</h4>
 
             <ul class="list-unstyled"> 
-            {% for commentaire in user.commentaires %}
+            {% for commentaire in app.user.commentaires %}
                 <li>
-                    {% if commentaire.advert.id is defined %}
-
-                        "{{ commentaire.contenu }}"
+                    {% if commentaire.id is defined %}
                         
-                        sur l'annonce: <a href="{{ path('knarf_platform_view', {'slug': commentaire.advert.slug}) }}">
-                        {{ commentaire.advert.title }}
+                        
+                        <a href="{{ commentaire.thread.permalink }}#fos_comment_{{ commentaire.id }}">
+                        "{{ commentaire.body }}"
                         </a>
 
 
                     {% endif %}
                     <hr>
 
-                    {%  if commentaire.commentaire.id is defined %}
+{#                    {%  if commentaire.commentaire.id is defined %}
                         {{ commentaire.contenu }}
-                        sur le <a href="{{ path('commentaire_view', {'id': commentaire.commentaire.id}) }}"> commentaire de:
+                        sur le <a href="{{ path('knarf_platform_view', {'slug': commentaire.commentaire.advert.slug}) }}#commentaire"> commentaire de:
                         <b>{{ commentaire.commentaire.user.username }}</b></a>
 
-                    {% endif %}
+                    {% endif %}#}
                     <hr>
                 </li>
             {% endfor %}
