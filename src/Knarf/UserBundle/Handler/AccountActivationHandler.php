@@ -41,6 +41,7 @@ class AccountActivationHandler
     public function handle(Request $request, array $options = null)
     {
        $token = $request->query->get('token');
+       $session = $request->getSession();
        
        if ($this->userManager->getUserByConfirmationToken($token))
        {
@@ -49,6 +50,7 @@ class AccountActivationHandler
        $this->userManager->clearConfirmationTokenUser($user);
        $this->userManager->setIsEnable($user);
       // $this->userManager->setIpAdress($user, $request->getClientIp());
+      $session->getFlashBag()->add('success', 'Votre compte est activé, vous pouvez vous connecter');
         
         return true;
        }
