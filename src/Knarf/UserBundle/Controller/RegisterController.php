@@ -70,7 +70,7 @@ class RegisterController extends Controller
         if ($this->getRegistrationAdminFormHandler()->handle($form, $request))
         {
             $email = $form->getData()->getEmail();
-            $this->addFlash('email', $email);
+            $this->addFlash('email', 'Un email a été expédié à l\'adresse: '.$email);
             return $this->redirectToRoute('info_activation');
         }
         
@@ -106,7 +106,7 @@ class RegisterController extends Controller
     {
         $token = $request->query->get("token");
         //on teste si le jeton existe en BDD
-        if(!$this->getDoctrine()->getManager()->getRepository('KnarfUserBundle:User')->getUserByToken($token))
+        if(!$this->getDoctrine()->getManager()->getRepository('KnarfUserBundle:App_User')->getUserByToken($token))
                 {
                    $this->addFlash('notice', 'Le lien a expiré ou votre compte est déjà activé');
                     return $this->redirectToRoute('knarf_platform_home');
@@ -114,7 +114,7 @@ class RegisterController extends Controller
         
         if ($this->getAccountActivationHandler()->handle($request))
         {
-           // $this->addFlash('notice', 'Votre compte est activé : Vous pouvez vous connecter');
+            //$this->addFlash('success', 'Votre compte est activé : Vous pouvez vous connecter');
             return $this->redirect($this->generateUrl('security_login_form'));
         }
     }

@@ -79,7 +79,7 @@ class SecurityController extends Controller
         $repository = $this
         ->getDoctrine()
         ->getManager()
-        ->getRepository('KnarfUserBundle:User');
+        ->getRepository('KnarfUserBundle:App_User');
 
         $user = $repository->findOneBy(array('slug' => $slug));
         
@@ -89,7 +89,7 @@ class SecurityController extends Controller
     
     public function indexAction()
     {
-        $repository = $this->getDoctrine()->getManager()->getRepository('KnarfUserBundle:User');
+        $repository = $this->getDoctrine()->getManager()->getRepository('KnarfUserBundle:App_User');
         $listUsers = $repository->findBy(array(), array('lastTimeConnect' => 'DESC'));
         
         return $this->render('KnarfUserBundle:Security:menu.html.twig', array(
@@ -124,7 +124,7 @@ class SecurityController extends Controller
     public function deleteProfileAction($slug, Request $request)
     {
         $em = $this->getDoctrine()->getManager();    
-        $user = $em->getRepository('KnarfUserBundle:User')->findOneBy(array('slug' => $slug));
+        $user = $em->getRepository('KnarfUserBundle:App_User')->findOneBy(array('slug' => $slug));
     
         if($this->getUser() === $user)
         {
