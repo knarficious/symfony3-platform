@@ -15,7 +15,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Knarf\CoreBundle\Entity\Manager\AbstractGenericManager;
 use Knarf\UserBundle\KnarfUserEvents;
-use Knarf\UserBundle\Entity\Interfaces\UserInterface;
+use Knarf\UserBundle\Entity\App_User;
 use Knarf\UserBundle\Event\UserDataEvent;
 use Knarf\UserBundle\Repository\UserRepository;
 
@@ -66,13 +66,13 @@ class UserManager extends AbstractGenericManager implements UserManagerInterface
         $this->repository = $userRepository;
     }
     
-    public function clearConfirmationTokenUser(UserInterface $user) 
+    public function clearConfirmationTokenUser(App_User $user) 
     {
         $user->setConfirmationToken(null);
         $user->setIsAlreadyRequested(false);
     }
 
-    public function createUser(UserInterface $user, $adresseIp) 
+    public function createUser(App_User $user, $adresseIp) 
     {
         $user->setCgvRead(false);
         $user->setRoles(['ROLE_USER']);
@@ -94,7 +94,7 @@ class UserManager extends AbstractGenericManager implements UserManagerInterface
         return $this->repository->getUserByIdentifier($identifier);
     }
 
-    public function isPasswordValid(UserInterface $user, $plainPassword)
+    public function isPasswordValid(App_User $user, $plainPassword)
     {
         return $this->encoder->isPasswordValid($user, $plainPassword);
     }
@@ -106,27 +106,27 @@ class UserManager extends AbstractGenericManager implements UserManagerInterface
         );
     }
 
-    public function setLastConnexion(UserInterface $user, \Datetime $lastConnexion) 
+    public function setLastConnexion(App_User $user, \Datetime $lastConnexion) 
     {
         $user->setLastTimeConnect($lastConnexion);
         
     }
 
-    public function updateConfirmationTokenUser(UserInterface $user, $token)
+    public function updateConfirmationTokenUser(App_User $user, $token)
     {
         $user->setConfirmationToken($token);
         $user->setIsAlreadyRequested(true);
         $this->save($user, false, true);
     }
 
-    public function updateCredentials(UserInterface $user, $newPassword) 
+    public function updateCredentials(App_User $user, $newPassword) 
     {
         $user->setPlainPassword($newPassword);
         $user->encodePassword($this->encoderFactory->getEncoder($user));
         $this->save($user, false, true);
     }
 
-    public function setIsEnable(UserInterface $user)
+    public function setIsEnable(App_User $user)
     {
         $user->setIsActive(true);
         $this->save($user, true, true);
@@ -137,22 +137,22 @@ class UserManager extends AbstractGenericManager implements UserManagerInterface
         return 'UserManager';
     }
     
-    public function updateUserEmail(UserInterface $user, $email) {
+    public function updateUserEmail(App_User $user, $email) {
         $user->setEmail($email);
         $this->save($user, false, true);
     }
 
-    public function updateUserAvatar(UserInterface $user, $avatar) {
+    public function updateUserAvatar(App_User $user, $avatar) {
         $user->setUpdatedAt(new \DateTime('now'));
         $user->setAvatar($avatar);
         $this->save($user, false, true);        
     }
 
-    public function setIp(UserInterface $user, $adresseIp) {
+    public function setIp(App_User $user, $adresseIp) {
         $user->setAdresseIp($adresseIp);
     }
 
-    public function createAdmin(UserInterface $admin, $adresseIp)
+    public function createAdmin(App_User $admin, $adresseIp)
     {
         $admin->setCgvRead(false);
         $admin->setRoles(['ROLE_ADMIN']);

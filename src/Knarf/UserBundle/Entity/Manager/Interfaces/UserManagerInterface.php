@@ -9,7 +9,7 @@
 namespace Knarf\UserBundle\Entity\Manager\Interfaces;
 
 use Knarf\CoreBundle\Entity\Manager\Interfaces\GenericManagerInterface;
-use Knarf\UserBundle\Entity\Interfaces\UserInterface;
+use Knarf\UserBundle\Entity\App_User;
 
 /**
  *
@@ -18,32 +18,32 @@ use Knarf\UserBundle\Entity\Interfaces\UserInterface;
 interface UserManagerInterface extends GenericManagerInterface 
 {
    /**
-     * @param UserInterface $user
+     * @param App_User $user
      *
      * @return void
      */
-    public function createUser(UserInterface $user, $adresseIp);
+    public function createUser(App_User $user, $adresseIp);
     
     /**
-     * @param UserInterface $admin
+     * @param App_User $admin
      * 
      * @return void
      */
-    public function createAdmin(UserInterface $admin, $adresseIp);
+    public function createAdmin(App_User $admin, $adresseIp);
     
     /**
-     * @param UserInterface $user
+     * @param App_User $user
      * @param $newPassword
      * @return mixed
      */
-    public function updateCredentials(UserInterface $user, $newPassword);
+    public function updateCredentials(App_User $user, $newPassword);
     
     /**
-     * @param UserInterface $user
+     * @param App_User $user
      * @param $plainPassword
      * @return mixed
      */
-    public function isPasswordValid(UserInterface $user, $plainPassword);
+    public function isPasswordValid(App_User $user, $plainPassword);
     
     /**
      * @param $identifier
@@ -58,11 +58,11 @@ interface UserManagerInterface extends GenericManagerInterface
     public function sendRequestPassword($user);
     
     /**
-     * @param UserInterface $user
+     * @param App_User $user
      * @param $token
      * @return mixed
      */
-    public function updateConfirmationTokenUser(UserInterface $user, $token);
+    public function updateConfirmationTokenUser(App_User $user, $token);
     
     /**
      * @param $token
@@ -71,41 +71,41 @@ interface UserManagerInterface extends GenericManagerInterface
     public function getUserByConfirmationToken($token);
     
     /**
-     * @param UserInterface $user
+     * @param App_User $user
      * @return mixed
      */
-    public function clearConfirmationTokenUser(UserInterface $user);
+    public function clearConfirmationTokenUser(App_User $user);
     
     /**
-     * @param UserInterface $user
+     * @param App_User $user
      * @param \Datetime $lastConnexion
      */
-    public function setLastConnexion(UserInterface $user, \Datetime $lastConnexion);
+    public function setLastConnexion(App_User $user, \Datetime $lastConnexion);
     
     /**
-     * @param UserInterface $user
+     * @param App_User $user
      * @return bool
      */
-    public function setIsEnable(UserInterface $user);
+    public function setIsEnable(App_User $user);
     
     /**
-     * @param UserInterface $user
+     * @param App_User $user
      * @param $email
      * @return mixed
      */
-    public function updateUserEmail(UserInterface $user, $email);
+    public function updateUserEmail(App_User $user, $email);
     
     /**
-     * @param UserInterface $user
+     * @param App_User $user
      * @param $avatar
      * @return mixed
      */
-    public function updateUserAvatar(UserInterface $user, $avatar);
+    public function updateUserAvatar(App_User $user, $avatar);
     
     /**
-     * @param UserInterface $user
+     * @param App_User $user
      * @param $adresseIp
      */
-    public function setIp(UserInterface $user, $adresseIp);
+    public function setIp(App_User $user, $adresseIp);
 
 }
