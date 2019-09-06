@@ -4,6 +4,8 @@ imports:
     - { resource: services.yml }
     - { resource: validator.yml }
     - { resource: mail_blacklist.yml }
+    - { resource: repository.yml }
+    - { resource: manager.yml }
     - { resource: "@KnarfCoreBundle/Resources/config/services.yml" }
     - { resource: "@KnarfCoreBundle/Resources/config/validator.yml" }
     - { resource: user/authentication.yml }
@@ -53,25 +55,34 @@ twig:
         - 'bootstrap_3_layout.html.twig'        
         - 'VichUploaderBundle:Form:fields.html.twig'
         - '@FOSCKEditor/Form/ckeditor_widget.html.twig'
+        - 'GoogleMapsBundle:Form:google_maps_layout.html.twig'
     globals:
         website: franckruer.fr    
 
 # Doctrine Configuration
 doctrine:
     dbal:
-        driver: pdo_mysql
-        host: '%database_host%'
-        port: '%database_port%'
-        dbname: '%database_name%'
-        user: '%database_user%'
-        password: '%database_password%'
-        charset: UTF8
-        # if using pdo_sqlite as your database driver:
-        #   1. add the path in parameters.yml
-        #     e.g. database_path: "%kernel.project_dir%/var/data/data.sqlite"
-        #   2. Uncomment database_path in parameters.yml.dist
-        #   3. Uncomment next line:
-        #path: '%database_path%'
+        default_connection: default
+        connections:
+           #Mysql
+           default:
+                driver:   pdo_mysql
+                host:     "%database_host%"
+                port:     "%database_port%"
+                dbname:   "%database_name%"
+                user:     "%database_user%"
+                password: "%database_password%"
+                charset:  UTF8
+           #Postgresql
+           pgsql:
+                driver:   pdo_pgsql
+                host:     "%psql_database_host%"
+                port:     "%psql_database_port%"
+                dbname:   "%psql_database_name%"
+                user:     "%psql_database_user%"
+                password: "%psql_database_password%"
+                charset:  UTF8
+
 
     orm:
         auto_generate_proxy_classes: '%kernel.debug%'
@@ -203,7 +214,7 @@ fos_oauth_server:
     refresh_token_class: Knarf\ApiBundle\Entity\RefreshToken
     auth_code_class:     Knarf\ApiBundle\Entity\AuthCode
     service:
-        user_provider: database_users
+        user_provider: security.user.provider.concrete.database_users
         options:
                 supported_scopes: user   
 
@@ -213,6 +224,9 @@ stof_doctrine_extensions:
         default:
             timestampable: true
             sluggable: true
+        pgsql:
+            timestampable: true
+            sluggable: true
             
 fos_ck_editor:
     configs:
@@ -220,7 +234,7 @@ fos_ck_editor:
             jquery: true
             require_js: true
             enterMode: CKEDITOR.ENTER_BR
-            height: '900px'
+            height: '400px'
             language: '%locale%'
             #toolbar: standard
             #filebrowserBrowseRoute: elfinder
@@ -245,4 +259,48 @@ nelmio_api_doc:
             type: bearer
 
             custom_endpoint: false
-        enabled:  true             
+        enabled:  true
+        
+knp_paginator:
+    template:
+        pagination: 'KnpPaginatorBundle:Pagination:twitter_bootstrap_v3_pagination.html.twig'
+        sortable: '@KnpPaginator/Pagination/sortable_link.html.twig'
+        filtration: '@KnpPaginator/Pagination/filtration.html.twig'
+
+fos_comment:
+    db_driver: orm
+    class:
+        model:
+            comment: Knarf\PlatformBundle\Entity\Commentaire
+            thread: Knarf\PlatformBundle\Entity\Thread
+    acl: true
+    service:
+        acl:
+            thread:  fos_comment.acl.thread.roles
+            comment: knarf.platformbundle.acl.comment.roles
+            vote:    fos_comment.acl.vote.roles
+#        manager:
+#            thread:  fos_comment.manager.thread.acl
+#            comment: fos_comment.manager.comment.acl
+#            vote:    fos_comment.manager.vote.acl
+    acl_roles:
+        comment:
+            create: ROLE_USER
+            view: IS_AUTHENTICATED_ANONYMOUSLY
+            edit: ROLE_ADMIN
+            delete: ROLE_ADMIN
+        thread:
+            create: ROLE_USER
+            view: IS_AUTHENTICATED_ANONYMOUSLY
+            edit: ROLE_ADMIN
+            delete: ROLE_ADMIN
+        vote:
+            create: ROLE_USER
+            view: IS_AUTHENTICATED_ANONYMOUSLY
+            edit: ROLE_ADMIN
+            delete: ROLE_ADMIN
+            
+google_maps:
+    api_key: 'AIzaSyA2K-avkDmpftUPLab9r9oqBca8vjM1-i4'
+    
+    
