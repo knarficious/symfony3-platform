@@ -11,7 +11,7 @@ namespace Knarf\UserBundle\Entity\Registration;
 use Symfony\Component\Validator\Constraints as Assert;
 use Knarf\CoreBundle\Validator\Constraints as CoreAssert;
 use Knarf\UserBundle\Validator\Constraints as KnarfAssert;
-use Knarf\UserBundle\Entity\User;
+use Knarf\UserBundle\Entity\App_User;
 
 /**
  * Description of Registration
@@ -23,7 +23,7 @@ class Registration
     /**
      * @Assert\NotBlank()
      * @CoreAssert\UniqueAttribute(
-     *      repository="Knarf\UserBundle\Entity\User",
+     *      repository="Knarf\UserBundle\Entity\App_User",
      *      property="username"
      * )
      */
@@ -39,7 +39,7 @@ class Registration
      * @Assert\NotBlank(message = "registration.email.notblank")
      * @Assert\Email()
      * @CoreAssert\UniqueAttribute(
-     *      repository="Knarf\UserBundle\Entity\User",
+     *      repository="Knarf\UserBundle\Entity\App_User",
      *      property="email"
      * )
      * @KnarfAssert\EmailBlackList()
@@ -95,11 +95,11 @@ class Registration
     }
     
     /**
-     * @return User
+     * @return App_User
      */
     public function getUser()
     {
-        $user = new User();
+        $user = new App_User();
         $user->setUsername($this->username);
         $user->setEmail($this->email);
         $user->setPlainPassword($this->password);
