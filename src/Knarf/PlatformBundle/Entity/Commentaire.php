@@ -3,6 +3,10 @@
 namespace Knarf\PlatformBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use FOS\CommentBundle\Entity\Comment as BaseComment;
+use FOS\CommentBundle\Model\SignedCommentInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Knarf\UserBundle\Entity\App_User;
 
 /**
  * Commentaire
@@ -10,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="commentaire")
  * @ORM\Entity(repositoryClass="Knarf\PlatformBundle\Repository\CommentaireRepository")
  */
-class Commentaire
+class Commentaire extends BaseComment implements SignedCommentInterface
 {
     /**
      * @var int
@@ -19,58 +23,57 @@ class Commentaire
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="contenu", type="text")
      */
-    private $contenu;
+    protected $contenu;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="datePublication", type="datetime")
+     * @ORM\Column(name="date_publication", type="datetime")
      */
-    private $datePublication;
+    protected $datePublication;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="dateMiseAJour", type="datetime")
+     * @ORM\Column(name="date_mise_ajour", type="datetime")
      */
-    private $dateMiseAJour;
+    protected $dateMiseAJour;
     
     //  === ASSOCIATIONS ===
     /**
      * @ORM\ManyToOne(targetEntity="Advert", inversedBy="commentaires")
      * @ORM\JoinColumn(name="advert_id", referencedColumnName="id")
      */
-    private $advert;
+    protected $advert;
     
     /**
-     * @ORM\ManyToOne(targetEntity="Knarf\UserBundle\Entity\User", inversedBy="commentaires")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Knarf\UserBundle\Entity\App_User", inversedBy="commentaires")
+     * @ORM\JoinColumn(name="app_user_id", referencedColumnName="id")
+     * @var App_User
      */
-    private $user;
+    protected $user;
     
     /**
-     * @ORM\ManyToOne(targetEntity="Commentaire", inversedBy="commentaires")
-     * @ORM\JoinColumn(name="commentaire_id", referencedColumnName="id")
+     * Thread of this comment
+     *
+     * @var Thread
+     * @ORM\ManyToOne(targetEntity="Knarf\PlatformBundle\Entity\Thread")     * 
+     * @ORM\JoinColumn(name="thread_id", referencedColumnName="id")
      */
-    private $commentaire;
+    protected $thread;
     
-    /**
-     * @ORM\OneToMany(targetEntity="Commentaire", mappedBy="commentaire", cascade={"persist", "remove"})
-     */
-    private $commentaires;
-    
-    public function __construct() {
-        $this->datePublication = new \DateTime();
-        $this->dateMiseAJour = new \DateTime();
-        $this->commentaires = new \Doctrine\Common\Collections\ArrayCollection();
-    }
+//    public function __construct() {
+//        $this->datePublication = new \DateTime();
+//        $this->dateMiseAJour = new \DateTime();
+//       // $this->commentaires = new \Doctrine\Common\Collections\ArrayCollection();
+//    }
 
 
     /**
@@ -182,11 +185,11 @@ class Commentaire
     /**
      * Set user
      *
-     * @param \Knarf\UserBundle\Entity\User $user
+     * @param \Knarf\UserBundle\Entity\App_User $user
      *
      * @return Commentaire
      */
-    public function setUser(\Knarf\UserBundle\Entity\User $user = null)
+    public function setUser(\Knarf\UserBundle\Entity\App_User $user = null)
     {
         $this->user = $user;
 
@@ -260,4 +263,33 @@ class Commentaire
     {
         return $this->commentaires;
     }
+
+
+
+    public function getAuthor() 
+    {
+        return $this->user;
+    }
+
+    public function setAuthor(UserInterface $author) 
+    {
+        $this->user = $author;
+    }
+    
+
+    public function getAuthorName()
+    {
+        if (null === $this->getAuthor()) {
+            return 'Anonymous';
+        }
+
+        return $this->getAuthor()->getUsername();
+    }
+    
+    public function getThread() 
+    {
+        return $this->thread;
+    }
+    
+
 }

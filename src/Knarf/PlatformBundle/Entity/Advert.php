@@ -37,7 +37,7 @@ class Advert
     /**
      * @var \DateTime
      * 
-     * @ORM\Column(name="updateAt", type="datetime")
+     * @ORM\Column(name="update_at", type="datetime")
      */
     private $updateAt;
 
@@ -98,8 +98,8 @@ class Advert
     //  === ASSOCIATIONS ===
     
     /**
-     * @ORM\ManyToOne(targetEntity="Knarf\UserBundle\Entity\User", inversedBy="adverts")
-     * @ORM\JoinColumn(name="user", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Knarf\UserBundle\Entity\App_User", inversedBy="adverts")
+     * @ORM\JoinColumn(name="app_user", referencedColumnName="id")
      */
     private $user;
     
@@ -227,11 +227,11 @@ class Advert
     /**
      * Set user
      *
-     * @param \Knarf\UserBundle\Entity\User $user
+     * @param \Knarf\UserBundle\Entity\App_User $user
      *
      * @return Advert
      */
-    public function setUser(\Knarf\UserBundle\Entity\User $user = null)
+    public function setUser(\Knarf\UserBundle\Entity\App_User $user = null)
     {
         $this->user = $user;
 
@@ -241,7 +241,7 @@ class Advert
     /**
      * Get user
      *
-     * @return \Knarf\UserBundle\Entity\User
+     * @return \Knarf\UserBundle\Entity\App_User
      */
     public function getUser()
     {

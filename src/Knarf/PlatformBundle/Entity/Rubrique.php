@@ -48,7 +48,7 @@ class Rubrique
     /**
      * @var \DateTime
      * 
-     * @ORM\Column(name="updateAt", type="datetime")
+     * @ORM\Column(name="update_at", type="datetime")
      */
     private $updateAt;
     

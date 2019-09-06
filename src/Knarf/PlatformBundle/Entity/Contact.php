@@ -24,42 +24,42 @@ class Contact
     /**
      * @var string
      *
-     * @ORM\Column(name="Nom", type="string", length=255)
+     * @ORM\Column(name="nom", type="string", length=255)
      */
     private $nom;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="Prénom", type="string", length=255)
+     * @ORM\Column(name="prenom", type="string", length=255)
      */
     private $prenom;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="Courriel", type="string", length=255)
+     * @ORM\Column(name="courriel", type="string", length=255)
      */
     private $courriel;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="nomFichier", type="string", length=255, nullable=true)
+     * @ORM\Column(name="nom_fichier", type="string", length=255, nullable=true)
      */
     private $nomFichier;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="Objet", type="string", length=255)
+     * @ORM\Column(name="objet", type="string", length=255)
      */
     private $objet;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="Message", type="text")
+     * @ORM\Column(name="message", type="text")
      */
     private $message;
 
