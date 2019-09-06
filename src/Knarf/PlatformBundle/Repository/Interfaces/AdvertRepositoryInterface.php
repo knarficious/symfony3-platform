@@ -16,7 +16,7 @@ interface AdvertRepositoryInterface
 {
     /**
      * @param $requestVal
-     * @return array of movies
+     * @return array of adverts
      */
     public function getResultFilterCount($requestVal);
     
