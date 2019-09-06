@@ -30,7 +30,7 @@ class Profile
      * @Assert\NotBlank
      * @Assert\Email()
      * @CoreAssert\UniqueAttribute(
-     *      repository="Knarf\UserBundle\Entity\User",
+     *      repository="Knarf\UserBundle\Entity\App_User",
      *      property="email"
      * )
      * @KnarfAssert\EmailBlackList()
