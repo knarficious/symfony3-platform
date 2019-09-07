@@ -96,7 +96,9 @@
   </div>
 </nav>
 
-{% include 'KnarfPlatformBundle:Clock:view.html.twig' %}
+{# horloges #}
+
+{{ include('KnarfPlatformBundle:Clock:view.html.twig') }}
 
   <div class="container-fluid">
       
@@ -138,11 +140,9 @@
 
     </div>
     
-    <div class="rightcolumn">
+    <div class="rightcolumn">        
         
-        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-           {{ render(controller("KnarfUserBundle:Security:index")) }}
-        {% endif %}
+           {{ render(controller("KnarfUserBundle:Security:index")) }}        
         
     </div>       
  
@@ -178,7 +178,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.3.0/moment-timezone-utils.min.js"></script>
 {#    <script type="text/javascript" src="{{ asset('bundles/knarfplatform/js/moment.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/knarfplatform/js/moment-timezone-with-data.js') }}"></script>#}
-    <script type="text/javascript" src="{{ asset('bundles/knarfplatform/js/clock.js') }}"></script
+    <script type="text/javascript" src="{{ asset('bundles/knarfplatform/js/clock.js') }}"></script>
 {#    <script>        
         $(document).ready(function(){
         $(document.getElementById("commentaire")).click(function(){
