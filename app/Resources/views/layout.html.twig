@@ -27,10 +27,10 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>                        
-      </button>
-      <a class="navbar-brand" href="{{ path('knarf_platform_home') }}">Knarf Media</a>
+      </button>        
+      <a class="navbar-brand" href="{{ path('knarf_platform_home') }}">Knarf Media</a>          
     </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
+      <div class="collapse navbar-collapse" id="myNavbar">         
       <ul class="nav navbar-nav navbar-right">        
 {#        <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="">Annonces<span class="caret"></span></a>
@@ -38,6 +38,7 @@
              {{ render(controller("KnarfPlatformBundle:Advert:menu")) }}
           </ul>
         </li>#}
+        <li><a href="#toggle-clocks" onclick="clocksToggle()">Horloges</a></li>
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="">Rubriques<span class="caret"></span></a>
             <ul class="dropdown-menu">
@@ -91,79 +92,57 @@
                 </div>
             </div>
         </form> #}
- 
+    
     </div>
   </div>
 </nav>
 
-{# horloges #}
+{# toggle clocks #}
+  
+  {{ include('KnarfPlatformBundle:Clock:view.html.twig') }}
+  
 
-{{ include('KnarfPlatformBundle:Clock:view.html.twig') }}
-
-  <div class="container-fluid">
+{# body layout #}
+ <div class="container-fluid">
       
-    <div class="row">
+    <div class="row">        
         <div class="col-sm-12">
                 {% include ('::flash-messages.html.twig') %}
         </div>
     </div>
   
-
-{#        {% set flashbag_notices = app.session.flashbag.get('notice') %}
-        {% if flashbag_notices is not empty %}
-
-            
-            <div class="glyphicon glyphicon-remove" id="msg" >
-                {% for notice in flashbag_notices %}
-                    {{ notice }}
-                {% endfor %}
-            </div>
-            
-
-        {% endif %}#}
-
-  
-  <div class="row">
-      
-    
+  <div class="row">    
         
-    <div class="leftcolumn">
-        
-        
-
+    <div class="leftcolumn"> 
         
         {% block body %}
-            
-
-
-        {% endblock %}        
+        {% endblock %}      
 
     </div>
     
-    <div class="rightcolumn">        
+    <div class="rightcolumn">   
         
            {{ render(controller("KnarfUserBundle:Security:index")) }}        
         
-    </div>       
- 
+    </div>
        
   </div>
 </div>   
 <hr>
-    <div class="footer">
-        <nav class="navbar">
-        <div class="container-fluid">
-            <div class="nav navbar-nav navbar-left">
-          <p>© knarficious {{ 'now'|date('Y') }}</p>
-            </div>
-          <ul class="nav navbar-nav navbar-right">          
-            <li>
-                <a href="{{ path('nelmio_api_doc_index') }}">API Documentation</a>
-            </li>
-          </ul>
+<div class="footer">
+    <nav class="navbar">
+    <div class="container-fluid">
+        <div class="nav navbar-nav navbar-left">
+      <p>© knarficious {{ 'now'|date('Y') }}</p>
         </div>
-        </nav>
+      <ul class="nav navbar-nav navbar-right">          
+        <li>
+            <a href="{{ path('nelmio_api_doc_index') }}">API Documentation</a>
+        </li>
+      </ul>
     </div>
+    </nav>
+</div>
    
   <div id="back-to-top" style="display:bloc;">
       <a href="#" class="btn btn-primary btn-lg back-to-top" role="button" title="Revenir en haut de la page" data-toggle="tooltip" data-placement="left"><span class="glyphicon glyphicon-chevron-up"></span></a>
@@ -179,13 +158,16 @@
 {#    <script type="text/javascript" src="{{ asset('bundles/knarfplatform/js/moment.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/knarfplatform/js/moment-timezone-with-data.js') }}"></script>#}
     <script type="text/javascript" src="{{ asset('bundles/knarfplatform/js/clock.js') }}"></script>
-{#    <script>        
-        $(document).ready(function(){
-        $(document.getElementById("commentaire")).click(function(){
-        $(this).hide();
-        });
-        });
-    </script>#}
+    <script>
+        function clocksToggle() {
+          var x = document.getElementById("toggle-clocks");
+          if (x.style.display === "none") {
+            x.style.display = "flex";
+          } else {
+            x.style.display = "none";
+          }
+        }
+    </script>
     <script>
         $(document).ready(function(){
         $(window).scroll(function () {

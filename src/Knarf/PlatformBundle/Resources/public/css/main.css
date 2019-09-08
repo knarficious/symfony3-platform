@@ -190,3 +190,11 @@ ul {
       background-color: #e0e0eb;
   }
 }
+
+#toggle-clocks {
+	display: none;
+}
+
+#toggle-clocks.is-visible {
+	display: flex;
+}
