@@ -7,12 +7,12 @@
 
 Accueil - {{ parent() }}
 
-{% endblock %}
+{% endblock %} 
 
 
-{% block knarfplatform_body %}
+{% block knarfplatform_body %}    
 
-    {{ parent() }}  
+    {{ parent() }}   
 
 
 {% for rubrique in listRubriques %}   
@@ -24,7 +24,7 @@ Accueil - {{ parent() }}
                 <a href="{{ path('rubrique_ext', {'slug': rubrique.slug}) }}">{{ rubrique.intitule }}</a>
             </div>
                   
-            {% for entity in rubrique.adverts|slice(0, 6) %}
+            {% for entity in rubrique.adverts|slice(0, 3) %}
                       
             <article class="col-md-4">
 
@@ -73,3 +73,8 @@ Accueil - {{ parent() }}
 {{ include('KnarfPlatformBundle:Map:map_view.html.twig') }}
 
 {%  endblock %}
+
+{% block next_body %}
+    
+    {{ include('KnarfPlatformBundle:Clock:view.html.twig') }}
+{% endblock %}

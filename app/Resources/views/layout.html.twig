@@ -31,14 +31,8 @@
       <a class="navbar-brand" href="{{ path('knarf_platform_home') }}">Knarf Media</a>          
     </div>
       <div class="collapse navbar-collapse" id="myNavbar">         
-      <ul class="nav navbar-nav navbar-right">        
-{#        <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="">Annonces<span class="caret"></span></a>
-          <ul class="dropdown-menu">
-             {{ render(controller("KnarfPlatformBundle:Advert:menu")) }}
-          </ul>
-        </li>#}
-        <li><a href="#toggle-clocks" onclick="clocksToggle()">Horloges</a></li>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#toggle-clocks" data-toggle="modal" data-target="#clocksModal">Horloges</a></li>
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="">Rubriques<span class="caret"></span></a>
             <ul class="dropdown-menu">
@@ -97,13 +91,12 @@
   </div>
 </nav>
 
-{# toggle clocks #}
-  
-  {{ include('KnarfPlatformBundle:Clock:view.html.twig') }}
-  
+{# modal clocks #}
+{{ include('KnarfPlatformBundle:Clock:modal_view.html.twig') }}
+            <!-- Modal -->
 
 {# body layout #}
- <div class="container-fluid">
+<div class="container-fluid">
       
     <div class="row">        
         <div class="col-sm-12">
@@ -111,22 +104,28 @@
         </div>
     </div>
   
-  <div class="row">    
+    <div class="row">    
         
-    <div class="leftcolumn"> 
-        
-        {% block body %}
-        {% endblock %}      
+        <div class="leftcolumn"> 
+
+            {% block left_body %}
+            {% endblock %}      
+
+        </div>
+
+        <div class="rightcolumn">   
+
+               {{ render(controller("KnarfUserBundle:Security:index")) }}        
+
+        </div>
+       
+    </div>
+    <div class="row">        
+
+            {% block next_body %}
+            {% endblock %}
 
     </div>
-    
-    <div class="rightcolumn">   
-        
-           {{ render(controller("KnarfUserBundle:Security:index")) }}        
-        
-    </div>
-       
-  </div>
 </div>   
 <hr>
 <div class="footer">
@@ -158,16 +157,7 @@
 {#    <script type="text/javascript" src="{{ asset('bundles/knarfplatform/js/moment.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/knarfplatform/js/moment-timezone-with-data.js') }}"></script>#}
     <script type="text/javascript" src="{{ asset('bundles/knarfplatform/js/clock.js') }}"></script>
-    <script>
-        function clocksToggle() {
-          var x = document.getElementById("toggle-clocks");
-          if (x.style.display === "none") {
-            x.style.display = "flex";
-          } else {
-            x.style.display = "none";
-          }
-        }
-    </script>
+
     <script>
         $(document).ready(function(){
         $(window).scroll(function () {
