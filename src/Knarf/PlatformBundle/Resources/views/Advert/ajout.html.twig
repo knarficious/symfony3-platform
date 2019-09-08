@@ -26,3 +26,10 @@
 
 
 {% endblock %}
+
+{% block javascripts %}
+    
+    {{ parent() }}
+    
+    <script type="text/javascript" src="{{ asset('bundles/fosckeditor/ckeditor-responsive-images.js') }}"></script>
+{% endblock %}    
