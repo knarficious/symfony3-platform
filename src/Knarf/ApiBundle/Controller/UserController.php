@@ -51,9 +51,7 @@ class UserController extends Controller
         $form = $this->createForm(ApiRegistrationType::class, $user);
         
         if ($this->getRegistrationFormHandler()->handle($form, $request))
-        {
-            //$email = $form->getData()->getEmail();
-            //notifier de l'envoi d'un email
+        {   
             return $user;
         }
         else {
@@ -234,7 +232,7 @@ class UserController extends Controller
      */
     protected function getRegistrationFormHandler()
     {
-        return $this->get('api.user_registration.handler');
+        return $this->get('app.user_registration.handler');
     }
     
     /**

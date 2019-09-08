@@ -16,6 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @author franck
  * @ORM\Entity
+ * @ORM\Table(name="client")
  */
 class Client extends BaseClient
 {

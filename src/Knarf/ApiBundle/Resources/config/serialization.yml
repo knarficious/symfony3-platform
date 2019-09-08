@@ -1,6 +1,6 @@
 # src/Knarf/ApiBundle/Resources/config/serialization.yml
 
-Knarf\UserBundle\Entity\User:
+Knarf\UserBundle\Entity\App_User:
     attributes:
         id:
             groups: ['user', 'advert', 'commentaire']

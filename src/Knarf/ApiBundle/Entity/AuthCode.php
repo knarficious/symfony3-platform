@@ -17,6 +17,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @author franck
  * @ORM\Entity
+ * @ORM\Table(name="`auth_code")
  */
 class AuthCode extends BaseAuthCode
 {
@@ -34,7 +35,7 @@ class AuthCode extends BaseAuthCode
     protected $client;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Knarf\UserBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="Knarf\UserBundle\Entity\App_User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $user;

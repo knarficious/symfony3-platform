@@ -17,6 +17,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @author franck
  * @ORM\Entity
+ * @ORM\Table(name="refresh_token")
  */
 class RefreshToken extends BaseRefreshToken
 {
@@ -34,7 +35,7 @@ class RefreshToken extends BaseRefreshToken
     protected $client;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Knarf\UserBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="Knarf\UserBundle\Entity\App_User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $user;

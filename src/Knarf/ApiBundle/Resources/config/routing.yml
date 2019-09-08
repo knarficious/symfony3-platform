@@ -1,16 +1,94 @@
 knarf_api_homepage:
     path:     /
-    defaults: { _controller: KnarfApiBundle:Default:index }
+    defaults: { _controller: KnarfApiBundle:ApiAdvert:index }
     
 knarf_api_users:
     path:   /users
-    defaults: { _controller: KnarfApiBundle:Default:getUsers }
+    defaults: { _controller: KnarfApiBundle:User:getUsers }
+    methods: GET
     
 knarf_api_adverts:
     path: /adverts
-    defaults: { _controller: KnarfApiBundle:Default:getAdverts }
+    defaults: 
+        _controller: KnarfApiBundle:ApiAdvert:getAdverts
+    methods: GET
     
 knarf_api_adverts_user:
-    path: /users/{id}/adverts
+    path: /user/{slug}/adverts
     defaults: 
-        _controller: KnarfApiBundle:Default:getAdvertsByUsers
+        _controller: KnarfApiBundle:ApiAdvert:getAdvertsByUser
+    methods: GET    
+        
+#knarf_api_user:
+#    path: /users/{slug}
+#    defaults:
+#        _controller: KnarfApiBundle:User:getUser
+#    methods: GET
+    
+knarf_api_user_id:
+    path: /users/{id}
+    defaults:
+        _controller: KnarfApiBundle:User:getUserId
+    methods: GET    
+        
+knarf_api_advert:
+    path: /adverts/{slug}
+    defaults: { _controller: KnarfApiBundle:ApiAdvert:getAdvert }
+    methods: GET
+    
+knarf_api_advert_id:
+    path: /adverts/{id}
+    defaults:
+        _controller: KnarfApiBundle:ApiAdvert:getAdvertId
+    methods: GET    
+    
+knarf_api_post_advert:
+    path: /adverts
+    defaults:
+        _controller: KnarfApiBundle:ApiAdvert:postAdvert
+    methods: POST
+    
+knarf_api_put_advert:
+    path: /adverts/{slug}
+    defaults:
+        _controller: KnarfApiBundle:ApiAdvert:putAdvert
+    methods: PUT
+    
+knarf_api_delete_advert:
+    path: /adverts/{id]
+    defaults:
+        _controller: KnarfApiBundle:ApiAdvert:deleteAdvert
+    methods: DELETE
+    
+knarf_api_adverts_rubrique:
+    path: /rubrique/{slug}/adverts
+    defaults:
+        _controller: KnarfApiBundle:ApiAdvert:getAdvertsByRubrique
+    methods: GET    
+        
+knarf_api_post_user:
+    path: /users
+    defaults:
+        _controller: KnarfApiBundle:User:postUser
+    methods: POST
+    
+knarf_api_patch_user:
+    path: /users/{slug}
+    defaults:
+        _controller: KnarfApiBundle:User:patchUser
+    methods: PATCH
+    
+knarf_api_put_user:
+    path: /users/{slug}
+    defaults:
+        _controller: KnarfApiBundle:User:putUser
+    methods: PUT
+    
+
+    
+    
+ 
+        
+        
+        
+

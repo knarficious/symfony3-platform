@@ -146,7 +146,17 @@ class ApiAdvertController extends Controller
     }
     
     /**
-     * @ApiDoc(description="Publie un article")
+     * @ApiDoc(
+     * resource="/api/adverts",
+     * description="Publie un article",
+     * input={
+     *  "class"="Knarf\ApiBundle\Type\ApiAdvertType"
+     * },
+     * status_code={
+     *  201="Publication enregistrée",
+     *  403="Validation errors"
+     * },
+     * )
      * @Rest\Post("/adverts")
      * @Rest\View(statusCode=Response::HTTP_CREATED)
      */
@@ -192,7 +202,44 @@ class ApiAdvertController extends Controller
         
     }
     
-    /** 
+    /**
+     * @ApiDoc(description="Supprime un article")
+     * @Rest\Delete("/adverts/{id}")
+     * @Rest\View(statusCode=Response::HTTP_NO_CONTENT)
+     */
+    public function deleteAdvertAction(Request $request)
+    {
+        //$this->denyAccessUnlessGranted('ROLE_USER', null);        
+        
+        $em = $this->getDoctrine()->getManager();
+        $advert = $em->getRepository('KnarfPlatformBundle:Advert')
+                ->find($request->get('id'));
+        
+//        if(null === $advert)
+//        {
+//            return $this->advertNotFound();
+//        }
+//        
+//        if($advert->getUser() !== $this->getUser())
+//        {
+//            throw new UnauthorizedHttpException('cette ressource ne vous appartient pas');
+//        }        
+        
+            $em->remove($advert);
+            $em->flush();
+            
+//            $response = new Response();
+//            $response->headers->set('Location', $this->generateUrl('knarf_api_advert', array(
+//                'id' => $advert->getId(),
+//                \Symfony\Component\Routing\Generator\UrlGeneratorInterface::ABSOLUTE_URL
+//            )));
+//            
+//            return $response;
+        
+
+    }
+
+        /** 
      * @ApiDoc(description="Récupère la liste des articles par rubrique") 
      * @Rest\View(serializerGroups={"advert"})
      * @Rest\Get("/rubrique/{slug}/adverts")

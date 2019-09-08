@@ -16,6 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @author franck * 
  * @ORM\Entity
+ * @ORM\Table(name="access_token")
  * */
 class AccessToken extends BaseAccessToken
 {
@@ -33,8 +34,8 @@ class AccessToken extends BaseAccessToken
     protected $client;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Knarf\UserBundle\Entity\User")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
+     * @ORM\ManyToOne(targetEntity="Knarf\UserBundle\Entity\App_User")
+     * @ORM\JoinColumn(name="app_user_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $user;
 }
