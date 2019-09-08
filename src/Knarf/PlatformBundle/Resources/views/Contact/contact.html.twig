@@ -1,11 +1,11 @@
 {# empty Twig template #}
-{% extends 'KnarfUserBundle::layout.html.twig' %}
+{% extends 'KnarfPlatformBundle::layout.html.twig' %}
 
 {% block title %}
     {{ parent() }}| Contact
 {% endblock %}
 
-{% block knarfuser_body %}
+{% block knarfplatform_body %}
     {{ parent() }}
     
 {{ include("KnarfPlatformBundle:Contact:form.html.twig") }}
