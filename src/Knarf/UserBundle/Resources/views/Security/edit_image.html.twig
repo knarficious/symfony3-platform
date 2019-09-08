@@ -1,6 +1,6 @@
 {# src/Knarf/UserBundle/Resources/views/Security/edit_image.html.twig #}
 
-{% extends 'KnarfUserBundle::layout.html.twig' %}
+{% extends 'KnarfPlatformBundle::layout.html.twig' %}
 
 {% form_theme form 'bootstrap_3_layout.html.twig' %}
 
@@ -9,7 +9,7 @@
     Avatar de {{ app.user.username }} - {{ parent()}}
 {% endblock %}
 
-{% block knarfuser_body %}
+{% block knarfplatform_body %}
     {{ parent() }}
     <h3>Modifier votre avatar, {{ app.user.username }}</h3>
 
