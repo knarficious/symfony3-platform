@@ -233,14 +233,17 @@ fos_ck_editor:
         full_config:
             jquery: true
             require_js: true
-            enterMode: CKEDITOR.ENTER_BR
+            enterMode: CKEDITOR.ENTER_P
             height: '400px'
             language: '%locale%'
             #toolbar: standard
             #filebrowserBrowseRoute: elfinder
             #filebrowserBrowseRouteParameters: []
-            extraPlugins: 'youtube'
-            uiColor: '#cccccc'            
+            extraPlugins: ['youtube', 'image2', 'imageresponsive']
+            uiColor: '#cccccc'
+            imageUploadUrl: '/web/uploads/medias'
+            image2_disableResizer: true
+
         basic_config:
             jquery: true
             heihgt: '250px'
