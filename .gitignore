@@ -19,3 +19,4 @@
 /web/prod.log
 /nbproject/private/
 /src/Knarf/PlatformBundle/DataFixtures/
+/tests/
