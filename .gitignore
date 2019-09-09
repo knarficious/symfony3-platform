@@ -15,4 +15,6 @@
 !var/SymfonyRequirements.php
 /vendor/
 /web/bundles/
-/src/Knarf/UserBundle/Entity/UserProvider.php
+/web/uploads/
+/web/prod.log
+/nbproject/private/
