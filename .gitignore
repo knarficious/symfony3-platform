@@ -20,3 +20,8 @@
 /nbproject/private/
 /src/Knarf/PlatformBundle/DataFixtures/
 /tests/
+/src/Knarf/PlatformBundle/Resources/public/js/sf-websocket.js
+/src/Knarf/PlatformBundle/Resources/public/js/moment.min.js
+/src/Knarf/PlatformBundle/Resources/public/js/moment-timezone-with-data.js
+/src/Knarf/PlatformBundle/Resources/public/css/bootstrap.min.css
+/web/info.php
