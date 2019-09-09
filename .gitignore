@@ -17,7 +17,7 @@
 /web/bundles/
 /web/uploads/
 /web/prod.log
-/nbproject/private/
+/nbproject/
 /src/Knarf/PlatformBundle/DataFixtures/
 /tests/
 /src/Knarf/PlatformBundle/Resources/public/js/sf-websocket.js
