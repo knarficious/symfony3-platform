@@ -22,3 +22,21 @@ services:
     vich_uploader.namer_origname.upload_avatar:
         class: Vich\UploaderBundle\Naming\OrignameNamer
         public: true
+        
+    knarf_advert_subscriber.listener:
+        class: Knarf\PlatformBundle\Events\AdvertSubscriber
+        arguments: [ "@vich_uploader.templating.helper.uploader_helper" ]
+        tags:
+            - { name: jms_serializer.event_subscriber }
+        
+        # Acl Comment Role
+    knarf.platformbundle.acl.comment.roles:
+        class: Knarf\PlatformBundle\Acl\RoleCommentAcl
+        arguments:
+            - "@security.authorization_checker"
+            - "@security.token_storage"
+            - IS_AUTHENTICATED_FULLY
+            - IS_AUTHENTICATED_ANONYMOUSLY
+            - ROLE_USER
+            - ROLE_USER
+            - "%fos_comment.model.comment.class%"     

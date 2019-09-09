@@ -18,3 +18,4 @@
 /web/uploads/
 /web/prod.log
 /nbproject/private/
+/src/Knarf/PlatformBundle/DataFixtures/
