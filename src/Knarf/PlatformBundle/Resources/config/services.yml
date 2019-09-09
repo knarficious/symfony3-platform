@@ -2,31 +2,14 @@ services:
 #    knarf_platform.example:
 #        class: Knarf\PlatformBundle\Example
 #        arguments: ["@service_id", "plain_value", "%parameter%"]
-        knarf_advert_subscriber.listener:
-            class: Knarf\PlatformBundle\Events\AdvertSubscriber
-            arguments: [ "@vich_uploader.templating.helper.uploader_helper" ]
-            tags:
-                - { name: jms_serializer.event_subscriber }
-        
         # Fixtures services
-        Knarf\PlatformBundle\DataFixtures\ORM\AdvertsFixture:
-            tags: [doctrine.fixture.orm]
-        
-        Knarf\PlatformBundle\DataFixtures\ORM\UserFixtures:
-            arguments: ["@security.password_encoder"]
-            tags: [doctrine.fixture.orm]
-            
-        Knarf\PlatformBundle\DataFixtures\ORM\RubriqueFixtures:
-            tags: [doctrine.fixture.orm]
+#        Knarf\PlatformBundle\DataFixtures\ORM\AdvertsFixture:
+#            tags: [doctrine.fixture.orm]
+#        
+#        Knarf\PlatformBundle\DataFixtures\ORM\UserFixtures:
+#            arguments: ["@security.password_encoder"]
+#            tags: [doctrine.fixture.orm]
+#            
+#        Knarf\PlatformBundle\DataFixtures\ORM\RubriqueFixtures:
+#            tags: [doctrine.fixture.orm]
 
-        # Acl Comment Role
-        knarf.platformbundle.acl.comment.roles:
-            class: Knarf\PlatformBundle\Acl\RoleCommentAcl
-            arguments:
-                - "@security.authorization_checker"
-                - "@security.token_storage"
-                - IS_AUTHENTICATED_FULLY
-                - IS_AUTHENTICATED_ANONYMOUSLY
-                - ROLE_USER
-                - ROLE_USER
-                - "%fos_comment.model.comment.class%" 
