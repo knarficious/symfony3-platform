@@ -35,7 +35,7 @@ services:
         arguments:
             - "@security.authorization_checker"
             - "@security.token_storage"
-            - IS_AUTHENTICATED_FULLY
+            - IS_AUTHENTICATED_REMEMBERED
             - IS_AUTHENTICATED_ANONYMOUSLY
             - ROLE_USER
             - ROLE_USER
