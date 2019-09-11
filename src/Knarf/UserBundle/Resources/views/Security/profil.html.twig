@@ -6,20 +6,26 @@
     Compte de {{ app.user.username }} - {{ parent() }}
 {% endblock %}
 
+{%  block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('bundles/knarfuser/css/profile.css') }}" type="text/css" rel="stylesheet">
+{% endblock %}
+
 {% block knarfplatform_body %}
     
     {{ parent() }}
-
-    <div class="well">
-        <h3> {{ app.user.username }}</h3>
+<div class="well">
+    <div class="container-fluid">
+        <h3>{{ app.user.username }}</h3>
         <p>
+        <div class="col-md-6">
             {% if is_granted('ROLE_ADMIN') %}
             Administrateur
             {% endif %}        
         {% if  app.user.avatar is not empty %}
-        <div class="">
+        <div class="avatar">
             <a href="{{ path('edit_avatar') }}" data-toggle="tooltip" data-placement="right" title="Modifier votre avatar">
-            <img src="{{vich_uploader_asset(app.user.avatar, 'mediaFile') | imagine_filter('my_thumb') }}" alt="{{ app.user.avatar.nomMedia }}"/>
+            <img src="{{vich_uploader_asset(app.user.avatar, 'mediaFile') | imagine_filter('my_thumb_resize') }}" alt="{{ app.user.avatar.nomMedia }}"/>
             </a>
         </div>
         {% else %}
@@ -27,46 +33,43 @@
             <img src="{{ asset('/images/icon-person_211874.png') }}" alt="icon person" />
         </a>    
         {% endif %}
-        
+        <p>
         <p>
         Vous êtes membre depuis le: {{ app.user.createdAt|date('d/m/Y') }}
         <p>
-
         Dernière connection le: {{ app.user.lastTimeConnect|date('d/m/Y H:i:s')}}
-
-
-    </div>
-
-    <div class="well">
-        Votre adresse email: {{ app.user.email }}
+        </div>
+        <div class="col-md-6">
+           Votre adresse email: 
+           <h4>{{ app.user.email }}</h4>
         <p>
         <p>
         {% if is_granted('ROLE_USER') %}
         <a class="btn btn-primary btn-lg" href="{{ path('change_email') }}">
             Modifier
         </a>
-        {% endif %}    
+        {% endif %}
+        <p>
+            <a class="btn btn-warning btn-lg" href="{{ path('change_password') }}">{{ 'menu.changement_password' | trans }}</a>
+        </div>
     </div>
-
-    <div class="well">    
-        <a class="btn btn-primary btn-lg" href="{{ path('change_password') }}">{{ 'menu.changement_password' | trans }}</a>
-    </div>
+</div>
 
     {% if app.user.adverts %}
-        <div class="well">
-            <h3>Mes annonces</h3>
+        <div class="well" id='adverts-user-profile'>
+            <h3>Vos annonces</h3>
             
-        <table style="width:100%">
-             <caption>Mes annonces en attente</caption>
+        <table style="width:100%">                         
             <tr>                          
-                <th>Date</th>                            
-                <th>Titre</th>
-                <th>Rubrique</th>
+                <th><h4>Date</h4></th>                            
+                <th><h4>Titre</h4></th>
+                <th><h4>Rubrique</h4></th>
             </tr>
-            {% for entity in app.user.adverts %}
-                {% set count = 0 %}
+            {% set count = 0 %}
+            {% for entity in app.user.adverts %}                        
             <tr>                           
                 {% if entity.published == false %}
+                {% set count = count + 1 %}
                 <td>{{ entity.date|date('d/m/Y') }}</td>
                 <td><a href="{{ path('knarf_platform_view', { 'slug': entity.slug }) }}">
                     {{ entity.title }}</a>
@@ -75,19 +78,22 @@
                 {% endif %}
             </tr>
             {% endfor %}
-
-        </table>    
+            <caption>Annonces en attente: {{ count }}</caption>
+        </table>
+            <p>
             
-        <table style="width:100%">
-             <caption>Mes annonces publiées</caption>
+        <table style="width:100%">                         
             <tr>                          
-                <th>Date</th>                            
-                <th>Titre</th>
-                <th>Rubrique</th>
+                <th><h4>Date</h4></th>                            
+                <th><h4>Titre</h4></th>
+                <th><h4>Rubrique</h4></th>
             </tr>
-            {% for entity in app.user.adverts %}                            
+            {% set countPublished = false %}
+            {% for entity in app.user.adverts %}
             <tr>                           
-                {% if entity.published == true %}                    
+                {% if entity.published == true %}
+                {% set countPublished = countPublished + 1 %}
+                      
                 <td>{{ entity.date|date('d/m/Y') }}</td>
                 <td><a href="{{ path('knarf_platform_view', { 'slug': entity.slug }) }}">
                         {{ entity.title }}</a>
@@ -96,6 +102,7 @@
                 {% endif %}
             </tr>
             {% endfor %}
+            <caption>Annonces publiées: {{ countPublished }}</caption>
 
         </table>        
                 
