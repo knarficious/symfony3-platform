@@ -1,4 +1,4 @@
-{# src/Knarf/PlatformBundle/Resources/views/Rubrique/index.html.twig #}
+{# src/Knarf/PlatformBundle/Resources/views/Rubrique/index_ext.html.twig #}
 
 
 {% extends "KnarfPlatformBundle::layout.html.twig" %}
@@ -30,9 +30,10 @@
                      
                   {% set count = 0 %}
                   {% for entity in rubrique.adverts %}
+                      {% if entity.published == 1 %}
                       
                       {% set count = count + 1 %}
-                      
+                      {% endif %}
                   {% endfor %}
                   
                   ({{ count }} publications)

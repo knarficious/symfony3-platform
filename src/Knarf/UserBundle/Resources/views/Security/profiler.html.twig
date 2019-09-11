@@ -43,12 +43,13 @@
     <h4>Ses articles</h4>
     <ul class="list-unstyled"> 
         {% for advert in user.adverts %}
+            {% if advert.published == true %}
             <li>
                 <a href="{{ path('knarf_platform_view', {'slug': advert.slug}) }}">
                     {{ advert.title }}
-                </a>
-                
+                </a>                
             </li>
+            {% endif %}
         {% endfor %}
     </ul>    
 </div>

@@ -3,7 +3,7 @@
 {% extends 'KnarfPlatformBundle::layout.html.twig' %}
 
 {% block title %}
-    Profile de {{ app.user.username }} - {{ parent() }}
+    Compte de {{ app.user.username }} - {{ parent() }}
 {% endblock %}
 
 {% block knarfplatform_body %}
@@ -52,32 +52,52 @@
         <a class="btn btn-primary btn-lg" href="{{ path('change_password') }}">{{ 'menu.changement_password' | trans }}</a>
     </div>
 
-    {% if app.user.adverts is not empty%}
+    {% if app.user.adverts %}
         <div class="well">
+            <h3>Mes annonces</h3>
+            
+        <table style="width:100%">
+             <caption>Mes annonces en attente</caption>
+            <tr>                          
+                <th>Date</th>                            
+                <th>Titre</th>
+                <th>Rubrique</th>
+            </tr>
+            {% for entity in app.user.adverts %}
+                {% set count = 0 %}
+            <tr>                           
+                {% if entity.published == false %}
+                <td>{{ entity.date|date('d/m/Y') }}</td>
+                <td><a href="{{ path('knarf_platform_view', { 'slug': entity.slug }) }}">
+                    {{ entity.title }}</a>
+                </td>
+                <td>{{ entity.rubrique.intitule }}</td>
+                {% endif %}
+            </tr>
+            {% endfor %}
 
-            <h3>Vos annonces</h3>  
-                    
-                    <table style="width:100%">
-                        <tr>                            
-                            <th>Publiées</th>
-                            <th>Date</th>
-                            <th>En attente</th>
-                        </tr>
-                        {% for entity in app.user.adverts %}
-                            
-                        <tr>                            
-                            {% if entity.published == 1 %}
-                            <td><a href="{{ path('knarf_platform_view', { 'slug': entity.slug }) }}">
-                                    {{ entity.title }}</a></td>
-                            <td>{{ entity.date|date('d/m/Y') }}</td>
-                            {% else %}
-                            <td><a href="{{ path('knarf_platform_view', { 'slug': entity.slug }) }}">
-                                    {{ entity.title }}</a></td>
-                            {% endif %}
-                        </tr>
-                        {% endfor %}
-                            
-                    </table>
+        </table>    
+            
+        <table style="width:100%">
+             <caption>Mes annonces publiées</caption>
+            <tr>                          
+                <th>Date</th>                            
+                <th>Titre</th>
+                <th>Rubrique</th>
+            </tr>
+            {% for entity in app.user.adverts %}                            
+            <tr>                           
+                {% if entity.published == true %}                    
+                <td>{{ entity.date|date('d/m/Y') }}</td>
+                <td><a href="{{ path('knarf_platform_view', { 'slug': entity.slug }) }}">
+                        {{ entity.title }}</a>
+                </td>
+                <td>{{ entity.rubrique.intitule }}</td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+
+        </table>        
                 
         </div>
     {% else %}
