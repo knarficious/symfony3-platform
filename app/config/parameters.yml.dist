@@ -2,13 +2,21 @@
 # Set parameters here that may be different on each deployment target of the app, e.g. development, staging, production.
 # https://symfony.com/doc/current/best_practices/configuration.html#infrastructure-related-configuration
 parameters:
+    #mysql db
     database_host: 127.0.0.1
     database_port: ~
-    database_name: symfony
+    database_name: ~
     database_user: root
     database_password: ~
     # You should uncomment this if you want to use pdo_sqlite
     #database_path: '%kernel.project_dir%/var/data/data.sqlite'
+
+    #posqtgresql db
+    psql_database_host: 127.0.0.1
+    psql_database_port: ~
+    psql_database_name: ~
+    psql_database_user: ~
+    psql_database_password: ~
 
     mailer_transport: smtp
     mailer_host: 127.0.0.1
