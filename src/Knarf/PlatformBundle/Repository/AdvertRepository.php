@@ -30,6 +30,15 @@ class AdvertRepository extends AbstractGenericRepository implements AdvertReposi
         
     }
     
+    public function getLastAdverts()
+    {
+        $qb = $this->createQueryBuilder('a')
+                ->setMaxResults(6);
+        
+        return $qb->getQuery()->getResult();
+    }
+    
+    
 
 
 }

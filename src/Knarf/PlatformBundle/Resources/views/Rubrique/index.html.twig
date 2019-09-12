@@ -12,11 +12,13 @@ Accueil - {{ parent() }}
 
 {% block knarfplatform_body %}    
 
-    {{ parent() }}   
+    {{ parent() }}
 
+        {{ render(controller("KnarfPlatformBundle:Advert:menu")) }}
 
-{% for rubrique in listRubriques %}   
-
+        <br>
+{% for rubrique in listRubriques %} 
+    
     <section class="container-fluid" id="section-rubrique">                     
             {% if rubrique.adverts is not empty %}
                   

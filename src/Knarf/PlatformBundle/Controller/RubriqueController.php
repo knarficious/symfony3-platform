@@ -75,14 +75,8 @@ class RubriqueController extends Controller{
 		 
 	return $this->render('KnarfPlatformBundle:Rubrique:ext.html.twig', array( 'rubrique' => $rubrique, 'pagination' => $pagination));
 		    
-    }
-    
-    /**
-     * @Route("/rubrique/{slug}", name="rubrique_view")
-     * @param type $slug
-     * @return type
-     * @throws NotFoundHttpException
-     */
+    }    
+
     public function viewAction($slug)
     {        
         $repository = $this

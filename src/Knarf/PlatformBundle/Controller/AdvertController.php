@@ -212,12 +212,7 @@ class AdvertController extends Controller
   
   public function menuAction()
   {
-
-    $listAdverts = $this->getDoctrine()
-            ->getRepository(Advert::class)
-        //    ->afficherDerniersArticles()
-            ->findAll();
-
+    $listAdverts = $this->getDoctrine()->getManager()->getRepository('KnarfPlatformBundle:Advert')->getLastAdverts();
 
     return $this->render('KnarfPlatformBundle:Advert:menu.html.twig', array(
 
