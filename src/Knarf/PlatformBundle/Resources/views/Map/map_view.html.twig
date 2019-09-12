@@ -13,8 +13,7 @@
     
     <script>
         $(document).ready(function(){
-            var mapholder = document.getElementById("mapholder");
-            mapholder.children('img').each(function(){
+            $(document).getElementById("mapholder").children('img').each(function(){
                 $(this).addClass('img-responsive');
             });
         });
