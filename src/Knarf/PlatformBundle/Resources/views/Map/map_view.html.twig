@@ -11,6 +11,8 @@
 </div>
 {% block javascripts %}
     
+    {{ parent() }}
+    
     <script>
         $(document).ready(function(){
             $(this).getElementById("mapholder").children('img').each(function(){
