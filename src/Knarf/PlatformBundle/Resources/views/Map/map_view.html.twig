@@ -11,7 +11,16 @@
 </div>
 {% block javascripts %}
     
-<script>
+    <script>
+        $(document).ready(function(){
+            var mapholder = document.getElementById("mapholder");
+            mapholder.children('img').each(function(){
+                $(this).addClass('img-responsive');
+            });
+        });
+    </script>
+    <script>    
+    
     var x = document.getElementById("geoloc");
 
     function getLocation() {

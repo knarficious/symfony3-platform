@@ -14,47 +14,32 @@
 {% block knarfplatform_body %}
 
     {{ parent() }}
-  <h2>Liste des rubriques</h2>
-  
+  <h2 style="text-align: center;">Liste des rubriques</h2>  
 
-    {% for rubrique in listRubriques %}        
-
-      <div class="row">
-          <div class="well">
+    {% for rubrique in listRubriques %}
+        <div class="col-md-6">
+            <div class="well">
             <a href="{{ path('rubrique_ext', {'slug': rubrique.slug}) }}">
-            
                 {{ rubrique.intitule }}
-
-            </a>
-                 {% if rubrique.adverts %}                    
-                     
+            </a>            
+                {% if rubrique.adverts %}
                   {% set count = 0 %}
                   {% for entity in rubrique.adverts %}
                       {% if entity.published == 1 %}
-                      
                       {% set count = count + 1 %}
                       {% endif %}
                   {% endfor %}
-                  
                   ({{ count }} publications)
-                  
-              {% endif %}   
+                {% endif %}   
             </div>
-
-</div>
-
-    {% endfor %}
-
-  
-    
-    {% if is_granted('ROLE_ADMIN') %}
-        
+        </div>
+    {% endfor %} 
+    <p>
+    {% if is_granted('ROLE_ADMIN') %}        
         <a class="btn btn-primary btn-lg" href="{{ path('rubrique_ajout') }}">
           Ajouter une rubrique »
         </a>
-
     {% endif %}
-
 
 {% endblock %}
 
