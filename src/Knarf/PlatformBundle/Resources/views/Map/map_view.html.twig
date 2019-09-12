@@ -14,7 +14,8 @@
     
     <script>
         $(document).ready(function(){
-            $(this).getElementById("mapholder").children('img').each(function(){
+            var mapholder = $(this).getElementById("mapholder");
+            mapholder.children('img').each(function(){
                 $(this).addClass('img-responsive');
             });
         });
