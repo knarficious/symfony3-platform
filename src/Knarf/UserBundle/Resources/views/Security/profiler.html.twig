@@ -14,7 +14,7 @@
         <h3>{{ user.username }}</h3>
 
         {% if  user.avatar is not empty %}        
-            <img src="{{vich_uploader_asset(user.avatar, 'mediaFile') | imagine_filter('my_thumb_resize') |replace({'http://':'https://'}) }}" alt="{{ user.avatar.nomMedia }}"  />        
+            <img class="img-responsive" src="{{vich_uploader_asset(user.avatar, 'mediaFile') | imagine_filter('my_thumb_resize')}}" alt="{{ user.avatar.nomMedia }}"  />        
         {% else %}
             <img src="{{ asset('/images/icon-person_211874.png') }}" alt="icon person" />
         {% endif %}

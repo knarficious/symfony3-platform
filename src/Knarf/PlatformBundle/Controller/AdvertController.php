@@ -194,7 +194,7 @@ class AdvertController extends Controller
         
                 $this->addFlash('success', "L'annonce a été supprimée avec succès");
         
-            return $this->redirect($this->generateUrl('knarf_platform_home'));    
+            return $this->redirect($this->generateUrl('profile'));    
             }
 
             return $this->render('KnarfPlatformBundle:Advert:delete.html.twig', array(

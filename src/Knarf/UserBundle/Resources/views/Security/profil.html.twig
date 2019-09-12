@@ -14,18 +14,15 @@
 {% block knarfplatform_body %}
     
     {{ parent() }}
+<h3>{{ app.user.username }}, bienvenue dans votre espace privé</h3>
+<p>
 <div class="well">
     <div class="container-fluid">
-        <h3>{{ app.user.username }}</h3>
-        <p>
-        <div class="col-md-6">
-            {% if is_granted('ROLE_ADMIN') %}
-            Administrateur
-            {% endif %}        
+        <div class="col-md-6">      
         {% if  app.user.avatar is not empty %}
         <div class="avatar">
             <a href="{{ path('edit_avatar') }}" data-toggle="tooltip" data-placement="right" title="Modifier votre avatar">
-            <img src="{{vich_uploader_asset(app.user.avatar, 'mediaFile') | imagine_filter('my_thumb_resize') }}" alt="{{ app.user.avatar.nomMedia }}"/>
+            <img class="img-responsive" src="{{vich_uploader_asset(app.user.avatar, 'mediaFile') | imagine_filter('my_thumb_resize') }}" alt="{{ app.user.avatar.nomMedia }}"/>
             </a>
         </div>
         {% else %}
@@ -38,6 +35,8 @@
         Vous êtes membre depuis le: {{ app.user.createdAt|date('d/m/Y') }}
         <p>
         Dernière connection le: {{ app.user.lastTimeConnect|date('d/m/Y H:i:s')}}
+        <p>
+        <a class="btn btn-warning btn-lg" href="{{ path('change_password') }}">{{ 'menu.changement_password' | trans }}</a>
         </div>
         <div class="col-md-6">
            Votre adresse email: 
@@ -49,8 +48,7 @@
             Modifier
         </a>
         {% endif %}
-        <p>
-            <a class="btn btn-warning btn-lg" href="{{ path('change_password') }}">{{ 'menu.changement_password' | trans }}</a>
+        <p>            
         </div>
     </div>
 </div>
@@ -58,54 +56,53 @@
     {% if app.user.adverts %}
         <div class="well" id='adverts-user-profile'>
             <h3>Vos annonces</h3>
-            
-        <table style="width:100%">                         
-            <tr>                          
-                <th><h4>Date</h4></th>                            
-                <th><h4>Titre</h4></th>
-                <th><h4>Rubrique</h4></th>
-            </tr>
-            {% set count = 0 %}
-            {% for entity in app.user.adverts %}                        
-            <tr>                           
-                {% if entity.published == false %}
-                {% set count = count + 1 %}
-                <td>{{ entity.date|date('d/m/Y') }}</td>
-                <td><a href="{{ path('knarf_platform_view', { 'slug': entity.slug }) }}">
-                    {{ entity.title }}</a>
-                </td>
-                <td>{{ entity.rubrique.intitule }}</td>
-                {% endif %}
-            </tr>
-            {% endfor %}
-            <caption>Annonces en attente: {{ count }}</caption>
-        </table>
-            <p>
-            
-        <table style="width:100%">                         
-            <tr>                          
-                <th><h4>Date</h4></th>                            
-                <th><h4>Titre</h4></th>
-                <th><h4>Rubrique</h4></th>
-            </tr>
-            {% set countPublished = false %}
-            {% for entity in app.user.adverts %}
-            <tr>                           
-                {% if entity.published == true %}
-                {% set countPublished = countPublished + 1 %}
-                      
-                <td>{{ entity.date|date('d/m/Y') }}</td>
-                <td><a href="{{ path('knarf_platform_view', { 'slug': entity.slug }) }}">
-                        {{ entity.title }}</a>
-                </td>
-                <td>{{ entity.rubrique.intitule }}</td>
-                {% endif %}
-            </tr>
-            {% endfor %}
-            <caption>Annonces publiées: {{ countPublished }}</caption>
-
-        </table>        
-                
+            {# en attente #}    
+            <table style="width:100%">                         
+                <tr>                         
+                    <th><h4>Titre</h4></th>
+                    <th><h4>Rubrique</h4></th>
+                    <th><h4>Date</h4></th>
+                </tr>
+                {% set count = 0 %}
+                {% for entity in app.user.adverts %}                        
+                <tr>                           
+                    {% if entity.published == false %}
+                    {% set count = count + 1 %}
+                    <td><a href="{{ path('knarf_platform_view', { 'slug': entity.slug }) }}">
+                        {{ entity.title }}
+                        </a>
+                    </td>
+                    <td>{{ entity.rubrique.intitule }}</td>                
+                    <td>{{ entity.date|date('d/m/Y') }}</td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+                <caption>Annonces en attente: {{ count }}</caption>
+            </table>
+                <p>
+            {# publiées#}    
+            <table style="width:100%">                         
+                <tr>                            
+                    <th><h4>Titre</h4></th>
+                    <th><h4>Rubrique</h4></th>                                          
+                    <th><h4>Date</h4></th>
+                </tr>
+                {% set countPublished = false %}
+                {% for entity in app.user.adverts %}
+                <tr>                           
+                    {% if entity.published == true %}
+                    {% set countPublished = countPublished + 1 %}
+                    <td><a href="{{ path('knarf_platform_view', { 'slug': entity.slug }) }}">
+                            {{ entity.title }}
+                        </a>
+                    </td>
+                    <td>{{ entity.rubrique.intitule }}</td>
+                    <td>{{ entity.date|date('d/m/Y') }}</td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+                <caption>Annonces publiées: {{ countPublished }}</caption>
+            </table>    
         </div>
     {% else %}
     {% endif %}
@@ -118,35 +115,28 @@
         </div>
     {% endif %}
     <p>
-    {% if app.user.commentaires is not empty %}
+    {% if app.user.commentaires %}
         <div class="well">
-
             <h4>Vos commentaires</h4>
-
-            <ul class="list-unstyled"> 
+            <table>
+                <tr>
+                    <th>Commentaire</th>
+                    <th>Article</th>
+                    <th>Date</th>
+                </tr>
             {% for commentaire in app.user.commentaires %}
-                <li>
+                <tr>
                     {% if commentaire.id is defined %}
-                        
-                        
-                        <a href="{{ commentaire.thread.permalink }}#fos_comment_{{ commentaire.id }}">
-                        "{{ commentaire.body }}"
+                    <td><a href="{{ commentaire.thread.permalink }}#fos_comment_{{ commentaire.id }}">
+                        {{ commentaire.body }}
                         </a>
-
-
+                    </td>
+                    <td></td>
+                    <td></td>
                     {% endif %}
-                    <hr>
-
-{#                    {%  if commentaire.commentaire.id is defined %}
-                        {{ commentaire.contenu }}
-                        sur le <a href="{{ path('knarf_platform_view', {'slug': commentaire.commentaire.advert.slug}) }}#commentaire"> commentaire de:
-                        <b>{{ commentaire.commentaire.user.username }}</b></a>
-
-                    {% endif %}#}
-                    <hr>
-                </li>
+                </tr>
             {% endfor %}
-        </ul>    
+        </table>    
     </div>
     {% endif %}
     <p>
