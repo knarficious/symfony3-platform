@@ -7,14 +7,15 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>{% block title %}Le Blog de Franck {% endblock %}</title>
+  <title>{% block title %}Knarf Media{% endblock %}</title>
 
   {% block stylesheets %}
     <link href="{{ asset('bundles/knarfplatform/css/main.css') }}" type="text/css" rel="stylesheet">  
     <link href="{{ asset('bundles/knarfplatform/css/hover-min.css') }}" type="text/css" rel="stylesheet">   
     <link href="{{ asset('bundles/knarfplatform/css/clocks.css') }}" type="text/css" rel="stylesheet">
     
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link rel="stylesheet" src="SlideShow-Carousel-slideWiz/src/css/slideWiz.css">
   {% endblock %}
 </head>
 
@@ -148,16 +149,15 @@
   </div>
 {% block javascripts %}
     {# Ajoutez ces lignes JavaScript si vous comptez vous servir des fonctionnalités du bootstrap Twitter #}
-    <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.23/moment-timezone-with-data.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.3.0/moment-timezone-utils.min.js"></script>
 {#    <script type="text/javascript" src="{{ asset('bundles/knarfplatform/js/moment.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/knarfplatform/js/moment-timezone-with-data.js') }}"></script>#}
-    <script type="text/javascript" src="{{ asset('bundles/knarfplatform/js/clock.js') }}"></script>
-
+    <script type="text/javascript" src="{{ asset('bundles/knarfplatform/js/clock.js') }}"></script>    
     <script>
         $(document).ready(function(){
         $(window).scroll(function () {
