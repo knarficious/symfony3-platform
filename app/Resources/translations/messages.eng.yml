@@ -31,6 +31,9 @@ menu:
 rubrique:
     intitule: Title
 user:
+    chat:
+        message: Your message...
+        post: Post
     connexion:
             new_password: New password
             confirmation: Repeat the password

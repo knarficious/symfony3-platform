@@ -30,6 +30,9 @@ menu:
 rubrique:
     intitule: Intitulé
 user:
+    chat:
+        message: Votre message...
+        post: Poster
     connexion:
             new_password: Nouveau mot de passe
             confirmation: Répétez le mot de passe

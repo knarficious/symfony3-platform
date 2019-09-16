@@ -3,6 +3,10 @@
 {% block title %}
     Chat - {{ parent() }}
 {% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link type="text/css" rel="stylesheet" href="{{ asset('bundles/knarfplatform/css/chat.css') }}">
+{% endblock %}
 
 {% block knarfplatform_body %}
 
@@ -15,20 +19,99 @@
         <input type="text" id="ws-content-to-send" />
         <button id="ws-send-content">Send</button>
         <button id="disconnect">Disconnect</button>
-    </div>#}
-    <div class="container">
-        <h1>Public chat</h1>
-        <div id="ws-username">{{app.user.username}}</div>
-        <ul id="chat-list"></ul>
-        <hr>
-        <textarea id="form-message" placeholder="Your public message here"></textarea>
-        <input type="button" id="form-submit" value="Send message"/>
-    </div>
+    </div>#}    
+        
+        <div class="container-fluid">
+            <h1>Chat privé</h1>
+            <article class="col-auto">
+                <div class="well" id="messages">
+                    Pas de messsages
+                </div>
+            </article>
+            <br>
+            <article class="col-auto">
+                <form>
+                    <input type="hidden" id="username" value="{{app.user.username}}">
+                    <input type="text" name="message" placeholder="{{ 'user.chat.message' | trans }}" size="50" autocomplete="off">
+                    <input class="btn btn-primary" type="submit" value="{{ 'user.chat.post' | trans }}">
+                </form>  
+            </article>
+        </div>
+    
 {% endblock %}
 {% block javascripts %}
-    <script type="text/javascript">
-      var wsUrl = '{{ ws_url }}';
+    {{ parent() }}
+    <script type="application/json" id="config">
+        {{ config|json_encode()|raw}}
     </script>
-    <script type="text/javascript" src="{{ asset('bundles/knarfplatform/js/sf-websocket.js') }}"></script>
+    <script>
+{#        var username = document.getElementById("username").innerHTML;#}
+        const {topic, publishRoute} = 
+                JSON.parse(document.getElementById('config').textContent)
+        const url = new URL('http://localhost:3000/hub');
+        url.searchParams.append('topic', topic);
+        
+        const eventSource = new EventSource(url);
+        let ul = null;
+        eventSource.onmessage = ({data}) => {
+            
+            const {username, message} = JSON.parse(data)
+            if (!username || !message) throw new Error('Invalid payload')
+
+            if (!ul) {
+                ul = document.createElement('ul');
+
+                const messages = document.getElementById('messages');
+                messages.innerHTML = '';
+                messages.append(ul);
+            }
+
+            const li = document.createElement('li');
+            li.append(document.createTextNode(`${username} : ${message}`))
+            ul.append(li)
+        };
+        
+        document.querySelector('form').onsubmit = function (e) {
+        e.preventDefault();
+
+        fetch(publishRoute, {method: 'POST', body: JSON.stringify({username: this.elements.username.value, message: this.elements.message.value})});
+        this.elements.message.value = '';
+        this.elements.message.focus();
+    }
+    </script>
+    {#<script>
+        
+            /// Some code to add the messages to the list element and the message submit.
+    document.getElementById("form-submit").addEventListener("click",function(){
+        var msg = document.getElementById("form-message").value;
+        
+        if(!msg){
+            alert("Please send something on the chat");
+        }
+        
+      
+        
+        document.getElementById("form-message").value = "";
+    }, false);
+        
+        if (typeof (EventSource) !== 'undefined') {
+        var source = new EventSource('{{ path('sse')}}', {withCredentials:true});
+        source.onopen = function (event) {
+            console.log('onopen', event);
+        };
+        source.onerror = function (event) {
+            console.log('onerror', event);
+        };
+        source.onmessage = function(event) {
+         	document.getElementById("result").innerHTML += event.data + "<br />";
+        };
+        source.addEventListener('new-msgs', function (event) {
+            document.getElementById("result").innerHTML += event.data + "<br />";
+        });
+    } else {
+        document.getElementById("result").innerHTML = 'Sorry, your browser does not support server-sent events...';
+    }
+    
+    </script>#}
 {% endblock %}
 
