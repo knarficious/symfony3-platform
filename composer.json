@@ -29,7 +29,6 @@
         "friendsofsymfony/comment-bundle": "^2.3",
         "friendsofsymfony/oauth-server-bundle": "dev-master",
         "friendsofsymfony/rest-bundle": "^2.1",
-        "hhxsv5/php-sse": "^1.1",
         "incenteev/composer-parameter-handler": "^2.0",
         "jms/serializer-bundle": "^2.4",
         "knplabs/knp-paginator-bundle": "^4.0",
