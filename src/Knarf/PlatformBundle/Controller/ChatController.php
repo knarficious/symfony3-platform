@@ -8,18 +8,21 @@
 
 namespace Knarf\PlatformBundle\Controller;
 
-//define('HUB_URL', 'http://localhost:3000/hub');
-//define('JWT', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtZXJjdXJlIjp7InB1Ymxpc2giOlsiKiJdfX0.NFCEbEEiI7zUxDU2Hj0YB71fQVT8YiQBGQWEyxWG0po');
+define('HUB_URL', 'http://localhost:3000/hub');
+define('JWT', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtZXJjdXJlIjp7InB1Ymxpc2giOlsiKiJdfX0.jRb2NCmejd6PA_32yqe4b10jjlj9PPfLQLeu3ZEH3L4');
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use Symfony\Component\HttpFoundation\Response;
 //use Hhxsv5\SSE\SSE;
 //use Hhxsv5\SSE\Update;
 use Symfony\Component\Mercure\Update;
 use Symfony\Component\Mercure\Publisher;
 use Symfony\Component\Mercure\Jwt\StaticJwtProvider;
+use Knarf\UserBundle\Entity\App_User;
+use Knarf\PlatformBundle\Services\MercureCookieGenerator;
 
 /**
  * Description of ChatController
@@ -30,18 +33,37 @@ class ChatController extends Controller
 {
     /**
      * @Route("/chat", name="knarf_chat")
-     * @return type
+     * @return $response
      */
-    public function indexAction(Request $request)
-    {
+    public function index()
+    {        
         $this->denyAccessUnlessGranted('ROLE_USER', null, 'U must BE logged IN !!!');        
+        $cookieGenerator = $this->get('knarf.platform.cookie.generator');
+        $cookie = $cookieGenerator->generate($this->getUser());
         
-        return $this->render('KnarfPlatformBundle:Chat:chat.html.twig', [
+        $response = $this->render('KnarfPlatformBundle:Chat:chat.html.twig', [
             'config' => [
-                'topic' => 'chat',
-                'publishRoute' => $this->generateUrl('publisher', ['topic' => 'chat'])
+                'topic' => 'chat', 'Last-Event-ID' => '',
+                'publishRoute' => $this->generateUrl('publisher', ['topic' => 'chat', 'Last-Event-ID' => ''])
             ]
         ]);
+        
+        $response->headers->set('set-cookie', $cookie);
+        
+        return $response;
+    }
+    
+    /**
+     * @Route("/publish/{topic}", name="publisher", methods={"POST"})
+     * @param type $topic
+     * @param Request $request
+     * @return Response
+     */
+    public function publishAction($topic, Request $request)
+    {
+        $publisher = new Publisher(HUB_URL, new StaticJwtProvider(JWT));
+                $publisher(new Update($topic, $request->getContent()));
+        return new Response('success');
     }
     
     /**
@@ -69,12 +91,20 @@ class ChatController extends Controller
         }
         
         /**
-         * @Route("/ping", name="ping", methods={"POST"})
+         * @Route("/ping/{user}", name="ping", methods={"POST"})
+         * @return Response         * 
          */
-        public function ping() 
+        public function ping(App_User $user = null) 
         {
+            $target = [];
+            if($user !== null)
+            {
+                $target = [
+                    "https://symfony.local/user/{$user->getId()}"
+                ];
+            }
             $publisher = new Publisher(HUB_URL, new StaticJwtProvider(JWT));
-            $publisher(new Update("http://symfony.local/ping", "[]"));
+            $publisher(new Update("https://symfony.local/ping", "[]", $target));
             
             return $this->redirectToRoute('knarf_chat');
             
