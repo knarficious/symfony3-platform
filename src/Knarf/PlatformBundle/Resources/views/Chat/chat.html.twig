@@ -23,20 +23,20 @@
         
         <div class="container-fluid">
             <h1>Chat privé</h1>
-            <article class="col-auto">
+            <div class="">
                 <div class="well" id="messages">
                     Pas de messsages
                 </div>
-            </article>
+            </div>
             <br>
-            <article class="col-auto">
+            <div class="well">
                 <form>
                     <input type="hidden" id="username" value="{{app.user.username}}">
                     <input type="text" name="message" placeholder="{{ 'user.chat.message' | trans }}" size="50" autocomplete="off">
                     <input class="btn btn-primary" type="submit" value="{{ 'user.chat.post' | trans }}">
                 </form>  
-            </article>
-        </div>
+            </div>
+        </div>       
     
 {% endblock %}
 {% block javascripts %}
@@ -51,10 +51,15 @@
         const url = new URL('http://localhost:3000/hub');
         url.searchParams.append('topic', topic);
         
-        const eventSource = new EventSource(url);
+        const lastEventId = localStorage.getItem('lastEventId');
+        if (lastEventId !== null){
+            url.searchParams.append('Last-Event-ID', lastEventId);
+}
+        
+        const eventSource = new EventSource(url, { withCredentials: true });
         let ul = null;
         eventSource.onmessage = ({data}) => {
-            
+            localStorage.setItem('lastEventId', eventSource.lastEventId);
             const {username, message} = JSON.parse(data)
             if (!username || !message) throw new Error('Invalid payload')
 
