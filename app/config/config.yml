@@ -4,8 +4,8 @@ imports:
     - { resource: services.yml }
     - { resource: validator.yml }
     - { resource: mail_blacklist.yml }
-    - { resource: repository.yml }
-    - { resource: manager.yml }
+#    - { resource: repository.yml }
+#    - { resource: manager.yml }
     - { resource: "@KnarfCoreBundle/Resources/config/services.yml" }
     - { resource: "@KnarfCoreBundle/Resources/config/validator.yml" }
     - { resource: user/authentication.yml }
@@ -39,8 +39,8 @@ framework:
         # https://symfony.com/doc/current/reference/configuration/framework.html#handler-id
         handler_id: session.handler.native_file
         save_path: '%kernel.project_dir%/var/sessions/%kernel.environment%'
-        cookie_lifetime: 3600
-        gc_maxlifetime: 1800
+        cookie_lifetime: 7200
+        gc_maxlifetime: 3600
     fragments: ~
     http_method_override: true
     assets: ~
@@ -151,18 +151,18 @@ liip_imagine:
     filter_sets:        
         my_thumb:
             data_loader: avatar
-            quality: 85
+            quality: 100
             filters:                
                 auto_rotate: true
-                thumbnail: { size: [100, 50], mode: inset }
+                thumbnail: { size: [48, 48], mode: inset }
         my_thumb_resize:            
             data_loader: avatar
-            quality: 50
+            quality: 100
             cache: false
             filters:
                 auto_rotate: true
-                thumbnail: { size: [240, 120], mode: inset}
-                relative_resize: { heighten: 78 }
+                downscale:
+                    max: [ 390, 550 ]                
         
 # Fos_Rest Configuration
 fos_rest:
@@ -172,6 +172,7 @@ fos_rest:
     format_listener:
         rules:
             - { path: '^/api', priorities: ['json'], fallback_format: 'json' }
+            - { path: '^/create-client', priorities: ['json'], fallback_format: 'json' }
             - { path: '^/', priorities: ['html'], fallback_format: 'html'}
     param_fetcher_listener: true
     view:
@@ -182,13 +183,14 @@ fos_rest:
             jsonp: true
         templating_formats:
             html: true
-        force_redirects:
-            html: true
+#        force_redirects:
+#            html: true
         failed_validation: HTTP_BAD_REQUEST
       #default_engine: twig
         mime_types:
             json : ['application/json']
     routing_loader:
+        #default_format: json
         include_format: false
     access_denied_listener:
         json: true
@@ -199,8 +201,7 @@ fos_rest:
             'Symfony\Component\Routing\Exception\ResourceNotFoundException': 404
             'Doctrine\ORM\OptimisticLockException': HTTP_CONFLICT
         messages:
-            'Symfony\Component\Routing\Exception\ResourceNotFoundException': true      
-      
+            'Symfony\Component\Routing\Exception\ResourceNotFoundException': true
     service:
         router: router
         templating: templating
@@ -216,6 +217,9 @@ fos_oauth_server:
     service:
         user_provider: security.user.provider.concrete.database_users
         options:
+                access_token_lifetime: 86400
+                refresh_token_lifetime: 1209600
+                auth_code_lifetime: 30
                 supported_scopes: user   
 
 stof_doctrine_extensions:
@@ -229,6 +233,10 @@ stof_doctrine_extensions:
             sluggable: true
             
 fos_ck_editor:
+    inline: false
+    filebrowsers:
+        - VideoBrowse
+        - VideoUpload
     configs:
         full_config:
             jquery: true
@@ -237,18 +245,19 @@ fos_ck_editor:
             height: '400px'
             language: '%locale%'
             #toolbar: standard
-            #filebrowserBrowseRoute: elfinder
-            #filebrowserBrowseRouteParameters: []
-            extraPlugins: ['youtube', 'image2', 'imageresponsive']
+#            filebrowserBrowseRoute: elfinder
+#            filebrowserBrowseRouteParameters: []
+            extraPlugins: ['youtube', 'image2', 'imageresponsive', 'html5video']
+            removePlugins: 'image'
             uiColor: '#cccccc'
             imageUploadUrl: '/web/uploads/medias'
-            image2_disableResizer: true
-
+            image2_disableResizer: false
         basic_config:
             jquery: true
             heihgt: '250px'
             language: '%locale%'
-            toolbar: basic            
+            toolbar: basic
+            enterMode: CKEDITOR.ENTER_P
         plugins:
             youtube:
                 path: '/web/bundles/fosckeditor/plugins/youtube/'
