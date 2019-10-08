@@ -1,4 +1,5 @@
-{# src/Knarf/PlatformBundle/Resources/views/Advert/menu.html.twig #}    
+{# src/Knarf/PlatformBundle/Resources/views/Advert/menu.html.twig #}
+{% trans_default_domain 'divers' %}
 <div class="container-fluid">    
 <div id="myCarousel" class="carousel slide carousel-fade" data-ride="carousel">
     
@@ -27,11 +28,11 @@
         <!-- Left and right controls -->
     <a class="left carousel-control" href="#myCarousel" data-slide="prev">
       <span class="glyphicon glyphicon-chevron-left"></span>
-      <span class="sr-only">Previous</span>
+      <span class="sr-only">{{ 'carousel.control.prev' | trans }}</span>
     </a>
     <a class="right carousel-control" href="#myCarousel" data-slide="next">
       <span class="glyphicon glyphicon-chevron-right"></span>
-      <span class="sr-only">Next</span>
+      <span class="sr-only">{{ 'carousel.control.next' | trans }}</span>
     </a>
 </div>
 </div>
