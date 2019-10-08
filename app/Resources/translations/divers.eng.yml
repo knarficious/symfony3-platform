@@ -9,3 +9,9 @@ copyright: Copyright
 filtrer: Search
 reinitialiser: Reset
 register: Register
+post: post
+
+carousel:
+    control:
+        prev: Previous
+        next: Next

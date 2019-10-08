@@ -27,6 +27,12 @@ menu:
       inscription: Inscription
       changement_password: Changement de mot de passe
       choisir_langue: Choisir la langue    
+
+map:
+    view:
+        click: Cliquer ici
+        label: Cliquer pour afficher votre localisation
+
 rubrique:
     intitule: Intitulé
 user:

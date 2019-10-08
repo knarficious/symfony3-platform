@@ -28,6 +28,11 @@ menu:
     changement_password: Password Changement
     choisir_langue: Choose a language
 
+map:
+    view:
+        click: Try it
+        label: Click the button to get your coordinates
+
 rubrique:
     intitule: Title
 user:

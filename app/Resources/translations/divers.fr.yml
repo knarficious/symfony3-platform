@@ -9,5 +9,12 @@ copyright: Tous droits réservés
 filtrer: Filtrer
 reinitialiser: Reinitialiser
 register: Enregistrer
+post: poster
+
+carousel:
+    control:
+        prev: Précédent
+        next: Suivant
+            
 
     
