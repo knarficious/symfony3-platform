@@ -5,7 +5,7 @@
 
 {% block title %}
 
-Accueil - {{ parent() }}
+La base - {{ parent() }}
 
 {% endblock %} 
 
@@ -23,7 +23,9 @@ Accueil - {{ parent() }}
             {% if rubrique.adverts is not empty %}
                   
             <div class="well">
-                <a href="{{ path('rubrique_ext', {'slug': rubrique.slug}) }}">{{ rubrique.intitule }}</a>
+                <a href="{{ path('rubrique_ext', {'slug': rubrique.slug}) }}">
+                    <h3 style="text-align: center;">{{ rubrique.intitule }}</h3>
+                </a>
             </div>
                   
             {% for entity in rubrique.adverts|slice(0, 3) %}
@@ -71,8 +73,6 @@ Accueil - {{ parent() }}
     </section>            
 
 {% endfor %}
-
-{{ include('KnarfPlatformBundle:Map:map_view.html.twig') }}
 
 {%  endblock %}
 
