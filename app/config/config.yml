@@ -247,7 +247,7 @@ fos_ck_editor:
             #toolbar: standard
 #            filebrowserBrowseRoute: elfinder
 #            filebrowserBrowseRouteParameters: []
-            extraPlugins: ['youtube', 'image2', 'imageresponsive', 'html5video']
+            extraPlugins: ['youtube', 'image2', 'imageresponsive', 'html5video', 'html5audio']
             removePlugins: 'image'
             uiColor: '#cccccc'
             imageUploadUrl: '/web/uploads/medias'
