@@ -1,11 +1,12 @@
 {# src/Knarf/PlatformBundle/Resources/views/Map/map_view.html.twig #}
-
+<div class="container-fluid">
 <h3>{{ 'map.view.label' | trans}}</h3>
 <p>
     <button onclick="getLocation()">{{ 'map.view.click' | trans }}</button>
 <p id="geoloc"></p>
 <div id="mapholder">
     
+</div>
 </div>
 {% block javascripts %}
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
