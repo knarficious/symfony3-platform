@@ -22,10 +22,6 @@ time, mark, audio, video {
   font: inherit;
   vertical-align: baseline; }
 
-/* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure,
-footer, header, hgroup, menu, nav, section {
-  display: block; }
 
 body {
     font-family: "Montserrat", sans-serif;
@@ -60,6 +56,12 @@ strong {
 a {
     transition: all 0.3s ease 0s;
 }
+
+/* for this feature, add !important clause for Twitter Bootstrap*/
+a:hover {
+    text-decoration: none !important; 
+}
+
 .navbar-inverse .navbar-nav > li > a {
     color: #e23813;
     font-size: 12px;
@@ -70,7 +72,7 @@ a {
     color: #e23813;
 }
 .navbar-brand {
-    background: rgba(0, 0, 0, 0) url("/images/totoro_avatar.jpg") no-repeat scroll left center / 42px 42px;
+    background: rgba(0, 0, 0, 0) url("/images/8-cell-simple.gif") no-repeat scroll left center / 42px 42px;
     font-size: 16px;
     padding-left: 54px;
     text-transform: uppercase;
@@ -138,17 +140,20 @@ body.home .dynamicheader.shrink .navbar-brand {
 }
 
 
-.back-to-top {
-    cursor: pointer;
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    display:none;
+#back-to-top {
+    display:block;
+    position:fixed;
+    bottom:0;
+    right:0;
+    width:3.1em;
+    height:3.1em;
+    overflow:hidden;
+    color:transparent;
+    border-bottom:medium none;
+    z-index:1;
 }
 
-ul {
-    list-style-type: none;
-}
+
 
 /* Create two unequal columns that floats next to each other */
 /* Left column */
