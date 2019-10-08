@@ -6,14 +6,15 @@
    tout comme le template inclus avec {{ include() }}. #}
 
 <div class="container-fluid">
+    <div class="well">
     
-    <h3>Membres </h3>
+    <h3 align="center">Membres </h3>
 
-    {% for user in listUsers |sort%}
+    {% for user in listUsers %}
       
       {% if user.isActive == 1 %}
 
-        <div class="media">
+          <div class="media">
             
             <div class="media-left">
                 
@@ -26,21 +27,26 @@
                     <img src="{{ asset('/images/icon-person_211874.png') }}" alt="icon person" />
 
                 {% endif %}
-        </div>
-        <div class="media-body">
-            <h4 class="media-heading">
-                {% if user is same as( app.user) %}
-                    <a href="{{ path('profile') }}">{{ user.username }}</a>                    
-                {% else %}    
-                    <a href="{{ path('profile_view', {'slug': user.slug}) }}">{{ user.username }}</a>
-                {% endif %}
-            </h4>
-        </div>     
-         
+            </div>
+            <div class="media-body">
+                <h4 class="media-heading">
+                    {% if user is same as( app.user) %}
+                        <a href="{{ path('profile') }}">{{ user.username }}</a>                    
+                    {% else %}    
+                        <a href="{{ path('profile_view', {'slug': user.slug}) }}">{{ user.username }}</a>
+                    {% endif %}
+                </h4>
+                <i class="connection-status" id="sse-connection-status"></i>
+            </div>   
+                    
+{#            {% if app.request.cookies.has('mercureAuthorization') %}
+            You have chosen your cookie brand!
+            {% endif %}#}
         </div>
         {% endif %}
 
   {% endfor %}
+    </div>
 </div>
 
 
