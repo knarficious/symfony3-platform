@@ -14,7 +14,34 @@ services:
         # if you need to do this, you can override this setting on individual services
         public: false
     
+    Knarf\PlatformBundle\:
+        resource: '../../src/Knarf/PlatformBundle/*'
+        # you can exclude directories or files
+        # but if a service is unused, it's removed anyway
+        exclude: '../../src/Knarf/PlatformBundle/{Entity,Repository}'
 
+    Knarf\ApiBundle\:
+        resource: '../../src/Knarf/ApiBundle/*'
+        # you can exclude directories or files
+        # but if a service is unused, it's removed anyway
+        exclude: '../../src/Knarf/ApiBundle/{Entity,Repository}'
+    
+    Knarf\PlatformBundle\Controller\:
+        resource: '../../src/Knarf/PlatformBundle/Controller'
+        tags: ['controller.service_arguments']
+        
+    Knarf\ApiBundle\Controller\:
+        resource: '../../src/Knarf/ApiBundle/Controller'
+        tags: ['controller.service_arguments']    
+            
+    Knarf\PlatformBundle\Services\MercureCookieGenerator:
+            arguments:
+                $secret: '%secret%'
+    
+    Knarf\PlatformBundle\Mercure\JwtProvider:
+            arguments:
+                $secret: '%secret%' 
+    
     vich_uploader.namer_origname.upload_media:
         class: Vich\UploaderBundle\Naming\OrignameNamer
         public: true
@@ -39,4 +66,4 @@ services:
             - IS_AUTHENTICATED_ANONYMOUSLY
             - ROLE_USER
             - ROLE_USER
-            - "%fos_comment.model.comment.class%"     
+            - "%fos_comment.model.comment.class%"            
