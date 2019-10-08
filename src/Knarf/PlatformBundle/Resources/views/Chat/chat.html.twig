@@ -32,7 +32,9 @@
             <div class="well">
                 <form>
                     <input type="hidden" id="username" value="{{app.user.username}}">
-                    <input type="text" name="message" placeholder="{{ 'user.chat.message' | trans }}" size="50" autocomplete="off">
+                    
+                    <input type="text" name="message" placeholder="{{ 'user.chat.message' | trans }}" autocomplete="off" class="form-control">
+                    <br>
                     <input class="btn btn-primary" type="submit" value="{{ 'user.chat.post' | trans }}">
                 </form>  
             </div>
@@ -45,44 +47,57 @@
         {{ config|json_encode()|raw}}
     </script>
     <script>
-{#        var username = document.getElementById("username").innerHTML;#}
+        document.querySelector('form').onsubmit = function (e) {
+            e.preventDefault();
+
+            fetch(publishRoute, {method: 'POST', body: JSON.stringify({username: this.elements.username.value, message: this.elements.message.value})});
+            this.elements.message.value = '';
+            this.elements.message.focus();
+        };
+        
+        var _connectionStatus = document.getElementById('sse-connection-status');
+         _connectionStatus.classList.add('active');
+         
         const {topic, publishRoute} = 
-                JSON.parse(document.getElementById('config').textContent)
+                JSON.parse(document.getElementById('config').textContent);
+        
         const url = new URL('http://localhost:3000/hub');
-        url.searchParams.append('topic', topic);
+        
+        url.searchParams.append('topic', 'chat');
         
         const lastEventId = localStorage.getItem('lastEventId');
         if (lastEventId !== null){
             url.searchParams.append('Last-Event-ID', lastEventId);
-}
-        
-        const eventSource = new EventSource(url, { withCredentials: true });
-        let ul = null;
-        eventSource.onmessage = ({data}) => {
-            localStorage.setItem('lastEventId', eventSource.lastEventId);
-            const {username, message} = JSON.parse(data)
-            if (!username || !message) throw new Error('Invalid payload')
-
-            if (!ul) {
-                ul = document.createElement('ul');
-
-                const messages = document.getElementById('messages');
-                messages.innerHTML = '';
-                messages.append(ul);
-            }
-
-            const li = document.createElement('li');
-            li.append(document.createTextNode(`${username} : ${message}`))
-            ul.append(li)
         };
         
-        document.querySelector('form').onsubmit = function (e) {
-        e.preventDefault();
+        if(typeof(EventSource) !== "undefined") {
+            
+            const eventSource = new EventSource(url, { withCredentials: false });
+                console.log('hasCredentials', eventSource.withCredentials);
+            let ul = null;
 
-        fetch(publishRoute, {method: 'POST', body: JSON.stringify({username: this.elements.username.value, message: this.elements.message.value})});
-        this.elements.message.value = '';
-        this.elements.message.focus();
-    }
+            eventSource.onmessage = e => {
+
+                localStorage.setItem('lastEventId', e.lastEventId);
+
+                const {username, message} = JSON.parse(e.data);
+
+                if (!username || !message) throw new Error('Invalid payload');
+
+                if (!ul) {
+                    ul = document.createElement('ul');
+
+                    const messages = document.getElementById('messages');
+                    messages.innerHTML = '';
+                    messages.append(ul);
+                };
+
+                const li = document.createElement('li');
+                li.append(document.createTextNode(`${username} : ${message}`))
+                ul.append(li)
+            };
+        };        
+
     </script>
     {#<script>
         
