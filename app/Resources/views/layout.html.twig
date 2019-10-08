@@ -10,12 +10,10 @@
   <title>{% block title %}Knarf Media{% endblock %}</title>
 
   {% block stylesheets %}
-    <link href="{{ asset('bundles/knarfplatform/css/main.css') }}" type="text/css" rel="stylesheet">  
-    <link href="{{ asset('bundles/knarfplatform/css/hover-min.css') }}" type="text/css" rel="stylesheet">   
+    <link href="{{ asset('bundles/knarfplatform/css/main.css') }}" type="text/css" rel="stylesheet"> 
     <link href="{{ asset('bundles/knarfplatform/css/clocks.css') }}" type="text/css" rel="stylesheet">
     
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-    <link rel="stylesheet" src="SlideShow-Carousel-slideWiz/src/css/slideWiz.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">    
   {% endblock %}
 </head>
 
@@ -107,16 +105,17 @@
   
     <div class="row">    
         
-        <div class="leftcolumn"> 
+        <div class="leftcolumn" id="main"> 
 
             {% block left_body %}
             {% endblock %}      
 
         </div>
 
-        <div class="rightcolumn">   
-
-               {{ render(controller("KnarfUserBundle:Security:index")) }}        
+        <div class="rightcolumn">
+            {{ render(controller("KnarfUserBundle:Security:index")) }}
+            <br>
+            {{ include('KnarfPlatformBundle:Map:map_view.html.twig') }}
 
         </div>
        
@@ -144,8 +143,10 @@
     </nav>
 </div>
    
-  <div id="back-to-top" style="display:bloc;">
-      <a href="#" class="btn btn-primary btn-lg back-to-top" role="button" title="Revenir en haut de la page" data-toggle="tooltip" data-placement="left"><span class="glyphicon glyphicon-chevron-up"></span></a>
+  <div id="back-to-top">
+      <a href="#main" class="btn btn-primary btn-lg back-to-top" role="button" title="Revenir en haut de la page">
+          <span class="glyphicon glyphicon-chevron-up"></span>
+      </a>
   </div>
 {% block javascripts %}
     {# Ajoutez ces lignes JavaScript si vous comptez vous servir des fonctionnalités du bootstrap Twitter #}
@@ -155,35 +156,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.23/moment-timezone-with-data.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.3.0/moment-timezone-utils.min.js"></script>
-{#    <script type="text/javascript" src="{{ asset('bundles/knarfplatform/js/moment.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/knarfplatform/js/moment-timezone-with-data.js') }}"></script>#}
-    <script type="text/javascript" src="{{ asset('bundles/knarfplatform/js/clock.js') }}"></script>    
-    <script>
-        $(document).ready(function(){
-        $(window).scroll(function () {
-        if ($(this).scrollTop() > 50) {
-        $('#back-to-top').fadeIn();
-        } else {
-        $('#back-to-top').fadeOut();
-        }
-        });
-        // scroll body to 0px on click
-        $('#back-to-top').click(function () {
-        $('#back-to-top').tooltip();
-        $('body,html').animate({
-        scrollTop: 0
-        }, 800);
-        return false;
-        });        
-        $('#back-to-top').tooltip();
-        });
-    </script>
-    <script>
-        $(document).ready(function(){
-        $('[data-toggle="tooltip"]').tooltip();
-        });
-    </script>
-    
+    <script type="text/javascript" src="{{ asset('bundles/knarfplatform/js/clock.js') }}"></script>
 {% endblock %}
 
 </body>
