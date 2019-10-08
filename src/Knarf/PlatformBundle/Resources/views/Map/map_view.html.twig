@@ -1,24 +1,15 @@
 {# src/Knarf/PlatformBundle/Resources/views/Map/map_view.html.twig #}
 
+<h3>{{ 'map.view.label' | trans}}</h3>
 <p>
-    Click the button to get your coordinates.</p>
-
-    <button onclick="getLocation()">Try It</button>
-
+    <button onclick="getLocation()">{{ 'map.view.click' | trans }}</button>
 <p id="geoloc"></p>
 <div id="mapholder">
     
 </div>
 {% block javascripts %}
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    
-    <script>
-        $(document).ready(function(){
-            $('#mapholder').children('img').each(function(){
-                $(this).addClass('img-responsive');
-            });
-        });
-    </script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
     <script>    
     
     var x = document.getElementById("geoloc");
@@ -36,7 +27,7 @@
 
   var img_url = "https://maps.googleapis.com/maps/api/staticmap?center="+latlon+"&zoom=14&size=400x300&sensor=false&key=AIzaSyA2K-avkDmpftUPLab9r9oqBca8vjM1-i4";
 
-  document.getElementById("mapholder").innerHTML = "<img src='"+img_url+"'>";
+  document.getElementById("mapholder").innerHTML = "<img class=\"img-responsive\" src='"+img_url+"'>";
     }
     
     function showError(error) {
