@@ -2,13 +2,13 @@ services:
     knarf.entity_management_guesser:
       class: Knarf\CoreBundle\Services\EntityManagementGuesser
 
-    knarf.collection_converter:
-      class: Knarf\CoreBundle\Converter\CollectionConverter
-      arguments:
-          - "@doctrine"
-          - "@service_container"
-      tags:
-          - { name: request.param_converter, converter: project_collection_converter }
+#    knarf.collection_converter:
+#      class: Knarf\CoreBundle\Converter\CollectionConverter
+#      arguments:
+#          - "@doctrine"
+#          - "@service_container"
+#      tags:
+#          - { name: request.param_converter, converter: project_collection_converter }
 
     knarf.mailer_service:
       class: Knarf\CoreBundle\Services\MailerService
