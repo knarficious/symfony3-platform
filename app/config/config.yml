@@ -300,8 +300,8 @@ fos_comment:
         comment:
             create: ROLE_USER
             view: IS_AUTHENTICATED_ANONYMOUSLY
-            edit: ROLE_ADMIN
-            delete: ROLE_ADMIN
+            edit: ROLE_USER
+            delete: ROLE_USER
         thread:
             create: ROLE_USER
             view: IS_AUTHENTICATED_ANONYMOUSLY
@@ -310,8 +310,8 @@ fos_comment:
         vote:
             create: ROLE_USER
             view: IS_AUTHENTICATED_ANONYMOUSLY
-            edit: ROLE_ADMIN
-            delete: ROLE_ADMIN
+            edit: ROLE_USER
+            delete: ROLE_USER
             
 google_maps:
     api_key: 'AIzaSyA2K-avkDmpftUPLab9r9oqBca8vjM1-i4'
