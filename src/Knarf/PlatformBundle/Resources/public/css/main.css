@@ -203,3 +203,8 @@ body.home .dynamicheader.shrink .navbar-brand {
 #toggle-clocks.is-visible {
 	display: flex;
 }
+
+label.required:after {
+    content: " *";
+}
+
