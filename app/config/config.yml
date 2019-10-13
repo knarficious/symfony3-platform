@@ -285,6 +285,7 @@ fos_comment:
         model:
             comment: Knarf\PlatformBundle\Entity\Commentaire
             thread: Knarf\PlatformBundle\Entity\Thread
+            vote: Knarf\PlatformBundle\Entity\Vote
     acl: true
     service:
         acl:
