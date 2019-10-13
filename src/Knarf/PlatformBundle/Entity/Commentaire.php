@@ -5,6 +5,7 @@ namespace Knarf\PlatformBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\CommentBundle\Entity\Comment as BaseComment;
 use FOS\CommentBundle\Model\SignedCommentInterface;
+use FOS\CommentBundle\Model\VotableCommentInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Knarf\UserBundle\Entity\App_User;
 
@@ -14,7 +15,7 @@ use Knarf\UserBundle\Entity\App_User;
  * @ORM\Table(name="commentaire")
  * @ORM\Entity(repositoryClass="Knarf\PlatformBundle\Repository\CommentaireRepository")
  */
-class Commentaire extends BaseComment implements SignedCommentInterface
+class Commentaire extends BaseComment implements SignedCommentInterface, VotableCommentInterface
 {
     /**
      * @var int
@@ -45,6 +46,12 @@ class Commentaire extends BaseComment implements SignedCommentInterface
      * @ORM\Column(name="date_mise_ajour", type="datetime")
      */
     protected $dateMiseAJour;
+    
+    /**
+     * @ORM\Column(type="integer")
+     * @var int
+     */
+    protected $score = 0;
     
     //  === ASSOCIATIONS ===
     /**
@@ -290,6 +297,35 @@ class Commentaire extends BaseComment implements SignedCommentInterface
     {
         return $this->thread;
     }
-    
+
+    /**
+     * Returns the current score of the comment.
+     *
+     * @return integer
+     */
+    public function getScore(): int {
+        return $this->score;
+    }
+
+    /**
+     * Increments the comment score by the provided
+     * value.
+     *
+     * @param integer value
+     *
+     * @return integer The new comment score
+     */
+    public function incrementScore($by = 1) {
+        $this->score += $by;
+    }
+
+    /**
+     * Sets the score of the comment.
+     *
+     * @param integer $score
+     */
+    public function setScore($score) {
+        $this->score = $score;
+    }
 
 }
