@@ -14,28 +14,43 @@ use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Doctrine\ORM\EntityManager;
+use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class AdvertType extends AbstractType
-{
+class AdvertType extends AbstractType {  
+    
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $post = '';
         $builder->add('rubrique',   EntityType::class,  array('class' => 'KnarfPlatformBundle:Rubrique', 'choice_label' => 'intitule', 'placeholder' => 'Sélectionner la rubrique'))
                 ->add('title',      TextType::class)
                 //->add('content',    TextareaType::class)
                 ->add('mediaFile',  VichFileType::class, array(
-                                        'required' => false,
-                                        'label' => false,
+                                        'required' => true,
+                                        'label' => true,
                                         'allow_delete' => true,
-                                    'download_link' => false))
+                                    'download_uri' => false))
                 ->add('published',  CheckboxType::class, array(
                                         'required' => false,
                                         'label' => 'Publier '))
                 ->add('enregistrer',       SubmitType::class)
                 ->add('effacer',    ResetType::class)
-                ->add('content',      CKEditorType::class, array('config_name' => 'full_config'));
+                ->add('content',    CKEditorType::class, array(
+                                            'config_name' => 'full_config'));
+//                                            'config' => array(
+//                                            'filebrowserBrowseHandler' => function (RouterInterface $router) use ($post) {
+//                                                return $router->generate(
+//                                                    'knarf_platform_view',
+//                                                    array('slug' => '$post->getSlug()'),
+//                                                    UrlGeneratorInterface::ABSOLUTE_URL
+//                                                );
+//                                            })
+
+                                                    
     }
     
     /**
