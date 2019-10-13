@@ -3,58 +3,61 @@
 {% form_theme form 'bootstrap_3_layout.html.twig' %}
 
 <div class="container-fluid">
-    
+
     {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
 
-        {# Les erreurs générales du formulaire. #}
-        {{ form_errors(form) }}
+    {# Les erreurs générales du formulaire. #}
+    {{ form_errors(form) }}
 
 
-        <div class="form-group">
-            {{ form_label(form.rubrique, "Rubrique de l'annonce", {'label_attr': {'class': 'control-label'}}) }}
-            {{ form_errors(form.rubrique) }}       
-            {{ form_widget(form.rubrique, {'attr': {'class': 'form-control'}}) }}
+    <div class="form-group">
+        {{ form_label(form.rubrique, "Rubrique de l'annonce", {'label_attr': {'class': 'control-label'}}) }}
+        {{ form_errors(form.rubrique) }}       
+        {{ form_widget(form.rubrique, {'attr': {'class': 'form-control'}}) }}
 
-        </div>
+    </div>
 
-        <div class="form-group">            
-            {{ form_label(form.title, "Titre de l'annonce", {'label_attr': {'class': 'control-label'}}) }}
-            {{ form_errors(form.title) }}            
-            {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}            
-        </div>
+    <div class="form-group">            
+        {{ form_label(form.title, "Titre de l'annonce", {'label_attr': {'class': 'control-label'}}) }}
+        {{ form_errors(form.title) }}            
+        {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}            
+    </div>
 
-        <div class="form-group">
-            {{ form_label(form.mediaFile, "Media de l'annonce", {'label_attr': {'class': 'media-heading  control-label'}}) }}
-            {{ form_errors(form.mediaFile) }}           
-            {{ form_widget(form.mediaFile) }}            
-        </div>
+    <div class="form-group">
+        {{ form_label(form.mediaFile, "Media de l'annonce", {'label_attr': {'class': 'media-heading  control-label'}}) }}
+        {{ form_errors(form.mediaFile) }}
+        {% if help is defined %}
+            <span class="help-block">{{ help }}</span>
+        {% endif %}
+        {{ form_widget(form.mediaFile, { 'attr': {'class': 'required'} }, {'help': 'foobar'}) }}
+    </div>
 
-        <div class="form-group">
-            {{ form_label(form.content, "Contenu de l'annonce", {'label_attr': {'class': 'control-label'}}) }}
-            {{ form_errors(form.content) }}            
-            {{ form_widget(form.content, {'attr': {'class': 'form-control'}}) }}            
-        </div>   
+    <div class="form-group">
+        {{ form_label(form.content, "Contenu de l'annonce", {'label_attr': {'class': 'control-label'}}) }}
+        {{ form_errors(form.content) }}            
+        {{ form_widget(form.content, {'attr': {'class': 'form-control'}}) }}            
+    </div>   
 
-        <div class="form-group">
-            {{ form_widget(form.published, {'attr': {'class': 'col-sm-offset-2 col-sm-4'}}) }}
-        </div>
-        
-        <a href="{{ path('profile') }}" class="btn btn-default" >
+    <div class="form-group">
+        {{ form_widget(form.published, {'attr': {'class': 'col-sm-offset-2 col-sm-4'}}) }}
+    </div>
+
+    <a href="{{ path('profile') }}" class="btn btn-default" >
         <i class="glyphicon glyphicon-chevron-left"></i>
         Annuler
-        </a>    
+    </a>    
 
-        {# Pour le bouton, pas de label ni d'erreur, on affiche juste le widget #}
-        {{ form_widget(form.enregistrer, {'attr': {'class': 'btn btn-primary'}}) }}
-        {{ form_widget(form.effacer, {'attr': {'class': 'btn btn-danger'}}) }}
+    {# Pour le bouton, pas de label ni d'erreur, on affiche juste le widget #}
+    {{ form_widget(form.enregistrer, {'attr': {'class': 'btn btn-primary'}}) }}
+    {{ form_widget(form.effacer, {'attr': {'class': 'btn btn-danger'}}) }}
 
-        {# Génération automatique des champs pas encore écrits.
-        Dans cet exemple, ce serait le champ CSRF (géré automatiquement par Symfony !)
-        et tous les champs cachés (type « hidden »). #}
-        {{ form_rest(form) }} 
+    {# Génération automatique des champs pas encore écrits.
+    Dans cet exemple, ce serait le champ CSRF (géré automatiquement par Symfony !)
+    et tous les champs cachés (type « hidden »). #}
+    {{ form_rest(form) }} 
 
     {# Fermeture de la balise <form> du formulaire HTML #}
     {{ form_end(form) }}
-  
+
 
 </div>
