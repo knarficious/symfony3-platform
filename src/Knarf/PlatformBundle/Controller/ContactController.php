@@ -38,7 +38,7 @@ class ContactController extends Controller{
             $email = \Swift_Message::newInstance()
                 ->setSubject($objet)
                 ->setFrom(array($courriel))
-                ->setTo('contact@norminfo.eu')
+                ->setTo('contact@franckruer.fr')
                 ->setCharset('utf-8')    
                 ->setContentType('text/html')    
                 ->setBody($this->container->get('templating')->render(
