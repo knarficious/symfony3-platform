@@ -26,3 +26,8 @@
 /src/Knarf/PlatformBundle/Resources/public/css/bootstrap.min.css
 /web/info.php
 /web/media/cache/
+/composer.phar
+/components/require-built.js
+/components/require.js
+/components/require.config.js
+/components/require.css

@@ -1,4 +1,4 @@
-# symfony3-platform
+# Knarf Media
 
 Plateforme de gestion d'annonces:
 -publication/gestion d'articles et commentaires par utilisateur authentifié
