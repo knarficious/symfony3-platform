@@ -1,6 +1,6 @@
 # Knarf Media
 
-Plateforme de gestion d'annonces:
+Plateforme de gestion d'annonces développée avec le framework Symfony 3.4
 -publication/gestion d'articles et commentaires par utilisateur authentifié
 
 Système sécurisé de gestion d'utilisateurs:
