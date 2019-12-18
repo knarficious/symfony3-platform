@@ -107,5 +107,13 @@ interface UserManagerInterface extends GenericManagerInterface
      * @param $adresseIp
      */
     public function setIp(App_User $user, $adresseIp);
+    
+    /**
+     *
+     */
+    public function getLastTimeConnect();
+
 
 }
+
+

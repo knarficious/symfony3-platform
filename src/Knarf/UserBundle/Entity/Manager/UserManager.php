@@ -163,5 +163,11 @@ class UserManager extends AbstractGenericManager implements UserManagerInterface
             KnarfUserEvents::NEW_ACCOUNT_CREATED, new UserDataEvent($admin)
         );
     }
+    
+    public function getLastTimeConnect()
+    {
+        return $this->repository->getAllNeverConnectedUsers();        
+
+    }
 
 }

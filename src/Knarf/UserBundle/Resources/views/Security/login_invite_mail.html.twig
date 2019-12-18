@@ -1,0 +1,22 @@
+{% block subject %}
+   Connectez-vous à votre profil
+{% endblock %}
+
+{% block body %}
+Bonjour {{ username }}.
+<p>
+<p>
+    Vous avez créé un compte sur la plateforme Knarf Media le : {{ dateCreation |date('d/M/y') }}
+<p>
+Vous ne vous êtes pas encore connecté. Veuillez vous connecter pour découvrir toutes les fonctionnalités offertes par la plateforme
+<a href ="http://knarfmedia.local/login"><button>Se connecter</button></a>
+<p>
+   À très bientôt sur Knarf Media 
+<p>    
+Cordialement,
+<p>
+Franck, administrateur
+<p>
+<img src="{{ asset('images/8-cell-simple.gif') }}">
+<a href="http://knarfmedia.local">Knarf Media</a>
+{% endblock %}

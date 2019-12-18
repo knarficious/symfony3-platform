@@ -14,6 +14,10 @@ services:
         # if you need to do this, you can override this setting on individual services
         public: false
     
+    Knarf\UserBundle\:
+        resource: '../../src/Knarf/UserBundle/*'
+        exclude: '../../src/Knarf/UserBundle/{Entity,Repository,DependencyInjection}'
+        
     Knarf\PlatformBundle\:
         resource: '../../src/Knarf/PlatformBundle/*'
         # you can exclude directories or files
@@ -34,6 +38,7 @@ services:
         resource: '../../src/Knarf/ApiBundle/Controller'
         tags: ['controller.service_arguments']    
             
+    
     Knarf\PlatformBundle\Services\MercureCookieGenerator:
             arguments:
                 $secret: '%secret%'
@@ -42,6 +47,11 @@ services:
             arguments:
                 $secret: '%secret%' 
     
+    Knarf\UserBundle\Services\SendMailToNeverConnectedUserService:
+        arguments:
+            $template: 'KnarfUserBundle:Security:login_invite_mail.html.twig'
+            $from: '%email_from%'
+            
     vich_uploader.namer_origname.upload_media:
         class: Vich\UploaderBundle\Naming\OrignameNamer
         public: true

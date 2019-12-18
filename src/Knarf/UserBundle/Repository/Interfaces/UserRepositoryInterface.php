@@ -35,6 +35,11 @@ interface UserRepositoryInterface
      * @return UserRepository
      */
     public function getUserByToken($token);
+    
+    /**
+     * @return UserRepository 
+     */
+    public function getAllNeverConnectedUsers();
 }
 
     
