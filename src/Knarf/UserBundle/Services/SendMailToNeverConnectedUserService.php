@@ -95,10 +95,11 @@ class SendMailToNeverConnectedUserService
                     'dateCreation' => $user->getCreatedAt()
             
                 ])
-            );          
+            );
             
+            $this->logger->info('User '. $user->getUsername(). ' RECEIVED AN EMAIL FOR LOGGING'); 
         }
         
-        $this->logger->info('User ' . $user->getUsername(). ' RECEIVED AN EMAIL FOR LOGGING', ['user' => $user]);
+        
     }
 }
