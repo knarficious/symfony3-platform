@@ -40,6 +40,12 @@ interface UserRepositoryInterface
      * @return UserRepository 
      */
     public function getAllNeverConnectedUsers();
+    
+    /**
+     * @param DateTime $date
+     * @return UserRepository
+     */
+    public function getAllOldConnectedUsers(\DateTime $date);
 }
 
     

@@ -58,5 +58,19 @@ class UserRepository extends AbstractGenericRepository implements UserRepository
         
         return $qb->getQuery()->getResult();
     }
+    
+    public function getAllOldConnectedUsers(\DateTime $date)
+    {
+        $from =$date->format("2019-08-01").(" 00:00:00");
+        $to = $date->format("2019-12-01").(" 23.59.59");
+        
+        $qb = $this->createQueryBuilder('u')
+                ->where('u.lastTimeConnect BETWEEN :from AND :to')
+                ->andWhere('u.isActive = 1')
+                ->setParameter('from', $from)
+                ->setParameter('to', $to);
+        
+        return $qb->getQuery()->getResult();
+    }
 
 }

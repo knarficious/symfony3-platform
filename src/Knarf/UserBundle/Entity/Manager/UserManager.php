@@ -164,10 +164,16 @@ class UserManager extends AbstractGenericManager implements UserManagerInterface
         );
     }
     
-    public function getLastTimeConnect()
+    public function getNeverConnect()
     {
-        return $this->repository->getAllNeverConnectedUsers();        
+        return $this->repository->getAllNeverConnectedUsers();      
 
+    }
+    
+    public function getOldConnect() 
+    {
+        $now = new \DateTime();
+        return $this->repository->getAllOldConnectedUsers($now);;
     }
 
 }

@@ -111,7 +111,9 @@ interface UserManagerInterface extends GenericManagerInterface
     /**
      *
      */
-    public function getLastTimeConnect();
+    public function getNeverConnect();
+    
+    public function getOldConnect();
 
 
 }

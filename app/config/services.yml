@@ -52,6 +52,11 @@ services:
             $template: 'KnarfUserBundle:Security:login_invite_mail.html.twig'
             $from: '%email_from%'
             
+    Knarf\UserBundle\Services\SendMailToOldConnectedUserService:
+        arguments:
+            $template: 'KnarfUserBundle:Security:login_invite_mail2.html.twig'
+            $from: '%email_from%'        
+            
     vich_uploader.namer_origname.upload_media:
         class: Vich\UploaderBundle\Naming\OrignameNamer
         public: true
@@ -76,4 +81,9 @@ services:
             - IS_AUTHENTICATED_ANONYMOUSLY
             - ROLE_USER
             - ROLE_USER
-            - "%fos_comment.model.comment.class%"            
+            - "%fos_comment.model.comment.class%"
+            
+    knarf.ajax.authentication.listener:
+     class: Knarf\UserBundle\Listeners\AjaxAuthenticationListener
+     tags:
+        - { name: kernel.event_listener, event: kernel.exception, method: onCoreException, priority: 1000 }        
