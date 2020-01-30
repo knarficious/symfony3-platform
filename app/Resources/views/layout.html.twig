@@ -6,7 +6,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="Knarf Media le media alternatif du web 3.0 enregistrement connexion sécurisée compte utilisateur contenu annonces articles symfony php" />
+        <meta name="description" content="Knarf Media est un media alternatif du web 3.0. Créez votre compte, publiez et commentez du contenu depuis l'interface sécurisée." />
         <link rel="canonical" href="https://blog.franckruer.fr/" />
         <meta property="og:locale" content="fr_FR" />
         <meta property="og:type" content="website" />
@@ -120,7 +120,7 @@
                 </div>
 
                 <div class="rightcolumn">
-                    
+                    {{ render(controller("KnarfUserBundle:Security:index")) }}
                     <br>
                     {{ include('KnarfPlatformBundle:Map:map_view.html.twig') }}
 
