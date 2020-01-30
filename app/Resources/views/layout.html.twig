@@ -3,161 +3,199 @@
 <!DOCTYPE html>
 
 <html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Knarf Media le media alternatif du web 3.0 enregistrement connexion sécurisée compte utilisateur contenu annonces articles symfony php" />
+        <link rel="canonical" href="https://blog.franckruer.fr/" />
+        <meta property="og:locale" content="fr_FR" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Knarf Media | le media alternatif du web 3.0" />
+        <meta property="og:description" content="Knarf Media le media alternatif du web 3.0 enregistrement connexion sécurisée compte utilisateur contenu annonces articles symfony php" />
+        <meta property="og:url" content="https://blog.franckruer.fr/" />
+        <meta property="og:site_name" content="Knarf Media | le media alternatif du web 3.0" />
 
-  <title>{% block title %}Knarf Media{% endblock %}</title>
+        <title>{% block title %}Knarf Media{% endblock %}</title>
 
-  {% block stylesheets %}
-    <link href="{{ asset('bundles/knarfplatform/css/main.css') }}" type="text/css" rel="stylesheet"> 
-    <link href="{{ asset('bundles/knarfplatform/css/clocks.css') }}" type="text/css" rel="stylesheet">
-    
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">    
-  {% endblock %}
-</head>
+        {% block stylesheets %}
+            <link href="{{ asset('bundles/knarfplatform/css/main.css') }}" type="text/css" rel="stylesheet"> 
+            <link href="{{ asset('bundles/knarfplatform/css/clocks.css') }}" type="text/css" rel="stylesheet">    
+            <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css" rel="stylesheet">    
+        {% endblock %}
+    </head>
 
-<body>
-<nav class="navbar navbar-inverse navbar-fixed-top dynamicheader">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#myNavbar" aria-expanded="false" aria-controls="navbar">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>                        
-      </button>        
-      <a class="navbar-brand" href="{{ path('knarf_platform_home') }}">Knarf Media</a>          
-    </div>
-      <div class="collapse navbar-collapse" id="myNavbar">         
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="#toggle-clocks" data-toggle="modal" data-target="#clocksModal">Horloges</a></li>
-        <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="">Rubriques<span class="caret"></span></a>
-            <ul class="dropdown-menu">
-                {{ render(controller("KnarfPlatformBundle:Rubrique:menu")) }}
-            </ul>
-        </li>
-        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}              
-        <li>
-            <a href="{{ path('knarf_platform_add') }}">Ajouter une annonce</a>
-        </li>          
-        {% endif %}        
-        <li>
-            <a href="{{ path('contact') }}">Contact</a>
-        </li>
-        <li>
-            <a href="{{ path('knarf_chat') }}">Chatroom</></a>
-        </li>
-                {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}  
-       
-{#        <li>
-        {% if  app.user.avatar is not empty %}
-        <img src="{{vich_uploader_asset(app.user.avatar, 'mediaFile') | imagine_filter('my_thumb') }}" alt=""  />
-        {% else  %}
-        <img src="{{ asset('/images/icon-person_211874.png') }}" alt="icon person"/> 
-        {% endif %}
-        </li>#}
-        
+    <body>
+        <nav class="navbar navbar-inverse navbar-fixed-top dynamicheader">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#myNavbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>                        
+                    </button>        
+                    <a class="navbar-brand" href="{{ path('knarf_platform_home') }}">Knarf Media</a>          
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar">         
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#toggle-clocks" data-toggle="modal" data-target="#clocksModal">Horloges</a></li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="">Rubriques<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                {{ render(controller("KnarfPlatformBundle:Rubrique:menu")) }}
+                            </ul>
+                        </li>
+                        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}              
+                            <li>
+                                <a href="{{ path('knarf_platform_add') }}">Ajouter une annonce</a>
+                            </li>          
+                        {% endif %}        
+                        <li>
+                            <a href="{{ path('contact') }}">Contact</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('knarf_chat') }}">Chatroom</></a>
+                        </li>
+                        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}  
 
-        {% if app.request.get('_route')!= 'profile'%}
-                    
-        <li><a id="profile" href="{{ path('profile') }}">{{app.user.username}}</a></li>        
-            
-        {% endif %}
-        
-        <li><a href="{{ path('security_logout') }}"><span class="glyphicon glyphicon-log-out"></span> Déconnexion</a></li>
-        
-        {% else %}
-            
-        <li><a href="{{ path('register') }}"><span class="glyphicon glyphicon-user"></span> S'enregistrer</a></li>
-        <li><a href="{{ path('security_login_form') }}"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
-      
-      {% endif %}
-      </ul>
-{#        <form class="navbar-form navbar-left" action="">
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Rechercher">
-                <div class="input-group-btn">
-                    <button class="btn btn-default" type="submit">
-                        <i class="glyphicon glyphicon-search"></i>
-                    </button>
+                            {#        <li>
+                                    {% if  app.user.avatar is not empty %}
+                                    <img src="{{vich_uploader_asset(app.user.avatar, 'mediaFile') | imagine_filter('my_thumb') }}" alt=""  />
+                                    {% else  %}
+                                    <img src="{{ asset('/images/icon-person_211874.png') }}" alt="icon person"/> 
+                                    {% endif %}
+                                    </li>#}
+
+
+                            {% if app.request.get('_route')!= 'profile'%}
+
+                                <li><a id="profile" href="{{ path('profile') }}">{{app.user.username}}</a></li>        
+
+                            {% endif %}
+
+                            <li><a href="{{ path('security_logout') }}"><span class="glyphicon glyphicon-log-out"></span> Déconnexion</a></li>
+
+                        {% else %}
+
+                            <li><a href="{{ path('register') }}"><span class="glyphicon glyphicon-user"></span> S'enregistrer</a></li>
+                            <li><a href="{{ path('security_login_form') }}"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
+
+                        {% endif %}
+                    </ul>
+                    {#        <form class="navbar-form navbar-left" action="">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Rechercher">
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-default" type="submit">
+                                            <i class="glyphicon glyphicon-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form> #}
+
                 </div>
             </div>
-        </form> #}
-    
-    </div>
-  </div>
-</nav>
+        </nav>
 
-{# modal clocks #}
-{{ include('KnarfPlatformBundle:Clock:modal_view.html.twig') }}
+        {# modal clocks #}
+        {{ include('KnarfPlatformBundle:Clock:modal_view.html.twig') }}
+        <!-- Modal -->
+
+        {# body layout #}
+        <div class="container-fluid">
+
+            <div class="row">        
+                <div class="col-sm-12">
+                    {% include ('::flash-messages.html.twig') %}
+                </div>
+            </div>
+
+            <div class="row">    
+
+                <div class="leftcolumn" id="main"> 
+
+                    {% block left_body %}
+                    {% endblock %}      
+
+                </div>
+
+                <div class="rightcolumn">
+                    
+                    <br>
+                    {{ include('KnarfPlatformBundle:Map:map_view.html.twig') }}
+
+                </div>
+
+            </div>
+            <div class="row">        
+
+                {% block next_body %}
+                {% endblock %}
+
+            </div>
             <!-- Modal -->
+            <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog">
 
-{# body layout #}
-<div class="container-fluid">
-      
-    <div class="row">        
-        <div class="col-sm-12">
-                {% include ('::flash-messages.html.twig') %}
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Modal Header</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Some text in the modal.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>   
+        <hr>
+        <div class="footer">
+            <nav class="navbar">
+                <div class="container-fluid">
+                    <div class="nav navbar-nav navbar-left">
+                        <p>© knarficious {{ 'now'|date('Y') }}</p>
+                    </div>
+                    <ul class="nav navbar-nav navbar-right">          
+                        <li>
+                            <a href="{{ path('nelmio_api_doc_index') }}">API Documentation</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
         </div>
-    </div>
-  
-    <div class="row">    
-        
-        <div class="leftcolumn" id="main"> 
 
-            {% block left_body %}
-            {% endblock %}      
-
+        <div id="back-to-top">
+            <a href="#main" class="btn btn-primary btn-lg back-to-top" role="button" title="Revenir en haut de la page">
+                <span class="glyphicon glyphicon-chevron-up"></span>
+            </a>
         </div>
 
-        <div class="rightcolumn">
-            {{ render(controller("KnarfUserBundle:Security:index")) }}
-            <br>
-            {{ include('KnarfPlatformBundle:Map:map_view.html.twig') }}
+        {% block javascripts %}
+            {# Ajoutez ces lignes JavaScript si vous comptez vous servir des fonctionnalités du bootstrap Twitter #}
+            <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.23/moment-timezone-with-data.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.3.0/moment-timezone-utils.min.js"></script>
+            <script type="text/javascript" src="{{ asset('bundles/knarfplatform/js/clock.js') }}"></script>
+            <script type="text/javascript">
+                        $(document).ready(function () {
+            //Catch AjaxAuthenticationListener response
+            $(document).ajaxError(function (event, jqXHR) {
+                if (403 === jqXHR.status) {
+                    $(location).attr('href', '{{ path('security_login_form') }}');
+                }
+            });
+            })
+            </script>
+        {% endblock %}
 
-        </div>
-       
-    </div>
-    <div class="row">        
-
-            {% block next_body %}
-            {% endblock %}
-
-    </div>
-</div>   
-<hr>
-<div class="footer">
-    <nav class="navbar">
-    <div class="container-fluid">
-        <div class="nav navbar-nav navbar-left">
-      <p>© knarficious {{ 'now'|date('Y') }}</p>
-        </div>
-      <ul class="nav navbar-nav navbar-right">          
-        <li>
-            <a href="{{ path('nelmio_api_doc_index') }}">API Documentation</a>
-        </li>
-      </ul>
-    </div>
-    </nav>
-</div>
-   
-  <div id="back-to-top">
-      <a href="#main" class="btn btn-primary btn-lg back-to-top" role="button" title="Revenir en haut de la page">
-          <span class="glyphicon glyphicon-chevron-up"></span>
-      </a>
-  </div>
-{% block javascripts %}
-    {# Ajoutez ces lignes JavaScript si vous comptez vous servir des fonctionnalités du bootstrap Twitter #}
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.23/moment-timezone-with-data.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.3.0/moment-timezone-utils.min.js"></script>
-    <script type="text/javascript" src="{{ asset('bundles/knarfplatform/js/clock.js') }}"></script>
-{% endblock %}
-
-</body>
+    </body>
 </html>
