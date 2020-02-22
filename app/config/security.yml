@@ -27,13 +27,13 @@ security:
             security: false
             
         oauth_authorize:
-            pattern:    ^/oauth/v2/auth
+            pattern: ^/oauth/v2/auth
             form_login:
-                provider: database_users
-                check_path: knarf_oauth_server_auth_login_check
-                login_path: knarf_oauth_server_auth_login
-            anonymous: false
-            logout_on_user_change: true
+                provider: database_users                
+                login_path: oauth_server_auth_login
+                check_path: oauth_server_auth_login_check
+                #use_referer: true
+            logout_on_user_change: true    
             
         oauth_token:
             pattern:    ^/oauth/v2/token
@@ -54,23 +54,15 @@ security:
         main:
             pattern: ^/
             anonymous: true
-            # activate different ways to authenticate
-
-            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
-            #http_basic: ~
-
-            # https://symfony.com/doc/current/security/form_login_setup.html
-            
             form_login:
-              provider: database_users
-              login_path: security_login_form
-              check_path: security_login_check
-              use_referer: false
-              csrf_token_generator: security.csrf.token_manager
-              failure_path: security_login_form
-              success_handler: security_authentication_success_handler
-              failure_handler: security_authentication_failure_handler
-              
+                provider: database_users
+                login_path: security_login_form
+                check_path: security_login_check
+                use_referer: false
+                csrf_token_generator: security.csrf.token_manager
+                failure_path: security_login_form
+                success_handler: security_authentication_success_handler
+                failure_handler: security_authentication_failure_handler              
             remember_me:
                 secret: '%secret%'
                 lifetime: 604800
@@ -81,8 +73,7 @@ security:
                 path: security_logout
                 #target: /
                 handlers: [security_logout_success_handler]
-                invalidate_session: true
-                
+                invalidate_session: true                
             logout_on_user_change: true           
         
             
@@ -93,10 +84,10 @@ security:
         strategy: affirmative
 
     access_control:
-        - { path: ^/oauth/v2/, roles: [ IS_AUTHENTICATED_FULLY, IS_AUTHENTICATED_ANONYMOUSLY ] }
-        - { path: ^/api, roles: [ IS_AUTHENTICATED_ANONYMOUSLY ] }        
+        - { path: ^/oauth/v2/auth, roles: [ IS_AUTHENTICATED_ANONYMOUSLY ] }
+        - { path: ^/api, roles: [ IS_AUTHENTICATED_FULLY ] }        
         - { path: ^/api/documentation, roles: [ IS_AUTHENTICATED_FULLY, IS_AUTHENTICATED_ANONYMOUSLY ] }        
-        - { path: ^/login | register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login | register, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
         - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/profile, roles: ROLE_USER }
         - { path: ^/rubrique/delete, roles: ROLE_ADMIN }
@@ -106,4 +97,5 @@ security:
         - { path: ^/ajout, roles: ROLE_USER }
         - { path: ^/reply, roles: ROLE_USER }
         - { path: ^/logout, roles: ROLE_USER }
+        - { path: ^/create-client, roles:[ IS_AUTHENTICATED_ANONYMOUSLY ]}
         
