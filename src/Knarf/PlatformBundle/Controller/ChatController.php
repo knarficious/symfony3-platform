@@ -52,7 +52,10 @@ class ChatController extends Controller
      */
     public function index(MercureCookieGenerator $cookieGenerator)
     {        
-        $this->denyAccessUnlessGranted('ROLE_USER', null, 'U must BE logged IN !!!');
+        if ($this->denyAccessUnlessGranted('ROLE_USER', null, 'U must BE logged IN !!!'))
+        {
+            $response = $this->redirectToRoute('security_login_form');
+        }
         
         $cookie = $cookieGenerator->generate($this->getUser());
         
@@ -81,7 +84,7 @@ class ChatController extends Controller
             if($user !== null)
             {
                 $target = [
-                    "https://symfony.local/user/{$user->getId()}"
+                    "http://knarfmedia.local/user/{$user->getId()}"
                 ];
             }
         
@@ -116,7 +119,7 @@ class ChatController extends Controller
         }
         
         /**
-         * @Route("/ping/{user}", name="ping", methods={"POST"})
+         * @Route("/ping/{user}", name="ping", methods={"GET, POST"})
          * @return Response         * 
          */
         public function ping(App_User $user = null) 
@@ -125,10 +128,10 @@ class ChatController extends Controller
             if($user !== null)
             {
                 $target = [
-                    "https://symfony.local/user/{$user->getId()}"
+                    "http://knarfmedia.local/user/{$user->getId()}"
                 ];
             }
-            $publisher = new Publisher(HUB_URL, new StaticJwtProvider(JWT));
+            $publisher = new Publisher(HUB_URL, new $this->jwt);
             $publisher(new Update("https://symfony.local/ping", "[]", $target));
             
             return $this->redirectToRoute('knarf_chat');
