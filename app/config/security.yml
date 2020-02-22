@@ -98,4 +98,4 @@ security:
         - { path: ^/reply, roles: ROLE_USER }
         - { path: ^/logout, roles: ROLE_USER }
         - { path: ^/create-client, roles:[ IS_AUTHENTICATED_ANONYMOUSLY ]}
-        
+        - { path: ^/chat, roles: ROLE_USER, requires_channel: https }
