@@ -3,8 +3,8 @@
 namespace Knarf\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-//use Knarf\UserBundle\Entity\Interfaces\AppUserInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
+//use Knarf\UserBundle\Entity\Interfaces\AppUserI  nterface;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -25,7 +25,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @UniqueEntity(fields="email", message="Cet email existe déjà!")
  * @Vich\Uploadable
  */
-class App_User implements UserInterface, \Serializable, EquatableInterface
+class App_User implements AdvancedUserInterface, \Serializable, EquatableInterface
 {
     /**
      * @var int
@@ -367,7 +367,8 @@ class App_User implements UserInterface, \Serializable, EquatableInterface
         $this->username,
         $this->email,
         $this->password,
-        $this->salt    
+        $this->salt,
+        $this->isActive    
         ));
     }
 
@@ -381,7 +382,8 @@ class App_User implements UserInterface, \Serializable, EquatableInterface
         $this->username,
         $this->email,
         $this->password,
-        $this->salt
+        $this->salt,
+        $this->isActive
         ) = unserialize($serialized);
     }
 
