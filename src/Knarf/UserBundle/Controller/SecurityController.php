@@ -16,7 +16,7 @@ class SecurityController extends Controller
    */  
   public function loginAction()
   {
-    // Si le visiteur est déjà identifié, on le redirige vers l'accueil
+    // Si le visiteur est déjà identifié, on le redirige vers sa page
     if ($this->get('security.authorization_checker')->isGranted('ROLE_USER')) {
       return $this->redirectToRoute('profile');
     }
@@ -98,19 +98,22 @@ class SecurityController extends Controller
         
     }
     
-    /**
-     * @Route("/admin")
-     * @return type
-     */
+
     public function adminAction()
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
         
-        $user = $this->getUser();
-        $name = $user->getUsername();
+       
+        $listUsers = $this
+                ->getDoctrine()
+                ->getManager()
+                ->getRepository('KnarfUserBundle:App_User')
+                ->findAll();
         
-        return $this->render('KnarfUserBundle:Security:admin.html.twig', array(
-            'name' => $name
+        dump($listUsers);
+        
+        return $this->render('KnarfUserBundle:Security:members.html.twig', 
+                array( 'listUsers' => $listUsers 
         ));
 
     }

@@ -52,6 +52,13 @@ class Rubrique
      */
     private $updateAt;
     
+    /**
+     *
+     * @var bool
+     * @ORM\Column(name="is_admin", type="boolean") 
+     */
+    private $isAdmin = false;
+    
         /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
      * 
@@ -277,5 +284,23 @@ class Rubrique
     public function getUpdateAt()
     {
         return $this->updateAt;
+    }
+    
+    /**
+     * 
+     * @param type $isAdmin
+     */
+    public function setIsAdmin($isAdmin) 
+    {
+        $this->isAdmin = $isAdmin;
+    }
+    
+    /**
+     * 
+     * @return boolean
+     */
+    public function getIsAdmin()
+    {
+        return $this->isAdmin;
     }
 }

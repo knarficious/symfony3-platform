@@ -18,7 +18,7 @@ La base - {{ parent() }}
 
         <br>
 {% for rubrique in listRubriques %} 
-    
+    {% if rubrique.isAdmin == 0 %}
     <section class="container-fluid" id="section-rubrique">                     
             {% if rubrique.adverts is not empty %}
                   
@@ -71,7 +71,7 @@ La base - {{ parent() }}
             {% endif %}    
         
     </section>            
-
+    {% endif %}
 {% endfor %}
 
 {%  endblock %}

@@ -1,18 +1,18 @@
 {# src/Knarf/UserBundle/Resources/views/Security/admin.html.twig #}
 
-{% extends '::layout.html.twig' %}
 
-{% block title %}
-    {{ parent() }} - {{ app.user.username }}
-{% endblock %}
+<div class="well">    
+    <h3>Liste des utilisateurs </h3>   
 
-{% block knarfuser_body %}
-    
-    {{ parent() }}
+    {{ render(controller("KnarfUserBundle:Security:admin")) }}
+</div>
 
+<div class="well">        
+    <h3>Liste des rubriques</h3>
+    <ul>
+        {{ render(controller("KnarfPlatformBundle:Rubrique:menu")) }}
+    </ul>
+    <p>
+        <a href="{{ path('rubrique_ext_index') }}"><h3>Gérer les rubriques</h3></a>
+</div>
 
-        <h1>Bienvenue {{ name }}</h1>
-
-  
-    
-    {% endblock %}    

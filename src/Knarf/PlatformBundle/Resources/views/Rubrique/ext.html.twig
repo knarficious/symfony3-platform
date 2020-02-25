@@ -22,8 +22,8 @@
         
 
         {# sorting of properties based on query components #}
-        <div {% if pagination.isSorted('a.Title') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Title', 'a.title') }}</div>
-        <div>{{ knp_pagination_sortable(pagination, 'Date', 'a.date') }}</div>
+        <div {% if pagination.isSorted('a.title') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Titre', 'a.title') }}</div>
+        <div {% if pagination.isSorted('a.date') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pagination, 'Date', 'a.date') }}</div>
    
 
         {% for entity in pagination %}

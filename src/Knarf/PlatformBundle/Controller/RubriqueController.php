@@ -15,13 +15,15 @@ use Symfony\Component\Routing\Annotation\Route;
 use Knarf\PlatformBundle\Form\RubriqueType;
 use Knarf\PlatformBundle\Form\RubriqueEditType;
 use Knarf\PlatformBundle\Entity\Rubrique;
+use Knarf\PlatformBundle\Entity\Advert;
 
 /**
  * Description of RubriqueController
  *
  * @author franck
  */
-class RubriqueController extends Controller{
+class RubriqueController extends Controller
+{
     
     /**
      * @Route("/", name="knarf_platform_home")
@@ -129,7 +131,7 @@ class RubriqueController extends Controller{
         
             $request->getSession()->getFlashBag()->add('success', 'Rubrique modifiée avec succès.');
         
-            return $this->redirectToRoute('rubrique_view', array('slug' => $rubrique->getSlug()));
+            return $this->redirectToRoute('rubrique_ext', array('slug' => $rubrique->getSlug()));
         }
 
 
@@ -219,7 +221,7 @@ class RubriqueController extends Controller{
 
             // Puis on redirige vers la page de visualisation de cettte annonce
 
-            return $this->redirect($this->generateUrl('rubrique_view', array('slug' => $rubrique->getSlug())));
+            return $this->redirect($this->generateUrl('rubrique_ext', array('slug' => $rubrique->getSlug())));
         }
 
         // Si on n'est pas en POST, alors on affiche le formulaire

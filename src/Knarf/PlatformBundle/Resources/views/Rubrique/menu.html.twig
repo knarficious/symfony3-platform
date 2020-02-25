@@ -6,18 +6,31 @@
 
 <ul class="nav nav-pills nav-stacked">
 
-  {% for rubrique in listRubriques %}      
+    {% for rubrique in listRubriques %}
 
-    <li>
+        {#  affichage des rubriques par défaut  #}
+        {% if rubrique.isAdmin == 0 %}
+            <li>
 
-      <a href="{{ path('rubrique_ext', {'slug': rubrique.slug}) }}">
+                <a href="{{ path('rubrique_ext', {'slug': rubrique.slug}) }}">
 
-        {{ rubrique.intitule }}
+                    {{ rubrique.intitule }}
 
-      </a>
+                </a>
 
-    </li>
+            </li>
+        {#  affichage des rubriques pour le role ADMIN  #}
+        {% elseif is_granted('ROLE_ADMIN') %}    
+            <li id="rubrique-admin">
 
-  {% endfor %}
+                <a href="{{ path('rubrique_ext', {'slug': rubrique.slug}) }}">
+
+                    {{ rubrique.intitule }}
+
+                </a>
+
+            </li>
+        {% endif %}
+    {% endfor %}
 
 </ul>

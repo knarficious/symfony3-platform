@@ -6,7 +6,7 @@
 
 {% block title %}
 
-  Accueil - {{ parent() }}
+  Liste des rubriques - {{ parent() }}
 
 {% endblock %}
 
@@ -17,6 +17,7 @@
   <h2 style="text-align: center;">Liste des rubriques</h2>  
 
     {% for rubrique in listRubriques %}
+        {% if rubrique.isAdmin == 0 %}
         <div class="col-md-6">
             <div class="well">
             <a href="{{ path('rubrique_ext', {'slug': rubrique.slug}) }}">
@@ -33,6 +34,28 @@
                 {% endif %}   
             </div>
         </div>
+        {% endif %}
+{#  ROLE ADMIN      #}
+        {% if is_granted('ROLE_ADMIN') %}
+            {%  if rubrique.isAdmin == 1 %}
+        <div class="col-md-6">
+            <div class="well " id="rubrique-admin">
+            <a href="{{ path('rubrique_ext', {'slug': rubrique.slug}) }}">
+                {{ rubrique.intitule }}
+            </a>            
+                {% if rubrique.adverts %}
+                  {% set count = 0 %}
+                  {% for entity in rubrique.adverts %}
+                      {% if entity.published == 1 %}
+                      {% set count = count + 1 %}
+                      {% endif %}
+                  {% endfor %}
+                  ({{ count }} publications)
+                {% endif %}   
+            </div>
+        </div> 
+            {% endif %}
+        {% endif %}
     {% endfor %} 
     <p>
     {% if is_granted('ROLE_ADMIN') %}        

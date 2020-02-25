@@ -1,0 +1,53 @@
+{# src/Knarf/UserBundle/Resources/views/Security/members.html.twig #}
+
+
+
+
+    {% for user in listUsers %}      
+      
+
+          <div class="media">
+            
+            <div class="media-left">
+                
+                {% if user.avatar is not empty %}
+                    
+                    <img class="media-object" src="{{vich_uploader_asset(user.avatar, 'mediaFile') | imagine_filter('my_thumb')}}" alt="mythumb"  />
+                
+                {% else %}
+                    
+                    <img src="{{ asset('/images/icon-person_211874.png') }}" alt="icon person" />
+
+                {% endif %}
+            </div>
+            <div class="media-body">
+                <h4 class="media-heading">
+                    {% if user is same as( app.user) %}
+                        <a href="{{ path('profile') }}">{{ user.username }}</a>                    
+                    {% else %}    
+                        <a href="{{ path('profile_view', {'slug': user.slug}) }}">{{ user.username }}</a>
+                    {% endif %}
+                    <p>
+                        {%  if user.isActive == 1 %}
+                        actif
+                        <span class="glyphicon glyphicon-thumbs-up"></span>
+                    {% else %}  inactif <span class="glyphicon glyphicon-thumbs-down"></span> 
+                    {% endif %}
+                </h4>
+                <i class="connection-status" id="sse-connection-status"></i>
+            </div> 
+                <div class="media-right">
+                    
+                </div>
+                    
+{#            {% if app.request.cookies.has('mercureAuthorization') %}
+            You have chosen your cookie brand!
+            {% endif %}#}
+        </div>
+        
+
+  {% endfor %}
+
+
+
+

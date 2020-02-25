@@ -212,3 +212,8 @@ label.required:after {
     content: " *";
 }
 
+#rubrique-admin {
+    background-color: #3cd19e;
+    
+}
+

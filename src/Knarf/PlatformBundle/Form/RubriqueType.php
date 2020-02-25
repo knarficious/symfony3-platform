@@ -7,6 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class RubriqueType extends AbstractType
@@ -17,6 +18,9 @@ class RubriqueType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('intitule',   TextType::class)
+                ->add('isAdmin',    CheckboxType::class, array(
+                    'required' => false,
+                ))
                 ->add('mediaFile',       VichFileType::class, array(
                     'required' => false,
                     'label' => false,
