@@ -8,25 +8,22 @@
 
 namespace Knarf\PlatformBundle\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Knarf\UserBundle\Services\SendMailToNeverConnectedUserService;
-use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * Description of EmailConnexionAlertCommand
  *
  * @author franck
  */
-class EmailConnexionAlertCommand extends ContainerAwareCommand
+class EmailConnexionAlertCommand extends Command
 {
     private $sendMail;
-    private $em;
     
-    public function __construct(EntityManagerInterface $em, SendMailToNeverConnectedUserService $sendMail) 
+    public function __construct(SendMailToNeverConnectedUserService $sendMail) 
     {
-        $this->em = $em;
         $this->sendMail = $sendMail;
         
         parent::__construct();
@@ -35,7 +32,7 @@ class EmailConnexionAlertCommand extends ContainerAwareCommand
     protected function configure() 
     {
         $this->setName('knarf:email-user')
-             ->setDescription('Send an email to never connected users');
+             ->setDescription('Send an email to not yet connected users');
     }
     
     protected function execute(InputInterface $input, OutputInterface $output)
