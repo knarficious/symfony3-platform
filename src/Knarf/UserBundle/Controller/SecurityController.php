@@ -108,9 +108,8 @@ class SecurityController extends Controller
                 ->getDoctrine()
                 ->getManager()
                 ->getRepository('KnarfUserBundle:App_User')
-                ->findAll();
+                ->findAll();        
         
-        dump($listUsers);
         
         return $this->render('KnarfUserBundle:Security:members.html.twig', 
                 array( 'listUsers' => $listUsers 
