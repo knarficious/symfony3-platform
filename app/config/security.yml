@@ -81,7 +81,7 @@ security:
         #   affirmative (default) => This grants access as soon as there is one voter granting access;
         #   consensus => This grants access if there are more voters granting access than denying;
         #   unanimous => This only grants access once all voters grant access.
-        strategy: affirmative
+        strategy: unanimous
 
     access_control:
         - { path: ^/oauth/v2/auth, roles: [ IS_AUTHENTICATED_ANONYMOUSLY ] }
@@ -93,9 +93,10 @@ security:
         - { path: ^/rubrique/delete, roles: ROLE_ADMIN }
         - { path: ^/rubrique/edit, roles: ROLE_ADMIN }
         - { path: ^/rubriques/ajout, roles: ROLE_ADMIN }
+        - { path: ^/rubrique/admin, roles: ROLE_ADMIN }
         - { path: ^/commentaire, role: ROLE_USER }
         - { path: ^/ajout, roles: ROLE_USER }
         - { path: ^/reply, roles: ROLE_USER }
         - { path: ^/logout, roles: ROLE_USER }
         - { path: ^/create-client, roles:[ IS_AUTHENTICATED_ANONYMOUSLY ]}
-        - { path: ^/chat, roles: ROLE_USER, requires_channel: https }
+        - { path: ^/chat, roles: ROLE_USER }
