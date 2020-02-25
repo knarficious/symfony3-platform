@@ -29,21 +29,21 @@ class Commentaire extends BaseComment implements SignedCommentInterface, Votable
     /**
      * @var string
      *
-     * @ORM\Column(name="contenu", type="text")
+     * @ORM\Column(name="contenu", type="text", nullable=true)
      */
     protected $contenu;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date_publication", type="datetime")
+     * @ORM\Column(name="date_publication", type="datetime", nullable=true)
      */
     protected $datePublication;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date_mise_ajour", type="datetime")
+     * @ORM\Column(name="date_mise_ajour", type="datetime", nullable=true)
      */
     protected $dateMiseAJour;
     
