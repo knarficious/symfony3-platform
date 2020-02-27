@@ -5,6 +5,7 @@
   {% block stylesheets %}
       {{ parent() }}
     <link href="{{ asset('bundles/foscomment/css/comments.css') }}" type="text/css" rel="stylesheet">
+    <link href="{{ asset('bundles/knarfplatform/css/player.css') }}" type="text/css" rel="stylesheet">
   {% endblock %}
 
 {% block title %}
@@ -110,6 +111,7 @@
 {% block javascripts %}
     
     {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/knarfplatform/js/player.js') }}"></script>
     <script>
         $(document).ready(function(){
             $('p').children('img').each(function(){
