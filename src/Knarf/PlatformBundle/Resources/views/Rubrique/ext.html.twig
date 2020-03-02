@@ -40,7 +40,7 @@
 
                 {% if entity.media.nomMedia ends with 'jpg' or entity.media.nomMedia ends with 'png' or entity.media.nomMedia ends with 'gif' %}
 
-                    <img src="{{vich_uploader_asset(entity, 'mediaFile') }}" alt="{{ entity.media.nomMedia }}"/>
+                    <img src="{{vich_uploader_asset(entity.media, 'mediaFile') }}" alt="{{ entity.media.nomMedia }}"/>
 
 
                 {% elseif entity.media.nomMedia ends with 'mp3' %}
