@@ -47,6 +47,19 @@ services:
             arguments:
                 $secret: '%secret%' 
     
+    Knarf\PlatformBundle\DataFixtures\ORM\MediaFixtures:
+        tags: [doctrine.fixture.orm]
+    
+    Knarf\PlatformBundle\DataFixtures\ORM\AdvertsFixture:
+           tags: [doctrine.fixture.orm]
+       
+    Knarf\PlatformBundle\DataFixtures\ORM\UserFixtures:
+           arguments: ["@security.password_encoder"]
+           tags: [doctrine.fixture.orm]
+           
+    Knarf\PlatformBundle\DataFixtures\ORM\RubriqueFixtures:
+           tags: [doctrine.fixture.orm]
+    
     Knarf\UserBundle\Services\SendMailToNeverConnectedUserService:
         arguments:
             $template: 'KnarfUserBundle:Security:login_invite_mail.html.twig'
@@ -65,11 +78,17 @@ services:
         class: Vich\UploaderBundle\Naming\OrignameNamer
         public: true
         
-    knarf_advert_subscriber.listener:
-        class: Knarf\PlatformBundle\Events\AdvertSubscriber
-        arguments: [ "@vich_uploader.templating.helper.uploader_helper" ]
-        tags:
-            - { name: jms_serializer.event_subscriber }
+    Knarf\PlatformBundle\Listeners\MediaListener:
+            arguments: ["@liip_imagine.cache.manager", "@vich_uploader.templating.helper.uploader_helper"]
+            tags:
+                - { name: doctrine.event_listener, event: postUpdate }
+                - { name: doctrine.event_listener, event: preRemove }
+                - { name: kernel.event_listener, event: vich_uploader.pre_remove}
+    
+    Knarf\PlatformBundle\Listeners\MediaSubscriber:
+            arguments: [ "@liip_imagine.cache.manager", "@vich_uploader.templating.helper.uploader_helper" ]
+            tags:
+                - { name: jms_serializer.event_subscriber }
         
         # Acl Comment Role
     knarf.platformbundle.acl.comment.roles:
