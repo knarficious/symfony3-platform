@@ -3,11 +3,11 @@ Knarf\UserBundle\Entity\Avatar:
     exclusion_policy: none
     properties:
         id:
-            groups: ['user', 'avatar']
+            groups: ['app_user', 'avatar']
         nomMedia:            
-            groups: ['user', 'avatar']        
+            groups: ['app_user', 'avatar']        
         date:            
-            groups: ['user', 'avatar']        
-        user:
+            groups: ['app_user', 'avatar']        
+        app_user:
             groups: ['avatar']
         

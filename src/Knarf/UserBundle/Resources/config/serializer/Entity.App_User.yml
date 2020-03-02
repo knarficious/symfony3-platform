@@ -1,0 +1,22 @@
+## src/Knarf/UserBundle/Resources/config/serializer/Entity.App_User.yml
+Knarf\UserBundle\Entity\App_User:
+    exclusion_policy: none
+    properties:
+        id:
+            groups: ['app_user', 'advert', 'commentaire']
+        username:
+            groups: ['app_user', 'advert', 'commentaire']
+        email:
+            groups: ['app_user', 'advert', 'commentaire']
+        createdAt:  
+            groups: ['app_user', 'advert', 'commentaire']
+        updatedAt:
+            groups: ['app_user', 'advert', 'commentaire']
+        lastTimeConnect:
+            groups: ['app_user', 'advert', 'commentaire']
+        avatar:
+            groups: ['app_user']
+        adverts:
+            groups: ['app_user']
+        commentaires:
+            groups: ['app_user']
