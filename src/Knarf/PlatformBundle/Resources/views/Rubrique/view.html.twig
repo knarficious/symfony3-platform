@@ -15,9 +15,9 @@
     <!-- Wrapper for slides -->
     <div class="carousel-inner" role="listbox">
         {% for entity in rubrique.adverts %}        
-        <div class="item {% if loop.first %}active{% endif %}">
-            <div class="thumbnail">
-                <img class="img-responsive" src="{{vich_uploader_asset(entity, 'mediaFile') }}" alt="{{ entity.nomMedia }}"/>        
+        <div class="carousel-item" {% if loop.first %}active{% endif %}">
+            <div class="">
+                <img class="d-block img-fluid" src="{{vich_uploader_asset(entity.media, 'mediaFile') }}" alt="{{ entity.media.nomMedia }}"/>        
             </div>
         </div>
         <div class="carousel-caption">

@@ -5,6 +5,7 @@ namespace Knarf\PlatformBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Vich\UploaderBundle\Form\Type\VichFileType;
+use Knarf\PlatformBundle\Form\MediaType;
 
 class AdvertEditType extends AbstractType
 {
@@ -13,11 +14,7 @@ class AdvertEditType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
-        $builder->add('mediaFile',  VichFileType::class, array(
-                                        'required' => false,
-                                        'label' => true,
-                                        'allow_delete' => true,
-                                    'download_uri' => false));
+        $builder->add('media',  MediaType::class);
     }
     
     /**

@@ -14,7 +14,7 @@ La base - {{ parent() }}
 
     {{ parent() }}
 
-        {{ render(controller("KnarfPlatformBundle:Advert:menu")) }}
+    {{ render(controller("KnarfPlatformBundle:Advert:menu")) }}
 
         <br>
 {% for rubrique in listRubriques %} 
@@ -32,25 +32,25 @@ La base - {{ parent() }}
                       
             <article class="col-md-4">
 
-                <div class="thumbnail hvr-grow">
+                <div class="thumbnail">
                     <a href="{{ path('knarf_platform_view', {'slug': entity.slug}) }}">
-                    {% if entity.nomMedia is defined %}        
+                    {% if entity.media is defined %}        
 
-                    {% if entity.nomMedia ends with 'jpg' or entity.nomMedia ends with 'png' or entity.nomMedia ends with 'gif' %}
+                    {% if entity.media.nomMedia ends with 'jpg' or entity.media.nomMedia ends with 'png' or entity.media.nomMedia ends with 'gif' %}
 
-                    <img src="{{vich_uploader_asset(entity, 'mediaFile') }}" alt="{{ entity.nomMedia }}"/>
+                    <img src="{{vich_uploader_asset(entity.media, 'mediaFile') }}" alt="{{ entity.media.nomMedia }}"/>
 
 
-                    {% elseif entity.nomMedia ends with 'mp3' %}
+                    {% elseif entity.media.nomMedia ends with 'mp3' %}
 
                     <span class="glyphicon glyphicon-play">
                     </span>
 
-                    {% elseif entity.nomMedia ends with 'mp4' %}
+                    {% elseif entity.media.nomMedia ends with 'mp4' %}
 
                     <div class="embed-responsive embed-responsive-16by9">
                     <video controls>
-                    <source src="{{ asset('uploads/medias/') }}{{ entity.nomMedia }}" type="video/mp4">
+                    <source src="{{ asset('uploads/medias/') }}{{ entity.media.nomMedia }}" type="video/mp4">
                     </video>          
                     </div>
 

@@ -8,6 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\ResetType;
+use Knarf\PlatformBundle\Form\MediaType;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
@@ -29,11 +30,7 @@ class AdvertType extends AbstractType {
         $builder->add('rubrique',   EntityType::class,  array('class' => 'KnarfPlatformBundle:Rubrique', 'choice_label' => 'intitule', 'placeholder' => 'Sélectionner la rubrique'))
                 ->add('title',      TextType::class)
                 //->add('content',    TextareaType::class)
-                ->add('mediaFile',  VichFileType::class, array(
-                                        'required' => true,
-                                        'label' => true,
-                                        'allow_delete' => true,
-                                    'download_uri' => false))
+                ->add('media',  MediaType::class)
                 ->add('published',  CheckboxType::class, array(
                                         'required' => false,
                                         'label' => 'Publier '))

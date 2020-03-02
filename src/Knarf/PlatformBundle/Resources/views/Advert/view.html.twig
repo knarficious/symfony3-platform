@@ -16,17 +16,17 @@
     
     {{ parent() }}
     
-    {% if advert.nomMedia is defined %} 
-        {% if advert.nomMedia ends with 'jpg' or advert.nomMedia ends with 'JPG' or advert.nomMedia ends with 'png' or advert.nomMedia ends with 'gif' %}                                           
-            <img class="img-responsive" src="{{vich_uploader_asset(advert, 'mediaFile') }}" alt="{{ advert.nomMedia }}"/>
-        {% elseif advert.nomMedia ends with 'mp3' %}						
+    {% if advert.media.nomMedia is defined %} 
+        {% if advert.media.nomMedia ends with 'jpg' or advert.media.nomMedia ends with 'JPG' or advert.media.nomMedia ends with 'png' or advert.media.nomMedia ends with 'gif' %}                                           
+            <img class="img-responsive" src="{{vich_uploader_asset(advert.media, 'mediaFile') }}" alt="{{ advert.media.nomMedia }}"/>
+        {% elseif advert.media.nomMedia ends with 'mp3' %}						
             <audio controls>
-            <source src="{{ asset('uploads/medias/') }}{{ advert.nomMedia }}" type="audio/mpeg">
+            <source src="{{ asset('uploads/medias/') }}{{ advert.media.nomMedia }}" type="audio/mpeg">
             </audio>       
-        {% elseif advert.nomMedia ends with 'mp4' %}
+        {% elseif advert.media.nomMedia ends with 'mp4' %}
         <div class="embed-responsive embed-responsive-16by9" >    
             <video controls>
-            <source src="{{ asset('uploads/medias/') }}{{ advert.nomMedia }}" type="video/mp4">
+            <source src="{{ asset('uploads/medias/') }}{{ advert.media.nomMedia }}" type="video/mp4">
             </video>          
 	</div>
         {% else %}                                    

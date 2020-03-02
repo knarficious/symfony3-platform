@@ -1,0 +1,12 @@
+## YAML Template.
+---
+Knarf\PlatformBundle\Entity\Media:
+    properties:
+        id:
+            groups: ['advert', 'media']
+        nomMedia:            
+            groups: ['advert', 'media']        
+        date:            
+            groups: ['advert', 'media']        
+        advert:
+            groups: ['media']

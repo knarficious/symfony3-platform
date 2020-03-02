@@ -1,50 +1,41 @@
 {# src/Knarf/PlatformBundle/Resources/views/Advert/menu.html.twig #}
 {% trans_default_domain 'divers' %}
-<div class="container-fluid">    
-<div id="myCarousel" class="carousel slide carousel-fade" data-ride="carousel">
-    
+  {% block stylesheets %}
+    <link href="{{ asset('bundles/knarfplatform/css/carousel.css') }}" type="text/css" rel="stylesheet">
+  {% endblock %}
+  
+  <div class="c-wrapper">
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+
         <!-- Indicators -->
-    <ol class="carousel-indicators">
-        {% for entity in listAdverts %}
-        <li data-target="#myCarousel" data-slide-to="{{ loop.index0 }}" {% if loop.index == 0 %}class="active"{% endif %}></li>        
-          {% endfor %}
-    </ol>
+        <ol class="carousel-indicators">
+            {% for entity in listAdverts %}
+                <li data-target="#myCarousel" data-slide-to="{{ loop.index0 }}" {% if loop.index == 0 %}class="active"{% endif %}></li>        
+                {% endfor %}
+        </ol>
 
-    <!-- Wrapper for slides -->
-    <div class="carousel-inner" role="listbox">
-        {% for entity in listAdverts %}        
-        <div class="item {% if loop.first %}active{% endif %}">
-            <a href="{{ path('knarf_platform_view', {'slug': entity.slug}) }}">
-            <div class="">
-                <img class="img-responsive" style="width: 100%" src="{{vich_uploader_asset(entity, 'mediaFile') }}" alt="{{ entity.nomMedia }}"/>        
-            </div>
-            <div class="carousel-caption">
-                <h3>{{ entity.title }}</h3>
-            </div>
-            </a>
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner" role="listbox">
+            {% for entity in listAdverts %}        
+                <div class="item {% if loop.first %}active{% endif %}">
+                    <a href="{{ path('knarf_platform_view', {'slug': entity.slug}) }}">                        
+                            <img class="img-responsive" src="{{vich_uploader_asset(entity.media, 'mediaFile') }}" alt="{{ entity.media.nomMedia }}"/>                           
+                        
+                        <div class="carousel-caption" id="carouselCaption">
+                            <h3>{{ entity.title }} par {{ entity.user.username }} </h3>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
         </div>
-        {% endfor %}
-    </div>
         <!-- Left and right controls -->
-    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-      <span class="glyphicon glyphicon-chevron-left"></span>
-      <span class="sr-only">{{ 'carousel.control.prev' | trans }}</span>
-    </a>
-    <a class="right carousel-control" href="#myCarousel" data-slide="next">
-      <span class="glyphicon glyphicon-chevron-right"></span>
-      <span class="sr-only">{{ 'carousel.control.next' | trans }}</span>
-    </a>
-</div>
-</div>
-{#        {% elseif entity.nomMedia ends with 'mp3' %}
-
-            <span class="glyphicon glyphicon-play">
-            </span>
-
-        {% elseif entity.nomMedia ends with 'mp4' %}
-
-            <div class="embed-responsive embed-responsive-16by9">
-            <video controls>
-            <source src="{{ asset('uploads/medias/') }}{{ entity.nomMedia }}" type="video/mp4">
-            </video>          
-            </div>#}  
+        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+            <span class="sr-only">{{ 'carousel.control.prev' | trans }}</span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+            <span class="sr-only">{{ 'carousel.control.next' | trans }}</span>
+        </a>
+    </div>
+  </div>

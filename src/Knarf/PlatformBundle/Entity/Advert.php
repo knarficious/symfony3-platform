@@ -65,35 +65,7 @@ class Advert
      * 
     * @ORM\Column(name="published", type="boolean")
     */
-    private $published = true;
-    
-    /**
-     * NOTE: This is not a mapped field of entity metadata, just a simple property.
-     * 
-     * @Assert\File(
-     * 		maxSize="10M",
-     * 		mimeTypes={"image/png",
-     *                     "image/jpeg",
-     *                     "image/gif",
-     *                     "image/svg+xml",
-     *                     "audio/mpeg",
-     *                     "audio/ogg",
-     *                     "video/mp4",
-     *                     "video/avi",
-     *                     "video/x-msvideo"},
-     *                     uploadErrorMessage="Le fichier ne peut pas etre téléchargé :-(")
-     * @Vich\UploadableField(mapping="upload_media", fileNameProperty="nomMedia")
-     * 
-     * @var File
-     */
-    private $mediaFile;
-
-     /**
-     * @var string
-     *
-     * @ORM\Column(name="nom_media", type="string", length=255, nullable=true)
-     */
-    private $nomMedia;
+    private $published = true; 
     
     //  === ASSOCIATIONS ===
     
@@ -108,6 +80,12 @@ class Advert
      * @ORM\JoinColumn(name="rubrique", referencedColumnName="id")
      */
     private $rubrique;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Knarf\PlatformBundle\Entity\Media", cascade={"remove"})
+     * @ORM\JoinColumn(name="media", onDelete="SET NULL")
+     */
+    private $media;
     
     /**
      * @ORM\OneToMany(targetEntity="Commentaire", mappedBy="advert", cascade={"persist", "remove"})
@@ -282,6 +260,27 @@ class Advert
     }
 
     /**
+     * Set media
+     * @param \Knarf\PlatformBundle\Entity\Media $media
+     * @return Media
+     */
+    public function setMedia(\Knarf\PlatformBundle\Entity\Media $media = null)
+    {
+        $this->media = $media;
+
+        return $this;
+    }
+
+    /**
+     * Get media
+     * @return \Knarf\PlatformBundle\Entity\Media
+     */
+    public function getMedia()
+    {
+        return $this->media;
+    }
+
+    /**
      * Add commentaire
      *
      * @param \Knarf\PlatformBundle\Entity\Commentaire $commentaire
@@ -314,58 +313,7 @@ class Advert
     {
         return $this->commentaires;
     }
-
-    /**
-     * Set nomMedia
-     *
-     * @param string $nomMedia
-     *
-     * @return Advert
-     */
-    public function setNomMedia($nomMedia)
-    {
-        $this->nomMedia = $nomMedia;
-
-        return $this;
-    }
-
-    /**
-     * Get nomMedia
-     *
-     * @return string
-     */
-    public function getNomMedia()
-    {
-        return $this->nomMedia;
-    }
     
-    /**
-     * Set mediaFile
-     * 
-     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $media
-     */
-     public function setMediafile($media)
-    {
-	$this->mediaFile = $media;
-		 
-	if ($media instanceof UploadedFile)
-        {
-            // It is required that at least one field changes if you are using doctrine
-            // otherwise the event listeners won't be called and the file is lost
-            $this->setUpDate(new \DateTime('now'));		
-        }	
-     }
-	 
-    /**
-     * Get mediaFile
-     * 
-     * @return File
-     */
-    public function getMediaFile()
-    {
-	  return $this->mediaFile;
-    } 
-
     /**
      * Set updateAt
      *

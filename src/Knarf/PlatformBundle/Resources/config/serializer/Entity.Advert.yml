@@ -3,23 +3,25 @@ Knarf\PlatformBundle\Entity\Advert:
     exclusion_policy: none
     properties:
         id:
-            groups: ['user', 'advert', 'commentaire', 'rubrique']
+            groups: ['app_user', 'advert', 'commentaire', 'media']
         
         title:
-            groups: ['user', 'advert', 'commentaire', 'rubrique']
+            groups: ['app_user', 'advert', 'commentaire', 'media']
             
         content:
-            groups: ['user', 'advert', 'commentaire', 'rubrique']
+            groups: ['app_user', 'advert', 'commentaire', 'media']
         
         date:
-            groups: ['user', 'advert', 'commentaire', 'rubrique']
+            groups: ['app_user', 'advert', 'commentaire', 'media']
             
         updateAt:
-            groups: ['user', 'advert', 'commentaire', 'rubrique']          
+            groups: ['app_user', 'advert', 'commentaire', 'media']          
                
                 
             
-        user:
+        media:
+            groups: ['advert']
+        app_user:
             groups: ['advert']
             
         rubrique:
