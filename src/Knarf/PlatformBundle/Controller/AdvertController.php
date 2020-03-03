@@ -84,7 +84,6 @@ class AdvertController extends Controller {
         $advert->setUpDateAt(new \DateTime());
         $media->setDate(new \DateTime());
         $advert->setMedia($media);
-        $media->setAdvert($advert);
         $form = $this->createForm(AdvertType::class, $advert);
 
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
