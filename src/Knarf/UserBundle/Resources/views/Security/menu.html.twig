@@ -31,9 +31,27 @@
             <div class="media-body">
                 <h4 class="media-heading">
                     {% if user is same as( app.user) %}
-                        <a href="{{ path('profile') }}">{{ user.username }}</a>                    
+                        <a href="{{ path('profile') }}">
+                            {{ user.username }}
+                            <br>
+                            {% for role in user.roles %}
+                                {%  if role == 'ROLE_ADMIN' %}
+                                    <sub>Administrateur</sub>
+                                {% endif %}
+                            {% endfor %}
+                            <br>
+                        </a>                    
                     {% else %}    
-                        <a href="{{ path('profile_view', {'slug': user.slug}) }}">{{ user.username }}</a>
+                        <a href="{{ path('profile_view', {'slug': user.slug}) }}">
+                            {{ user.username }}
+                            <br>
+                            {% for role in user.roles %}
+                                {%  if role == 'ROLE_ADMIN' %}
+                                    <sub>Administrateur</sub>
+                                {% endif %}
+                            {% endfor %}
+<br>
+                        </a>
                     {% endif %}
                 </h4>
                 <i class="connection-status" id="sse-connection-status"></i>

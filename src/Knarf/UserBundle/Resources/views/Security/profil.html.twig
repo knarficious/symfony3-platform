@@ -32,10 +32,16 @@
                         <img src="{{ asset('/images/icon-person_211874.png') }}" alt="icon person" />
                     </a>    
                 {% endif %}
+                    {% for role in app.user.roles %}
+                        {%  if role == 'ROLE_ADMIN' %}
+                        <sub>Administrateur</sub>
+                        {% endif %}
+                    {% endfor %}
                 <p>
                 <p>
                     Vous êtes membre depuis le: {{ app.user.createdAt|date('d/m/Y') }}
                 <p>
+                <br>
                     Dernière connection le: {{ app.user.lastTimeConnect|date('d/m/Y H:i:s')}}
                 <p>
                     <a class="btn btn-warning btn-lg" href="{{ path('change_password') }}">{{ 'menu.changement_password' | trans }}</a>
