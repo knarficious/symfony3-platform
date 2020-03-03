@@ -12,17 +12,4 @@ and open the template in the editor.
     background:#666;
     padding:0;
 }
-.active a{
-    color:#5DB0E6;
-    text-decoration:none;
-}
-li a{
-    color:#eeeedd;
-    background:#333;
-    padding:5px;
-    display:block;
-}
-li a:hover{
-    text-decoration:none;
-}
 
