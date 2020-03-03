@@ -30,7 +30,7 @@ class AdvertType extends AbstractType {
         $builder->add('rubrique',   EntityType::class,  array('class' => 'KnarfPlatformBundle:Rubrique', 'choice_label' => 'intitule', 'placeholder' => 'Sélectionner la rubrique'))
                 ->add('title',      TextType::class)
                 //->add('content',    TextareaType::class)
-                ->add('media',  MediaType::class)
+                ->add('media',      MediaType::class)
                 ->add('published',  CheckboxType::class, array(
                                         'required' => false,
                                         'label' => 'Publier '))

@@ -28,7 +28,9 @@
         {% if help is defined %}
             <span class="help-block">{{ help }}</span>
         {% endif %}
+        <div class="col-md-3">
         {{ form_widget(form.media, { 'attr': {'class': 'required'} }, {'help': 'foobar'}) }}
+        </div>
     </div>
 
     <div class="form-group">

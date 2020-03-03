@@ -15,6 +15,7 @@ class MediaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('mediaFile', VichImageType::class, array(
+            'label' => 'Image de l\'annonce',
             'required' => true,
             'download_link' => false,            
             'allow_delete' => true));
