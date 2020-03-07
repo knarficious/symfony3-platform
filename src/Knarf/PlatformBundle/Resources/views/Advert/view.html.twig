@@ -4,8 +4,7 @@
 
   {% block stylesheets %}
       {{ parent() }}
-    <link href="{{ asset('bundles/foscomment/css/comments.css') }}" type="text/css" rel="stylesheet">
-    <link href="{{ asset('bundles/knarfplatform/css/player.css') }}" type="text/css" rel="stylesheet">
+    {{ encore_entry_link_tags('comments-css') }}
   {% endblock %}
 
 {% block title %}
