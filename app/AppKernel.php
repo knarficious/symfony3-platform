@@ -31,6 +31,8 @@ class AppKernel extends Kernel
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new FOS\CommentBundle\FOSCommentBundle(),
             new CyberJaw\GoogleMapsBundle\GoogleMapsBundle(),
+            new Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle(),
+            new Symfony\WebpackEncoreBundle\WebpackEncoreBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

@@ -19,9 +19,9 @@
         <title>{% block title %}Knarf Media{% endblock %}</title>
 
         {% block stylesheets %}
-            <link href="{{ asset('bundles/knarfplatform/css/main.css') }}" type="text/css" rel="stylesheet"> 
-            <link href="{{ asset('bundles/knarfplatform/css/clocks.css') }}" type="text/css" rel="stylesheet">    
-            <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css" rel="stylesheet">    
+            <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css" rel="stylesheet">
+            {{ encore_entry_link_tags('app') }}
+            {{ encore_entry_link_tags('clock') }}
         {% endblock %}
     </head>
 
@@ -189,7 +189,7 @@
             <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.23/moment-timezone-with-data.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.3.0/moment-timezone-utils.min.js"></script>
-            <script type="text/javascript" src="{{ asset('bundles/knarfplatform/js/clock.js') }}"></script>
+            {{ encore_entry_script_tags('clock') }}
             <script type="text/javascript">
                         $(document).ready(function () {
             //Catch AjaxAuthenticationListener response
@@ -198,7 +198,7 @@
                     $(location).attr('href', '{{ path('security_login_form') }}');
                 }
             });
-            })
+            });
             </script>
         {% endblock %}
 

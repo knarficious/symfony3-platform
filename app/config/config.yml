@@ -124,7 +124,7 @@ vich_uploader:
         delete_on_update: true
         delete_on_remove: true
        upload_avatar:
-         uri_prefix: ""
+         uri_prefix: /uploads/avatars
          upload_destination: '%kernel.root_dir%/../web/uploads/avatars/'
          namer: vich_uploader.namer_origname
          inject_on_load: true
@@ -135,34 +135,35 @@ vich_uploader:
 # LiipImagineBundle Configuration
 liip_imagine:
     resolvers:
-       avatar:
-         web_path:
-             web_root: '%kernel.project_dir%/web'
-             cache_prefix: 'media/cache'
-            
+        default:
+            web_path:
+                web_root: '%kernel.project_dir%/web'
+                cache_prefix: 'media/cache'            
     loaders:
-        avatar:
+        default:
             filesystem:
                 data_root:
-                    - '%kernel.root_dir%/../web/uploads/avatars/' 
-    driver:               gd
-    cache: avatar
-    data_loader: avatar
-    filter_sets:        
+                    - '%kernel.root_dir%/../web/'
+    driver: gd  
+    filter_sets:
+        carousel:
+            quality: 100
+            filters:
+
         my_thumb:
-            data_loader: avatar
+            #data_loader: avatar
             quality: 100
             filters:                
                 auto_rotate: true
                 thumbnail: { size: [48, 48], mode: inset }
         my_thumb_resize:            
-            data_loader: avatar
+            #data_loader: avatar
             quality: 100
             cache: false
             filters:
                 auto_rotate: true
                 downscale:
-                    max: [ 390, 550 ]                
+                    max: [ 390, 550 ]
         
 # Fos_Rest Configuration
 fos_rest:
@@ -274,6 +275,11 @@ nelmio_api_doc:
         enabled:  true
         
 knp_paginator:
+    default_options:
+        page_name: page                
+        sort_field_name: sort          
+        sort_direction_name: direction 
+        distinct: true                 
     template:
         pagination: 'KnpPaginatorBundle:Pagination:twitter_bootstrap_v3_pagination.html.twig'
         sortable: '@KnpPaginator/Pagination/sortable_link.html.twig'
@@ -316,4 +322,11 @@ fos_comment:
 google_maps:
     api_key: 'AIzaSyA2K-avkDmpftUPLab9r9oqBca8vjM1-i4'
     
+lexik_jwt_authentication:
+    secret_key:       '%kernel.project_dir%/config/jwt/private.pem' # required for token creation
+    public_key:       '%kernel.project_dir%/config/jwt/public.pem'  # required for token verification
+    pass_phrase:      'Equaled42blomberg04glances' # required for token creation, usage of an environment variable is recommended
+    token_ttl:        3600    
     
+webpack_encore:
+    output_path: "%kernel.root_dir%/../web/build/"
