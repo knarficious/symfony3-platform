@@ -58,6 +58,7 @@
 {% endblock %}
 
 {% block javascripts %}
+    {{ parent() }}
     <script type="text/javascript" src="{{ asset('bundles/knarfuser/js/starwars.js') }}"></script>
 {% endblock %}
 
