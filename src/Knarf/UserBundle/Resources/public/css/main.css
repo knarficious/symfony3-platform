@@ -1,4 +1,118 @@
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
 
+
+body {
+    font-family: "Montserrat", sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+  line-height: 1; }
+
+ol, ul {
+  list-style: none; }
+
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+strong {
+  font-weight: bold; }
+
+.navbar-inverse, .navbar-collapse, .navbar-inverse .navbar-form {
+    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+    border: 0 none;
+}
+
+a {
+    transition: all 0.3s ease 0s;
+}
+
+/* for this feature, add !important clause for Twitter Bootstrap*/
+a:hover {
+    text-decoration: none !important; 
+}
+
+
+.navbar-inverse .navbar-nav > li > a {
+    color: #e23813;
+    font-size: 12px;
+    padding: 15px 17px 15px 0;
+    text-transform: uppercase;
+}
+.navbar-inverse .navbar-brand {
+    color: #e23813;
+}
+.navbar-brand {
+    background: rgba(0, 0, 0, 0) url("/images/8-cell-simple.gif") no-repeat scroll left center / 42px 42px;
+    font-size: 16px;
+    padding-left: 54px;
+    text-transform: uppercase;
+}
+.navbar-inverse .navbar-toggle {
+    border: 0 none;
+}
+@media screen and (max-width: 991px) {
+.navbar-inverse .navbar-toggle, .navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:active {
+    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+    border: 0 none;
+    margin: 10px -21px 0 0;
+}
+.navbar-inverse .navbar-toggle .icon-bar {
+    background: #e23813 none repeat scroll 0 0;
+}
+}
+ol, ul {
+    padding-left: 20px;
+}
+.dynamicheader {
+    background: transparent none repeat scroll 0 0;
+    padding: 0 30px;
+    transition: background 0.7s ease 0s;
+}
+.dynamicheader {
+    background: rgba(17, 22, 31, 0.9) none repeat scroll 0 0;
+}
+@media screen and (max-width: 768px) {
+body.home .dynamicheader, body.home .dynamicheader.shrink {
+    background: rgba(17, 22, 31, 0.9) none repeat scroll 0 0;
+}
+body.home .dynamicheader .navbar-brand {
+    display: none;
+}
+body.home .dynamicheader.shrink .navbar-brand {
+    display: block;
+}
+}
 
 #msg {
   background: rgb(113,223,113);
