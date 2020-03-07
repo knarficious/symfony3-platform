@@ -6,6 +6,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="description" content="Knarf Media est un media alternatif du web 3.0. Créez votre compte, publiez et commentez du contenu depuis l'interface sécurisée." />
         <link rel="canonical" href="https://blog.franckruer.fr/" />
         <meta property="og:locale" content="fr_FR" />
@@ -161,11 +162,14 @@
                     <div class="nav navbar-nav navbar-left">
                         <p>© knarficious {{ 'now'|date('Y') }}</p>
                     </div>
-                    <ul class="nav navbar-nav navbar-right">          
-                        <li>
+                    <div class="col-lg-9">
+                        <a href="{{ path('knarf_platform_view', {'slug': 'conditions-d-utilisations'}) }}">CGU</a>
+                    </div>
+                    <div class="nav navbar-nav navbar-right">          
+                       
                             <a href="{{ path('nelmio_api_doc_index') }}">API Documentation</a>
-                        </li>
-                    </ul>
+                        
+                    </div>
                 </div>
             </nav>
         </div>
@@ -177,8 +181,9 @@
         </div>
 
         {% block javascripts %}
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
             {# Ajoutez ces lignes JavaScript si vous comptez vous servir des fonctionnalités du bootstrap Twitter #}
-            <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+            <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"></script>

@@ -1,20 +1,21 @@
 {# src/Knarf/UserBundle/Resources/views/Security/login.html.twig #}
 
-{% extends 'KnarfPlatformBundle::layout.html.twig' %}
+{% extends 'KnarfUserBundle::layout.html.twig' %}
 
 {% block stylesheets %}
     
     {{ parent() }}
     
     <link href="{{ asset('bundles/knarfuser/css/login.css') }}" type="text/css" rel="stylesheet">
-
+    <link href="{{ asset('bundles/knarfuser/css/starwars.css') }}" type="text/css" rel="stylesheet">
 {%  endblock %}
 
-{% block knarfplatform_body %}
+{% block knarfuser_body %}
     
-    {{ parent() }}
   {# Le formulaire, avec URL de soumission vers la route « login_check » comme on l'a vu #}
-<div class="col-sm-12 col-sm-6 col-md-4">
+<div class="container-fluid">
+    <div class="row" id="login-container">
+  <div class="col-sm-4" id="login-area">
     <h1 class=" well text-center login-title">Connectez-vous pour continuer</h1>
     <div class="account-wall">
         {% if error %}
@@ -42,7 +43,21 @@
         <a href="{{ path('request_password') }}">{{ 'user.connexion.password_forgotten' | trans }}</a>
     <p>
     <a href="{{ path('register') }}" class="text-center new-account">Créer un compte </a>
-</div>    
+</div>
 
 
+
+    <div class="col-sm-8" id="starwars-area">
+    <div class="starwars-demo">
+        <img class="star" src="{{ asset('/images/star.svg') }}" alt="Star" >
+        <img class="wars" src="{{ asset('/images/wars.svg') }}" alt="Wars" >
+        <h2 class="byline" id="byline">THE FORCE AWAKENS</h2>
+    </div>
+    </div>
+    </div></div>
 {% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('bundles/knarfuser/js/starwars.js') }}"></script>
+{% endblock %}
+
