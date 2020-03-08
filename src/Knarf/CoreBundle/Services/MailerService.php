@@ -43,9 +43,11 @@ class MailerService implements MailerServiceInterface
             ->setCharset($charset)
             ->setSubject($subject)
             ->setFrom($from)
-            ->setTo($to)
-            ->setBody($body)
+            ->setTo($to)                            
             ->setContentType($contentType);
+        $cid = $message->embed(\Swift_Image::fromPath('https://blog.franckruer.fr/images/8-cell-simple.gif'));
+        $message->setBody($body . '<img src="' . $cid. '" alt="knarf media" />');
+                
         return $message;
     }
 

@@ -81,7 +81,7 @@ class SendMailToNeverConnectedUserService
     
     public function sendMailToUsers() 
     {
-        $users = $this->userManager->getLastTimeConnect();
+        $users = $this->userManager->getNeverConnect();
         
         foreach ($users as $user) 
         {
@@ -92,7 +92,8 @@ class SendMailToNeverConnectedUserService
             $this->templating->loadTemplate($this->template)->renderBlock('body',
                 [
                     'username' => $user->getUsername(),
-                    'dateCreation' => $user->getCreatedAt()
+                    'dateCreation' => $user->getCreatedAt(),
+                    'slug' => $user->getSlug()
             
                 ])
             );

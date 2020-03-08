@@ -6,20 +6,24 @@
 Bonjour {{ username }}.
 <p>
 <p>
-    Vous avez créé un compte sur la plateforme Knarf Media le : {{ dateCreation |date('d-M-y') }}
+    Vous avez créé un <a href="https://blog.franckruer.fr/member/{{ slug }}">compte</a> sur la plateforme Knarf Media le : {{ dateCreation |date('d-M-y') }}
 <p>
-Vous ne vous êtes pas connecté depuis le {{ lastTimeConnect | date('d-M-y') }}. Veuillez vous connecter pour découvrir toutes les fonctionnalités offertes par la plateforme
+    Vous ne vous êtes pas connecté depuis le {{ lastTimeConnect | date('d-M-y') }}. 
 <p>
-    <a href ="http://knarfmedia.local/login"><button>Se connecter</button></a>
+    Connecte-vous pour découvrir toutes les fonctionnalités offertes par la plateforme:
 <p>
-   À très bientôt sur Knarf Media 
-<p>    
-Cordialement,
+    + connection sécurisée HTTP2
 <p>
-Franck, administrateur
+    + publication d'articles (texte enrichi, image, media audio, video) et de commentaires
 <p>
-<a href="http://knarfmedia.local">Knarf Media</a>
+    + gestion du profil
 <p>
-<a href="http://knarfmedia.local"><img src="http://knarfmedia.local/images/8-cell-simple.gif" alt="Knarf Media"></a>
-
+    + conversation sur la messagerie
+<p>
+    À très bientôt sur <a href="https://blog.franckruer.fr">KNARF MEDIA</a>.
+<p> 
+<a href ="https://blog.franckruer.fr/login"><button>Se connecter</button></a>
+<p> 
+    Franck, administrateur
+<p>
 {% endblock %}

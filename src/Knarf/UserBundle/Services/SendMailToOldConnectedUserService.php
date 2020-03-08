@@ -93,7 +93,8 @@ class SendMailToOldConnectedUserService
                 [
                     'username' => $user->getUsername(),
                     'dateCreation' => $user->getCreatedAt(),
-                    'lastTimeConnect' => $user->getLastTimeConnect()
+                    'lastTimeConnect' => $user->getLastTimeConnect(),
+                    'slug' =>$user->getSlug()
             
                 ])
             );
