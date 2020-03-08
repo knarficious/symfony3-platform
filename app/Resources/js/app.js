@@ -24,7 +24,7 @@ $(document).ready(function(){
       "Latitude is " + latitude + "° Longitude is " + longitude + "°";
 
     $.getJSON(
-      url + apiKey + "/" + latitude + "," + longitude + "?lang=fr",
+      url + apiKey + "/" + latitude + "," + longitude + "?callback=?",
       function(data) {
           var fahrenheit = data.currently.temperature;
           var celsius;
