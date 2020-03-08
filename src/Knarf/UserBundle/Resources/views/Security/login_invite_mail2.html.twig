@@ -6,7 +6,10 @@
 Bonjour {{ username }}.
 <p>
 <p>
-    Vous avez créé un <a href="https://blog.franckruer.fr/member/{{ slug }}">compte</a> sur la plateforme Knarf Media le : {{ dateCreation |date('d-M-y') }}
+    Vous avez créé un <a href="https://blog.franckruer.fr/member/{{ slug }}">compte</a> sur la plateforme Knarf Media le {{ ('day.'~dateCreation|date('N'))|trans|raw~}}
+    {{ dateCreation|date('d')|raw }}
+    {{ ('month.'~dateCreation|date('m'))|trans|raw~}} 
+    {{ dateCreation|date('Y')|raw }}
 <p>
     Vous ne vous êtes pas connecté depuis le {{ lastTimeConnect | date('d-M-y') }}. 
 <p>

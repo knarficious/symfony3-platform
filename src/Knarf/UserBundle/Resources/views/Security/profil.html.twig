@@ -39,8 +39,13 @@
                     {% endfor %}
                 <p>
                 <p>
-                    Vous êtes membre depuis le: {{ app.user.createdAt|date('d/m/Y') }}
+                    Vous êtes membre depuis le:
                 <p>
+                        {{ ('day.'~app.user.createdAt|date('N'))|trans|raw~}}
+                        {{ app.user.createdAt|date('d')|raw }}
+                        {{ ('month.'~app.user.createdAt|date('m'))|trans|raw~}} 
+                        {{ app.user.createdAt|date('Y')|raw }}
+                                    <p>
                 <br>
                     Dernière connection le: {{ app.user.lastTimeConnect|date('d/m/Y H:i:s')}}
                 <p>

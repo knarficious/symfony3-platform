@@ -72,3 +72,24 @@ user:
             mail_sent: Un email vient de vous être envoyé pour modifier votre mot de passe
     change_email:
             title: Changement de l'email
+            
+month.01: Janvier
+month.02: Février
+month.03: Mars
+month.04: Avril
+month.05: Mai
+month.06: Juin
+month.07: Juillet
+month.08: Août
+month.09: Septembre
+month.10: Octobre
+month.11: Novembre
+month.12: Décembre
+
+day.1: Lundi
+day.2: Mardi
+day.3: Mercredi
+day.4: Jeudi
+day.5: Vendredi
+day.6: Samedi
+day.7: Dimanche
