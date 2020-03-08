@@ -48,8 +48,9 @@ $(document).ready(function(){
     );
   }
 
-  function error() {
+  function error(err) {
     coordonnees.innerHTML = "Unable to retrieve your location";
+    console.warn(`ERROR(${err.code}): ${err.message}`);
   }
 
   coordonnees.innerHTML = "Locating...";
