@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+require('../css/player.css');
 
 $(document).ready(function() {
 

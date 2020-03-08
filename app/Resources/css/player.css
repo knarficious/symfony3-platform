@@ -1,0 +1,19 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 27 févr. 2020, 15:44:29
+    Author     : franck
+*/
+
+#playlist,audio{
+    background:#000;
+    border-radius:.25em;
+    color:#000;
+    font-size:.5em;
+    font-weight:700;
+    padding:0;
+}
+
