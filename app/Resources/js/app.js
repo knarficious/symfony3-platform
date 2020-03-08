@@ -46,10 +46,10 @@ $(document).ready(function(){
   }
 
   function error() {
-    location.innerHTML = "Unable to retrieve your location";
+    coordonnees.innerHTML = "Unable to retrieve your location";
   }
 
-  location.innerHTML = "Locating...";
+  coordonnees.innerHTML = "Locating...";
 }
 
 weather();
