@@ -19,14 +19,14 @@
         <title>{% block title %}Knarf Media{% endblock %}</title>
 
         {% block stylesheets %}
+            <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css" rel="stylesheet">
             {{ encore_entry_link_tags('app') }}
             {{ encore_entry_link_tags('clock') }}
-            <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css" rel="stylesheet">    
         {% endblock %}
     </head>
 
     <body>
-        <nav id="Kfnavbar" class="navbar navbar-inverse navbar-fixed-top dynamicheader">
+        <nav class="navbar navbar-inverse navbar-fixed-top dynamicheader">
             <div class="container-fluid">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#myNavbar" aria-expanded="false" aria-controls="navbar">

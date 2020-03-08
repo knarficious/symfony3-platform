@@ -6,8 +6,8 @@
     
     {{ parent() }}
     
-    <link href="{{ asset('bundles/knarfuser/css/login.css') }}" type="text/css" rel="stylesheet">
-    <link href="{{ asset('bundles/knarfuser/css/starwars.css') }}" type="text/css" rel="stylesheet">
+    {{ encore_entry_link_tags('login') }}
+    {{ encore_entry_link_tags('starwars') }}
 {%  endblock %}
 
 {% block knarfuser_body %}
@@ -59,6 +59,6 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script type="text/javascript" src="{{ asset('bundles/knarfuser/js/starwars.js') }}"></script>
+    {{ encore_entry_script_tags('starwars') }}
 {% endblock %}
 
