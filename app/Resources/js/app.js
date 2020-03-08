@@ -26,7 +26,13 @@ $(document).ready(function(){
     $.getJSON(
       url + apiKey + "/" + latitude + "," + longitude + "?callback=?",
       function(data) {
-        $("#temp").html(data.currently.temperature + "° F");
+          var fahrenheit = data.currently.temperature;
+          var celsius;
+          if(fahrenheit !== '')
+          {
+              celsius = (fahrenheit - 32) * 5/9;
+          }
+        $("#temp").html(celsius + "° C");
         $("#minutely").html(data.minutely.summary);
       }
     );
