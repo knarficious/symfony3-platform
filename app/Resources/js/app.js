@@ -8,7 +8,7 @@ require('../css/app.css');
 $(document).ready(function(){
     
   function weather() {
-  var coordonnees = document.getElementById("coordonnes");
+  var coordonnees = document.getElementById("coordonnees");
   var location = document.getElementById("location");
   var apiKey = "da6ae541c95e65f571c4274c3588cb5f";
   var url = "https://api.darksky.net/forecast/";
