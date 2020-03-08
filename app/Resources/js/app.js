@@ -8,6 +8,7 @@ require('../css/app.css');
 $(document).ready(function(){
     
   function weather() {
+  var coordonnees = document.getElementById("coordonnes");
   var location = document.getElementById("location");
   var apiKey = "da6ae541c95e65f571c4274c3588cb5f";
   var url = "https://api.darksky.net/forecast/";
@@ -18,9 +19,14 @@ $(document).ready(function(){
     latitude = position.coords.latitude;
     longitude = position.coords.longitude;
     
-    var position = "https://maps.googleapis.com/maps/api/geocode/json?latlng=latitude,longitude&key=AIzaSyA2K-avkDmpftUPLab9r9oqBca8vjM1-i4";
-    console.log(position);
-    location.innerHTML =
+    var geocode = "https://maps.googleapis.com/maps/api/geocode/json?latlng=latitude,longitude&key=AIzaSyBXnjaWQ1FinxrqxbwT34v90O0qxm2S9ZI";
+    console.log(geocode);
+    var geocode_length = geocode.length;
+    for (var i = 0; i < geocode_length; i++)
+    {
+        location.html(geocode[i]["plus_code"]["compound_code"]);
+    }
+    coordonnees.innerHTML =
       "Latitude is " + latitude + "° Longitude is " + longitude + "°";
 
     $.getJSON(
