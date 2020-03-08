@@ -4,9 +4,7 @@ namespace Knarf\PlatformBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\HttpFoundation\File\File;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
@@ -14,7 +12,6 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @ORM\Table(name="advert")
  * @ORM\Entity(repositoryClass="Knarf\PlatformBundle\Repository\AdvertRepository")
- * @Vich\Uploadable
  */
 class Advert
 {

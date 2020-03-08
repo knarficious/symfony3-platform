@@ -14,7 +14,9 @@
 {% block knarfplatform_body %}
     
     {{ parent() }}
-    
+    <article class="container-fluid">
+        <div class="row">
+    <div class="col-md-6">
     {% if advert.media.nomMedia is defined %} 
         {% if advert.media.nomMedia ends with 'jpg' or advert.media.nomMedia ends with 'JPG' or advert.media.nomMedia ends with 'png' or advert.media.nomMedia ends with 'gif' %}                                           
             <img class="img-responsive" src="{{vich_uploader_asset(advert.media, 'mediaFile') }}" alt="{{ advert.media.nomMedia }}"/>
@@ -31,20 +33,28 @@
         {% else %}                                    
         {% endif %}    
     {% endif %}
-    
+    </div>
+    <div class="col-md-6">
     <h2>{{ advert.title }}</h2>
-    <i>Par 
+    <p>
+    <br>
+    Par 
         {% if app.user %}
             <a href ="{{ path('profile_view', {'slug': advert.user.slug} )}}">{{ advert.user.username }}</a>
         {% else %}
             {{ advert.user.username }}
-        {% endif %}    , le {{ advert.date|date('d/m/Y') }} à {{ advert.date|date('H:i') }}</i>
-        <p>
-    <div class="">
-    {{ advert.content | raw }}
+        {% endif %}    , le {{ advert.date|date('d/m/Y') }} à {{ advert.date|date('H:i') }}
+    </p>
     </div>
-    <p>
-    <p>
+    </div>
+    <br>
+    <div class="">
+        <p>{{ advert.content | raw }}</p>
+    </div>
+        
+    </article>
+    
+    <br>
     
     <div class="">
         <a href="{{ path('rubrique_ext', {'slug': advert.rubrique.slug}) }}" class="btn btn-default">
@@ -70,6 +80,7 @@
     </a>
     {% endif %} 
     </div>
+    <br>
     {# bloc des commentaires #}
     
     <section class="" id="commentaires">
