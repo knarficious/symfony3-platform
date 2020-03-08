@@ -19,7 +19,7 @@ $(document).ready(function(){
     latitude = position.coords.latitude;
     longitude = position.coords.longitude;
     
-    var geocode = "https://maps.googleapis.com/maps/api/geocode/json?latlng=latitude,longitude&key=AIzaSyBXnjaWQ1FinxrqxbwT34v90O0qxm2S9ZI";
+    var geocode = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitude + "," + longitude + "&key=AIzaSyBXnjaWQ1FinxrqxbwT34v90O0qxm2S9ZI";
     console.log(geocode);
     var geocode_length = geocode.length;
     for (var i = 0; i < geocode_length; i++)
