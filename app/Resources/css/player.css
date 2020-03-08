@@ -8,10 +8,10 @@ and open the template in the editor.
     Author     : franck
 */
 
-#playlist,audio{
-    background:#000;
+#playlist{
+    background:#fff;
     border-radius:.25em;
-    color:#000;
+    color:#fff;
     font-size:.5em;
     font-weight:700;
     padding:0;
