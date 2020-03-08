@@ -49,7 +49,7 @@ class AdvertController extends Controller {
 //    }
 
     /**
-     * @Route("/annonces/{slug}", name="knarf_platform_view")
+     * @Route("/{slug}", name="knarf_platform_view")
      * @param type $slug
      * @param Request $request
      */
