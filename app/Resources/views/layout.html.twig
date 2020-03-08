@@ -119,8 +119,10 @@
                     {% endblock %}      
 
                 </div>
-
+                    <br>
                 <div class="rightcolumn">
+                    {{ include('KnarfPlatformBundle:Weather:view.html.twig') }}
+                    <br>
                     {{ render(controller("KnarfUserBundle:Security:index")) }}
                     <br>
                     {{ include('KnarfPlatformBundle:Map:map_view.html.twig') }}
@@ -190,6 +192,7 @@
             <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.23/moment-timezone-with-data.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.3.0/moment-timezone-utils.min.js"></script>
             {{ encore_entry_script_tags('clock') }}
+            {{ encore_entry_script_tags('app') }}
             <script type="text/javascript">
                         $(document).ready(function () {
             //Catch AjaxAuthenticationListener response

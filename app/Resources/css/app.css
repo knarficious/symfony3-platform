@@ -122,6 +122,10 @@ body.home .dynamicheader.shrink .navbar-brand {
 }
 }
 
+#article-title {
+    font-size: 1.5em;
+}
+
 #commentaires {
     background: #DDD;
 }
