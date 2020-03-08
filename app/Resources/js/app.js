@@ -24,7 +24,7 @@ $(document).ready(function(){
       "Latitude is " + latitude + "° Longitude is " + longitude + "°";
 
     $.getJSON(
-      url + apiKey + "/" + latitude + "," + longitude + "?callback=?",
+      url + apiKey + "/" + latitude + "," + longitude + "," + "lang=fr?callback=?",
       function(data) {
           var fahrenheit = data.currently.temperature;
           var celsius;
@@ -32,7 +32,7 @@ $(document).ready(function(){
           {
               celsius = (fahrenheit - 32) * 5/9;
           }
-        $("#temp").html(celsius + "° C");
+        $("#temp").html("Température extérieure" + celsius + "° C");
         $("#minutely").html(data.minutely.summary);
       }
     );
