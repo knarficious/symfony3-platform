@@ -24,15 +24,15 @@ $(document).ready(function(){
       "Latitude is " + latitude + "° Longitude is " + longitude + "°";
 
     $.getJSON(
-      url + apiKey + "/" + latitude + "," + longitude + "?callback=?",
+      url + apiKey + "/" + latitude + "," + longitude + "?lang=fr&units=auto&callback=?",
       function(data) {
           var fahrenheit = data.currently.temperature;
-          var celsius;
-          if(fahrenheit !== '')
-          {
-              celsius = (fahrenheit - 32) * 5/9;
-          }
-        $("#temp").html("Température extérieure: " + celsius + "° C");
+//          var celsius;
+//          if(fahrenheit !== '')
+//          {
+//              celsius = (fahrenheit - 32) * 5/9;
+//          }
+        $("#temp").html("Température extérieure: " + fahrenheit + "° C");
         $("#icon").html(data.currently.icon);
         $("#minutely").html(data.minutely.summary);
       }
