@@ -238,5 +238,11 @@ label.required:after {
 margin: auto;
 }
 
+/* Weather forecast widget*/
+#weather_widget {
+    border-radius: .25em;
+    background: #7fdbff;
+}
+
 
 
