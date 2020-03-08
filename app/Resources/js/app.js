@@ -19,8 +19,12 @@ $(document).ready(function(){
     latitude = position.coords.latitude;
     longitude = position.coords.longitude;
     
-    var geocode = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitude + "," + longitude + "&key=AIzaSyBXnjaWQ1FinxrqxbwT34v90O0qxm2S9ZI";
-    console.log(geocode);
+    $.getJSON(
+            "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitude + "," + longitude + "&key=AIzaSyBXnjaWQ1FinxrqxbwT34v90O0qxm2S9ZI",
+            function(data) {
+                location.html(data.plus_code.compount_code);      
+            }
+    ); 
 //    $.each(geocode, function(key, val) {
 //    location.html(key+ " *** " + val);
 //    });
