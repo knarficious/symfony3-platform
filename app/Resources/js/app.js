@@ -21,9 +21,9 @@ $(document).ready(function(){
     
     var geocode = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitude + "," + longitude + "&key=AIzaSyBXnjaWQ1FinxrqxbwT34v90O0qxm2S9ZI";
     console.log(geocode);
-    $.each(geocode, function(key, val) {
-    location.html(key+ " *** " + val);
-    });
+//    $.each(geocode, function(key, val) {
+//    location.html(key+ " *** " + val);
+//    });
 //    var geocode_length = geocode.length;
 //    for (var i = 0; i < geocode_length; i++)
 //    {
