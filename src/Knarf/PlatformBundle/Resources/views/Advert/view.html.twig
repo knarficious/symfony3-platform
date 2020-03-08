@@ -107,110 +107,15 @@
             </div> #}       
 {% endblock %}
 
-{% block javascripts %}
-    
+{% block javascripts %}    
     {{ parent() }}
-    <script type="text/javascript" src="{{ asset('bundles/knarfplatform/js/player.js') }}"></script>
+    {{ encore_entry_script_tags('player') }}
     <script>
         $(document).ready(function(){
             $('p').children('img').each(function(){
                 $(this).addClass('img-responsive');
             });
         });
-    </script>
+    </script>    
     
-    {#<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js"></script>
-   
-    <script>
-        $j = jQuery.noConflict();
-                    $j.xhrPool = []; // array of uncompleted requests
-            $j.xhrPool.abortAll = function() { // our abort function
-            $j(this).each(function(idx, jqXHR) { 
-                jqXHR.abort();
-                });
-            $j.xhrPool.length = 0
-            };
-     
-            $j.ajaxSetup({
-                beforeSend: function(jqXHR) { // before jQuery send the request we will push it to our array
-                $j.xhrPool.push(jqXHR);
-                            },
-                complete: function(jqXHR) { // when some of the requests completed it will splice from the array
-                    var index = $j.xhrPool.indexOf(jqXHR);
-                    if (index > -1) {
-                        $j.xhrPool.splice(index, 1);
-                    }
-                        }
-            });
-        
-        $j(document).ready(function(){
-            
-
- 
-        $j(document).on('submit', 'form', function(e){
-			// il est impératif de commencer avec cette méthode qui va empêcher le navigateur d'envoyer le formulaire lui-même
-            e.preventDefault();
-            
-            $jform = $j(e.target);
-            modal = $j('#myModal');
- 
-			
-            
-        	var $jsubmitButton = $jform.find(':submit');
-    		$jsubmitButton.html('<i class="fas fa-spinner fa-pulse"></i>');
-    		$jsubmitButton.prop('disabled', true);
- 
-			// ajaxSubmit du plugin ajaxForm nécessaire pour l'upload de fichier
-			$jform.ajaxSubmit({
-				type: 'post',
-                                beforeSubmit: showRequest,
-				success: function(data) {
-					if (data === 'success') {
-						
-						modal.modal('toggle');
-                                                location.reload();
-					} else {
-						modal.find('.modal-body').html(data);
-					}
-				},
-				error: function(jqXHR, status, error) {
-					  $jsubmitButton.html(button.data('label'));
-					  $jsubmitButton.prop('disabled', false);
-				}
-			});
-        });
-        $j(document).on('shown.bs.modal', function () {
-        var modal = $j(this);
-        var xhr;   
-        
-            if(xhr && xhr.readyState !== 4){
-            xhr.abort();
-            }
-        
-        xhr = $j.ajax('{{ path('commentaire_add', {'slug' : advert.slug}) }}', {
-       
-        success: function(data) {
-                        modal.find('.modal-body').html(data);
-                }
-        });
-                
-        });
-        });
-               // pre-submit callback 
-    function showRequest(formData, jqForm, options) { 
-    // formData is an array; here we use $j.param to convert it to a string to display it 
-    // but the form plugin does this for you automatically when it submits the data 
-    var queryString = $j.param(formData); 
- 
-    // jqForm is a jQuery object encapsulating the form element.  To access the 
-    // DOM element for the form do this: 
-    // var formElement = jqForm[0]; 
- 
-    console.log('About to submit: \n\n' + queryString); 
- 
-    // here we could return false to prevent the form from being submitted; 
-    // returning anything other than false will allow the form submit to continue 
-    return true; 
-} 
-	</script>#}
 {% endblock %}     
