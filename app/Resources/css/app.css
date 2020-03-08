@@ -234,11 +234,5 @@ label.required:after {
 margin: auto;
 }
 
-/* Audio Player */
-
-#playlist,audio{
-    background:#666;
-    padding:0;
-}
 
 
