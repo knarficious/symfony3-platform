@@ -9,6 +9,11 @@ and open the template in the editor.
 */
 
 #playlist{
+    background:#3cd19e;
+    border-radius:.25em;
+    color:#3cd19e;
+}
+.label{
     background:#fff;
     border-radius:.25em;
     color:#fff;

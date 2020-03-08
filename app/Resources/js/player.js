@@ -57,7 +57,7 @@ function init() {
 function run(link, player) {
     player.src = link.attr('href');
     par = link.parent();
-    par.addClass('active').siblings().removeClass('active');
+    par.addClass('label active').siblings().removeClass('active');
     audio[0].load();
     audio[0].play();
     }
