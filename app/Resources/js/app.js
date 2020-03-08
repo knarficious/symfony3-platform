@@ -17,7 +17,9 @@ $(document).ready(function(){
   function success(position) {
     latitude = position.coords.latitude;
     longitude = position.coords.longitude;
-
+    
+    location = "https://maps.googleapis.com/maps/api/geocode/json?latlng=latitude,longitude&key=AIzaSyA2K-avkDmpftUPLab9r9oqBca8vjM1-i4";
+    console.log(location);
     location.innerHTML =
       "Latitude is " + latitude + "° Longitude is " + longitude + "°";
 
