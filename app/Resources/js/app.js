@@ -18,8 +18,8 @@ $(document).ready(function(){
     latitude = position.coords.latitude;
     longitude = position.coords.longitude;
     
-    location = "https://maps.googleapis.com/maps/api/geocode/json?latlng=latitude,longitude&key=AIzaSyA2K-avkDmpftUPLab9r9oqBca8vjM1-i4";
-    console.log(location);
+    var position = "https://maps.googleapis.com/maps/api/geocode/json?latlng=latitude,longitude&key=AIzaSyA2K-avkDmpftUPLab9r9oqBca8vjM1-i4";
+    console.log(position);
     location.innerHTML =
       "Latitude is " + latitude + "° Longitude is " + longitude + "°";
 
