@@ -53,8 +53,7 @@ class UserRepository extends AbstractGenericRepository implements UserRepository
     public function getAllNeverConnectedUsers()
     {
         $qb = $this->createQueryBuilder('u')
-                ->where('u.lastTimeConnect is null' )
-                ->andWhere('u.isActive = 1');
+                ->where('u.lastTimeConnect is null' );
         
         return $qb->getQuery()->getResult();
     }

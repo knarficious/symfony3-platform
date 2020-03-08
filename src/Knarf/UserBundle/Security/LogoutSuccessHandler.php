@@ -45,8 +45,7 @@ class LogoutSuccessHandler implements LogoutHandlerInterface
         $request->getSession()->getFlashBag()->add(
                 'success', 'Vous êtes déconnecté. À bientôt '.$user->getUsername());
         $response->headers->setCookie(new Cookie('success_connection', '', time() - 3600));
-        $this->userManager->setLastConnexion($user, new \DateTime('now'));
-        
+        $this->userManager->setLastConnexion($user, new \DateTime('now'));        
         $this->userManager->save($user, false, true);
         return $response;
     }
