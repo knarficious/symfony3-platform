@@ -11,6 +11,8 @@ $(document).ready(function(){
   var location = document.getElementById("location");
   var apiKey = "da6ae541c95e65f571c4274c3588cb5f";
   var url = "https://api.darksky.net/forecast/";
+  var lang = "lang=[fr]";
+  var units = "units=[si]";
 
   navigator.geolocation.getCurrentPosition(success, error);
 
@@ -24,7 +26,7 @@ $(document).ready(function(){
       "Latitude is " + latitude + "° Longitude is " + longitude + "°";
 
     $.getJSON(
-      url + apiKey + "/" + latitude + "," + longitude + "," + "lang=[fr]?callback=?",
+      url + apiKey + "/" + latitude + "," + longitude + "," + units + "," + lang + "?callback=?",
       function(data) {
           var fahrenheit = data.currently.temperature;
 //          var celsius;
