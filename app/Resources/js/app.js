@@ -27,12 +27,12 @@ $(document).ready(function(){
       url + apiKey + "/" + latitude + "," + longitude + "," + "lang=fr?callback=?",
       function(data) {
           var fahrenheit = data.currently.temperature;
-          var celsius;
-          if(fahrenheit !== '')
-          {
-              celsius = (fahrenheit - 32) * 5/9;
-          }
-        $("#temp").html("Température extérieure" + celsius + "° C");
+//          var celsius;
+//          if(fahrenheit !== '')
+//          {
+//              celsius = (fahrenheit - 32) * 5/9;
+//          }
+        $("#temp").html("Température extérieure: " + fahrenheit + "° C");
         $("#minutely").html(data.minutely.summary);
       }
     );
