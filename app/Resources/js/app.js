@@ -30,14 +30,14 @@ $(document).ready(function () {
                     url + apiKey + "/" + latitude + "," + longitude + "?lang=fr&units=auto&callback=?",
                     function (data) {
                         $("#temp").html("Température extérieure: " + data.currently.temperature + "° C");
-                        $("#icon").html(data.currently.icon);
+                        $("#currently").html(data.currently.summary);
                         $("#minutely").html(data.minutely.summary);
                     }
             );
         }
 
         function error(err) {
-            process.innerHTML = "Unable to retrieve your location";
+            process.innerHTML = "Impossible de récupérer votre position";
             console.warn(`ERROR(${err.code}): ${err.message}`);
         }
 
