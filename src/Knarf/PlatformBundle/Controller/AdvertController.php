@@ -81,7 +81,7 @@ class AdvertController extends Controller {
     }
     
         /**
-     * @Route("/admin/{slug}", name="knarf_admin_view")
+     * @Route("/{slug}", name="knarf_admin_view")
      * @param type $slug
      * @param Request $request
      */
