@@ -3,38 +3,38 @@
 {% extends "KnarfPlatformBundle::layout.html.twig" %}
 
 {% block title %}
-{{ parent() }} | {{ advert.title | title }}
+    {{ parent() }} | {{ advert.title | title }}
 {% endblock %}
 
 {% block knarfplatform_body %}
     {{ parent() }}
     <article class="well">
 
-    
-    <h2>{{ advert.title }}</h2>
-    <div class="row">
-    {{ advert.content }}
-    </div>
-    </article>   
-    <br>
-    
-    <a href="{{ path('knarf_platform_home') }}" class="btn btn-default">
-        <i class="glyphicon glyphicon-chevron-left"></i>
-            Retour à la liste
-    </a>    
+
+        <h2>{{ advert.title }}</h2>
         <br>
+        <div class="row">
+            {{ advert.content | raw }}
+        </div>
+    </article>   
+    <br>    
+
     {% if advert.user == app.user %}
-        
-    <a href="{{ path('knarf_admin_edit', {'slug': advert.slug}) }}" class="btn btn-default">
-      <i class="glyphicon glyphicon-edit"></i>
-      Modifier l'article
-    </a>
-      <br>
-    <a href="{{ path('knarf_admin_delete', {'slug': advert.slug}) }}" class="btn btn-danger">
-      <i class="glyphicon glyphicon-trash"></i>
-      Supprimer l'article
-    </a>
-      
+        <a href="{{ path('profile') }}" class="btn btn-default">
+            <i class="glyphicon glyphicon-chevron-left"></i>
+            Retour à mon profil
+        </a>    
+        <br>    
+        <a href="{{ path('knarf_admin_edit', {'slug': advert.slug}) }}" class="btn btn-default">
+            <i class="glyphicon glyphicon-edit"></i>
+            Modifier l'article
+        </a>
+        <br>
+        <a href="{{ path('knarf_admin_delete', {'slug': advert.slug}) }}" class="btn btn-danger">
+            <i class="glyphicon glyphicon-trash"></i>
+            Supprimer l'article
+        </a>
+
     {% endif %} 
-    
+
 {% endblock %}

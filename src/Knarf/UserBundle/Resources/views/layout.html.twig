@@ -143,9 +143,15 @@
                     <div class="nav navbar-nav navbar-left">
                         <p>© knarficious {{ 'now'|date('Y') }}</p>
                     </div>
-                    <div class="col-lg-9">
-                        <a href="{{ path('knarf_platform_view', {'slug': 'conditions-d-utilisations'}) }}">CGU</a>
+                    <p>
+                    <div class='col-lg-4'>
+                        <a href="{{ path('knarf_admin_view', {'slug':'confidentialite '}) }}">Confidentialité</a>
                     </div>
+                    <p>
+                    <div class="col-lg-4">
+                        <a href="{{ path('knarf_admin_view', {'slug': 'conditions-gnrales-d-utilisation'}) }}">Conditions Générales d'Utilisation</a>
+                    </div>
+                    <p>
                     <div class="nav navbar-nav navbar-right">          
                        
                             <a href="{{ path('nelmio_api_doc_index') }}">API Documentation</a>
