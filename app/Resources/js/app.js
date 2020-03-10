@@ -22,7 +22,7 @@ $(document).ready(function () {
             $.getJSON(
                     "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitude + "," + longitude + "&key=AIzaSyBXnjaWQ1FinxrqxbwT34v90O0qxm2S9ZI",
                     function (data) {
-                        location.innerHTML = data.plus_code.compound_code.substring(0, data.plus_code.compound_code.indexof(" "));
+                        location.innerHTML = data.plus_code.compound_code.substring(data.plus_code.compound_code.indexof(" "));
                     }
             );
 
