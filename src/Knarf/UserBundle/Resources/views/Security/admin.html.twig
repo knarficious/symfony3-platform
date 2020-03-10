@@ -1,6 +1,9 @@
 {# src/Knarf/UserBundle/Resources/views/Security/admin.html.twig #}
 
-
+<div class='well'>
+    <h3>Articles administrateur</h3>
+    {{ render(controller('KnarfPlatformBundle:Advert:indexAsAdmin')) }}
+</div>
 <div class="well">    
     <h3>Liste des utilisateurs </h3>   
 

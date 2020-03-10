@@ -59,10 +59,17 @@ class Advert
     private $content;    
     
     /**
-     * 
+    * 
     * @ORM\Column(name="published", type="boolean")
     */
-    private $published = true; 
+    private $published = true;
+    
+    
+    /**
+     * @var bool
+     * @ORM\Column(name="is_admin", type="boolean")
+     */
+    private $isAdmin = false;
     
     //  === ASSOCIATIONS ===
     
@@ -197,6 +204,28 @@ class Advert
    {
        return $this->published;
        
+   }
+   
+   /**
+    * Set isAdmin
+    * 
+    * @param boolean $isAdmin Description
+    * 
+    * @return Advert Description
+    */
+   public function setIsAdmin($isAdmin)
+   {
+       $this->isAdmin = $isAdmin;
+   }
+   
+   /**
+    * Get isAdmin
+    * 
+    * @return boolean Description
+    */
+   public function getIsAdmin() 
+   {
+       return $this->isAdmin;
    }
 
     /**

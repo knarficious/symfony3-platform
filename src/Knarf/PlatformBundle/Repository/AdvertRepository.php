@@ -34,8 +34,28 @@ class AdvertRepository extends AbstractGenericRepository implements AdvertReposi
     {
         $qb = $this->createQueryBuilder('a')
                 ->where('a.published = 1' )
+                ->andWhere('a.isAdmin = 0')
                 ->orderBy('a.date','DESC')
                 ->setMaxResults(6);
+        
+        return $qb->getQuery()->getResult();
+    }
+    
+    public function getAdvertsbyRubrique($rubrique) 
+    {
+        $qb = $this->createQueryBuilder('a')
+                ->where('a.rubrique = :rubrique' )
+                ->andWhere('a.published = 1')
+                ->setParameter('rubrique', $rubrique);
+        
+        return $qb->getQuery()->getResult();
+                
+    }
+    
+    public function getAdminAdverts()
+    {
+        $qb = $this->createQueryBuilder('a')
+                ->where('a.isAdmin = 1');
         
         return $qb->getQuery()->getResult();
     }

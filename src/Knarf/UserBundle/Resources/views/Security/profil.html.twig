@@ -99,7 +99,7 @@
                     <th><h4>Date</h4></th>
                 </tr>
                 {% set countPublished = false %}
-                {% for entity in app.user.adverts if entity.published == true %}
+                {% for entity in app.user.adverts if entity.published == true and entity.isAdmin == false %}
                     <tr>
                         {% set countPublished = countPublished + 1 %}
                         <td><a href="{{ path('knarf_platform_view', { 'slug': entity.slug }) }}">

@@ -10,11 +10,21 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Knarf\PlatformBundle\Form\AdvertType;
 use Knarf\PlatformBundle\Form\AdvertEditType;
+use Knarf\PlatformBundle\Form\AdminAdvertType;
 use Knarf\PlatformBundle\Entity\Advert;
 use Knarf\PlatformBundle\Entity\Media;
 
 class AdvertController extends Controller {
 
+    public function indexAsAdminAction(Request $request)
+    {
+        $repository = $this->getDoctrine()->getManager()->getRepository('KnarfPlatformBundle:Advert');
+        $listAdverts = $repository->getAdminAdverts();
+        
+        return $this->render('KnarfPlatformBundle:Advert:index_as_admin.html.twig',
+                ['listAdverts' => $listAdverts ]);
+    }
+    
     public function indexAction(Request $request) {
         $repository = $this->getDoctrine()->getManager()->getRepository('KnarfPlatformBundle:Advert');
         $listAdverts = $repository->findAll();
@@ -69,6 +79,28 @@ class AdvertController extends Controller {
         return $this->render('KnarfPlatformBundle:Advert:view.html.twig', array(
                     'advert' => $advert, 'active' => 'advert'));
     }
+    
+        /**
+     * @Route("/admin/{slug}", name="knarf_admin_view")
+     * @param type $slug
+     * @param Request $request
+     */
+    public function viewAsAdminAction($slug, Request $request) {
+
+        $repository = $this
+                ->getDoctrine()
+                ->getManager()
+                ->getRepository('KnarfPlatformBundle:Advert');
+
+        $advert = $repository->findOneBy(array('slug' => $slug));
+
+        if (null === $advert) {
+            throw new NotFoundHttpException("L'article " . $slug . " n'existe pas!");
+        }
+
+        return $this->render('KnarfPlatformBundle:Advert:vue.html.twig', array(
+                    'advert' => $advert));
+    }
 
     /**
      * @Route("/ajout", name="knarf_platform_add")
@@ -105,9 +137,42 @@ class AdvertController extends Controller {
 
         return $this->render('KnarfPlatformBundle:Advert:ajout.html.twig', array('form' => $form->createView()));
     }
+    
+    /**
+     * @Route("/admin/ajout", name="as_admin_add")
+     * @param Request $request
+     * @return type
+     */
+    public function addAsAdminAction(Request $request) 
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $advert = new Advert();
+        $user = $this->getUser();
+        $advert->setUser($user);
+        $advert->setDate(new \DateTime());
+        $advert->setUpDateAt(new \DateTime());
+        $form = $this->createForm(AdminAdvertType::class, $advert);
+
+        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($advert);
+            $em->flush();
+
+            $this->addFlash('success', 'Annonce bien enregistrée.');
+
+            // Puis on redirige vers la page de visualisation de cettte annonce
+
+            return $this->redirect($this->generateUrl('knarf_admin_view', array('id' => $advert->getId(), 'slug' => $advert->getSlug())));
+        }
+
+        // Si on n'est pas en POST, alors on affiche le formulaire
+
+        return $this->render('KnarfPlatformBundle:Advert:admin_ajout.html.twig', array('form' => $form->createView()));
+    }
 
     /**
-     * @Route("modifier/{slug}", name="knarf_platform_edit")
+     * @Route("/modifier/{slug}", name="knarf_platform_edit")
      * @param type $slug
      * @param Request $request
      * @throws NotFoundHttpException
@@ -143,6 +208,45 @@ class AdvertController extends Controller {
             return $this->redirectToRoute('knarf_platform_view', array('slug' => $advert->getSlug()));
         }
     }
+    
+       /**
+     * @Route("/admin/modifier/{slug}", name="knarf_admin_edit")
+     * @param type $slug
+     * @param Request $request
+     * @throws NotFoundHttpException
+     */
+    public function editAsAdminAction($slug, Request $request) 
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $em = $this->getDoctrine()->getManager();
+        $advert = $em->getRepository('KnarfPlatformBundle:Advert')->findOneBy(array('slug' => $slug));
+
+        $advert->setUpDateAt(new \DateTime());
+
+        //On vérifie si l'annonce appartient à l'utilisateur en cours
+        if ($this->getUser() === $advert->getUser()) {
+            if (null === $advert) {
+                throw new NotFoundHttpException("L'annonce  " . $slug . " n'existe pas!");
+            }
+
+            $form = $this->createForm(AdminAdvertType::class, $advert);
+
+            if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+                $em->persist($advert);
+                $em->flush();
+
+                $this->addFlash('success', 'Annonce modifiée avec succès.');
+
+                return $this->redirectToRoute('knarf_admin_view', array('slug' => $advert->getSlug()));
+            }
+
+
+            return $this->render('KnarfPlatformBundle:Advert:admin_ajout.html.twig',
+                            array('advert' => $advert, 'form' => $form->createView()));
+        } else {
+            return $this->redirectToRoute('knarf_platform_view', array('slug' => $advert->getSlug()));
+        }
+    }
 
     /**
      * @Route("/delete/{slug}", name="knarf_platform_delete")
@@ -171,6 +275,43 @@ class AdvertController extends Controller {
             }
 
             return $this->render('KnarfPlatformBundle:Advert:delete.html.twig', array(
+                        'advert' => $advert,
+                        'form' => $form->createView()
+            ));
+        } else {
+            return $this->redirectToRoute('knarf_platform_view', array('slug' => $advert->getSlug()));
+        }
+    }
+    
+    /**
+     * @Route("admin/delete/{slug}", name="knarf_admin_delete")
+     * @param type $slug
+     * @param Request $request
+     * @throws NotFoundHttpException
+     */
+    public function deleteAdvertAsAdminAction($slug, Request $request) 
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $em = $this->getDoctrine()->getManager();
+        $advert = $em->getRepository('KnarfPlatformBundle:Advert')->findOneBy(array('slug' => $slug));
+
+        if ($this->getUser() === $advert->getUser()) {
+            if (null === $advert) {
+                throw new NotFoundHttpException("L'annonce  " . $slug . " n'existe pas!");
+            }
+
+            $form = $this->createFormBuilder()->getForm();
+
+            if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+                $em->remove($advert);
+                $em->flush();
+
+                $this->addFlash('success', "L'article a été supprimé avec succès");
+
+                return $this->redirect($this->generateUrl('profile'));
+            }
+
+            return $this->render('KnarfPlatformBundle:Advert:delete_as_admin.html.twig', array(
                         'advert' => $advert,
                         'form' => $form->createView()
             ));

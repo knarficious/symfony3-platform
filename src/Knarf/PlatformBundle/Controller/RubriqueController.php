@@ -32,7 +32,7 @@ class RubriqueController extends Controller
     public function indexAction()
     {
         $repository = $this->getDoctrine()->getManager()->getRepository('KnarfPlatformBundle:Rubrique');
-        $listRubriques = $repository->GetRubriquesEtAdverts();
+        $listRubriques = $repository->getRubriquesEtAdverts();
         
         return $this->render('KnarfPlatformBundle:Rubrique:index.html.twig', array(
         'listRubriques' => $listRubriques

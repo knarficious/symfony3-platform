@@ -3,89 +3,36 @@
 {% extends "KnarfPlatformBundle::layout.html.twig" %}
 
 {% block title %}
-  Lecture d'une annonce - {{ parent() }}
+{{ parent() }} | {{ advert.title | title }}
 {% endblock %}
 
 {% block knarfplatform_body %}
+    {{ parent() }}
+    <article class="well">
 
-    <article class="well">   
-    
-    {% if advert.nomMedia is defined %} 
-        {% if advert.nomMedia ends with 'jpg' or advert.nomMedia ends with 'png' or advert.nomMedia ends with 'gif' %}                                           
-            <img class="img-responsive" src="{{vich_uploader_asset(advert, 'mediaFile') }}" alt="{{ advert.nomMedia }}"/>
-        {% elseif advert.nomMedia ends with 'mp3' %}						
-            <audio controls>
-            <source src="{{ asset('uploads/') }}{{ advert.nomMedia }}" type="audio/mpeg">
-            </audio>       
-        {% elseif advert.nomMedia ends with 'mp4' %}
-        <div class="embed-responsive embed-responsive-16by9" >    
-            <video controls>
-            <source src="{{ asset('uploads/') }}{{ advert.nomMedia }}" type="video/mp4">
-            </video>          
-	</div>
-        {% else %}                                    
-        {% endif %}    
-    {% endif %}
     
     <h2>{{ advert.title }}</h2>
-    <i>Par {{ advert.user.username }}, le {{ advert.date|date('d/m/Y') }} à {{ advert.date|date('h:i') }}</i>
     <div class="row">
     {{ advert.content }}
     </div>
-    </article>
-    
-    {# bloc des commentaires #}
-    
-    <div class="container-fluid">
-        <h4>Commentaires</h4>        
-        <hr>
-        <div class="container" >
-        {% if advert.commentaires is not empty %}
-            
-            {% for commentaire in advert.commentaires %}
-                <div class="media">
-                    <a href="{{ path('knarf_commentaire_view', {'id': commentaire.id}) }}">
-                    <div class="media-left">
-                        {% if commentaire.user.nomMedia is not empty %}
-                        <img class="media-object" src="{{vich_uploader_asset(commentaire.user, 'mediaFile')| imagine_filter('my_thumb_resize') }}" />
-                        {% else %}
-                        {% image '@KnarfUserBundle/Resources/public/images/if_icon-person_211874.png' %}
-                        <img src="{{ asset_url }}" alt="" />
-                        {% endimage %}
-                        {% endif %}
-                    </div>
-                    <div class="media-body">                        
-                        <h4 class="media-heading">
-                            <small><i>par <b>{{ commentaire.user.username }}</b> le {{ commentaire.datePublication|date('d/m/Y') }}</i>
-                            </small>
-                        </h4>
-                        <p>
-                        {{ commentaire.contenu }}
-                        </p>                    
-                    </div>             
-            {% endfor %}   
-                    </a>
-                </div>
-        {% else %}
-            Aucun commentaire
-        {% endif %}    
-          
-    </div>
+    </article>   
+    <br>
     
     <a href="{{ path('knarf_platform_home') }}" class="btn btn-default">
         <i class="glyphicon glyphicon-chevron-left"></i>
             Retour à la liste
     </a>    
-    
+        <br>
     {% if advert.user == app.user %}
         
-    <a href="{{ path('knarf_platform_edit', {'id': advert.id}) }}" class="btn btn-default">
+    <a href="{{ path('knarf_admin_edit', {'slug': advert.slug}) }}" class="btn btn-default">
       <i class="glyphicon glyphicon-edit"></i>
-      Modifier l'annonce
+      Modifier l'article
     </a>
-    <a href="{{ path('knarf_platform_delete', {'id': advert.id}) }}" class="btn btn-danger">
+      <br>
+    <a href="{{ path('knarf_admin_delete', {'slug': advert.slug}) }}" class="btn btn-danger">
       <i class="glyphicon glyphicon-trash"></i>
-      Supprimer l'annonce
+      Supprimer l'article
     </a>
       
     {% endif %} 

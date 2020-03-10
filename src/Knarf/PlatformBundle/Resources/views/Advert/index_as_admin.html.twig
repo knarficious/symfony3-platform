@@ -1,0 +1,22 @@
+{# empty Twig template #}
+<table style="width:100%">                         
+                <tr>                         
+                    <th><h4>Titre</h4></th>
+                    <th><h4>Rubrique</h4></th>
+                    <th><h4>Date</h4></th>
+                </tr>
+                {% set count = 0 %}
+                {% for entity in listAdverts%}                      
+                    <tr>
+                        {% set count = count + 1 %}
+                        <td><a href="{{ path('knarf_admin_view', { 'slug': entity.slug }) }}">
+                                {{ entity.title }}
+                            </a>
+                        </td>
+                        <td>{{ entity.rubrique.intitule }}</td>                
+                        <td>{{ entity.date|date('d/m/Y') }}</td>
+                    </tr>
+                {% endfor %}
+                <caption>Nombre d'articles:  {{ count }}</caption>
+            </table>
+            <p>

@@ -36,7 +36,8 @@
     {% endif %}
     </div>
     <div class="col-md-6">
-    <h2>{{ advert.title }}</h2>
+        <br/>
+        <header id="article-title">{{ advert.title }}</header>
     <p>
     <br>
     Par 
@@ -49,9 +50,9 @@
     </div>
     </div>
     <br>
-    <div class="">
+    <section class="col-md-12">
         <p>{{ advert.content | raw }}</p>
-    </div>
+    </section>
         
     </article>
     
