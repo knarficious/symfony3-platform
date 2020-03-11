@@ -37,7 +37,8 @@ class ContactType extends AbstractType
                 ->add('message',    TextareaType::class, array('constraints' => array(
                     new NotBlank(array('message' => 'Veuillez remplir ce champ'))
                 )))
-                ->add('envoyer',    SubmitType::class);
+                //->add('envoyer',    SubmitType::class)
+                ;
     }/**
      * {@inheritdoc}
      */
