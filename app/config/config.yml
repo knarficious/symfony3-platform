@@ -146,9 +146,11 @@ liip_imagine:
                     - '%kernel.root_dir%/../web/'
     driver: gd  
     filter_sets:
-        carousel:
+        article_thumb:
             quality: 100
             filters:
+                relative_resize:
+                    heighten: 200
 
         my_thumb:
             #data_loader: avatar
@@ -275,11 +277,12 @@ nelmio_api_doc:
         enabled:  true
         
 knp_paginator:
+    page_range: 5
     default_options:
         page_name: page                
         sort_field_name: sort          
-        sort_direction_name: direction 
-        distinct: true                 
+        sort_direction_name: direction
+        distinct: false                 
     template:
         pagination: 'KnpPaginatorBundle:Pagination:twitter_bootstrap_v3_pagination.html.twig'
         sortable: '@KnpPaginator/Pagination/sortable_link.html.twig'

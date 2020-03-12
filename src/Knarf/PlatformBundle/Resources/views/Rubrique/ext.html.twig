@@ -3,110 +3,105 @@
 {% extends "KnarfPlatformBundle::layout.html.twig" %}
 
 {% block title %}
-    
-    {{ rubrique.intitule }} | {{ parent() }}
-    
+
+    {{ parent() }} - {{ rubrique.intitule }}
+
 {% endblock %}
 
 {% block knarfplatform_body %}
-   
+
     {{ parent() }}
-    
-{#     {{ render(controller("KnarfPlatformBundle:Rubrique:view", {'slug': rubrique.slug})) }}#}
-    
-     <div class="well" align="center">    
+
+    {#     {{ render(controller("KnarfPlatformBundle:Rubrique:view", {'slug': rubrique.slug})) }}#}
+
+    <div class="well" align="center">    
         <h1>{{ rubrique.intitule }}</h1> 
     </div>
-     
-    {% if pagination is not empty %}
-        
+    
+        {% if pagination is not empty %}
 
-        {# sorting of properties based on query components #}
-        <div {% if pagination.isSorted('a.title') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Titre', 'a.title') }}</div>
-        <div {% if pagination.isSorted('a.date') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pagination, 'Date', 'a.date') }}</div>
-   
+            {# sorting of properties based on query components #}
+            <div {% if pagination.isSorted('a.title') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Titre', 'a.title') }}</div>
+            <div {% if pagination.isSorted('a.date') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pagination, 'Date', 'a.date') }}</div>
+            <div class="container-fluid" > 
+            {% for entity in pagination %}
+                {% if entity.published == 1 %} 
+                 
+                    <div class="col-sm-3 col-md-6 col-md-12" id="article-block">
 
-        {% for entity in pagination %}
-    <div class="">
-        <div class="">
-            {% if entity.published == 1 %}
-                
-                  
-        <article class="">
+                        <div class="thumbnail" id="article-thumbnail">
+                            <a href="{{ path('knarf_platform_view', {'slug': entity.slug}) }}">
+                                {% if entity.media.nomMedia is defined %}        
 
-        <div class="thumbnail">
-        <a href="{{ path('knarf_platform_view', {'slug': entity.slug}) }}">
-            {% if entity.media.nomMedia is defined %}        
+                                    {% if entity.media.nomMedia ends with 'jpg' or entity.media.nomMedia ends with 'png' or entity.media.nomMedia ends with 'gif' %}
 
-                {% if entity.media.nomMedia ends with 'jpg' or entity.media.nomMedia ends with 'png' or entity.media.nomMedia ends with 'gif' %}
+                                        <img src="{{vich_uploader_asset(entity.media, 'mediaFile') | imagine_filter('article_thumb') }}" alt="{{ entity.media.nomMedia }}"/>
 
-                    <img src="{{vich_uploader_asset(entity.media, 'mediaFile') }}" alt="{{ entity.media.nomMedia }}"/>
+                                    {% elseif entity.media.nomMedia ends with 'mp3' %}
 
+                                        <span class="glyphicon glyphicon-play">
+                                        </span>
 
-                {% elseif entity.media.nomMedia ends with 'mp3' %}
+                                    {% elseif entity.media.nomMedia ends with 'mp4' %}
 
-                    <span class="glyphicon glyphicon-play">
-                    </span>
+                                        <div class="embed-responsive embed-responsive-16by9">
+                                            <video controls>
+                                                <source src="{{ asset('uploads/medias/') }}{{ entity.media.nomMedia }}" type="video/mp4">
+                                            </video>          
+                                        </div>
 
-                {% elseif entity.media.nomMedia ends with 'mp4' %}
+                                    {% else %}                                    
+                                    {% endif %}        
 
-                    <div class="embed-responsive embed-responsive-16by9">
-                    <video controls>
-                    <source src="{{ asset('uploads/medias/') }}{{ entity.media.nomMedia }}" type="video/mp4">
-                    </video>          
+                                {% endif %}
+
+                                <div class="caption" id="article-caption" align="center">
+                                    {{ entity.title }}
+                                    {#                <h4>par {{ entity.user.username }}, le {{ entity.date|date('d/m/Y') }}</h4>#}
+                                </div>
+                            </a>
+                        </div>
+                                
                     </div>
+                
+                {%  endif %}
 
-                {% else %}                                    
-                {% endif %}        
+
+            {% endfor %}
+            </div> 
+            <div align="center">
+                {{ knp_pagination_render(pagination) }}
+            </div>
+
+        {% else %}
+
+            Cette rubrique est vide
+
+        {% endif %} 
+    
+    <br>    
+    <div class="well">
+        <p>
+            {% if is_granted('ROLE_ADMIN') %}
+
+                <a href="{{ path('rubrique_edit', {'slug': rubrique.slug}) }}" class="btn btn-default">
+                    <i class="glyphicon glyphicon-edit"></i>
+                </a>
+
+                <a href="{{ path('rubrique_delete', {'slug': rubrique.slug}) }}" class="btn btn-danger">
+                    <i class="glyphicon glyphicon-trash"></i>
+                </a>
 
             {% endif %}
 
-            <div class="caption" align="center">
-                <h2>{{ entity.title }}</h2>
-                <h4>par {{ entity.user.username }}, le {{ entity.date|date('d/m/Y') }}</h4>
-            </div>
-        </a>
-        </div>
-    </article>
-    
-            {%  endif %}
-        </div>
+            <a href="{{ path('rubrique_ext_index') }}" class="btn btn-default">
+                <i class="glyphicon glyphicon-chevron-left"></i>
+            </a>
+        </p>
     </div>
-          {% endfor %}
-          
-        <div class="navigation text-center">
-        {{ knp_pagination_render(pagination) }}
-        </div>
-        
-    {% else %}
-        
-        Cette rubrique est vide
-        
-    {% endif %} 
-   
-          <br>    
-      <div class="well">
-         <p>
-        {% if is_granted('ROLE_ADMIN') %}
-
-        <a href="{{ path('rubrique_edit', {'slug': rubrique.slug}) }}" class="btn btn-default">
-            <i class="glyphicon glyphicon-edit"></i>
-        </a>
-   
-        <a href="{{ path('rubrique_delete', {'slug': rubrique.slug}) }}" class="btn btn-danger">
-            <i class="glyphicon glyphicon-trash"></i>
-        </a>
-
-        {% endif %}
-        
-        <a href="{{ path('rubrique_ext_index') }}" class="btn btn-default">
-          <i class="glyphicon glyphicon-chevron-left"></i>
-        </a>
-          </p>
-      </div>
-          
 
 
- 
+
+
 
 {% endblock %}

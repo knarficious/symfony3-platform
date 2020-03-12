@@ -76,7 +76,7 @@ class RubriqueController extends Controller
         $pagination = $paginator->paginate(
             $allAdvertsQuery,
             $request->query->getInt('page', 1),
-            $request->query->getInt('limit', 6),
+            $request->query->getInt('limit', 8),
             [ 'defaultSortFieldName' => 'a.date', 'defaultSortDirection' => 'desc' ]
             );
 		 

@@ -122,9 +122,22 @@ body.home .dynamicheader.shrink .navbar-brand {
 }
 }
 
-#article-title {
-    font-size: 1.5em;
+#article-block {
+    padding-right: 15px;
+    /*max-height: 234px;*/
 }
+
+#article-thumbnail.thumbnail {
+    max-height: 225px;
+    border: none;
+}
+
+#article-caption {
+    text-align: center;
+    font-size: .9em;
+    padding-top: 0;
+}
+
 
 #commentaires {
     background: #DDD;
