@@ -14,7 +14,8 @@ $(document).ready(function () {
         var url = "https://api.darksky.net/forecast/";
         var latitude;
         var longitude;
-        if (navigator.connection.type === 'ethernet')
+        var networkInformation = navigator.connection.type;
+        if (networkInformation === 'ethernet')
         {
      
             $.getJSON("https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyBXnjaWQ1FinxrqxbwT34v90O0qxm2S9ZI",
@@ -63,45 +64,8 @@ $(document).ready(function () {
         //process.innerHTML = "Locating...";
     }
 
-    weather();
-    
-    deviceInfo: function () {
-		var isMobile = false;
-		var os = '';
-		var device = '';
-		var ua = navigator.userAgent;
-		var p = navigator.platform;
-		var matched;
-		
-		if ( /bot|spider/i.test( ua ) ) {
-			os = 'spider';
-		} else {
-			if ( /iPhone|iPod|iPad/.test( p ) ) { 
-				os = 'iOS';
-				device = p;
-				isMobile = true; 
-			} else {
-				var matched = /Android|BlackBerry|IEMobile|Opera Mini|Mobi|Tablet/.exec( ua );
-				if ( matched ) {
-					device = ( matched[0] === 'Mobi' ) ? 'Mobile' : matched[0];
-					isMobile = true;
-				}
-			}
-			if ( ! isMobile ) {
-				if ( /Mac/.test( p ) ) {
-					os = 'Mac';
-					device = 'Desk/Laptop';
-				} else if ( /Linux/.test( p ) ) {
-					os = 'Linux';
-					device = 'Desk/Laptop';
-				} else if ( /Win|Pocket PC/.test( p ) ) {
-					os = 'Windows';
-					device = 'Desk/Laptop';
-				}
-			}
-		}
-		return { os:os, device:device, isMobile:isMobile }; 
-	}
+    weather();    
+
 });
 
 
