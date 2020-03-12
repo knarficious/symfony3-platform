@@ -1,5 +1,5 @@
 {# src/Knarf/UserBundle/Resources/views/Security/register.html.twig #}
-{% extends 'KnarfPlatformBundle::layout.html.twig' %}
+{% extends 'KnarfUserBundle::layout.html.twig' %}
 
 {% form_theme form 'bootstrap_3_layout.html.twig' %}
 
@@ -7,14 +7,15 @@
     {{ parent() }}|{{ 'user.registration.label' | trans }}
 {% endblock %}
 
-{% block knarfplatform_body %}
+{% block knarfuser_body %}
     
     {{ parent() }}
-    
+    <div class="container-fluid">
     <div style="text-align: center">
         <h1>{{ 'user.registration.label' | trans }}</h1>
     </div>
-    
+    <div class="col-md-12">
     {{ form(form) }}
-    
+    </div>
+    </div>
 {% endblock %}
