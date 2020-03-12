@@ -62,21 +62,25 @@ class RubriqueController extends Controller
      */
     public function extendedViewAction($slug, Request $request)
     {
-        $rubrique = $this
-                ->getDoctrine()
-                ->getRepository('KnarfPlatformBundle:Rubrique')
-                ->findOneBy(array('slug'=> $slug));
-
-        $adverts = $rubrique->getAdverts();        
-        
+        $em = $this->getDoctrine()->getManager();
+        $rubrique = $em->getRepository('KnarfPlatformBundle:Rubrique')->findOneBy(['slug' => $slug]);
+        $rubriqueId = $rubrique->getId();
+        $advertsRep = $em->getRepository('KnarfPlatformBundle:Advert');
+        $allAdvertsQuery = $advertsRep->createQueryBuilder('a')
+                ->where('a.rubrique = :rubrique')
+                ->andWhere('a.published = 1')
+                ->andWhere('a.isAdmin = 0')
+                ->setParameter('rubrique', $rubriqueId)
+                ->getQuery();
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
-            $adverts,
+            $allAdvertsQuery,
             $request->query->getInt('page', 1),
-            $request->query->getInt('limit', 6));
+            $request->query->getInt('limit', 6),
+            [ 'defaultSortFieldName' => 'a.date', 'defaultSortDirection' => 'desc' ]
+            );
 		 
-	return $this->render('KnarfPlatformBundle:Rubrique:ext.html.twig', array( 'rubrique' => $rubrique, 'pagination' => $pagination));
-		    
+	return $this->render('KnarfPlatformBundle:Rubrique:ext.html.twig', array( 'rubrique' => $rubrique, 'pagination' => $pagination));		    
     }    
 
     public function viewAction($slug)
