@@ -257,5 +257,9 @@ margin: auto;
     background: #7fdbff;
 }
 
+audio {
+    display: block;
+}
+
 
 
