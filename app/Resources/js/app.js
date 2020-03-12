@@ -43,8 +43,27 @@ $(document).ready(function () {
 
         //process.innerHTML = "Locating...";
     }
-
+    
     weather();
+    
+    function myFunction(x) {
+//        const image = document.getElementById("weather-image");
+//        const content = document.getElementById("weather-content");
+      if (x.matches) { // If media query matches
+        $("#weather-image").addClass("col-xs-4");
+        $("#weather-content").addClass("col-xs-4");
+      }
+      else {
+        $("#weather-image").removeClass("col-xs-4");
+        $("#weather-content").removeClass("col-xs-4");  
+      }
+    }
+
+    var x = window.matchMedia("(max-width: 800px)")
+    myFunction(x) // Call listener function at run time
+    x.addListener(myFunction) // Attach listener function on state changes 
+
+
 });
 
 

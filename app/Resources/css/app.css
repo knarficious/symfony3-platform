@@ -193,6 +193,7 @@ body.home .dynamicheader.shrink .navbar-brand {
   float: left;
   width: 25%;
   padding-left: 20px;
+  padding-top: 2px;
 }
 
 /* Clear floats after the columns */
@@ -217,8 +218,8 @@ body.home .dynamicheader.shrink .navbar-brand {
     padding: 0;    
   }
   
-  .rightcolumn {
-      background-color: #e0e0eb;
+  #weather-widget {
+    padding-left: 2em;
   }
 }
 
@@ -252,9 +253,8 @@ margin: auto;
 }
 
 /* Weather forecast widget*/
-#weather_widget {
-    border-radius: .25em;
-    background: #7fdbff;
+#weather-widget {
+    
 }
 
 audio {

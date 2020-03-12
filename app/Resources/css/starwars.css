@@ -92,7 +92,7 @@ and open the template in the editor.
 }
 /* General styles and layout */
 #starwars-area {
-    background: #000  url(//knarfmedia.local/images/stars_bg.jpg);
+    background: #000  url("/images/stars_bg.jpg");
     padding-top: 500px;
 }
 
