@@ -51,11 +51,11 @@ $(document).ready(function () {
 //        const content = document.getElementById("weather-content");
       if (x.matches) { // If media query matches
         $("#weather-image").addClass("col-xs-4");
-        $("#weather-content").addClass("col-xs-4");
+        $("#weather-content").addClass("col-xs-8");
       }
       else {
         $("#weather-image").removeClass("col-xs-4");
-        $("#weather-content").removeClass("col-xs-4");  
+        $("#weather-content").removeClass("col-xs-8");  
       }
     }
 
