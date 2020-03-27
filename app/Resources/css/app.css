@@ -228,7 +228,7 @@ body.home .dynamicheader.shrink .navbar-brand {
 
 /* Responsive video ---*/
 @media screen and (max-width: 900px) {
-    video {
+    video, audio {
         max-width: 300px;
     }
 }
