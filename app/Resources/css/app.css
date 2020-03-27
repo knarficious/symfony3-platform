@@ -226,13 +226,6 @@ body.home .dynamicheader.shrink .navbar-brand {
   }
 }
 
-/* Responsive video ---*/
-@media screen and (max-width: 900px) {
-    video {
-        max-height: 300px;
-    }
-}
-
 #toggle-clocks {
 	display: none;
 }
