@@ -45,7 +45,8 @@
             <a href ="{{ path('profile_view', {'slug': advert.user.slug} )}}">{{ advert.user.username }}</a>
         {% else %}
             {{ advert.user.username }}
-        {% endif %}    , le {{ advert.date|date('d/m/Y') }} à {{ advert.date|date('H:i') }}
+        {% endif %} , le {{ advert.date|date('d/m/Y') }} à {{ advert.date|date('H:i') }}
+        {% if advert.updateAt %}, modifié le {{ advert.updateAt|date('d/m/Y') }} à {{ advert.updateAt|date('H:i') }} {% endif %}
     </p>
     </div>
     </div>
