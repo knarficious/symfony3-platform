@@ -1,0 +1,52 @@
+{# src/Knarf/PlatformBundle/Resources/views/Security/login_modal.html.twig #}
+{% block stylesheets %}
+    
+    {{ encore_entry_link_tags('login') }}
+{%  endblock %}
+{% block knarfplatform_body %}
+    <div class="container-fluid">
+        <div class="col-sm-4" id="login-area">
+    <div id="loginModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title">Connexion</h1>
+                </div>
+                <div class="modal-body">
+                    <div class="account-wall">
+                        {% if error %}
+                            <div class="alert alert-danger">
+                                {{ error.messageKey | trans(error.messageData, 'security') }}
+                            </div>
+                        {% endif %}    
+                        {#                    <img class="profile-img" src="{{ asset('/images/8-cell-simple.gif') }}" alt="icon person"/>#}
+
+                        <form class="form-signin" action="{{ path('security_login_check') }}" method="post">
+                            <input type="text" id="username" name="_username" value="{{ last_username }}"class="form-control" placeholder="username or email" required autofocus/>
+                            <input type="password" id="password" name="_password" class="form-control" placeholder="Mot de passe" required/>
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
+                            {% if app.request.get('_route') != app.request.headers.get('referer') %}   
+                                <input type="hidden" name="_target_path" value="{{ app.request.headers.get('referer') }}" />   
+                            {% endif %}
+                            <button class="btn btn-lg btn-primary btn-block" type="submit">
+                                Se connecter</button>
+                            <input type="checkbox" id="remember_me" name="_remember_me" />
+                            <label class="checkbox pull-left">            
+                                Se souvenir de moi
+                            </label>
+                            <a href="#" class="pull-right need-help">Need help? </a><span class="clearfix"></span>
+                        </form>
+                    </div>
+                            
+        <a href="{{ path('request_password') }}">{{ 'user.connexion.password_forgotten' | trans }}</a>
+    <p>
+    <a href="{{ path('register') }}" class="text-center new-account">Créer un compte </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+                            
+    </div>
+{% endblock %}
+

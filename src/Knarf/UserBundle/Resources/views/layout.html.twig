@@ -79,8 +79,9 @@
                         {% else %}
 
                             <li><a href="{{ path('register') }}"><span class="glyphicon glyphicon-user"></span> S'enregistrer</a></li>
-                            <li><a href="{{ path('security_login_form') }}"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
-
+                            <li><a href="#login" data-toggle="modal" data-target="#loginModal"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
+                            
+            
                         {% endif %}
                     </ul>
                     {#        <form class="navbar-form navbar-left" action="">
@@ -104,26 +105,10 @@
             {# modal clocks #}
         {{ include('KnarfPlatformBundle:Clock:modal_view.html.twig') }}
         <!-- Modal -->
-            <div class="modal fade" id="myModal" role="dialog">
-                <div class="modal-dialog">
-
-                    <!-- Modal content-->
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Modal Header</h4>
-                        </div>
-                        <div class="modal-body">
-                            <p>Some text in the modal.</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
+        {% if not app.user %}
+            {{ render(controller('KnarfUserBundle:Security:loginModal')) }}
+        {% endif %}    
+            
             <div class="row">        
                 <div class="col-sm-12">
                     {% include ('::flash-messages.html.twig') %}

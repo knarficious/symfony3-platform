@@ -6,16 +6,36 @@
 {% block title %}
     {{ parent() }}|{{ 'user.registration.label' | trans }}
 {% endblock %}
+{% block stylesheets %}
+    
+    {{ parent() }}
+    
+    {{ encore_entry_link_tags('login') }}
+    {{ encore_entry_link_tags('starwars') }}
+{%  endblock %}
 
 {% block knarfuser_body %}
     
     {{ parent() }}
     <div class="container-fluid">
-    <div style="text-align: center">
-        <h1>{{ 'user.registration.label' | trans }}</h1>
+    <div style="text-align: left">
+        <h3>{{ 'user.registration.label' | trans }}</h3>
     </div>
-    <div class="col-md-12">
+    <div class="row">
+    <div class="col-sm-4">
     {{ form(form) }}
     </div>
+        <div class="col-sm-8" id="starwars-area">
+    <div class="starwars-demo">
+        <img class="star" src="{{ asset('/images/star.svg') }}" alt="Star" >
+        <img class="wars" src="{{ asset('/images/wars.svg') }}" alt="Wars" >
+        <h2 class="byline" id="byline">THIS IS THE FORCE</h2>
     </div>
+    </div>
+    </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('starwars') }}
 {% endblock %}

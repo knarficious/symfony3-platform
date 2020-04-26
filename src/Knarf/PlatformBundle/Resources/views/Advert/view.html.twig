@@ -101,7 +101,9 @@
     <hr>
 
         {% if not app.user %}
-            Vous devez vous <a href="{{ path('security_login_form') }}">connecter</a> pour commenter
+            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#loginModal">Connectez-vous pour commenter</button>
+{#            Vous devez vous <a href="{{ path('security_login_form') }}">connecter</a> pour commenter#}
+        {{ render(controller("KnarfUserBundle:Security:loginModal")) }}
         {% endif %}
 {#            <!-- Modal -->
             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModal" aria-hidden="true">
