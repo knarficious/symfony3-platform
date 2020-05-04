@@ -18,7 +18,6 @@ function init() {
     playlist = $('#playlist');
     tracks = playlist.find('li a');
     len = tracks.length - 1;
-    audio[0].volume = .10;
     audio[0].play();
     playlist.on('click','a', function (e) {
         e.preventDefault();
@@ -28,7 +27,7 @@ function init() {
     })
     audio[0].addEventListener('ended', function() {
         current++;
-        if (current === len) {
+        if (current > len) {
             current = 0;
             link = playlist.on('a')[0];
         } else {
