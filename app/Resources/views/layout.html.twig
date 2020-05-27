@@ -107,11 +107,12 @@
         {% endif %}    
         <div class="container-fluid">
 
-            <div class="row">        
-                <div class="col-sm-12">
-                    {% include ('::flash-messages.html.twig') %}
-                </div>
+            <div id="flash-messages">
+                
+                {% include ('::flash-messages.html.twig') %}
+                
             </div>
+
 
             <div class="row">    
 
@@ -173,8 +174,11 @@
             <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.3.0/moment-timezone-utils.min.js"></script>
             {{ encore_entry_script_tags('clock') }}
             {{ encore_entry_script_tags('app') }}
+            <script type="text/javascript">     
+            $("#flashModal").modal()
+            </script>
             <script type="text/javascript">
-                        $(document).ready(function () {
+            $(document).ready(function () {
             //Catch AjaxAuthenticationListener response
             $(document).ajaxError(function (event, jqXHR) {
                 if (403 === jqXHR.status) {
