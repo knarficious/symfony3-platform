@@ -30,17 +30,37 @@
                             {% endif %}
                             <button class="btn btn-lg btn-primary btn-block" type="submit">
                                 Se connecter</button>
-                            <input type="checkbox" id="remember_me" name="_remember_me" />
-                            <label class="checkbox pull-left">            
-                                Se souvenir de moi
-                            </label>
-                            <a href="#" class="pull-right need-help">Need help? </a><span class="clearfix"></span>
+                            <br>
+                            <div class='form-check'>
+                                <input type="checkbox" class="form-check-input" id="remember_me" name="_remember_me" />
+                                
+                                <label class="form-check-label" for="remember_me">            
+                                    Se souvenir de moi
+                                </label>
+                                                            
+                            </div>
+
                         </form>
                     </div>
-                            
-        <a href="{{ path('request_password') }}">{{ 'user.connexion.password_forgotten' | trans }}</a>
-    <p>
-    <a href="{{ path('register') }}" class="text-center new-account">Créer un compte </a>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    
+                                    <a href="{{ path('request_password') }}">{{ 'user.connexion.password_forgotten' | trans }}</a>
+    
+                                </div>
+                                <div class="col-md-6">
+                                     
+                                    <a href="{{ path('register') }}" class="text-center new-account">Créer un compte </a>
+                
+                                </div>
+                                <div class="col-md-3">
+                                    
+                                    <a href="#" class="pull-right need-help">Besoin d'aide? </a><span class="clearfix"></span>
+                        
+                                </div>   
+                                    
+                            </div>                                
                 </div>
             </div>
         </div>
