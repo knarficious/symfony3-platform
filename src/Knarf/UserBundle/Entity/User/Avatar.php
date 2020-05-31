@@ -34,7 +34,7 @@ class Avatar
      * @Assert\File(
      * 		maxSize="10M",
      * 		mimeTypes={"image/png", "image/jpeg", "image/gif"})
-     * @Vich\UploadableField(mapping="upload_avatar", fileNameProperty="nomMedia", nullable=true)
+     * @Vich\UploadableField(mapping="upload_avatar", fileNameProperty="nomMedia")
      * 
      * @var File
      */
