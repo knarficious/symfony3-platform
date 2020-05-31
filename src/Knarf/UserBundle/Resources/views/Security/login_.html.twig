@@ -3,58 +3,71 @@
 {% extends 'KnarfUserBundle::layout.html.twig' %}
 
 {% block stylesheets %}
-    
+
     {{ parent() }}
-    
+
     {{ encore_entry_link_tags('login') }}
     {{ encore_entry_link_tags('starwars') }}
 {%  endblock %}
 
 {% block knarfuser_body %}
-    
-  {# Le formulaire, avec URL de soumission vers la route « login_check » comme on l'a vu #}
-<div class="container-fluid">
-    <div class="row" id="login-container">
-  <div class="col-sm-4" id="login-area">
-    <h1 class=" well text-center login-title">Connectez-vous pour continuer</h1>
-    <div class="account-wall">
-        {% if error %}
-            <div class="alert alert-danger">
-                {{ error.messageKey | trans(error.messageData, 'security') }}
+
+    {# Le formulaire, avec URL de soumission vers la route « login_check » comme on l'a vu #}
+    <div class="container-fluid">
+        <div class="row" id="login-container">
+            <div class="col-sm-4" id="login-area">
+                <h1 class=" well text-center login-title">Connectez-vous pour continuer</h1>
+                <div class="account-wall">
+                    {% if error %}
+                        <div class="alert alert-danger">
+                            {{ error.messageKey | trans(error.messageData, 'security') }}
+                        </div>
+                    {% endif %}    
+                    <img class="profile-img" src="{{ asset('/images/8-cell-simple.gif') }}" alt="icon person"/>
+                    <form class="form-signin" action="{{ path('security_login_check') }}" method="post">
+                        <input type="text" id="username" name="_username" value="{{ last_username }}"class="form-control" placeholder="username or email" required autofocus/>
+                        <input type="password" id="password" name="_password" class="form-control" placeholder="Mot de passe" required/>
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
+                        {% if app.request.get('_route') != app.request.headers.get('referer') %}   
+                            <input type="hidden" name="_target_path" value="{{ app.request.headers.get('referer') }}" />   
+                        {% endif %}
+                        <button class="btn btn-lg btn-primary btn-block" type="submit">
+                            Se connecter</button>
+                        <br>
+                        <div class='form-check'>
+                            <input type="checkbox" class="form-check-input" id="remember_me" name="_remember_me" />
+                            <label class="form-check-label" for="remember_me">            
+                                Se souvenir de moi
+                            </label>
+                        </div>
+                    </form>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-3">
+                        <a href="{{ path('request_password') }}">{{ 'user.connexion.password_forgotten' | trans }}</a>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="{{ path('register') }}" class="text-center new-account">Créer un compte </a>
+                    </div>
+                    <div class="col-md-3">
+                        <a href="#" class="pull-right need-help">Besoin d'aide? </a><span class="clearfix"></span>
+                    </div>   
+                </div>
             </div>
-        {% endif %}    
-        <img class="profile-img" src="{{ asset('/images/8-cell-simple.gif') }}" alt="icon person"/>
-        <form class="form-signin" action="{{ path('security_login_check') }}" method="post">
-        <input type="text" id="username" name="_username" value="{{ last_username }}"class="form-control" placeholder="username or email" required autofocus/>
-        <input type="password" id="password" name="_password" class="form-control" placeholder="Mot de passe" required/>
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
-        {% if app.request.get('_route') != app.request.headers.get('referer') %}   
-        <input type="hidden" name="_target_path" value="{{ app.request.headers.get('referer') }}" />   
-        {% endif %}
-        <button class="btn btn-lg btn-primary btn-block" type="submit">
-            Se connecter</button>
-        <input type="checkbox" id="remember_me" name="_remember_me" />
-        <label class="checkbox pull-left">            
-            Se souvenir de moi
-        </label>
-        <a href="#" class="pull-right need-help">Need help? </a><span class="clearfix"></span>
-        </form>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-8" id="starwars-area">
+                        <div class="starwars-demo">
+                            <img class="star" src="{{ asset('/images/star.svg') }}" alt="Star" >
+                            <img class="wars" src="{{ asset('/images/wars.svg') }}" alt="Wars" >
+                            <h2 class="byline" id="byline">THIS IS THE FORCE</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-        <a href="{{ path('request_password') }}">{{ 'user.connexion.password_forgotten' | trans }}</a>
-    <p>
-    <a href="{{ path('register') }}" class="text-center new-account">Créer un compte </a>
-</div>
-
-
-
-    <div class="col-sm-8" id="starwars-area">
-    <div class="starwars-demo">
-        <img class="star" src="{{ asset('/images/star.svg') }}" alt="Star" >
-        <img class="wars" src="{{ asset('/images/wars.svg') }}" alt="Wars" >
-        <h2 class="byline" id="byline">THIS IS THE FORCE</h2>
-    </div>
-    </div>
-    </div></div>
 {% endblock %}
 
 {% block javascripts %}
