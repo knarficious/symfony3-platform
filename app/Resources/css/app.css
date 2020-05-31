@@ -89,9 +89,10 @@ a:hover {
 .navbar-inverse .navbar-toggle {
     border: 0 none;
 }
-/*#kf-navbar {
-    background-color: #3cd19e;
-}*/
+.mydropdowncss:hover .dropdown-menu {
+    display: block;
+    margin-top: 0; 
+ }
 @media screen and (max-width: 991px) {
 .navbar-inverse .navbar-toggle, .navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:active {
     background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
