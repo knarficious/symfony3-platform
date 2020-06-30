@@ -19,7 +19,6 @@ function init() {
     playlist = $('#playlist');
     tracks = playlist.find('li a');
     len = tracks.length - 1;
-    audio[0].volume = .10;
     audio[0].play();
     playlist.on('click','a', function (e) {
         e.preventDefault();
