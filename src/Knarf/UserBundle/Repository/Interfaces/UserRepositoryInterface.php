@@ -42,6 +42,11 @@ interface UserRepositoryInterface
     public function getAllNeverConnectedUsers();
     
     /**
+     * @return UserRepository
+     */
+    public function getNotActiveUsers();
+
+    /**
      * @param DateTime $date
      * @return UserRepository
      */

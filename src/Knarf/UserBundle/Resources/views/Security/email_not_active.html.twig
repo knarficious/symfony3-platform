@@ -1,0 +1,35 @@
+{# empty Twig template #}
+{% block subject %}
+   Veuillez activer votre compte
+{% endblock %}
+
+{% block body %}
+Bonjour {{ username }}.
+<p>
+<p>
+    Vous avez créé un compte sur la plateforme Knarf Media le {{ ('day.'~dateCreation|date('N'))|trans|raw~}}
+    {{ dateCreation|date('d')|raw }}
+    {{ ('month.'~dateCreation|date('m'))|trans|raw~}} 
+    {{ dateCreation|date('Y')|raw }}
+<p>
+    Vous devez activer votre compte en cliquant sur ce <a href="https://blog.franckruer.fr/activate?token={{ token }}">lien</a>.
+<p>
+    Sans action de votre part, votre compte sera supprimé.
+<p>
+    Connectez-vous pour découvrir toutes les fonctionnalités offertes par la plateforme:
+<p>
+    + connection sécurisée HTTP2
+<p>
+    + publication d'articles (texte enrichi, image, media audio, video) et commentaires
+<p>
+    + gestion du profil
+<p>
+    + conversation sur la messagerie (en developpement)
+<p>
+    À très bientôt sur <a href="https://blog.franckruer.fr">KNARF MEDIA</a>.
+    
+<p>
+    Franck Ruer, administrateur
+<p>
+{% endblock %}
+

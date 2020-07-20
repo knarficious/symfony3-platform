@@ -114,6 +114,8 @@ interface UserManagerInterface extends GenericManagerInterface
     public function getNeverConnect();
     
     public function getOldConnect();
+    
+    public function getNotActive();
 
 
 }

@@ -154,7 +154,7 @@ class UserManager extends AbstractGenericManager implements UserManagerInterface
 
     public function createAdmin(App_User $admin, $adresseIp)
     {
-        $admin->setCgvRead(false);
+        $admin->setCgvRead(true);
         $admin->setRoles(['ROLE_ADMIN']);
         $admin->encodePassword($this->encoderFactory->getEncoder($admin));
         $admin->setAdresseIp($adresseIp);
@@ -174,6 +174,11 @@ class UserManager extends AbstractGenericManager implements UserManagerInterface
     {
         $now = new \DateTime();
         return $this->repository->getAllOldConnectedUsers($now);;
+    }
+
+    public function getNotActive() 
+    {
+        return $this->repository->getNotActiveUsers();
     }
 
 }

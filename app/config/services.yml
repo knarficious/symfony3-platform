@@ -1,7 +1,7 @@
 # Learn more about services, parameters and containers at
 # https://symfony.com/doc/current/service_container.html
 parameters:
-    #parameter_name: value
+    admin_pass: 'secret_password'
 
 services:
     # default configuration for services in *this* file
@@ -13,6 +13,8 @@ services:
         # this means you cannot fetch services directly from the container via $container->get()
         # if you need to do this, you can override this setting on individual services
         public: false
+        bind:
+            $adminPass: '%admin_pass%'
     
     Knarf\UserBundle\:
         resource: '../../src/Knarf/UserBundle/*'
@@ -39,7 +41,7 @@ services:
         tags: ['controller.service_arguments']    
             
     
-    Knarf\PlatformBundle\Services\MercureCookieGenerator:
+    Knarf\PlatformBundle\Service\MercureCookieGenerator:
             arguments:
                 $secret: '%secret%'
     
@@ -68,7 +70,12 @@ services:
     Knarf\UserBundle\Services\SendMailToOldConnectedUserService:
         arguments:
             $template: 'KnarfUserBundle:Security:login_invite_mail2.html.twig'
-            $from: '%email_from%'        
+            $from: '%email_from%'
+            
+    Knarf\UserBundle\Services\SendMailToNotActiveUserService:
+        arguments:
+            $template: 'KnarfUserBundle:Security:email_not_active.html.twig'
+            $from: '%email_from%'
             
     vich_uploader.namer_origname.upload_media:
         class: Vich\UploaderBundle\Naming\OrignameNamer
@@ -85,7 +92,7 @@ services:
                 - { name: doctrine.event_listener, event: preRemove }
                 - { name: kernel.event_listener, event: vich_uploader.pre_remove}
     
-    Knarf\PlatformBundle\Listeners\MediaSubscriber:
+    Knarf\PlatformBundle\Subscriber\MediaSubscriber:
             arguments: [ "@liip_imagine.cache.manager", "@vich_uploader.templating.helper.uploader_helper" ]
             tags:
                 - { name: jms_serializer.event_subscriber }
@@ -105,4 +112,8 @@ services:
     knarf.ajax.authentication.listener:
      class: Knarf\UserBundle\Listeners\AjaxAuthenticationListener
      tags:
-        - { name: kernel.event_listener, event: kernel.exception, method: onCoreException, priority: 1000 }        
+        - { name: kernel.event_listener, event: kernel.exception, method: onCoreException, priority: 1000 }
+    
+    Knarf\PlatformBundle\Subscriber\PaginateDirectorySubscriber:
+        tags:
+            - { name: knp_paginator.subscriber }
