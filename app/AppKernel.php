@@ -33,6 +33,8 @@ class AppKernel extends Kernel
             new CyberJaw\GoogleMapsBundle\GoogleMapsBundle(),
             new Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle(),
             new Symfony\WebpackEncoreBundle\WebpackEncoreBundle(),
+            new Sonata\SeoBundle\SonataSeoBundle(),
+			new Symfony\Cmf\Bundle\SeoBundle\CmfSeoBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

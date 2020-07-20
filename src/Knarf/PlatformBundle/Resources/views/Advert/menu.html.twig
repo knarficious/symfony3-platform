@@ -1,8 +1,5 @@
 {# src/Knarf/PlatformBundle/Resources/views/Advert/menu.html.twig #}
 {% trans_default_domain 'divers' %}
-  {% block stylesheets %}
-    <link href="{{ asset('bundles/knarfplatform/css/carousel.css') }}" type="text/css" rel="stylesheet">
-  {% endblock %}
   
   <div class="c-wrapper">
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
@@ -22,7 +19,7 @@
                             <img class="img-responsive" src="{{vich_uploader_asset(entity.media, 'mediaFile') }}" alt="{{ entity.media.nomMedia }}"/>                           
                         
                         <div class="carousel-caption" id="carouselCaption">
-                            <h3>{{ entity.title }} par {{ entity.user.username }} </h3>
+                            <h3>{{ entity.title }}</h3>
                         </div>
                     </a>
                 </div>

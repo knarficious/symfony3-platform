@@ -2,13 +2,19 @@
 
 {% extends "KnarfPlatformBundle::layout.html.twig" %}
 
+  {% block metadata %}
+    {% do cmf_seo_update_metadata(advert) %}
+
+    {{ parent() }}
+  {% endblock metadata %}
+  
   {% block stylesheets %}
       {{ parent() }}
     {{ encore_entry_link_tags('comments-css') }}
     {{ encore_entry_link_tags('player-style') }}
-  {% endblock %}
-
-{% block title %}
+  {% endblock %}  
+ 
+  {% block title %}
   {{ parent() }} - {{ advert.title | title }}
 {% endblock %}
 
@@ -37,7 +43,9 @@
     </div>
     <div class="col-md-6">
         <br/>
-        <header id="article-title">{{ advert.title }}</header>
+        <header id="article-title">
+            {{ advert.title }}
+        </header>
     <p>
     <br>
     Par 

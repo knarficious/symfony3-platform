@@ -334,3 +334,16 @@ lexik_jwt_authentication:
     
 webpack_encore:
     output_path: "%kernel.root_dir%/../web/build/"
+    
+sonata_seo:
+    page:
+        title: Knarf Media
+        metas:
+            name:
+                description: Le Média alternatif de la Base
+                keywords: default, sonata, seo
+                
+cmf_seo:
+    title: "%%content_title%% - Knarf Media"
+    content_listener: false                    
+    
