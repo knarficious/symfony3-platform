@@ -1,3 +1,6 @@
+_liip_imagine:
+    resource: "@LiipImagineBundle/Resources/config/routing.xml"
+
 knarf_api:
     resource: "@KnarfApiBundle/Resources/config/routing.yml"
     prefix:   /api
@@ -13,6 +16,12 @@ knarf_platform:
     type: annotation
     prefix:   /
     
+create_client:
+    path: /create-client
+    defaults:
+        _controller: KnarfApiBundle:Security:authentication
+    methods: POST  
+        
 registration:
     path: /activate
     defaults:
@@ -20,10 +29,7 @@ registration:
 
 commentaire:
     resource: "@KnarfPlatformBundle/Resources/config/routing/commentaire.yml"
-    prefix: /commentaire
-        
-_liip_imagine:
-    resource: "@LiipImagineBundle/Resources/config/routing.xml"
+    prefix: /commentaire    
     
 contact:
     path: /contact
@@ -42,17 +48,20 @@ fos_oauth_server_authorize:
     
 oauth_server_auth_login:
     path:  /oauth/v2/auth_login
-    defaults: { _controller: KnarfUserBundle:Security:login }
+    defaults: { _controller: KnarfApiBundle:Login:login }
 
 oauth_server_auth_login_check:
     path:  /oauth/v2/auth_login_check
-    defaults: { _controller: KnarfUserBundle:Security:loginCheck }
+    defaults: { _controller: KnarfApiBundle:Login:loginCheck }
     
 fos_comment_api:
     type: rest
     resource: "@FOSCommentBundle/Resources/config/routing.yml"
     prefix: /comment/api
-    defaults: { _format: html }    
+    defaults: { _format: html }
+    
+sitemaps:
+    resource: "@CmfSeoBundle/Resources/config/routing/sitemap.xml"     
 
 
 

@@ -2,9 +2,13 @@
 
 <!DOCTYPE html>
 
-<html>
+<html {{ sonata_seo_html_attributes() }}>
     <head>
-        <meta charset="utf-8">
+        {% block metadata %}
+            {{ sonata_seo_title() }}
+
+            {{ sonata_seo_metadatas() }}
+        {% endblock metadata %}
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="description" content="Knarf Media est un media alternatif du web 3.0. Créez votre compte, publiez et commentez du contenu depuis l'interface sécurisée." />
@@ -15,11 +19,7 @@
         <meta property="og:description" content="Knarf Media le media alternatif du web 3.0 l'expression libre" />
         <meta property="og:url" content="https://blog.franckruer.fr/" />
         <meta property="og:site_name" content="Knarf Media | le media alternatif du web 3.0" />
-		{% block metadata %}
-            {{ sonata_seo_title() }}
 
-            {{ sonata_seo_metadatas() }}
-        {% endblock metadata %}
         <title>{% block title %}Knarf Media{% endblock %}</title>
 
         {% block stylesheets %}

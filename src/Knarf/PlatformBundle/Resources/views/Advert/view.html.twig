@@ -4,8 +4,9 @@
 
   {% block metadata %}
     {% do cmf_seo_update_metadata(advert) %}
-
     {{ parent() }}
+    
+    <link rel="canonical" href="{{ absolute_url(advert.slug) }}"/>
   {% endblock metadata %}
   
   {% block stylesheets %}
@@ -14,9 +15,9 @@
     {{ encore_entry_link_tags('player-style') }}
   {% endblock %}  
  
-  {% block title %}
+{#  {% block title %}
   {{ parent() }} - {{ advert.title | title }}
-{% endblock %}
+{% endblock %}#}
 
 {% block knarfplatform_body %}
     

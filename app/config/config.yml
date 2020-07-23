@@ -336,14 +336,28 @@ webpack_encore:
     output_path: "%kernel.root_dir%/../web/build/"
     
 sonata_seo:
+    encoding: 'UTF-8'
     page:
+        default: 'sonata.seo.page.default'
         title: Knarf Media
-        metas:
-            name:
-                description: Le Média alternatif de la Base
-                keywords: default, sonata, seo
+#        metas:
+#            name:
+#                description: '%content_description%'
+#                keywords: knarf, media, alternatif
                 
 cmf_seo:
     title: "%%content_title%% - Knarf Media"
-    content_listener: false                    
+    description: "%%content_description%%"
+    content_listener: false
+#    sitemap:
+#        enabled: true
+#        defaults:
+#            default_change_frequency: always
+#            templates:
+#                html: CmfSeoBundle:Sitemap:index.html.twig
+#                xml: CmfSeoBundle:Sitemap:index.xml.twig
+#        configurations:
+#            sitemap: ~
+    
+   
     

@@ -7,6 +7,7 @@ namespace Knarf\PlatformBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Knarf\PlatformBundle\Form\AdvertType;
 use Knarf\PlatformBundle\Form\AdvertEditType;
@@ -25,18 +26,31 @@ class AdvertController extends Controller {
                 ['listAdverts' => $listAdverts ]);
     }
     
+    /**
+     * @Route("/articles")
+     * @param Request $request
+     * @return type
+     */
     public function indexAction(Request $request) {
-        $repository = $this->getDoctrine()->getManager()->getRepository('KnarfPlatformBundle:Advert');
-        $listAdverts = $repository->findAll();
-
+        $em = $this->getDoctrine()->getManager();
+        $advertsRep = $em->getRepository('KnarfPlatformBundle:Advert');
+        $allAdvertsQuery = $advertsRep->createQueryBuilder('a')
+                ->andWhere('a.published = 1')
+                ->andWhere('a.isAdmin = 0')
+                ->getQuery();
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
-                $listAdverts,
+                $allAdvertsQuery,
                 $request->query->getInt('page', 1),
-                $request->query->getInt('limit', 6));
+                $request->query->getInt('limit', 6),
+                [
+                'defaultSortFieldName'      => 'a.date',
+                'defaultSortDirection' => 'desc'
+                ]                
+                );
 
         return $this->render('KnarfPlatformBundle:Advert:index.html.twig', array(
-                    'listAdverts' => $pagination
+                    'pagination' => $pagination
         ));
     }
 
@@ -73,8 +87,24 @@ class AdvertController extends Controller {
         $advert = $repository1->findOneBy(array('slug' => $slug));
 
         if (null === $advert) {
-            throw new NotFoundHttpException("L'annonce " . $slug . " n'existe pas!");
+            throw new NotFoundHttpException("L'article " . $slug . " n'existe pas!");
         }
+        
+        $seoPage = $this->container->get('sonata.seo.page');
+        
+        $seoPage->setTitle($advert->getTitle())
+                ->addMeta('name', 'description', $advert->getContent())
+                ->addMeta('property', 'og:locale', 'fr_FR')
+                ->addMeta('property', 'og:title', $advert->getTitle())
+                ->addMeta('property', 'og:type', 'article')
+                ->addMeta('property', 'og:url',  $this->generateUrl('knarf_platform_view', ['slug'=> $advert->getSlug()
+                ], UrlGeneratorInterface::ABSOLUTE_URL))
+                ->addMeta('property', 'og:description', $advert->getContent())
+                ->addMeta('property', 'og:image', $advert->getMedia())
+                ->addMeta('property', 'article:published_time', date_format($advert->getDate(), 'd/m/Y'))
+                ->addMeta('property', 'article:modified_time', date_format($advert->getUpdateAt(), 'd/m/y'))
+                
+;
 
         return $this->render('KnarfPlatformBundle:Advert:view.html.twig', array(
                     'advert' => $advert, 'active' => 'advert'));
