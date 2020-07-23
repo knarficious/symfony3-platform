@@ -100,10 +100,15 @@ class AdvertController extends Controller {
                 ->addMeta('property', 'og:url',  $this->generateUrl('knarf_platform_view', ['slug'=> $advert->getSlug()
                 ], UrlGeneratorInterface::ABSOLUTE_URL))
                 ->addMeta('property', 'og:description', $advert->getContent())
-                ->addMeta('property', 'og:image', $advert->getMedia())
+                ->addMeta('property', 'og:image', $this->getParameter('base_url').$this->get('vich_uploader.templating.helper.uploader_helper')->asset($advert->getMedia(), 'mediaFile'))
                 ->addMeta('property', 'article:published_time', date_format($advert->getDate(), 'd/m/Y'))
                 ->addMeta('property', 'article:modified_time', date_format($advert->getUpdateAt(), 'd/m/y'))
-                
+                ->addMeta('property', 'twitter:card', 'summary')
+                ->addMeta('property', 'twitter:title', $advert->getTitle())
+                ->addMeta('property', 'twitter:description', $advert->getContent())
+                ->addMeta('property', 'twitter:image', $this->getParameter('base_url').$this->get('vich_uploader.templating.helper.uploader_helper')->asset($advert->getMedia(), 'mediaFile'))
+                ->addMeta('property', 'twitter:url', $this->generateUrl('knarf_platform_view', ['slug'=> $advert->getSlug()
+                ], UrlGeneratorInterface::ABSOLUTE_URL))
 ;
 
         return $this->render('KnarfPlatformBundle:Advert:view.html.twig', array(
