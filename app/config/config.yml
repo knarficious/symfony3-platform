@@ -19,6 +19,7 @@ imports:
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: fr
+    base_url: 'https://knarfmedia.local'
 
 framework:
     #esi: ~
@@ -57,7 +58,7 @@ twig:
         - '@FOSCKEditor/Form/ckeditor_widget.html.twig'
         - 'GoogleMapsBundle:Form:google_maps_layout.html.twig'
     globals:
-        website:     
+        website: 'https://knarfmedia.local'    
 
 # Doctrine Configuration
 doctrine:

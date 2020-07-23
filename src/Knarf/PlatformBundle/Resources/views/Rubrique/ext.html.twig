@@ -2,11 +2,12 @@
 
 {% extends "KnarfPlatformBundle::layout.html.twig" %}
 
-{% block title %}
+{% block metadata %}
+    {% do cmf_seo_update_metadata(rubrique) %}
 
-    {{ parent() }} - {{ rubrique.intitule }}
-
-{% endblock %}
+    {{ parent() }}
+    <link rel="canonical" href="{{ absolute_url(rubrique.slug) }}"/>
+{% endblock metadata %}
 
 {% block knarfplatform_body %}
 
@@ -23,8 +24,9 @@
             {# sorting of properties based on query components #}
             <div {% if pagination.isSorted('a.title') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Titre', 'a.title') }}</div>
             <div {% if pagination.isSorted('a.date') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pagination, 'Date', 'a.date') }}</div>
-            <div class="container-fluid" > 
-            {% for entity in pagination %}
+            <div class="container-fluid" >
+                <div class="row">
+                {% for entity in pagination %}
                 {% if entity.published == 1 %} 
                  
                     <div class="col-sm-3 col-md-6 col-md-12" id="article-block">
@@ -66,8 +68,9 @@
                 
                 {%  endif %}
 
-
             {% endfor %}
+                </div>
+
             </div> 
             <div align="center">
                 {{ knp_pagination_render(pagination) }}

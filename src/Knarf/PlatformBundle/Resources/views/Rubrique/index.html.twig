@@ -2,13 +2,19 @@
 
 {% extends "KnarfPlatformBundle::layout.html.twig" %}
 
-
-{% block title %}
-
-La base - {{ parent() }}
-
-{% endblock %} 
-
+  {% block metadata %}
+    {{ parent() }}
+        <meta name="description" content="Knarf Media est un media alternatif du web 3.0. Créez votre compte, publiez et commentez du contenu depuis l'interface sécurisée." />
+        <link rel="canonical" href="{{ website }}" />
+        <meta property="og:locale" content="fr_FR" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Knarf Media | le media alternatif du web 3.0" />
+        <meta property="og:description" content="Knarf Media le media alternatif du web 3.0 l'expression libre" />
+        <meta property="og:url" content="{{ website }}" />
+        <meta property="og:site_name" content="Knarf Media | le media alternatif du web 3.0" />
+    
+    
+  {% endblock metadata %}
 
 {% block knarfplatform_body %}    
 
