@@ -273,11 +273,13 @@ audio {
     display: block;
 }
 
-#derniers-articles {
+#drnarticles > li > a {
+    color: #000000;
     font-size: 0.75em;
 }
 
 #date-article {
     color: darkgray;
 }
+
 
