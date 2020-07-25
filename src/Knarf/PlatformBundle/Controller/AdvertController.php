@@ -362,6 +362,15 @@ class AdvertController extends Controller {
                     'listAdverts' => $listAdverts
         ));
     }
+    
+    public function derniersArticlesAction()
+    {
+        $listAdverts = $this->getDoctrine()->getManager()->getRepository('KnarfPlatformBundle:Advert')->getLastAdverts();
+
+        return $this->render('KnarfPlatformBundle:Advert:derniers_articles.html.twig', array(
+                    'listAdverts' => $listAdverts
+        ));
+    }
 
     public function getAdvertManager() {
         return $this->get('app.advert.manager');

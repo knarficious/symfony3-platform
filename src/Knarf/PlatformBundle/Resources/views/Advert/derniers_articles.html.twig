@@ -1,0 +1,36 @@
+{# src/Knarf/UserBundle/Resources/views/Security/members.html.twig #}
+<div class="container-fluid">
+    <div class="well">
+    
+    <h3 align="center">Articles récents </h3>
+
+    {% for advert in listAdverts %}     
+
+          <div class="media" id="derniers-articles">
+            
+            <div class="media-left">
+                
+                {% if advert.media is not empty %}
+                    
+                    <img class="media-object" src="{{vich_uploader_asset(advert.media, 'mediaFile') | imagine_filter('my_thumb')}}" alt="mythumb"  />
+                
+                {% else %}
+                    
+                    <img src="{{ asset('/images/icon-person_211874.png') }}" alt="icon person" />
+
+                {% endif %}
+            </div>
+            <div class="media-body">
+                <h4 class="media-heading">
+                    {{ advert.title }}
+                </h4>
+                <i class="connection-status" id="sse-connection-status"></i>
+            </div> 
+        </div>
+        
+
+  {% endfor %}
+  </div>
+</div>
+
+

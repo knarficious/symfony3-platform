@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 
 <html {{ sonata_seo_html_attributes() }}>
-    <head>
+    <head {{ sonata_seo_head_attributes() }}>
         {% block metadata %}
             {{ sonata_seo_title() }}
 
@@ -122,7 +122,8 @@
                     {{ include('KnarfPlatformBundle:Weather:view.html.twig') }}
                     <br>
                     {{ render(controller("KnarfUserBundle:Security:index")) }}
-
+                    <br>
+                    {{ render(controller("KnarfPlatformBundle:Advert:derniersArticles")) }}
                 </div>
 
             </div>
