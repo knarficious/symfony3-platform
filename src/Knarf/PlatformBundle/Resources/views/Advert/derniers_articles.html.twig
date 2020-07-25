@@ -3,7 +3,7 @@
     <div class="well">
     
     <h3 align="center">Articles récents </h3>
-    <ul class="nav nav-pills nav-stacked">
+    <ul class="nav nav-pills nav-stacked" id="drnarticles">
     {% for advert in listAdverts %}     
         <li>
             <a href="{{ path('knarf_platform_view', {'slug': advert.slug}) }}">
