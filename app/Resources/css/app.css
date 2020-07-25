@@ -274,6 +274,7 @@ audio {
 }
 
 #drnarticles > li > a {
+    font-family: "Montserrat", sans-serif;
     color: #000000;
     font-size: 0.75em;
 }
