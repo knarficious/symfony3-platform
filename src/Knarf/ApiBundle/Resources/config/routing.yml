@@ -1,6 +1,3 @@
-knarf_api_homepage:
-    path:     /
-    defaults: { _controller: KnarfApiBundle:ApiAdvert:index }
     
 knarf_api_users:
     path:   /users
@@ -13,22 +10,23 @@ knarf_api_adverts:
         _controller: KnarfApiBundle:ApiAdvert:getAdverts
     methods: GET
     
+knarf_api_rubriques:
+    path: /rubriques
+    defaults:
+        _controller: KnarfApiBundle:ApiAdvert:getRubriques
+    methods: GET    
+
 knarf_api_adverts_user:
     path: /user/{slug}/adverts
     defaults: 
         _controller: KnarfApiBundle:ApiAdvert:getAdvertsByUser
-    methods: GET    
-        
-#knarf_api_user:
-#    path: /users/{slug}
-#    defaults:
-#        _controller: KnarfApiBundle:User:getUser
-#    methods: GET
+    methods: GET      
+
     
-knarf_api_user_id:
-    path: /users/{id}
+knarf_api_user_get:
+    path: /users/{slug}
     defaults:
-        _controller: KnarfApiBundle:User:getUserId
+        _controller: KnarfApiBundle:User:getUser
     methods: GET    
         
 knarf_api_advert:
@@ -55,7 +53,7 @@ knarf_api_put_advert:
     methods: PUT
     
 knarf_api_delete_advert:
-    path: /adverts/{id]
+    path: /adverts/{slug]
     defaults:
         _controller: KnarfApiBundle:ApiAdvert:deleteAdvert
     methods: DELETE

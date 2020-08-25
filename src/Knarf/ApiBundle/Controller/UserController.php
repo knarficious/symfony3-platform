@@ -16,6 +16,9 @@ use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\Controller\Annotations as Rest;
+use Nelmio\ApiDocBundle\Annotation\Operation;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Swagger\Annotations as SWG;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use FOS\RestBundle\Request\ParamFetcher;
 use Knarf\UserBundle\Entity\Registration\Registration;
@@ -62,7 +65,7 @@ class UserController extends Controller
     /**
      * @ApiDoc(description="Met à jour ...") 
      * @Rest\View(serializerGroups={"user"})
-     * @Rest\Put("/users/{id}")
+     * @Rest\Put("/users/{slug}")
      */
     public function putUserAction(Request $request)
     {
@@ -99,7 +102,7 @@ class UserController extends Controller
         
         $user = $this->getDoctrine()
                 ->getManager()
-                ->getRepository('KnarfUserBundle:User')
+                ->getRepository('KnarfUserBundle:App_User')
                 ->findOneBy(['slug' => $request->get('slug')]);
 
         if (empty($user)) {
@@ -139,7 +142,7 @@ class UserController extends Controller
         }
     }
     
-    /**
+    /**    
      * @ApiDoc(description="Récupère la liste des utilisateurs")
      * @Rest\View(serializerGroups={"user"})
      * @Rest\Get("/users")
@@ -156,7 +159,7 @@ class UserController extends Controller
         $qb = $this->get('doctrine.orm.entity_manager')->createQueryBuilder();
         
         $qb->select('u')
-           ->from('KnarfUserBundle:User', 'u');
+           ->from('Knarf\UserBundle\Entity\App_User', 'u');
         
         if ($offset != "") {
             $qb->setFirstResult($offset);
@@ -175,27 +178,27 @@ class UserController extends Controller
         return $users;
     }
     
-//    /**
-//     * @ApiDoc(description="Récupère un utilisateur")
-//     * @Rest\View(serializerGroups={"user"})
-//     * @Rest\Get("/users/{slug}")
-//     * @param Request $request
-//     * @return type
-//     */
-//    public function getUserAction(Request $request)
-//    {
-//        $user = $this->getDoctrine()
-//                ->getManager()
-//                ->getRepository('KnarfUserBundle:User')
-//                ->findOneBy(array('slug' => $request->get('slug')));
-//        
-//        if(empty($user))
-//        {
-//            return $this->userNotFound();
-//        }            
-//        
-//        return $user;
-//    }
+    /**
+     * @ApiDoc(description="Récupère un utilisateur")
+     * @Rest\View(serializerGroups={"user"})
+     * @Rest\Get("/users/{slug}")
+     * @param Request $request
+     * @return type
+     */
+    public function getUserAction(Request $request)
+    {
+        $user = $this->getDoctrine()
+                ->getManager()
+                ->getRepository('KnarfUserBundle:App_User')
+                ->findOneBy(array('slug' => $request->get('slug')));
+        
+        if(empty($user))
+        {
+            return $this->userNotFound();
+        }            
+        
+        return $user;
+    }
     
     /**
      * @ApiDoc(description="Récupère un utilisateur depuis l'id")
@@ -208,7 +211,7 @@ class UserController extends Controller
     {
         $user = $this->getDoctrine()
                 ->getManager()
-                ->getRepository('KnarfUserBundle:User')
+                ->getRepository('KnarfUserBundle:App_User')
                 ->findOneById(array('id' => $request->get('id')));
         
         if(empty($user))

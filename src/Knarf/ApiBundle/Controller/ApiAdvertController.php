@@ -37,7 +37,7 @@ class ApiAdvertController extends Controller
     {
         $user = $this->getDoctrine()
                 ->getManager()
-                ->getRepository('KnarfUserBundle:User')
+                ->getRepository('KnarfUserBundle:App_User')
                 ->findOneBy(array('slug' => $request->get('slug')));
 
         if (empty($user)) {
@@ -62,24 +62,24 @@ class ApiAdvertController extends Controller
         return $adverts;
     }
     
-//    /**
-//     * @ApiDoc(description="Récupère un article")
-//     * @Rest\View(serializerGroups={"advert"})
-//     * @Rest\Get("/adverts/{slug}")
-//     */
-//    public function getAdvertAction(Request $request) {
-//        
-//        $advert = $this->getDoctrine()
-//                ->getManager()
-//                ->getRepository('KnarfPlatformBundle:Advert')
-//                ->findOneBy(['slug' => $request->get('slug')]);
-//        
-//        if (empty($advert)) {
-//            return $this->advertNotFound();
-//        }
-//        
-//        return $advert;        
-//    }
+    /**
+     * @ApiDoc(description="Récupère un article")
+     * @Rest\View(serializerGroups={"advert"})
+     * @Rest\Get("/adverts/{slug}")
+     */
+    public function getAdvertAction(Request $request) {
+        
+        $advert = $this->getDoctrine()
+                ->getManager()
+                ->getRepository('KnarfPlatformBundle:Advert')
+                ->findOneBy(['slug' => $request->get('slug')]);
+        
+        if (empty($advert)) {
+            return $this->advertNotFound();
+        }
+        
+        return $advert;        
+    }
     
     /**
      * @ApiDoc(description="Récupère un article depuis son id")
@@ -204,42 +204,42 @@ class ApiAdvertController extends Controller
     
     /**
      * @ApiDoc(description="Supprime un article")
-     * @Rest\Delete("/adverts/{id}")
+     * @Rest\Delete("/adverts/{slug}")
      * @Rest\View(statusCode=Response::HTTP_NO_CONTENT)
      */
     public function deleteAdvertAction(Request $request)
     {
-        //$this->denyAccessUnlessGranted('ROLE_USER', null);        
+        $this->denyAccessUnlessGranted('ROLE_USER', null);    
         
         $em = $this->getDoctrine()->getManager();
         $advert = $em->getRepository('KnarfPlatformBundle:Advert')
-                ->find($request->get('id'));
+                ->findOneBy(array('slug' => $request->get('slug')));
         
-//        if(null === $advert)
-//        {
-//            return $this->advertNotFound();
-//        }
-//        
-//        if($advert->getUser() !== $this->getUser())
-//        {
-//            throw new UnauthorizedHttpException('cette ressource ne vous appartient pas');
-//        }        
+        if(null === $advert)
+        {
+            return $this->advertNotFound();
+        }
+        
+        if($advert->getUser() !== $this->getUser())
+        {
+            throw new UnauthorizedHttpException('cette ressource ne vous appartient pas');
+        }        
         
             $em->remove($advert);
             $em->flush();
             
-//            $response = new Response();
-//            $response->headers->set('Location', $this->generateUrl('knarf_api_advert', array(
-//                'id' => $advert->getId(),
-//                \Symfony\Component\Routing\Generator\UrlGeneratorInterface::ABSOLUTE_URL
-//            )));
-//            
-//            return $response;
+            $response = new Response();
+            $response->headers->set('Location', $this->generateUrl('knarf_api_advert', array(
+                'id' => $advert->getId(),
+                \Symfony\Component\Routing\Generator\UrlGeneratorInterface::ABSOLUTE_URL
+            )));
+            
+            return $response;
         
 
     }
 
-        /** 
+    /** 
      * @ApiDoc(description="Récupère la liste des articles par rubrique") 
      * @Rest\View(serializerGroups={"advert"})
      * @Rest\Get("/rubrique/{slug}/adverts")
