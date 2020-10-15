@@ -56,7 +56,6 @@ twig:
         - 'bootstrap_3_layout.html.twig'        
         - 'VichUploaderBundle:Form:fields.html.twig'
         - '@FOSCKEditor/Form/ckeditor_widget.html.twig'
-        - 'GoogleMapsBundle:Form:google_maps_layout.html.twig'
     globals:
         website: 'https://knarfmedia.local'    
 
@@ -326,9 +325,6 @@ fos_comment:
             view: IS_AUTHENTICATED_ANONYMOUSLY
             edit: ROLE_USER
             delete: ROLE_USER
-            
-google_maps:
-    api_key: 'AIzaSyA2K-avkDmpftUPLab9r9oqBca8vjM1-i4'
     
 lexik_jwt_authentication:
     secret_key:       '%kernel.project_dir%/config/jwt/private.pem' # required for token creation

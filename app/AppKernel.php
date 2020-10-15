@@ -30,7 +30,6 @@ class AppKernel extends Kernel
             new FOS\OAuthServerBundle\FOSOAuthServerBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new FOS\CommentBundle\FOSCommentBundle(),
-            new CyberJaw\GoogleMapsBundle\GoogleMapsBundle(),
             new Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle(),
             new Symfony\WebpackEncoreBundle\WebpackEncoreBundle(),
             new Sonata\SeoBundle\SonataSeoBundle(),
