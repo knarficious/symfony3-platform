@@ -18,13 +18,34 @@ $(document).ready(function () {
         function success(position) {
             latitude = position.coords.latitude;
             longitude = position.coords.longitude;
+            console.log(latitude, longitude);
+            
+// get address by reverse geocoding
 
-            $.getJSON(
-                    "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitude + "," + longitude + "&key=AIzaSyBXnjaWQ1FinxrqxbwT34v90O0qxm2S9ZI",
-                    function (data) {
-                        location.innerHTML = data.plus_code.compound_code.substring(data.plus_code.compound_code.indexOf(" "));
-                    }
-            );
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState === 4 && this.status === 200) {
+                    
+                    var myObj = JSON.parse(this.responseText);
+                    
+                    for (var i = 0; i < myObj.results.length; i++)
+                    {
+                        var results = myObj.results[i];
+                
+                        for (var iter = 0; iter < results.locations.length; iter++)
+                        {
+                            var area = results.locations[iter];
+                
+                            location.innerHTML = area.adminArea5;
+                        }
+                    }                    
+                };
+            };
+            
+            xmlhttp.open("GET", "https://open.mapquestapi.com/geocoding/v1/reverse?key=4gNCAu0aZMSWHvaUaV56xvD846pUXFix&location=" + latitude + "," + longitude, true );
+            xmlhttp.send();
+            
+// get weather forecast
 
             $.getJSON(
                     url + apiKey + "/" + latitude + "," + longitude + "?lang=fr&units=auto&callback=?",
