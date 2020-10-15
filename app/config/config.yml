@@ -237,8 +237,8 @@ stof_doctrine_extensions:
             sluggable: true
             
 fos_ck_editor:
-    base_path: "build/ckeditor"
-    js_path:   "build/ckeditor/ckeditor.js"
+#    base_path: "build/ckeditor"
+#    js_path:   "build/ckeditor/ckeditor.js"
     inline: false
     filebrowsers:
         - VideoBrowse
@@ -265,10 +265,13 @@ fos_ck_editor:
             enterMode: CKEDITOR.ENTER_P
         plugins:
             youtube:
-                path: '/web/build/fosckeditor/plugins/youtube/'
+                path: '/web/bundles/fosckeditor/plugins/youtube/'
                 filename: 'plugin.js'
            
 nelmio_api_doc:
+#    documentation:
+#        info:
+#            title: Knarf Media
     sandbox:
         authentication:
             name: access_token
