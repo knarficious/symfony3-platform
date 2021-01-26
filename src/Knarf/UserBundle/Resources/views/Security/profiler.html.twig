@@ -24,6 +24,9 @@
             <img src="{{ asset('/images/icon-person_211874.png') }}" alt="icon person" />
         {% endif %}
         <p>
+        {% for role in user.roles %}
+        {% if role != 'ROLE_ADMIN' %}
+                
         Membre depuis le: {{ user.createdAt|date('d/m/Y') }}
         </p>
         <p>
@@ -34,6 +37,8 @@
         {% else %}
             jamais
         {% endif %}
+        {% endif %}
+        {% endfor %}
         </p>   
         <p>
         {% if is_granted('ROLE_ADMIN') %}

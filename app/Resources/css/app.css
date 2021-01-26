@@ -82,7 +82,7 @@ a:hover {
     color: #ffffff;
 }
 .navbar-brand {
-    background: rgba(0, 0, 0, 0) url("/images/8-cell-simple.gif") no-repeat scroll left center / 42px 42px;
+    background: rgba(0, 0, 0, 0) url("/images/logo.png") no-repeat scroll left center / 42px 42px;
     font-size: 16px;
     padding-left: 54px;
     text-transform: uppercase;
@@ -98,7 +98,6 @@ a:hover {
 .navbar-inverse .navbar-toggle, .navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:active {
     background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
     border: 0 none;
-    margin: 10px -21px 0 0;
 }
 .navbar-inverse .navbar-toggle .icon-bar {
     background: #ffffff none repeat scroll 0 0;
@@ -109,7 +108,7 @@ ol, ul {
 }
 .dynamicheader {
     background: transparent none repeat scroll 0 0;
-    padding: 0 30px;
+    padding-left: 10px;
     transition: background 0.7s ease 0s;
 }
 .dynamicheader {
@@ -216,6 +215,10 @@ body.home .dynamicheader.shrink .navbar-brand {
   margin-top: 20px;
 }
 
+#subscribe-form-block {
+	padding: 35px;
+}
+
 /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 800px) {
   .leftcolumn, .centercolumn, .rightcolumn {
@@ -281,6 +284,13 @@ audio {
 
 #date-article {
     color: darkgray;
+}
+
+/* Text */
+
+#header-text {
+	text-align: center;
+	text-transform: uppercase;
 }
 
 

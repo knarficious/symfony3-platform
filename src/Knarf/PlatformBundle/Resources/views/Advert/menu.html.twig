@@ -16,7 +16,7 @@
             {% for entity in listAdverts %}        
                 <div class="item {% if loop.first %}active{% endif %}">
                     <a href="{{ path('knarf_platform_view', {'slug': entity.slug}) }}">                        
-                            <img class="img-responsive" src="{{vich_uploader_asset(entity.media, 'mediaFile') }}" alt="{{ entity.media.nomMedia }}"/>                           
+                            <img style="width:100%; height:auto;" src="{{vich_uploader_asset(entity.media, 'mediaFile') }}" alt="{{ entity.media.nomMedia }}"/>                           
                         
                         <div class="carousel-caption" id="carouselCaption">
                             <h3>{{ entity.title }}</h3>
