@@ -13,17 +13,11 @@
 !/var/sessions
 /var/sessions/*
 !var/sessions/.gitkeep
-!var/SymfonyRequirements.php
 /vendor/
 /web/bundles/
-/web/uploads/
 /web/prod.log
 /nbproject/
 /tests/
-/src/Knarf/PlatformBundle/Resources/public/js/sf-websocket.js
-/src/Knarf/PlatformBundle/Resources/public/js/moment.min.js
-/src/Knarf/PlatformBundle/Resources/public/js/moment-timezone-with-data.js
-/src/Knarf/PlatformBundle/Resources/public/css/bootstrap.min.css
 /web/info.php
 /web/media/cache/
 /composer.phar
