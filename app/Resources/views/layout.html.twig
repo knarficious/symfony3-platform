@@ -222,7 +222,7 @@
                 $.getJSON(
                         url + apiKey + "/" + latitude + "," + longitude + "?lang=fr&units=auto&callback=?",
                         function (data) {
-                            $("#temp").html("Température extérieure: " + data.currently.temperature + "° C");
+                            $("#temp").html("Température ext: " + data.currently.temperature + "°C");
                             $("#currently").html(data.currently.summary);
                             $("#minutely").html(data.minutely.summary);
                         }
