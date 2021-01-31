@@ -24,7 +24,7 @@ services:
         resource: '../../src/Knarf/PlatformBundle/*'
         # you can exclude directories or files
         # but if a service is unused, it's removed anyway
-        exclude: '../../src/Knarf/PlatformBundle/{Entity,Repository}'
+        exclude: '../../src/Knarf/PlatformBundle/{Entity,Repository,DependencyInjection}'
 
     Knarf\ApiBundle\:
         resource: '../../src/Knarf/ApiBundle/*'
@@ -38,7 +38,7 @@ services:
         
     Knarf\ApiBundle\Controller\:
         resource: '../../src/Knarf/ApiBundle/Controller'
-        tags: ['controller.service_arguments']    
+        tags: ['controller.service_arguments'] 
             
     
     Knarf\PlatformBundle\Service\MercureCookieGenerator:

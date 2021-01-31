@@ -12,7 +12,3 @@ services:
 #            
 #        Knarf\PlatformBundle\DataFixtures\ORM\RubriqueFixtures:
 #            tags: [doctrine.fixture.orm]
-        knarf.platform.cookie.generator:
-            class: Knarf\PlatformBundle\Services\MercureCookieGenerator
-            arguments:
-                $secret: '%secret%'

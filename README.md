@@ -1,6 +1,6 @@
 # Knarf Media
 
-[![forthebadge](http://forthebadge.com/images/badges/built-with-love.svg)](http://forthebadge.com)  [![forthebadge](http://forthebadge.com/images/badges/powered-by-electricity.svg)](http://forthebadge.com)
+[![forthebadge](http://forthebadge.com/images/badges/built-with-love.svg)](http://forthebadge.com)
 
 Plateforme web de gestion de publications développée avec le framework Symfony 3.4
 
@@ -21,8 +21,10 @@ Un serveur local type LAMP
 - Cloner le dépôt Github https://github.com/knarficious/knarfmedia.git
 - Installer les dépendances avec Composer 'composer install'
 - Créer la BDD et mettre à jour avec la commande 'php bin/console doctrine:schema:update --force'
-- Installer webpack avec la commande 'yarn encore install'
+- Installer ckeditor, webpack avec la commande 'yarn install'
 - Installer ckeditor avec la commande 'php bin/console ckeditor:install'
+- Installer les assets avec la commande 'php bin/console assets:install --symlink'
+- (Optionnel) Installer les fixtures avec la commande 'php bin/console doctrine:fixtures:load'
 
 ## Utilisation
 
@@ -46,7 +48,7 @@ JQuery
 
 ## Versions
 
-1.1
+1.2
 
 ## Auteur
 
