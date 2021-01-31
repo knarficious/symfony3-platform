@@ -1,0 +1,72 @@
+{
+  "entrypoints": {
+    "app": {
+      "js": [
+        "/build/runtime.d94b3b43.js",
+        "/build/app.f4dbfd91.js"
+      ],
+      "css": [
+        "/build/app.02e918da.css"
+      ]
+    },
+    "clock": {
+      "js": [
+        "/build/runtime.d94b3b43.js",
+        "/build/clock.50e4dd51.js"
+      ],
+      "css": [
+        "/build/clock.daeae779.css"
+      ]
+    },
+    "starwars": {
+      "js": [
+        "/build/runtime.d94b3b43.js",
+        "/build/starwars.ae411bfb.js"
+      ],
+      "css": [
+        "/build/starwars.1b280c33.css"
+      ]
+    },
+    "login": {
+      "js": [
+        "/build/runtime.d94b3b43.js",
+        "/build/login.a4b411c9.js"
+      ],
+      "css": [
+        "/build/login.d2513468.css"
+      ]
+    },
+    "comments": {
+      "js": [
+        "/build/runtime.d94b3b43.js",
+        "/build/comments.61458943.js"
+      ]
+    },
+    "comments-css": {
+      "js": [
+        "/build/runtime.d94b3b43.js",
+        "/build/comments-css.6e3ab62e.js"
+      ],
+      "css": [
+        "/build/comments-css.08371834.css"
+      ]
+    },
+    "playlist": {
+      "js": [
+        "/build/runtime.d94b3b43.js",
+        "/build/playlist.37e8fcc6.js"
+      ],
+      "css": [
+        "/build/playlist.4312856e.css"
+      ]
+    },
+    "player": {
+      "js": [
+        "/build/runtime.d94b3b43.js"
+      ],
+      "css": [
+        "/build/player.4312856e.css"
+      ]
+    }
+  }
+}
