@@ -1,5 +1,7 @@
 {# src/Knarf/PlatformBundle/Resources/views/Weather/view.html.twig #}
 <div class="container-fluid">
+	<button id="weather-button" class="btn btn-primary" onclick="weather()">Afficher la météo</button>
+	
     <div id="weather-widget">
         <div id="weather-image">
         <img class="img-responsive" src="{{ asset('/images/weather.png') }}" alt="Meteo" >

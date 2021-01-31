@@ -41,7 +41,7 @@ services:
         tags: ['controller.service_arguments'] 
             
     
-    Knarf\PlatformBundle\Service\MercureCookieGenerator:
+    Knarf\PlatformBundle\Mercure\MercureCookieGenerator:
             arguments:
                 $secret: '%secret%'
     

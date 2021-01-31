@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace Knarf\PlatformBundle\Service;
+namespace Knarf\PlatformBundle\Mercure;
 
 use Lcobucci\JWT\Builder;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
