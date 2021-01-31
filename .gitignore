@@ -1,6 +1,6 @@
 /.web-server-pid
 /app/config/parameters.yml
-/build/
+/web/build/
 /phpunit.xml
 /var/*
 !/var/cache
@@ -18,7 +18,6 @@
 /web/uploads/
 /web/prod.log
 /nbproject/
-/src/Knarf/PlatformBundle/DataFixtures/
 /tests/
 /src/Knarf/PlatformBundle/Resources/public/js/sf-websocket.js
 /src/Knarf/PlatformBundle/Resources/public/js/moment.min.js
@@ -31,3 +30,7 @@
 /components/require.js
 /components/require.config.js
 /components/require.css
+/.settings/
+/node_modules/
+/.project
+/.buildpath

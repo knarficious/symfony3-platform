@@ -25,7 +25,7 @@ class MediaSubscriber implements EventSubscriberInterface
     private $cacheManager;
     private $uploaderHelper;
     
-    public function __construct(CacheManager $cacheManager, Uploader $uploaderHelper) 
+    public function __construct(CacheManager $cacheManager, UploaderHelper $uploaderHelper) 
     {
         $this->cacheManager = $cacheManager;
         $this->uploaderHelper = $uploaderHelper;
