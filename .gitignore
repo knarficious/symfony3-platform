@@ -12,6 +12,7 @@
 !var/sessions/.gitkeep
 /vendor/
 /web/bundles/
+/web/build/
 /web/media/cache/
 /.settings/
 /node_modules/
