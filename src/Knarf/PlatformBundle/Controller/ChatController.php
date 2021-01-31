@@ -23,7 +23,7 @@ use Symfony\Component\Mercure\Publisher;
 use Symfony\Component\Mercure\Jwt\StaticJwtProvider;
 use Knarf\PlatformBundle\Mercure\JwtProvider;
 use Knarf\UserBundle\Entity\App_User;
-use Knarf\PlatformBundle\Service\MercureCookieGenerator;
+use Knarf\PlatformBundle\Mercure\MercureCookieGenerator;
 
 /**
  * Description of ChatController
