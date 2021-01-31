@@ -76,7 +76,7 @@
 		"sort-packages" : true
 	},
 	"extra" : {
-		"symfony-app-dir" : "app",
+		"symfony-app-dir" : "bin",
 		"symfony-bin-dir" : "bin",
 		"symfony-var-dir" : "var",
 		"symfony-web-dir" : "web",
@@ -86,5 +86,5 @@
 			"file" : "app/config/parameters.yml"
 		}
 	},
-	"minimum-stability" : "alpha"
+	"minimum-stability" : "stable"
 }

@@ -1,0 +1,17 @@
+{
+  "build/app.css": "/build/app.02e918da.css",
+  "build/app.js": "/build/app.f4dbfd91.js",
+  "build/clock.css": "/build/clock.daeae779.css",
+  "build/clock.js": "/build/clock.50e4dd51.js",
+  "build/comments.js": "/build/comments.61458943.js",
+  "build/comments-css.css": "/build/comments-css.08371834.css",
+  "build/comments-css.js": "/build/comments-css.6e3ab62e.js",
+  "build/login.css": "/build/login.d2513468.css",
+  "build/login.js": "/build/login.a4b411c9.js",
+  "build/player.css": "/build/player.4312856e.css",
+  "build/playlist.css": "/build/playlist.4312856e.css",
+  "build/playlist.js": "/build/playlist.37e8fcc6.js",
+  "build/runtime.js": "/build/runtime.d94b3b43.js",
+  "build/starwars.css": "/build/starwars.1b280c33.css",
+  "build/starwars.js": "/build/starwars.ae411bfb.js"
+}
