@@ -22,8 +22,8 @@
 {% block knarfplatform_body %}
     
     {{ parent() }}
-    <article class="container-fluid">
-        <div class="row">
+    <article>
+    <section class="row">
     <div class="col-md-6">
     {% if advert.media.nomMedia is defined %} 
         {% if advert.media.nomMedia ends with 'jpg' or advert.media.nomMedia ends with 'JPG' or advert.media.nomMedia ends with 'png' or advert.media.nomMedia ends with 'gif' %}                                           
@@ -58,78 +58,63 @@
         {% if advert.updateAt %}, modifié le {{ advert.updateAt|date('d/m/Y') }} à {{ advert.updateAt|date('H:i') }} {% endif %}
     </p>
     </div>
-    </div>
+    </section>
     <br>
-    <section class="col-md-12">
-        <p>{{ advert.content | raw }}</p>
+    <section class="row">
+    	<div class="col-md-12">
+    		<p>{{ advert.content | raw }}</p>
+    	</div>        
     </section>
         
     </article>
     
     <br>
     
-    <div class="">
-        <a href="{{ path('rubrique_ext', {'slug': advert.rubrique.slug}) }}" class="btn btn-default">
-            <i class="glyphicon glyphicon-chevron-right"></i>
-            Voir les publications dans cette rubrique
-        </a>
-        
+    <div class="row">
+    	<div class="col-md-3">
+        	<a href="{{ path('rubrique_ext', {'slug': advert.rubrique.slug}) }}" class="btn btn-default">
+                <i class="glyphicon glyphicon-chevron-right"></i>
+                Voir les publications dans cette rubrique
+            </a>
+    	</div>        
     
     {% if advert.user == app.user %}
-        
-    <a href="{{ path('knarf_platform_edit', {'slug': advert.slug}) }}" class="btn btn-default">
-      <i class="glyphicon glyphicon-edit"></i>
-      Modifier l'annonce
-    </a>
-    <a href="{{ path('knarf_platform_delete', {'slug': advert.slug}) }}" class="btn btn-danger">
-      <i class="glyphicon glyphicon-trash"></i>
-      Supprimer l'annonce
-    </a>
-      
-    <a href="{{ path('profile')}}" class="btn btn-default">
-        <i class="glyphicon glyphicon-user"></i>
-        Retourner à mon profil
-    </a>
-    {% endif %} 
+        <div class="col-md-3">
+        	<a href="{{ path('knarf_platform_edit', {'slug': advert.slug}) }}" class="btn btn-default">
+          	<i class="glyphicon glyphicon-edit"></i>
+          		Modifier l'annonce
+        	</a>
+        </div> 
+        <div class="col-md-3">
+        	<a href="{{ path('knarf_platform_delete', {'slug': advert.slug}) }}" class="btn btn-danger">
+        	<i class="glyphicon glyphicon-trash"></i>
+        		Supprimer l'annonce
+        	</a>
+        </div>
+        <div class="col-md-3">
+        	<a href="{{ path('profile')}}" class="btn btn-default">
+            <i class="glyphicon glyphicon-user"></i>
+            	Retourner à mon profil
+        	</a>
+        </div>
+        {% endif %} 
     </div>
     <br>
     {# bloc des commentaires #}
     
-    <section class="" id="commentaires">
-{#        <h4>Commentaires</h4>   
-        {% if app.user %}          
-            <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-                <i class="fa fa-plus"></i> Ajouter un commentaire
-            </button> 
-            
-        {% else %}
-            Vous devez vous <a href="{{ path('security_login_form') }}">connecter</a> pour commenter
-        {% endif %}#}
-{% include '@FOSComment/Thread/async.html.twig' with {'id': 'advert' ~ advert.id} %}
-    </section>
-    <hr>
+<section class="well" id="commentaires">
 
-        {% if not app.user %}
-            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#loginModal">Connectez-vous pour commenter</button>
-{#            Vous devez vous <a href="{{ path('security_login_form') }}">connecter</a> pour commenter#}
+	{% if not app.user %}
+        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#loginModal">Connectez-vous pour commenter</button>
         {{ render(controller("KnarfUserBundle:Security:loginModal")) }}
-        {% endif %}
-{#            <!-- Modal -->
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModal" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content" role="dialog">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="MyModal">Ajout d'un commentaire</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            
-                        </div>
-                    </div>
-                </div>
-            </div> #}       
+    {% endif %}
+    
+    {% include '@FOSComment/Thread/async.html.twig' with {'id': 'advert' ~ advert.id} %}
+    
+</section>
+
+
+     
 {% endblock %}
 
 {% block javascripts %}    

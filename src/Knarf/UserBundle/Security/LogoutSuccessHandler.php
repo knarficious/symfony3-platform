@@ -12,6 +12,7 @@ use Knarf\UserBundle\Entity\Manager\Interfaces\UserManagerInterface;
 use Symfony\Component\Security\Http\Logout\LogoutHandlerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Cookie;
 use Psr\Log\LoggerInterface;
@@ -47,6 +48,7 @@ class LogoutSuccessHandler implements LogoutHandlerInterface
         $response->headers->setCookie(new Cookie('success_connection', '', time() - 3600));
         $this->userManager->setLastConnexion($user, new \DateTime('now'));        
         $this->userManager->save($user, false, true);
+        $response = new RedirectResponse($request->getBasePath() . '/');
         return $response;
     }
 
