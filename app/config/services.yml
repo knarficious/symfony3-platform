@@ -97,7 +97,7 @@ services:
             tags:
                 - { name: jms_serializer.event_subscriber }
         
-        # Acl Comment Role
+    # Acl Comment Role
     knarf.platformbundle.acl.comment.roles:
         class: Knarf\PlatformBundle\Acl\RoleCommentAcl
         arguments:
