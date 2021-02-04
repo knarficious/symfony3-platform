@@ -14,7 +14,9 @@
 /web/bundles/
 /web/build/
 /web/media/cache/
+/web/uploads/
 /.settings/
 /node_modules/
 /.project
 /.buildpath
+/local-php-security-checker
