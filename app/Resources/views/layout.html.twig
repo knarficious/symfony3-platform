@@ -35,7 +35,7 @@
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbar">         
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#toggle-clocks" data-toggle="modal" data-target="#clocksModal">Horloges</a></li>
+                        <li><a href="#toggle-clocks" data-toggle="modal" data-target="#clocksModal"><span class="glyphicon glyphicon-time"></span></a></li>
                         <li class="dropdown mydropdowncss">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="">Rubriques<span class="caret"></span></a>
                             <ul class="dropdown-menu">
@@ -45,24 +45,16 @@
                         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}              
                             <li>
                                 <a href="{{ path('knarf_platform_add') }}">Ajouter une annonce</a>
-                            </li>          
+                            </li>
+                            <li>
+                            <a href="{{ path('knarf_chat') }}">Chatroom</></a>
+                        	</li>          
                         {% endif %}        
                         <li>
                             <a href="{{ path('contact') }}">Contact</a>
                         </li>
-                        <li>
-                            <a href="{{ path('knarf_chat') }}">Chatroom</></a>
-                        </li>
-                        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}  
 
-                            {#        <li>
-                                    {% if  app.user.avatar is not empty %}
-                                    <img src="{{vich_uploader_asset(app.user.avatar, 'mediaFile') | imagine_filter('my_thumb') }}" alt=""  />
-                                    {% else  %}
-                                    <img src="{{ asset('/images/icon-person_211874.png') }}" alt="icon person"/> 
-                                    {% endif %}
-                                    </li>#}
-
+                        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %} 
 
                             {% if app.request.get('_route')!= 'profile'%}
 
@@ -70,7 +62,7 @@
 
                             {% endif %}
 
-                            <li><a href="{{ path('security_logout') }}"><span class="glyphicon glyphicon-log-out"></span> Déconnexion</a></li>
+                            <li><a href="{{ path('security_logout') }}"><span class="glyphicon glyphicon-log-out"></span>Déconnexion</a></li>
 
                         {% else %}
 
