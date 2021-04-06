@@ -6,12 +6,13 @@ namespace Knarf\UserBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class SecurityController extends Controller
 {
   
   /**
-   * @return type
+   * @return void
    * @Route("/login", name="security_login_form")
    */  
   public function loginAction()
@@ -34,7 +35,7 @@ class SecurityController extends Controller
   
   /**
    * @Route("/login-modal", name="login_modal")
-   * @return type
+   * @return void
    */
   public function loginModalAction()
   {
@@ -141,7 +142,7 @@ class SecurityController extends Controller
     
     /**
      * @Route("/supprimer/{slug}", name="knarf_user_delete")
-     * @param type $slug
+     * @param string $slug
      * @param Request $request
      * @throws NotFoundHttpException
      */
@@ -163,10 +164,8 @@ class SecurityController extends Controller
             {
                 $em->remove($user);
                 $em->flush();
-
                 $this->get('security.token_storage')->setToken(null);
                 $request->getSession()->invalidate();
-
                 $this->addFlash('success', "Votre profil a été supprimé avec succès");
 
                 return $this->redirect($this->generateUrl('knarf_platform_home'));    
@@ -183,6 +182,14 @@ class SecurityController extends Controller
             return $this->redirectToRoute('profile');
         }   
 
+    }
+    
+    /**
+     * @return \Knarf\CoreBundle\Form\Handler\FormHandlerInterface
+     */
+    protected function getAccountDeletionHandler()
+    {
+        return $this->get('app.user_deletion.handler');
     }
     
 }

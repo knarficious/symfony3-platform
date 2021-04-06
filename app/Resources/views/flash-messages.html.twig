@@ -3,22 +3,17 @@
 {% block flash_messages %}
 
     {% for type, messages in app.session.flashbag.all() %}
-        
-        <div id="flashModal" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-body">
+
+            <div class="row"  >
+            	<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
                         {% for message in messages %}
-                            <div class="alert alert-{{ type }} alert-dismissible" role="alert">
+                            <div class="center-block alert alert-{{ type }} alert-dismissible" role="alert">
                                 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                                 {{ message | raw }}
                             </div>
                         {% endfor %}
-                    </div>
-                </div>
-            </div>
-        </div>
-
+                 </div>
+            </div>   
     {% endfor %}
     
 {% endblock %}

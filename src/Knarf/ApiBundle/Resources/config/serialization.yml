@@ -17,7 +17,7 @@ Knarf\UserBundle\Entity\App_User:
         nomMedia:
             groups: ['user', 'advert', 'commentaire']
         adverts:
-            groups: ['user']
+            groups: ['user', 'advert']
         commentaires:
             groups: ['user']
             
@@ -45,12 +45,23 @@ Knarf\PlatformBundle\Entity\Advert:
         user:
             groups: ['advert']
             
+        media:
+            groups: ['advert']
         rubrique:
             groups: ['advert']
             
         commentaires:
             groups: ['advert']
             
+Knarf\PlatformBundle\Entity\Media:
+    attributes:
+        id:
+            groups: ['advert', 'media']
+        date:
+            groups: ['advert', 'media']
+        nomMedia:
+            groups: ['advert', 'media']
+
 Knarf\PlatformBundle\Entity\Rubrique:
     attributes:
         id:

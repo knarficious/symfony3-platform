@@ -10,7 +10,7 @@ namespace Knarf\PlatformBundle\Listeners;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Liip\ImagineBundle\Imagine\Cache\CacheManager;
-use Knarf\PlatformBundle\Entity\Advert;
+use Knarf\PlatformBundle\Entity\Media;
 //use AppBundle\Services\ImageTransformer;
 use Vich\UploaderBundle\Event\Event;
 use Doctrine\ORM\EntityManager;
