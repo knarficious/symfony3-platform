@@ -19,7 +19,7 @@ imports:
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: fr
-    base_url: 'https://knarfmedia.local'
+    base_url: 'https://knarfmedia.fr.local'
 
 framework:
     #esi: ~
@@ -57,7 +57,7 @@ twig:
         - 'VichUploaderBundle:Form:fields.html.twig'
         - '@FOSCKEditor/Form/ckeditor_widget.html.twig'
     globals:
-        website: 'https://knarfmedia.local'    
+        website: 'https://knarfmedia.fr.local'    
 
 # Doctrine Configuration
 doctrine:

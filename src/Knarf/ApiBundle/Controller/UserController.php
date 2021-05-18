@@ -27,7 +27,7 @@ use Knarf\ApiBundle\Type\ApiEditEmailType;
 use Knarf\UserBundle\Entity\User\Profile;
 
 /**
- * Description of PutController
+ * Description of UserController
  *
  * @author franck
  */

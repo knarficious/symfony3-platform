@@ -32,6 +32,14 @@ interface UserManagerInterface extends GenericManagerInterface
     public function createAdmin(App_User $admin, $adresseIp);
     
     /**
+     * 
+     * @param App_User $user
+     * 
+     * @return void
+     */
+    public function deleteUser(App_User $user);
+    
+    /**
      * @param App_User $user
      * @param $newPassword
      * @return mixed

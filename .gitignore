@@ -20,3 +20,5 @@
 /.project
 /.buildpath
 /local-php-security-checker
+!bin/console
+!bin/symfony_requirements

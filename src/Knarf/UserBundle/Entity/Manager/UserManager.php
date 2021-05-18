@@ -84,6 +84,10 @@ class UserManager extends AbstractGenericManager implements UserManagerInterface
         );
     }
     
+    public function deleteUser(App_User $user) {
+        $this->remove($user);
+    }
+    
     public function getUserByConfirmationToken($token) 
     {
         return $this->repository->getUserByToken($token);
