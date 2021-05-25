@@ -12,7 +12,6 @@
   {% block stylesheets %}
       {{ parent() }}
     {{ encore_entry_link_tags('comments-css') }}
-    {{ encore_entry_link_tags('player') }}
   {% endblock %}  
  
 {#  {% block title %}
@@ -119,7 +118,6 @@
 
 {% block javascripts %}    
     {{ parent() }}
-    {{ encore_entry_script_tags('playlist') }}
     <script>
         $(document).ready(function(){
             $('p').children('img').each(function(){

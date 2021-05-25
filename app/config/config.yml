@@ -146,12 +146,6 @@ liip_imagine:
                     - '%kernel.root_dir%/../web/'
     driver: gd  
     filter_sets:
-        article_thumb:
-            quality: 100
-            filters:
-                relative_resize:
-                    heighten: 200
-
         my_thumb:
             #data_loader: avatar
             quality: 100

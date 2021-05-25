@@ -21,7 +21,7 @@
                 {% if  app.user.avatar is not empty %}
                     <div class="avatar">
                         <a href="{{ path('edit_avatar') }}" data-toggle="tooltip" data-placement="right" title="Modifier votre avatar">
-                            <img class="img-responsive" src="{{vich_uploader_asset(app.user.avatar, 'mediaFile') | imagine_filter('my_thumb_resize') }}" alt="{{ app.user.avatar.nomMedia }}"/>
+                            <img class="img-responsive" src="{{vich_uploader_asset(app.user.avatar, 'mediaFile') | imagine_filter('my_thumb') }}" alt="{{ app.user.avatar.nomMedia }}"/>
                         </a>
                         <br>
                         <a class="btn btn-warning" href="{{ path('delete_avatar') }}" >Supprimer votre avatar</a>
