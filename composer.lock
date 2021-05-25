@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "85d8fc9ef75bdb91766ec73386ecab89",
+    "content-hash": "a158f41f1329085cb4e53b443e15e5ca",
     "packages": [
         {
             "name": "adoy/oauth2",
@@ -7981,7 +7981,8 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=7.0"
+        "php": ">=7.0",
+        "ext-gd": "^7.4"
     },
     "platform-dev": [],
     "plugin-api-version": "2.0.0"
