@@ -8,7 +8,7 @@ imports:
 #        query_cache_driver: apc
 doctrine:
     dbal:
-        url: "%env(DATABASE_URL)"
+        url: "%env(DATABASE_URL)%"
 monolog:
     handlers:
         main:
