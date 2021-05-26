@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a158f41f1329085cb4e53b443e15e5ca",
+    "content-hash": "a7654544389628dcd3e341faa98451ac",
     "packages": [
         {
             "name": "adoy/oauth2",

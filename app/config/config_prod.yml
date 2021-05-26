@@ -17,17 +17,17 @@ monolog:
             channels:       ['!doctrine', '!security']
         doctrine:
             type:           stream
-            path:           "%kernel.logs_dir%/%kernel.environment%.doctrine.log"
+            path:           "php://stderr"
             channels:       doctrine
         authentication:
             type:           rotating_file
             max_files:      15
-            path:           "%kernel.logs_dir%/%kernel.environment%.auth.log"
+            path:           "php://stderr"
             level:          info
             channels:       security #mywebsite_user    
         nested:
             type: stream
-            path: '%kernel.logs_dir%/%kernel.environment%.log'
+            path: "php://stderr"
             level: debug
         console:
             type: console
