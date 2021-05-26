@@ -23,8 +23,6 @@ Encore
     .addEntry('login', './app/Resources/css/login.css')
     .addEntry('comments', './app/Resources/js/comments.js')
     .addEntry('comments-css', './app/Resources/css/comments.css')
-    .addEntry('playlist', './app/Resources/js/playlist.js')
-    .addStyleEntry('player', './app/Resources/css/player.css')
 
     // will require an extra script tag for runtime.js
     // but, you probably want this, unless you're building a single-page app
